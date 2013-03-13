@@ -1,0 +1,233 @@
+/* Simple "css reset" rule - for debugging. */
+
+.ua-container, .ua-container * {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	line-height: 1.25em;
+	vertical-align: baseline;
+	text-decoration: none;
+	outline: 0;
+	font-family: tahoma, verdana, arial, sans-serif;
+}
+.ua-table-container {
+	position: relative;
+}
+.ua-table-container .ua-overlay-background {
+	position: absolute;
+	background: #f8f8f8;
+	opacity: .8;
+	filter: alpha(opacity=80);
+}
+.ua-table-container .ua-overlay-foreground {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+.ua-table-container .ua-overlay-foreground td {
+	vertical-align: middle;
+	font-size: 130%;
+	text-align: center;
+	font-style: italic;
+	color: #666;
+}
+.ua-table-container .ua-overlay-foreground .ua-loading {
+	background: url(images/loading-24-eeeeee.gif) no-repeat;
+	width: 24px;
+	height: 24px;
+	display: inline-block;
+}
+.ua-table {
+	border-collapse: collapse;
+	table-layout: fixed;
+	width: 100%;
+}
+.ua-table a {
+	color: #449;
+}
+.ua-table.ua-ellipsis-tds td {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+}
+.ua-table > thead td {
+	vertical-align: bottom;
+	background: #fff;
+	padding: 5px 8px;
+	border-bottom: 1px solid #d3d3d3;
+}
+.ua-table > thead td a {
+	text-decoration: none;
+}
+.ua-table > thead td.ua-sortable {
+	cursor: pointer;
+	border-left: 1px solid #e3e3e3;
+	border-right: 1px solid #e3e3e3;
+}
+.ua-table > thead td.ua-sortable .ua-loading {
+	background: url(images/loading-11-ffffff.gif) no-repeat;
+	width: 16px;
+	height: 11px;
+	margin-left: 8px;
+	display: inline-block;
+}
+.ua-table > thead td.ua-nonsortable {
+	color: #888;
+	cursor: default;
+}
+.ua-table > thead td.ua-strong {
+}
+.ua-table > thead td.ua-actions {
+	padding: 0 5px }
+.ua-table > tbody td {
+	vertical-align: middle;
+	background: #f5f5f5;
+	padding: 5px 8px;
+	border-bottom: 1px solid #d3d3d3;
+}
+.ua-table > tbody tr.ua-hovered td {
+	background: #fff;
+	cursor: pointer;
+}
+.ua-table > tbody .ua-placeholder td {
+	padding: 60px;
+}
+.ua-table > tbody td.ua-strong {
+	background: #f0f0f0;
+	border-left: 1px solid #e1e1e1;
+	border-right: 1px solid #e1e1e1;
+}
+.ua-table > tbody td.ua-actions {
+	background: #fff;
+	border-left: 1px solid #e1e1e1;
+	border-right: 1px solid #e1e1e1;
+	padding: 0 5px;
+}
+.ua-table > tbody td.ua-actions a.ua-action-icon {
+	float: left;
+	cursor: pointer;
+	padding: 1px 2px 2px 1px;
+	opacity: 0.5;
+}
+.ua-table > tbody td.ua-actions a.ua-action-icon:hover,
+.ua-table > tbody td.ua-actions a.ua-action-icon:focus {
+	background: #ddd;
+	opacity: 1.0;
+}
+.ua-table > tfoot td {
+	vertical-align: middle;
+}
+.ua-table > tfoot > tr > td {
+	padding: 5px 5px 5px 11px;
+	border: 1px solid #e8e8e8;
+}
+.ua-table > tfoot table {
+	width: 100%;
+}
+.ua-table .ua-summary {
+	color: #888;
+}
+.ua-table .ua-summary .ua-loading {
+	display: inline-block;
+	min-height: 16px;
+	background: url(images/loading-16-ffffff.gif) no-repeat;
+	padding-left: 21px;
+}
+.ua-table .ua-more {
+	float: right;
+	margin: 0;
+	padding: 0;
+}
+.ua-table .ua-more div {
+	margin-left: 5px;
+}
+.ua-table .ua-datatype-boolean.ua-true {
+	font-weight: bold;
+}
+.ua-table .ua-datatype-boolean.ua-false {
+	font-size: 85%;
+	color: #888;
+}
+.ua-table > thead td.ua-sorted-by,.ua-table > thead td.ua-sortable:hover {
+	border-left: 1px solid #e3e3e3;
+	border-right: 1px solid #e3e3e3;
+	background-image: linear-gradient(bottom, rgb(242,242,242) 0%, rgb(255,255,255) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(242,242,242) 0%, rgb(255,255,255) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(242,242,242) 0%, rgb(255,255,255) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(242,242,242) 0%, rgb(255,255,255) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(242,242,242) 0%, rgb(255,255,255) 100%);
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, rgb(242,242,242)),color-stop(1, rgb(255,255,255)));
+}
+.ua-form-error, .ua-form-error-arrow:after {
+	background: #d22;
+	border: 1px solid rgba(255, 255, 255, 1.0);
+	cursor: pointer;
+	z-index: 1;
+}
+.ua-form-error {
+	position: absolute;
+	display: inline-block;
+	max-width: 300px;
+	color: #fff;
+	padding: 3px 5px;
+	font-size: 12px;
+	font-weight: bold;
+	font-family: arial;
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+.ua-form-error-arrow {
+	width: 35px;
+	height: 8px;
+	overflow: hidden;
+	position: absolute;
+	left: 50%;
+	margin-left: -8px;
+	bottom: -8px;
+}
+.ua-form-error-arrow.top {
+	top: -8px;
+	bottom: auto;
+}
+.ua-form-error-arrow.left {
+	left: 20%;
+}
+.ua-form-error-arrow:after {
+	content: "";
+	position: absolute;
+	left: 10px;
+	top: -10px;
+	width: 13px;
+	height: 13px;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	tranform: rotate(45deg);
+}
+.ua-form-error-arrow.top:after {
+	bottom: -10px;
+	top: auto;
+}
+.ua-ascending {
+	content: url(images/asc.gif);
+}
+.ua-descending {
+	content: url(images/desc.gif);
+}
+.ua-note {
+	color: #888;
+	font-size: 80%;
+}
+.ua-selector.ua-filled textarea {
+	z-index: 0;
+}
+.ua-selector.ua-filled .text-wrap {
+	background: #e2e6f0;
+}
+.ua-selector.ua-filled .text-prompt {
+	display: none;
+}
+.ua-selector.ua-filled .text-button {
+	border-color: transparent !important;
+}

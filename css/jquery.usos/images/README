@@ -1,0 +1,10 @@
+Obrazki mog¹ znikn¹æ lub zmieniæ siê w przysz³ych wersjach biblioteki, zatem
+nie nale¿y ich u¿ywaæ bezpoœrednio w zewnêtrznych aplikacjach (mo¿na je
+skopiowaæ).
+
+Ikony loading-*.gif wygenerowa³em ze strony ajaxload.info. Gdyby w przysz³oœci
+brakowa³o ikony dla danego koloru t³a, to najlepiej wygenerowaæ ich wiêcej
+przy u¿yciu tej samej strony. Pierwsze cyfry po "loading-" odpowiadaj¹
+wysokoœci ikony w pikselach. Ostatnie 6 znaków nazwy odpowiada kolorowi t³a, na
+którym ikona wygl¹da OK. Kolor ikony dobiera³em metod¹ prób i b³êdów, testuj¹c
+na danym tle.
