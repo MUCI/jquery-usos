@@ -1,5 +1,5 @@
-jQuery-USOS
-===========
+jQuery-USOS - USOS plugin for jQuery
+====================================
 
 This is a set of jQuery plugins intended to help developers with their work
 with USOS API.
@@ -38,31 +38,32 @@ Core
 
 ### $.usosCore.init(options)
 
-Before you start working with widgets, you **must** initialize the plugin with the
-following call:
+Before you start working with widgets, you **must** initialize the core by
+calling this method. Possible parameters are:
 
 ```javascript
 $.usosCore.init({
 
-	/** Language of the interface - "pl" or "en" (default: "en"). */
+	/** Optional. Language of the interface - "pl" or "en" (default: "en"). */
 	langpref: 'en',
 	
 	/**
-	 * Dictionary of USOS API servers which you want to use. Usually you will
-	 * need to define only the "default" key.
+	 * Optional. Dictionary of USOS API servers which you want to use. Usually
+	 * you will need to define only the "default" key.
 	 */
 	usosAPIs: {
 		'default': {
 		
 			/**
-			 * Where to send the USOS API request? "%s" will be  replaced with
-			 * the method name.
+			 * Required. Where to send the USOS API request? "%s" will be
+			 * replaced with the method name.
 			 */
 			methodUrl: "http://apps.usos.edu.pl/%s"
 			
 			/**
-			 * Extra parameters to be appended to all issued requests. This
-			 * is useful for passing CSRF tokens when you're using a proxy.
+			 * Optional. Extra parameters to be appended to all issued
+			 * requests. This is useful for passing CSRF tokens when you're
+			 * using a proxy.
 			 */
 			extraParams: {}
 		}
@@ -234,12 +235,13 @@ $('#element').usosOverlays('showContextMessage', {
 Hide previously shown context message.
 
 
-ApiTables
----------
+ApiTable
+--------
 
-This module displays dynamic, sortable, paginated tables from USOS API data.
-In order for all of its specific functionality to work properly, the underlaying
-USOS API method must implement a specific set of parameters.
+This widget can display dynamic, sortable, paginated tables based on USOS API
+data. In order for all of its functionality to work properly, the underlaying
+USOS API method must implement a specific set of parameters (not yet
+documented).
 
 **This module is currently undocumented. You should not use it.**
 
