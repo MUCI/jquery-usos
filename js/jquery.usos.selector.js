@@ -78,6 +78,7 @@
 		$this
 			.empty()
 			.addClass("ua-container ua-selector")
+			.css("width", mydata.settings.width)
 			.append($("<textarea>")
 				.attr("rows", "1")
 				.css("width", mydata.settings.width)

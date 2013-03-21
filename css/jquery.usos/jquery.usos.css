@@ -231,3 +231,26 @@
 .ua-selector.ua-filled .text-button {
 	border-color: transparent !important;
 }
+.ua-progressoverlay-background {
+	position: absolute;
+	background: #f8f8f8;
+	filter: alpha(opacity=80);
+}
+.ua-progressoverlay-foreground {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+.ua-progressoverlay-foreground td {
+	vertical-align: middle;
+	text-align: center;
+	color: #666;
+}
+.ua-progressoverlay-foreground .ua-loading {
+	background: url(images/loading-16-eeeeee.gif) no-repeat;
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	position: relative;
+	top: 1px;
+}

@@ -143,30 +143,46 @@
 		
 		if (arguments.length == 2) {
 			
-			/* When called with two arguments, treat as an alias to: */
+			/* When called with two arguments, treat as one of two aliases: */
 			
-			return langSelect({
-				langdict: {
-					pl: arguments[0],
-					en: arguments[1]
-				},
-				format: "text"
-			})
+			if (typeof arguments[0] === "object") {
+				
+				/* ALIAS: langSelect(langdict, format) */
+				return langSelect({
+					langdict: arguments[0],
+					format: arguments[1]
+				});
+				
+			} else {
+				
+				/* ALIAS: langSelect(pl, en) */
+				return langSelect({
+					langdict: {
+						pl: arguments[0],
+						en: arguments[1]
+					},
+					format: "text"
+				});
+				
+			}
 		}
 		if (arguments.length != 1) {
 			throw("Invalid arguments", arguments);
 		}
 		var opts = arguments[0];
 		
+		/* Called with one argument. */
+		
 		if (opts.pl && opts.en && !opts.langdict) {
 			
-			/* When called with a LangDict object, treat as an alias to: */
-			
+			/* ALIAS: langSelect(langdict) */
 			return langSelect({
 				langdict: opts,
 				format: "text"
 			})
 		}
+		
+		/* PRIMARY SIGNATURE: langSelect(options) */
 		
 		var defaultOptions = {
 			langdict: null,
@@ -185,26 +201,46 @@
 		var en = options.langdict.en;
 		
 		if (options.format == "text") {
-			return (lang == 'pl') ? pl : en;
+			var ret;
+			if (lang == 'pl') {
+				if (pl) {
+					ret = pl;
+				} else if (en) {
+					ret = "(po angielsku) " + en;
+				} else {
+					ret = "(brak danych)";
+				}
+			} else {
+				if (en) {
+					ret = en;
+				} else if (pl) {
+					ret = "(in Polish) " + pl;
+				} else {
+					ret = "(unknown)";
+				}
+			}
+			return ret;
 		} else if (options.format == "$span") {
 			var $ret = $("<span>");
 			if (lang == 'pl') {
 				if (pl) {
-					$ret.text(pl);
+					$ret.html(pl);
 				} else if (en) {
 					$ret
 						.append($("<span>").addClass("ua-note").text("(po angielsku)"))
-						.append(" " + en);
+						.append(" ")
+						.append($("<span>").html(en));
 				} else {
 					$ret.append($("<span>").addClass("ua-note").text("(brak danych)"));
 				}
 			} else {
 				if (en) {
-					$ret.text(en);
+					$ret.html(en);
 				} else if (pl) {
 					$ret
 						.append($("<span>").addClass("ua-note").text("(in Polish)"))
-						.append(" " + pl);
+						.append(" ")
+						.append($("<span>").html(pl));
 				} else {
 					$ret.append($("<span>").addClass("ua-note").text("(unknown)"));
 				}

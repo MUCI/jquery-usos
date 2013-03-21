@@ -7,10 +7,13 @@ with USOS API.
 Demos
 -----
 
-  * [Selector](http://jsfiddle.net/wrygiel/r7eF6/)
-  * [Multiselector](http://jsfiddle.net/wrygiel/gNwHa/)
-  * [USOS API Fetch](http://jsfiddle.net/wrygiel/qwmu9/)
-  * [Context message](http://jsfiddle.net/wrygiel/j2Eu3/)
+  * Widgets:
+    * [Selector](http://jsfiddle.net/wrygiel/r7eF6/)
+    * [Multiselector](http://jsfiddle.net/wrygiel/gNwHa/)
+    * [Context message](http://jsfiddle.net/wrygiel/j2Eu3/)
+  * Core:
+    * [USOS API Fetch](http://jsfiddle.net/wrygiel/qwmu9/)
+    * [LangDict helpers](http://jsfiddle.net/wrygiel/Tgxep/)
 
 
 Installation
@@ -96,20 +99,40 @@ $.usosCore.usosapiFetch({
 	/**
 	 * Optional. Useful when you're issuing lots of subsequent queries.
 	 *
-	 * By default (syncMode "noSync"), if you issue queries ABCDE and then
-	 * receive responses ADBEC, success/error will be fired 5 times with each
-	 * of these responses in order.
+	 * One of the following values:
+	 * - "noSync" (default)
+	 * - "receiveIncrementalFast",
+	 * - "receiveLast".
 	 *
-	 * If you use syncMode "receiveIncrementalFast", you will get three: ADE.
+	 * By default ("noSync"), if you:
+	 * [1] call usosapiFetch five times (in the =ABCDE= order), then:
+	 * [2] five requests will be issued (=ABCDE=),
+	 * [3] your success/error handler will be called five times, in order
+	 * in which the responses are received (for example, =ADBEC=).
 	 *
-	 * If you use syncMode "receiveLast", you will get only one: E.
+	 * If you use syncMode "receiveIncrementalFast", then for the above example
+	 * your handler will be called three times only: [2] =ABCDE= [3] =ADE=.
+	 *
+	 * If you use syncMode "receiveLast", your handler will be called just
+	 * once: [2] =ABCDE= [3] =E=.
+	 *
+	 * TODO: Other options to be (possibly) implemented in the future:
+	 * - "receiveIncremental": [2] =ABCDE= [3] =ABCDE=
+	 * - "sendIncremental": Same as above, but B is issued after the response
+	 *   to A is received and handled (may take much more time!):
+	 *   [2] =ABCDE= [3] =ABCDE=
+	 * - "sendLast": B-D are not issued at all. E is issued after the response
+	 *   to A is received and handled: [2] =AE= [3] =AE=
+	 * - "sendAndReceiveLast": This behaves like "receiveLast" and "sendLast"
+	 *   together: [2] =AE= [3] =E=.
 	 */
 	syncMode: "noSync",
 	
 	/**
-	 * If you use any syncMode (other than "noSync"), then this is required.
+	 * If you use any syncMode other than "noSync", then this is required.
 	 * You should provide an empty object here. You must use *the same* object
-	 * for all calls in your "torrent".
+	 * for all calls in your synchronized "torrent". Internal format of a
+	 * syncObject is left undocumented and may change in the future.
 	 */
 	syncObject: null,
 });
@@ -129,20 +152,20 @@ in multiple ways:
     object.
   * `$.usosCore.langSelect(langdict, format)`, where `format` is one of the
     following:
-	* `"text"`, when you want the result to be a simple string,
-	* `"$span"`, when you want the result to be a jQuery HTML node. In this
-	  case, the result may contain additional notes such as `"(in Polish)"` or
-	  `"(brak danych)"`.
+    * `"text"`, when you want the result to be a simple string,
+    * `"$span"`, when you want the result to be a jQuery HTML node. In this
+      case, the result may contain additional notes such as `"(in Polish)"` or
+      `"(brak danych)"`.
   * `$.usosCore.langSelect(options)` - you may use this if you need to provide
     even more options. Currently, the options are:
-	* `langdict` - as described above, USOS API's LangDict object,
-	* `format` - as described above, `"text"` or `"$span"`,
-	* `langpref` - `pl`, `en` or `inherit`. Use this if you want to override
-	  the language provided during `$.usosCore.init`.
+    * `langdict` - as described above, USOS API's LangDict object,
+    * `format` - as described above, `"text"` or `"$span"`,
+    * `langpref` - `pl`, `en` or `inherit`. Use this if you want to override
+      the language provided during `$.usosCore.init`.
 
 ### $.usosCore.console object
 
-Currently undocumented. You should not use it.
+Internal and undocumented. You should not use it.
 
 
 Selector widget
@@ -233,6 +256,10 @@ $('#element').usosOverlays('showContextMessage', {
 ### .usosOverlays('hideContextMessage')
 
 Hide previously shown context message.
+
+### .usosOverlays('progressIndicator')
+
+Currently undocumented. You should not use it. <!-- WRTODO -->
 
 
 ApiTable

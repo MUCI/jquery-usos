@@ -2,7 +2,8 @@
 	
 	"use strict";
 	
-	var NS = "usosOverlays";
+	var NS1 = "usosOverlays.contextMessage";
+	var NS2 = "usosOverlays.progress";
 	
 	var _isScrolling = false;
 	
@@ -23,7 +24,7 @@
 			
 			/* Check if previously initialized. */
 			
-			if ($this.data(NS)) {
+			if ($this.data(NS1)) {
 				/* Delay execution after hide is complete. */
 				$this.usosOverlays('hideContextMessage', function() {
 					$this.usosOverlays('showContextMessage', options);
@@ -48,7 +49,7 @@
 				$.usosCore.console.error("Message parameter is missing.");
 				return;
 			}
-			$this.data(NS, mydata);
+			$this.data(NS1, mydata);
 			
 			mydata.$error = $("<div>")
 				.addClass("ua-container")
@@ -70,11 +71,30 @@
 				}
 			});
 			mydata.$error.click(function() {
-				$this.focus();
+				/* When the user clicks the error message, we want to focus on the
+				 * errornous field. However, we don't know if $this is focusable.
+				 * That's why we will first try to find focusable elements "below" it. */
+				
+				var $tmp = $this.find("input:visible, select:visible, textarea:visible");
+				if ($tmp.length == 0) {
+					$this.trigger('focus');
+				} else if ($tmp.length == 1) {
+					$tmp.trigger('focus');
+				} else {
+					/* Multiple focusable elements found. Trigger nothing, but hide
+					 * the error (usually hiding is triggered after the focus is gained). */
+					
+					$this.usosOverlays("hideContextMessage");
+				}
 			});
-			$this.bind("focus." + NS + " keypress." + NS + " change." + NS, function() {
-				$this.usosOverlays("hideContextMessage");
-			});
+			
+			/* We don't know if the item is focusable or not. That's why we will also
+			 * try to observe all focusable items "below" it. */
+			
+			$this.find("input:visible, select:visible, textarea:visible").andSelf()
+				.on("focus." + NS1 + " keypress." + NS1 + " change." + NS1, function() {
+					$this.usosOverlays("hideContextMessage");
+				});
 			mydata.$error.fadeTo("fast", 1.0);
 			if (mydata.settings.scrollToBeVisible
 					&& (!_isScrolledIntoView(mydata.$error))
@@ -95,12 +115,12 @@
 	var hideContextMessage = function(callback) {
 		return this.each(function() {
 			var $this = $(this);
-			var mydata = $this.data(NS);
+			var mydata = $this.data(NS1);
 			if (!mydata)
 				return;
 			mydata.$error.unbind();
-			$this.unbind('.' + NS);
-			$this.removeData(NS);
+			$this.unbind('.' + NS1);
+			$this.removeData(NS1);
 			mydata.$error.fadeTo("fast", 0, function() {
 				mydata.$error.remove();
 				if (callback) {
@@ -110,9 +130,100 @@
 		});
 	};
 
+	/**
+	 * Show (or hide) a simple progress indicator over the matched element(s).
+	 */
+	var progressIndicator = function(options) {
+		return this.each(function() {
+			var $this = $(this);
+			var mydata = $this.data(NS2);
+			if (!mydata) {
+				mydata = {};
+				$this.data(NS2, mydata);
+				mydata.settings = {
+					state: "loading",
+					delay: 300,
+					opacity: 0.8,
+					fadeDuration: 300
+				};
+			}
+			if (typeof options !== 'object') {
+				options = {state: options};
+			}
+			$.extend(mydata.settings, options);
+			
+			/* If state is 'hide', then simply destroy all the elements (if they exist). */
+			
+			if (mydata.settings.state == 'hide') {
+				if (mydata) {
+					mydata.$bg.remove();
+					mydata.$fg.remove();
+					$this.removeData(NS2);
+				}
+				return;
+			}
+			
+			/* Initialize $bg and $fg objects. Set proper widths and heights. */
+			
+			if (!mydata.$bg) {
+				mydata.$bg = $("<div>")
+					.addClass("ua-progressoverlay-background")
+					.hide();
+				$(document.body).append(mydata.$bg);
+				mydata.$fg = $("<table>")
+					.addClass("ua-progressoverlay-foreground")
+					.hide()
+					.append($("<tr>")
+						.append($("<td>"))
+					);
+				$(document.body).append(mydata.$fg);
+			}
+			var $bg = mydata.$bg;
+			var $fg = mydata.$fg;
+			$fg.find("td").empty();
+			$bg.add($fg)
+				.css("left", $this.position().left)
+				.css("top", $this.position().top)
+				.css("width", $this.outerWidth())
+				.css("height", $this.outerHeight())
+				.css("opacity", mydata.settings.opactity)
+				.delay(mydata.settings.delay)
+				.fadeIn(mydata.settings.fadeDuration);
+			
+			/* Based on options and/or space available, decide what to show. */
+			
+			var title;
+			switch (mydata.settings.state) {
+				case 'loading': title = $.usosCore.langSelect("Wczytywanie...", "Loading..."); break;
+				case 'saving': title = $.usosCore.langSelect("Zapisywanie...", "Saving..."); break;
+				case 'hide': throw("Should return eariler!");
+				default: throw("Unknown state: " + mydata.settings.state);
+			}
+			$fg.find("td")
+				.append($("<span>")
+					.attr('class', 'ua-loading')
+					.attr('title', title)
+				);
+			
+			$fg.delay(mydata.settings.delay + (mydata.settings.fadeDuration / 2)).each(function() {
+				
+				/* Foreground is shown after the background animation is finished.
+				 * However, overlay might have been removed before the animation
+				 * could finish. This method is called either way! */
+				
+				if (!$.contains(document.documentElement, $bg[0])) {
+					/* $bg was removed from DOM. */
+					return;
+				}
+				$fg.fadeIn(mydata.settings.fadeDuration);
+			});
+		});
+	};
+
 	var PUBLIC = {
 		'showContextMessage': showContextMessage,
-		'hideContextMessage': hideContextMessage
+		'hideContextMessage': hideContextMessage,
+		'progressIndicator': progressIndicator
 	} 
 
 	$.fn.usosOverlays = function(method) {
