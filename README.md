@@ -1,8 +1,13 @@
 jQuery-USOS - USOS plugin for jQuery
 ====================================
 
+**STATUS OF THIS PROJECT:** unreleased Alpha version - It is not yet used
+in any public USOS project. The API can change in backward-incompatible way.
+
 This is a set of jQuery plugins intended to help developers with their work
-with USOS API.
+with USOS API. Most of it is designed specificly to work with USOS-related
+projects. It you don't know what USOS is, you are probably in a wrong place!
+
 
 Demos
 -----
