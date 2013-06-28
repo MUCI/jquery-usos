@@ -9,7 +9,10 @@ $(function() {
 	});
 
 	$('#course').usosSelector({
-		entity: "course"
+		entity: "course",
+		width: "450px",
+		multi: true,
+		value: ["1000-412SOP"]
 	});
 	$('#course').change(function () {
 		$('#result').text(JSON.stringify($(this).usosSelector('value')));
