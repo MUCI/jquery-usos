@@ -25,11 +25,13 @@
 	};
 	InvisibleStateCoordinator.prototype.getState = function() {
 		return this._state;
-	}
+	};
 	InvisibleStateCoordinator.prototype.setState = function(state) {
 		this._state = state;
 		this.publishState();
-	}
+	};
+	InvisibleStateCoordinator.prototype.destroy = function() {
+	};
 
 	/**
 	 * UrlHashStateCoordinator stores the state in the fragment part of an URL.
@@ -42,12 +44,12 @@
 		this.onStateChanged = onStateChanged;
 		var me = this;
 		/* Subscribe to the hashchange event. */
-		$(window).bind('hashchange', function(e) {
+		$(window).bind('hashchange.' + NS, function(e) {
 			me.publishState();
 		});
 		/* If there is no state in hash, set to default one. This will also
 		 * trigger this.publishState(), via hashchange event. */
-		if (this.getState() == null) {
+		if (this.getState() === null) {
 			this.setState(defaultState);
 		} else {
 			this.publishState();
@@ -65,12 +67,15 @@
 		if (v)
 			return v;
 		return null;
-	}
+	};
 	UrlHashStateCoordinator.prototype.setState = function(state) {
 		var x = {};
 		x[this.paramName] = state;
 		$.bbq.pushState(x);
-	}
+	};
+	UrlHashStateCoordinator.prototype.destroy = function() {
+		$(window).unbind('hashchange.' + NS);
+	};
 
 	
 	/** [{column: "abc", ascending: false}] => "-abc" */
@@ -99,10 +104,10 @@
 			/* coldata is being initialized during the init method. */
 			var coldata = $(this).data(NS);
 			if (coldata.orderRules[0].column == first.column) {
-				coldata.$img.attr("class", first.ascending ? 'ua-ascending' : 'ua-descending').show();
+				coldata.$img.attr("class", first.ascending ? 'ua-ascending' : 'ua-descending');
 				$(this).closest("td").addClass("ua-sorted-by");
 			} else {
-				coldata.$img.hide();
+				coldata.$img.removeClass("ua-ascending ua-descending");
 				$(this).closest("td").removeClass("ua-sorted-by");
 			}
 		});
@@ -113,14 +118,11 @@
 	 * with proper num/start/order_by.
 	 */
 	var _constructMethodParameters = function(mydata) {
-		var params = {};
-		$.extend(params, mydata.settings.params);
-		$.extend(params, {
+		return $.extend({}, mydata.settings.params, {
 			'order_by': _orderRulesToString(mydata.currentOrder),
 			'start': mydata.currentOffset,
 			'num': mydata.settings.pageLength
 		});
-		return params;
 	};
 	
 	/**
@@ -131,7 +133,10 @@
 		var $div = $("<div>")
 			.addClass("ua-container")
 			.addClass("ua-table-container");
-		var $table = $("<table>").addClass("ua-table").addClass("ua-ellipsis-tds");
+		var $table = $("<table>").addClass("ua-table");
+		if (settings.nowrap) {
+			$table.addClass("ua-ellipsis-tds");
+		}
 		$div.append($table);
 		var $thead = _createDefaultThead(settings);
 		$table.append($thead);
@@ -163,11 +168,11 @@
 					.attr("tabindex", 0)
 					.addClass("ua-sorter")
 					.attr("data-ua-fields", column.field)
-					.text(column.label)
+					.html(column.label)
 				);
 			} else {
 				$td.addClass("ua-nonsortable");
-				$td.text(column.label);
+				$td.html(column.label);
 			}
 			if (column.cssClass) {
 				$.each(column.cssClass.split(" "), function(index, cls) {
@@ -214,12 +219,12 @@
 				.attr('colspan', _columnCount(mydata.settings));
 		}
 		var $bg = mydata.elements.$div.find(".ua-overlay-background");
-		if ($bg.length == 0) {
+		if ($bg.length === 0) {
 			$bg = $("<div>").addClass("ua-overlay-background").hide();
 			mydata.elements.$div.append($bg);
 		}
 		var $fg = mydata.elements.$div.find(".ua-overlay-foreground");
-		if ($fg.length == 0) {
+		if ($fg.length === 0) {
 			$fg = $("<table>")
 				.addClass("ua-overlay-foreground")
 				.hide()
@@ -257,26 +262,25 @@
 	var _removeOverlay = function(mydata) {
 		mydata.elements.$div.find(".ua-overlay-background").remove();
 		mydata.elements.$div.find(".ua-overlay-foreground").remove();
-	}
+	};
 	
 	/**
 	 * Create default TFOOT based on settings.
 	 */
 	var _createDefaultTfoot = function(settings) {
-		var $tfoot = (
-			$("<tfoot>")
+		var $tfoot = $("<tfoot>")
 			.append($("<tr>")
 				.append($("<td>")
 					.attr("colspan", _columnCount(settings))
 					.append($("<table>")
-						.append($("<tr>")
-						)
+						.css("width", "100%")
+						.append($("<tr>"))
 					)
 				)
-			)
-		);
+			);
 		$tfoot.find("table tr")
 			.append($("<td>")
+				.css("vertical-align", "middle")
 				.append($("<div>")
 					.addClass("ua-summary")
 				)
@@ -311,7 +315,7 @@
 			$elements = $("<span>").text($elements);
 		}
 		mydata.elements.$summary.empty().append($elements.clone());
-	}
+	};
 	
 	/**
 	 * Create a TD for a LangDict value.
@@ -365,14 +369,14 @@
 			var tmp = serializedState.split(",");
 			if (tmp[0] == "1") {
 				return {
-					offset: parseInt(tmp[1]),
+					offset: parseInt(tmp[1], 10),
 					orderRules: _orderRulesFromString(tmp.slice(2).join("|"))
 				};
 			} else {
 				throw "Unknown serializer version";
 			}
 		} catch(err) {
-			console.error("Could not deserialize state:", err);
+			$.usosCore.console.error("Could not deserialize apiTable state:", err);
 			return {offset: 0, orderRules: []};
 		}
 	};
@@ -422,6 +426,7 @@
 			if ($this.data(NS)) {
 				$this.usosApiTable('destroy');
 			}
+			$this.empty();
 			
 			/* Load settings, override with options. */
 			
@@ -432,12 +437,18 @@
 				sourceId: "default",
 				method: null,
 				params: {},
+				offsetReset: false,
 				columns: null,
 				defaultOrder: null,
-				pageLength: 6
+				pageLength: 6,
+				actions: [],
+				emptyMessage: {
+					pl: "Brak wyników",
+					en: "No results"
+				},
+				nowrap: true
 			};
-			mydata.settings = defaultSettings;
-			$.extend(mydata.settings, options);
+			mydata.settings = $.extend({}, defaultSettings, options);
 			
 			/* Create UI elements. */
 			
@@ -452,9 +463,9 @@
 				$summary: $this.find('.ua-summary'),
 				$sorters: $this.find('.ua-sorter')
 					.each(function() {
-						/* Create an <img> order indicator. Parse and store orderRules. */
+						/* Create an order indicator. Parse and store orderRules. */
 						var $this = $(this);
-						var $img = $("<img>").css('margin-left', '3px').hide();
+						var $img = $("<div>").css('margin-left', '3px').hide();
 						$this.after($img);
 						var $loader = $("<span>").addClass("ua-loading").hide();
 						$img.after($loader);
@@ -486,20 +497,24 @@
 						);
 						mydata.currentOffset = 0;
 						var ascending = true;
-						if (mydata.currentOrder.length > 0
-							&& mydata.currentOrder[0].column == clickedColumns[0]
-							&& mydata.currentOrder[0].ascending == true)
-								ascending = false;
+						if (
+							mydata.currentOrder.length > 0 &&
+							mydata.currentOrder[0].column == clickedColumns[0] &&
+							mydata.currentOrder[0].ascending === true
+						) {
+							ascending = false;
+						}
 						var references = [];
 						var newRules = [];
-						for (var i=0; i<mydata.currentOrder.length; i++) {
+						var i;
+						for (i=0; i<mydata.currentOrder.length; i++) {
 							if ($.inArray(mydata.currentOrder[i].column, clickedColumns) != -1)
 								references[mydata.currentOrder[i].column] = mydata.currentOrder[i];
 							else
 								newRules.push(mydata.currentOrder[i]);
 						}
 						var prefixRules = [];
-						for (var i=0; i<clickedColumns.length; i++) {
+						for (i=0; i<clickedColumns.length; i++) {
 							var rule = null;
 							if (references[clickedColumns[i]]) {
 								rule = references[clickedColumns[i]];
@@ -510,7 +525,7 @@
 							prefixRules.push(rule);
 						}
 						var newOrder = prefixRules;
-						for (var i=0; i<newRules.length; i++)
+						for (i=0; i<newRules.length; i++)
 							newOrder.push(newRules[i]);
 						mydata.stateCoordinator.setState(_serializeState({
 							orderRules: newOrder,
@@ -550,7 +565,7 @@
 			$.each(mydata.settings.actions, function(_, action) {
 				if (action.isDefault) {
 					if (mydata.defaultAction) {
-						console.error("More than one default action defined.");
+						$.usosCore.console.error("More than one default action defined.");
 						return false;  // breaks the loop
 					}
 					mydata.defaultAction = action;
@@ -574,8 +589,8 @@
 			var onStateChanged = function(serializedState) {
 				mydata.initialized = true;
 				var newState = _unserializeState(serializedState);
-				mydata.currentOrder = newState.orderRules
-				mydata.currentOffset = newState.offset
+				mydata.currentOrder = newState.orderRules;
+				mydata.currentOffset = newState.offset;
 				$this.usosApiTable('reload');
 			};
 			if (mydata.settings.hashParam) {
@@ -587,6 +602,14 @@
 					defaultState, onStateChanged
 				);
 			}
+			
+			/* Offset reset is done at most once, during init. */
+			
+			if (mydata.settings.offsetReset) {
+				var state = _unserializeState(mydata.stateCoordinator.getState());
+				state.offset = 0;
+				mydata.stateCoordinator.setState(_serializeState(state));
+			}
 		});
 	};
 
@@ -597,7 +620,7 @@
 		return this.each(function() {
 			var $this = $(this);
 			var mydata = $this.data(NS);
-			console.log("Reloading with order " + _orderRulesToString(mydata.currentOrder) + "...");
+			$.usosCore.console.log("Reloading with order " + _orderRulesToString(mydata.currentOrder) + "...");
 			_refreshSorterImages(mydata);
 			_overlayContentWith(mydata, $("<span>").addClass("ua-loading"));
 			_updateSummary(mydata, $("<span>")
@@ -611,6 +634,9 @@
 				syncMode: "receiveLast",
 				syncObject: mydata.syncObject,
 				success: function(data) {
+					if (mydata.destroyed) {
+						return;
+					}
 					mydata.elements.$contents.empty();
 					$.each(data.items, function(trIndex, trData) {
 						var $tr = $("<tr>");
@@ -633,6 +659,35 @@
 							/* Apply text align from column.align. */
 							if (column.align) {
 								$td.css("text-align", column.align);
+							}
+							/* Apply overflow handler, if needed. */
+							if (mydata.settings.nowrap) {
+								$td.on("mouseenter", function() {
+									var $this = $(this);
+									if ($this.attr('title')) {
+										return;
+									}
+									
+									var ellipsisShown = false;
+									
+									/* There is a much faster way for Chrome, but we need this to
+									 * work on Firefox too. http://goo.gl/HIZkZ */
+	
+									var $e = $this
+										.clone()
+										.css({
+											display: 'inline',
+											width: 'auto',
+											visibility: 'hidden'
+										})
+										.appendTo('body');
+									ellipsisShown = $e.width() > $this.width();
+									$e.remove();
+	
+									if (ellipsisShown) {
+										$this.attr('title', $this.text());
+									}
+								});
 							}
 							$tr.append($td);
 						});
@@ -677,17 +732,30 @@
 					/* Next/Prev buttons */
 					mydata.elements.$nextPage.button(data.next_page ? "enable" : "disable");
 					mydata.elements.$prevPage.button(mydata.currentOffset > 0 ? "enable" : "disable");
+					/* Make the columns resizable. */
+					mydata.elements.$table.colResizable({
+						liveDrag: true,
+						headerOnly: true
+					});
 					/* Remove all progress indicators. */
-					_updateSummary(mydata,
-						$.usosCore.langSelect("Pokazywane elementy ", "Showing items ")
-						+ (mydata.currentOffset + 1) + ".."
-						+ (mydata.currentOffset + data.items.length)
-					);
 					mydata.elements.$table.find("thead .ua-loading").hide();
 					_removeOverlay(mydata);
+					/* Update the summary. */
+					if (mydata.currentOffset + data.items.length === 0) {
+						/* No data to display. */
+						var $span = $("<span>")
+							.html($.usosCore.langSelect(mydata.settings.emptyMessage));
+						_overlayContentWith(mydata, $span);
+						_updateSummary(mydata, "");
+					} else {
+						_updateSummary(mydata,
+							$.usosCore.langSelect("Pokazywane elementy ", "Showing items ") +
+							(mydata.currentOffset + 1) + ".." +
+							(mydata.currentOffset + data.items.length)
+						);
+					}
 				},
 				error: function(xhr, errorCode, errorMessage) {
-					console.error("Error while reloading feed", errorCode, errorMessage);
 					var $errorSpan = $("<span>")
 						.html($.usosCore.langSelect(
 							"Wystąpił błąd podczas wczytywania. Spróbuj odświeżyć stronę (F5).",
@@ -708,7 +776,9 @@
 		return this.each(function() {
 			var $this = $(this);
 			var data = $this.data(NS);
-			data.$root.find("*").andSelf().unbind();
+			data.destroyed = true;
+			data.stateCoordinator.destroy();
+			data.elements.$root.find("*").addBack().unbind();
 			$this.removeData(NS);
 		});
 	};

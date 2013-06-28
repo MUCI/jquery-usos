@@ -29,10 +29,13 @@ Installation
     * jQuery 1.9.1 (older versions MAY work, but I did not test them),
     * jQuery-UI 1.10.1 (same as above),
     * [jQuery BBQ](http://benalman.com/code/projects/jquery-bbq/docs/files/jquery-ba-bbq-js.html) 1.2.1,
-    * [jQuery TextExt](http://textextjs.com/) 1.3.1.
+    * [jQuery TextExt](http://textextjs.com/) 1.3.1 - **important**: this library needed some fixes and they
+      are integrated within the version which is commited inside jQuery-USOS repository (you should
+      use the one included here),
+    * [jQuery colResizable](http://quocity.com/colresizable/) 1.3.
   * Copy `css/jquery.usos` directory to your `css` directory.
-  * Copy `js/jquery.usos.1.2.3.min.js` file to your `js` directory.
-    * For development, use unminified `js/jquery.usos.*.js` files (include them all).
+  * Copy `js/jquery.usos.x.y.z.min.js` file to your `js` directory.
+    * For development, you can use unminified `js/jquery.usos.*.js` files (include them all).
   * Include CSS and JS file (along with all the dependencies) in your HTML.
   * Advanced usage:
     If your users are not anonymous, then you will probably need to set up your

@@ -1,10 +1,10 @@
-Obrazki mog¹ znikn¹æ lub zmieniæ siê w przysz³ych wersjach biblioteki, zatem
-nie nale¿y ich u¿ywaæ bezpoœrednio w zewnêtrznych aplikacjach (mo¿na je
-skopiowaæ).
+Obrazki mogÄ… zniknÄ…Ä‡ lub zmieniÄ‡ siÄ™ w przyszÅ‚ych wersjach biblioteki, zatem
+nie naleÅ¼y ich uÅ¼ywaÄ‡ bezpoÅ›rednio w zewnÄ™trznych aplikacjach (moÅ¼na je
+skopiowaÄ‡).
 
-Ikony loading-*.gif wygenerowa³em ze strony ajaxload.info. Gdyby w przysz³oœci
-brakowa³o ikony dla danego koloru t³a, to najlepiej wygenerowaæ ich wiêcej
-przy u¿yciu tej samej strony. Pierwsze cyfry po "loading-" odpowiadaj¹
-wysokoœci ikony w pikselach. Ostatnie 6 znaków nazwy odpowiada kolorowi t³a, na
-którym ikona wygl¹da OK. Kolor ikony dobiera³em metod¹ prób i b³êdów, testuj¹c
+Ikony loading-*.gif wygenerowaÅ‚em ze strony ajaxload.info. Gdyby w przyszÅ‚oÅ›ci
+brakowaÅ‚o ikony dla danego koloru tÅ‚a, to najlepiej wygenerowaÄ‡ ich wiÄ™cej
+przy uÅ¼yciu tej samej strony. Pierwsze cyfry po "loading-" odpowiadajÄ…
+wysokoÅ›ci ikony w pikselach. Ostatnie 6 znakÃ³w nazwy odpowiada kolorowi tÅ‚a, na
+ktÃ³rym ikona wyglÄ…da OK. Kolor ikony dobieraÅ‚em metodÄ… prÃ³b i bÅ‚Ä™dÃ³w, testujÄ…c
 na danym tle.

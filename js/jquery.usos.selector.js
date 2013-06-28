@@ -42,8 +42,8 @@
 		 * as browser version, resolution, internet speed etc. Currently, we
 		 * assume that all clients are fast enough. */
 		
-		return 0;
-	}
+		return 0.25;
+	};
 	
 	/**
 	 * Give our component a "filled" look and feel. This is used, when 'multi' is false,
@@ -51,14 +51,19 @@
 	 */
 	var _markFilled = function(mydata) {
 		mydata.$root.addClass("ua-filled");
-	}
+	};
 	
 	/**
 	 * Remove the "filled" look and feel (previously applied with _markFilled).
 	 */
 	var _markUnfilled = function(mydata) {
 		mydata.$root.removeClass("ua-filled");
-	}
+	};
+	
+	/** Return true if two values are equal. */
+	var _isEqual = function(va, vb) {
+		return JSON.stringify(va) == JSON.stringify(vb);
+	};
 	
 	/**
 	 * A common part of all inits. Note, that internalOptions are unaccessible to the
@@ -108,9 +113,10 @@
 						position: (distanceToBottom > 200) ? "below" : ((distanceToTop > distanceToBottom) ? "above" : "below")
 					},
 					render: function(suggestion) {
-						return $('<span>')
-							.addClass("text-label")
+						var $span = $('<span>')
 							.html(mydata.settings.suggestionRenderer(mydata.knownItems[suggestion]));
+						$span.find("*").addBack().addClass("text-label");
+						return $span;
 					}
 				},
 				ext: {
@@ -153,12 +159,11 @@
 								$self.trigger('setSuggestions', { result: keys });
 							},
 							error: function(xhr, errorCode, errorMessage) {
-								console.error("Error while loading suggestions", errorCode, errorMessage);
 								mydata.$textarea.usosOverlays("showContextMessage", {
 									type: "error",
 									message: $.usosCore.langSelect(
 										"Nie udało się wczytać listy sugestii. Spróbuj odświeżyć stronę (F5).",
-										"Could not load the list of suggesstions. Try to refresh tha page (F5)."
+										"Could not load the list of suggestions. Try to refresh tha page (F5)."
 									)
 								});
 							}
@@ -204,9 +209,9 @@
 						_markFilled(mydata);
 					}
 				}
-				if (currentValue != mydata.previousValue) {
+				if (!_isEqual(currentValue, mydata.previousValue)) {
 					mydata.previousValue = currentValue;
-					mydata.$root.change();
+					mydata.$root.trigger('change');
 				}
 			});
 		
@@ -220,7 +225,7 @@
 	 */
 	var _entitySetup_user = function(settings) {
 		return {
-			prompt: $.usosCore.langSelect("Wpisz imię i nazwisko", "Enter a name"),
+			prompt: $.usosCore.langSelect("Wpisz imię i nazwisko", "Enter the user's name"),
 			search: {
 				method: 'services/users/search',
 				paramsProvider: function(query) {
@@ -248,7 +253,7 @@
 					var items = [];
 					$.each(data, function(user_id, user) {
 						if (user === null) {
-							console.error("User " + user_id + " not found! Will be skipped!");
+							$.usosCore.console.warn("User " + user_id + " not found! Will be skipped!");
 							return true; // continue
 						}
 						items.push(user);
@@ -261,7 +266,24 @@
 				return item.user_id || item.id;
 			},
 			suggestionRenderer: function(item) {
-				return item.match;
+				/* Suggestions are feeded from the "search" method which includes
+				 * some additional info. */
+				var $div = $("<div>");
+				$div.append($("<span>").html(item.match));
+				$.each(item.active_employment_functions, function(_, f) {
+					$div.append(" ").append($("<span class='ua-note'>")
+						.text(
+							"- " + $.usosCore.langSelect(f['function']) +
+							" (" + $.usosCore.langSelect(f.faculty.name) + ")"
+						)
+					);
+				});
+				$.each(item.active_student_programmes, function(_, f) {
+					$div.append(" ").append($("<span class='ua-note'>")
+						.text("- " + $.usosCore.langSelect(f.programme.description))
+					);
+				});
+				return $div;
 			},
 			tagRenderer: function(item) {
 				/* 'search' method returns 'match', 'users' method returns first_name and last_name. */
@@ -271,7 +293,7 @@
 					return item.first_name + " " + item.last_name;
 				}
 			}
-		}
+		};
 	};
 	
 	/**
@@ -307,7 +329,7 @@
 					var items = [];
 					$.each(data, function(course_id, course) {
 						if (course === null) {
-							console.error("Course " + course_id + " not found! Will be skipped!");
+							$.usosCore.console.warn("Course " + course_id + " not found! Will be skipped!");
 							return true; // continue
 						}
 						items.push(course);
@@ -349,7 +371,7 @@
 					'text-overflow': 'ellipsis'
 				});
 			}
-		}
+		};
 	};
 	
 	/**
@@ -386,7 +408,7 @@
 					var items = [];
 					$.each(data, function(fac_id, faculty) {
 						if (faculty === null) {
-							console.error("Faculty " + fac_id + " not found! Will be skipped!");
+							$.usosCore.console.warn("Faculty " + fac_id + " not found! Will be skipped!");
 							return true; // continue
 						}
 						items.push(faculty);
@@ -407,7 +429,7 @@
 				
 				var name = $.usosCore.langSelect(item.name);
 				
-				/* Return in a block with decent max-width applied. WRTODO: This should be generalized! */
+				/* Return in a block with decent max-width applied. */
 				
 				return $('<span>').text(name).css({
 					'white-space': 'nowrap',
@@ -417,10 +439,87 @@
 					'text-overflow': 'ellipsis'
 				});
 			}
-		}
+		};
 	};
 
-	
+	/**
+	 * Build and return internal config for searching slip templates.
+	 */
+	var _entitySetup_slip_template = function(settings) {
+		return {
+			prompt: $.usosCore.langSelect("Wpisz nazwę szablonu obiegówki", "Enter a slip template name"),
+			search: {
+				method: 'services/slips/search_templates',
+				paramsProvider: function(query) {
+					return {
+						'langpref': $.usosCore.getLangPref(),
+						'fields': 'id|match|name|state',
+						'query': query
+					};
+				},
+				itemsExtractor: function(data) {
+					return data.items;
+				}
+			},
+			get: {
+				method: 'services/slips/templates',
+				paramsProvider: function(ids) {
+					return {
+						'tpl_ids': ids.join("|"),
+						'fields': 'id|name'
+					};
+				},
+				itemsExtractor: function(data) {
+					var items = [];
+					$.each(data, function(tpl_id, template) {
+						if (template === null) {
+							$.usosCore.console.warn("Template " + tpl_id + " not found! Will be skipped!");
+							return true; // continue
+						}
+						items.push(template);
+					});
+					return items;
+				}
+			},
+			idExtractor: function(item) {
+				return item.id;
+			},
+			suggestionRenderer: function(item) {
+				var $div = $("<div>");
+				$div.append($("<span>").html(item.match));
+				if (item.state != 'active') {
+					$div.append(" ").append($("<span class='ua-note'>").text(
+						item.state == 'draft' ?
+						$.usosCore.langSelect("(kopia robocza)", "(draft)") :
+						$.usosCore.langSelect("(przestarzały)", "(obsolete)")
+					));
+				}
+				return $div;
+			},
+			tagRenderer: function(item) {
+				return $('<span>')
+					.text(item.name)
+					.css({
+						'white-space': 'nowrap',
+						'display': 'inline-block',
+						'overflow': 'hidden',
+						'max-width': '250px',
+						'text-overflow': 'ellipsis'
+					})
+					.click(function() {
+						var msg = $.usosCore.langSelect(
+							"Przejść do strony szablonu \"" + item.name + "\"?",
+							"Go to the \"" + item.name + "\" template page?"
+						);
+						if (confirm(msg)) {
+							var url = $.usosCore.entities.slip_template.url(item.id);
+							document.location = url;
+						}
+					});
+			}
+		};
+	};
+
 	var init = function(options) {
 		return this.each(function() {
 			var $this = $(this);
@@ -435,14 +534,13 @@
 			
 			var mydata = {};
 			$this.data(NS, mydata);
-			mydata.settings = {
+			mydata.settings = $.extend({}, {
 				entity: null,
 				sourceId: "default",
 				width: "300px",
 				multi: false,
 				value: null
-			};
-			$.extend(mydata.settings, options);
+			}, options);
 			
 			/* Load entity-specific setup options. */
 			
@@ -452,13 +550,15 @@
 				$.extend(mydata.settings, _entitySetup_course(mydata.settings));
 			} else if (mydata.settings.entity == 'faculty') {
 				$.extend(mydata.settings, _entitySetup_faculty(mydata.settings));
+			} else if (mydata.settings.entity == 'slip_template') {
+				$.extend(mydata.settings, _entitySetup_slip_template(mydata.settings));
 			} else {
 				throw("Unknown entity: " + mydata.settings.entity);
 			}
 			
 			_internalInit.apply(this);
 		});
-	}
+	};
 	
 	/**
 	 * Get the list of IDs of currently selected items.
@@ -499,7 +599,7 @@
 					type: "error",
 					message: $.usosCore.langSelect(
 						"Wystąpił błąd podczas wczytywania wartości tego pola. Sprawdź, czy pole " +
-						"zawiera porządaną wartość. Jeśli problem będzie się powtarzał, prosimy " +
+						"zawiera pożądaną wartość. Jeśli problem będzie się powtarzał, proszę " +
 						"skontaktować się z administratorem.",
 						
 						"Error occured while loading values for this form field. Check if the field " +
@@ -507,7 +607,7 @@
 					)
 				});
 			}
-		}
+		};
 		
 		/* Compute the set of unknown IDs. */
 		
@@ -518,11 +618,15 @@
 		/* If not empty, make an AJAX call to retrieve the missing items. */
 		
 		if (unknownIds.length > 0) {
+			mydata.$root.usosOverlays('progressIndicator', {
+				state: 'loading'
+			});
 			$.usosCore.usosapiFetch({
 				sourceId: mydata.settings.sourceId,
 				method: mydata.settings.get.method,
 				params: mydata.settings.get.paramsProvider(unknownIds),
 				success: function(data) {
+					mydata.$root.usosOverlays('progressIndicator', 'hide');
 					$.each(mydata.settings.get.itemsExtractor(data), function(_, item) {
 						var id = mydata.settings.idExtractor(item);
 						mydata.knownItems[id] = item;
@@ -538,7 +642,7 @@
 							"Error occured while loading values for this form field. Try to " +
 							"refresh the page (F5)."
 						)
-					})
+					});
 				}
 			});
 		} else {
@@ -566,7 +670,7 @@
 				var values = _getIds(mydata);
 				if (mydata.settings.multi) {
 					retval = values;
-				} else if (values.length == 0) {
+				} else if (values.length === 0) {
 					retval = null;
 				} else {
 					retval = values[0];
@@ -594,7 +698,7 @@
 		return this.each(function() {
 			var $this = $(this);
 			var mydata = $this.data(NS);
-			mydata.$root.find("*").andSelf().unbind();
+			mydata.$root.find("*").addBack().unbind();
 			mydata.$root.remove();
 			$this.removeData(NS);
 		});
@@ -604,7 +708,7 @@
 		'init': init,
 		'value': valueFunc,
 		'destroy': destroy
-	} 
+	};
 
 	$.fn.usosSelector = function(method) {
 		if (PUBLIC[method]) {

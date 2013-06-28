@@ -35,12 +35,11 @@
 			/* Load settings, override with options. */
 			
 			var mydata = {};
-			mydata.settings = {
+			mydata.settings = $.extend({}, {
 				type: null,
 				message: null,
 				scrollToBeVisible: true
-			};
-			$.extend(mydata.settings, options);
+			}, options);
 			if (mydata.settings.type !== 'error') {
 				$.usosCore.console.error("Message type must equal 'error'.");
 				return;
@@ -76,7 +75,7 @@
 				 * That's why we will first try to find focusable elements "below" it. */
 				
 				var $tmp = $this.find("input:visible, select:visible, textarea:visible");
-				if ($tmp.length == 0) {
+				if ($tmp.length === 0) {
 					$this.trigger('focus');
 				} else if ($tmp.length == 1) {
 					$tmp.trigger('focus');
@@ -91,14 +90,16 @@
 			/* We don't know if the item is focusable or not. That's why we will also
 			 * try to observe all focusable items "below" it. */
 			
-			$this.find("input:visible, select:visible, textarea:visible").andSelf()
+			$this.find("input:visible, select:visible, textarea:visible").addBack()
 				.on("focus." + NS1 + " keypress." + NS1 + " change." + NS1, function() {
 					$this.usosOverlays("hideContextMessage");
 				});
 			mydata.$error.fadeTo("fast", 1.0);
-			if (mydata.settings.scrollToBeVisible
-					&& (!_isScrolledIntoView(mydata.$error))
-					&& (!_isScrolling)) {
+			if (
+				mydata.settings.scrollToBeVisible &&
+				(!_isScrolledIntoView(mydata.$error)) &&
+				(!_isScrolling)
+			) {
 				_isScrolling = true;
 				$('html, body').animate({
 					scrollTop: mydata.$error.offset().top - 30
@@ -130,6 +131,16 @@
 		});
 	};
 
+	var _findZIndex = function($node) {
+		var max = 0;
+		$node.parents().each(function() {
+			var zIndex = parseInt($(this).css('zIndex'), 10);
+			if (zIndex > max)
+				max = zIndex;
+		});
+		return max;
+	};
+	
 	/**
 	 * Show (or hide) a simple progress indicator over the matched element(s).
 	 */
@@ -155,7 +166,7 @@
 			/* If state is 'hide', then simply destroy all the elements (if they exist). */
 			
 			if (mydata.settings.state == 'hide') {
-				if (mydata) {
+				if (mydata.$bg) {
 					mydata.$bg.remove();
 					mydata.$fg.remove();
 					$this.removeData(NS2);
@@ -182,13 +193,21 @@
 			var $fg = mydata.$fg;
 			$fg.find("td").empty();
 			$bg.add($fg)
-				.css("left", $this.position().left)
-				.css("top", $this.position().top)
+				.css("z-index", _findZIndex($this))
+				.css("left", $this.offset().left)
+				.css("top", $this.offset().top)
 				.css("width", $this.outerWidth())
 				.css("height", $this.outerHeight())
-				.css("opacity", mydata.settings.opactity)
+				.css("opacity", mydata.settings.opacity)
 				.delay(mydata.settings.delay)
-				.fadeIn(mydata.settings.fadeDuration);
+				.each(function() {
+					/* There is a huge probability, that the progress indicator
+					 * was cancelled (hidden) before the delay had passed. Before
+					 * we fadeIn, we have to verify that. */
+					if ($('body').has($(this)).length > 0) {
+						$(this).fadeIn(mydata.settings.fadeDuration);
+					}
+				});
 			
 			/* Based on options and/or space available, decide what to show. */
 			
@@ -224,13 +243,13 @@
 		'showContextMessage': showContextMessage,
 		'hideContextMessage': hideContextMessage,
 		'progressIndicator': progressIndicator
-	} 
+	};
 
 	$.fn.usosOverlays = function(method) {
 		if (PUBLIC[method]) {
 			return PUBLIC[method].apply(this, Array.prototype.slice.call(arguments, 1));
 		} else {
-			$.error('Method ' + method + ' does not exist on jQuery.' + NS);
+			$.error('Method ' + method + ' does not exist.');
 		}
 	};
 	
