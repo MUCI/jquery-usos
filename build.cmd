@@ -50,9 +50,17 @@ echo  * Produced out of respect for the authors of http://rawgithub.com/ and use
 echo  */ >> %BUILDTARGET2%
 echo. >> %BUILDTARGET2%
 cat %DEST%/js/jquery-1.9.1.min.js >> %BUILDTARGET2%
+echo. >> %BUILDTARGET2%
 cat %DEST%/js/jquery-migrate-1.1.0.min.js >> %BUILDTARGET2%
+echo. >> %BUILDTARGET2%
 cat %DEST%/js/jquery-ui-1.10.1.custom.min.js >> %BUILDTARGET2%
+echo. >> %BUILDTARGET2%
 cat %DEST%/js/jquery.ba-bbq-1.2.1.min.js >> %BUILDTARGET2%
+echo. >> %BUILDTARGET2%
 cat %DEST%/js/jquery.colResizable-1.3.min.js >> %BUILDTARGET2%
+echo. >> %BUILDTARGET2%
 cat %DEST%/js/jquery.textext.1.3.1.min.js >> %BUILDTARGET2%
+echo. >> %BUILDTARGET2%
 cat %DEST%/js/jquery.tooltipster.2.1.min.js >> %BUILDTARGET2%
+echo. >> %BUILDTARGET2%
+cat %BUILDTARGET% >> %BUILDTARGET2%
