@@ -15,35 +15,30 @@ set BUILDTARGET=%DEST%/js/jquery-usos-%VERSION%.min.js
 set BUILDTARGET2=%DEST%/js/jquery-usos-%VERSION%-bundle.min.js
 set BUILDTARGET2COPY=%DEST%/jsfiddle-demos/latest-bundle.min.js
 
-rem * Copy new JS files.
+rem * Copy new JS development files. Remove the old ones.
 
-rm %DEST%/js/jquery.usos*
-cp %USOSWEB%/www/js/jquery.usos* %DEST%/js
-rm %DEST%/js/jquery.usos-0*
-rm %DEST%/js/jquery.usos-1*
+rm %DEST%/js/jquery-usos*
+rm %DEST%/js/devel/*
+cp %USOSWEB%/www/js/jquery-usos/devel/* %DEST%/js/devel
 
 rem * Copy new CSS and images.
 
-rm -R %DEST%/css/jquery.usos
-cp -R %USOSWEB%/www/css/jquery.usos %DEST%/css
+rm -R %DEST%/css/jquery-usos
+cp -R %USOSWEB%/www/css/jquery-usos %DEST%/css
 rm -R %DEST%/css/jquery-ui-theme
 cp -R %USOSWEB%/www/css/theme %DEST%/css/jquery-ui-theme
 
-rem * Merge all jquery-USOS JS files into one minified library
+rem * Merge all jquery-USOS development files into one minified library
 rem * (this will NOT include external libs).
 
-cat %DEST%/js/jquery.usos* > %DEST%/js/tmp1.js
+cat %DEST%/js/devel/* > %DEST%/js/tmp1.js
 java -jar %YUICOMPRESSOR% --charset utf-8 --type js %DEST%/js/tmp1.js > %DEST%/js/tmp2.js
 echo /** jQuery-USOS %VERSION% -- https://github.com/MUCI/jquery-usos */ > %DEST%/js/tmp3.js
 cat %DEST%/js/tmp2.js >> %DEST%/js/tmp3.js
 mv %DEST%/js/tmp3.js %BUILDTARGET%
 rm %DEST%/js/tmp*.js
 
-rem * Copy the "official" package back to USOSweb.
-
-cp %BUILDTARGET% %USOSWEB%/www/js
-
-rem * Merge all files into "bundled" packages (to be used in demo pages).
+rem * Create the "bundle" package.
 
 echo /** > %BUILDTARGET2%
 echo  * jQuery-USOS *BUNDLE VERSION* -- this file includes all jQuery-USOS >> %BUILDTARGET2%
@@ -59,4 +54,14 @@ echo. >> %BUILDTARGET2%
 cat %DEST%/js/jquery.tooltipster.2.1.min.js >> %BUILDTARGET2%
 echo. >> %BUILDTARGET2%
 cat %BUILDTARGET% >> %BUILDTARGET2%
+
+rem * Copy the "bundle" to jsfiddle directory. This is done so that there's no
+rem * need to update all resource URLs in demo pages (as the original URL
+rem * contains the version number).
+
 cp %BUILDTARGET2% %BUILDTARGET2COPY%
+
+rem * Copy both ("official" and "bundle") packages back to USOSweb.
+
+cp %BUILDTARGET% %USOSWEB%/www/js/jquery-usos
+cp %BUILDTARGET2% %USOSWEB%/www/js/jquery-usos

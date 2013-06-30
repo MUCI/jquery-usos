@@ -28,20 +28,22 @@ Installation
     included in jQuery-USOS repository too):
     * jQuery 1.9.1 (older versions MAY work, but I did not test them),
     * jQuery-UI 1.10.1 (same as above),
-    * [jQuery BBQ](http://benalman.com/code/projects/jquery-bbq/docs/files/jquery-ba-bbq-js.html) 1.2.1,
-    * [jQuery TextExt](http://textextjs.com/) 1.3.1 - **important**: this library needed some fixes and they
-      are integrated within the version which is commited inside jQuery-USOS repository (you should
-      use the one included here),
-    * [jQuery colResizable](http://quocity.com/colresizable/) 1.3.
-  * Copy `css/jquery.usos` directory to your `css` directory.
-  * Copy `js/jquery.usos.x.y.z.min.js` file to your `js` directory.
-    * For development, you can use unminified `js/jquery.usos.*.js` files (include them all).
-  * Include CSS and JS file (along with all the dependencies) in your HTML.
+    * [jQuery BBQ](http://benalman.com/code/projects/jquery-bbq/docs/files/jquery-ba-bbq-js.html) 1.2.1 (included in the bundle package),
+    * [jQuery TextExt](http://textextjs.com/) 1.3.1 (included in the bundle package)
+      * This library needed some fixes. The attached version differs from the official one!
+    * [jQuery colResizable](http://quocity.com/colresizable/) 1.3 (included in the bundle package).
+  * Copy `css/jquery-usos` directory to your `css` directory.
+  * Copy `js/jquery-usos-x.y.z.min.js` file to your `js` directory.
+    * You may also use `js/jquery-usos-x.y.z-bundle.min.js` if you want to
+      include all the dependencies in one file. This does NOT include jQuery nor jQuery-UI,
+      you need to load them separately.
+    * For development, you can use unminified `js/devel/*.js` files.
+  * Include CSS and JS files (along with all the dependencies) in your HTML.
   * Advanced usage:
     If your users are not anonymous, then you will probably need to set up your
     own USOS API proxy. The proxy should sign all the incoming USOS API requests
-	with your USOS API Consumer Key and your user's Access Token. Make sure
-	your proxy is guarded against CSRF attacks.
+    with your USOS API Consumer Key and your user's Access Token. Make sure
+    your proxy is guarded against CSRF attacks.
 
 
 Core

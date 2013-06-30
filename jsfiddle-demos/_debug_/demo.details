@@ -5,7 +5,8 @@ http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos
 Provided that you have a development USOSweb VM running at
 http://xusosweb.rygielski.net/.
 
-These resources WILL NOT be loaded from your local VM:
+These resources WILL NOT be loaded from your local VM (they will be loaded from
+jsfiddle-provided locations):
    - http://xusosweb.rygielski.net/js/jquery-1.9.1.js
    - http://xusosweb.rygielski.net/js/jquery-migrate-1.1.0.js
    - http://xusosweb.rygielski.net/js/jquery-ui-1.10.1.custom.js
@@ -18,16 +19,16 @@ These resources WILL NOT be loaded from your local VM:
  resources:
    - http://xusosweb.rygielski.net/css/tooltipster.css
    - http://xusosweb.rygielski.net/css/theme/jquery-ui-1.10.1.custom.css
-   - http://xusosweb.rygielski.net/css/jquery.usos/jquery.usos.css
-   - http://xusosweb.rygielski.net/js/jquery.tooltipster.2.1.min.js
-   - http://xusosweb.rygielski.net/js/jquery.textext.1.3.1.min.js
-   - http://xusosweb.rygielski.net/js/jquery.ba-bbq-1.2.1.min.js
-   - http://xusosweb.rygielski.net/js/jquery.colResizable-1.3.min.js
-   - http://xusosweb.rygielski.net/js/jquery.usos.apitable.js
-   - http://xusosweb.rygielski.net/js/jquery.usos.core.js
-   - http://xusosweb.rygielski.net/js/jquery.usos.forms.js
-   - http://xusosweb.rygielski.net/js/jquery.usos.overlays.js
-   - http://xusosweb.rygielski.net/js/jquery.usos.selector.js
-   - http://xusosweb.rygielski.net/js/jquery.usos.tip.js
+   - http://xusosweb.rygielski.net/css/jquery-usos/jquery.usos.css
+   - http://xusosweb.rygielski.net/js/jquery-usos/jquery.tooltipster.2.1.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/jquery.textext.1.3.1.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/jquery.ba-bbq-1.2.1.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/jquery.colResizable-1.3.min.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/apitable.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/core.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/forms.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/overlays.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/selector.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/tip.js
  normalize_css: no
  ...
