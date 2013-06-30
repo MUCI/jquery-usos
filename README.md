@@ -1,24 +1,24 @@
 jQuery-USOS - USOS plugin for jQuery
 ====================================
 
-**STATUS OF THIS PROJECT:** unreleased Alpha version - It is not yet used
-in any public USOS project. The API can change in backward-incompatible way.
-
 This is a set of jQuery plugins intended to help developers with their work
 with USOS API. Most of it is designed specificly to work with USOS-related
 projects. It you don't know what USOS is, you are probably in a wrong place!
+
+**This is an unreleased Alpha version!** It is used inside USOSweb, but is
+still in active pre-release development phase. API **will** change in
+a backward-incompatible way.
 
 
 Demos
 -----
 
   * Widgets:
-    * [Selector](http://jsfiddle.net/wrygiel/r7eF6/)
-    * [Multiselector](http://jsfiddle.net/wrygiel/gNwHa/)
-    * [Context message](http://jsfiddle.net/wrygiel/j2Eu3/)
+    * [Selector](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/selector)
+    * [Multiselector](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/multiselector)
+    * [Context message](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/contextMessage)
   * Core:
-    * [USOS API Fetch](http://jsfiddle.net/wrygiel/qwmu9/)
-    * [LangDict helpers](http://jsfiddle.net/wrygiel/Tgxep/)
+    * [USOS API Fetch](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/usosapiFetch)
 
 
 Installation
