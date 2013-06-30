@@ -11,8 +11,9 @@ set USOSWEB=D:/PRIV/Projekty/usosweb
 set DEST=D:/PRIV/Projekty/jquery-usos
 set YUICOMPRESSOR=%DEST%/yuicompressor-2.4.2.jar
 
-set BUILDTARGET=%DEST%/js/jquery.usos-%VERSION%.min.js
-set BUILDTARGET2=%DEST%/jsfiddle-demos/bundle.min.js
+set BUILDTARGET=%DEST%/js/jquery-usos-%VERSION%.min.js
+set BUILDTARGET2=%DEST%/js/jquery-usos-%VERSION%-bundle.min.js
+set BUILDTARGET2COPY=%DEST%/jsfiddle-demos/latest-bundle.min.js
 
 rem * Copy new JS files.
 
@@ -45,15 +46,9 @@ cp %BUILDTARGET% %USOSWEB%/www/js
 rem * Merge all files into "bundled" packages (to be used in demo pages).
 
 echo /** > %BUILDTARGET2%
-echo  * jQuery-USOS *JS BUNDLED VERSION* -- this file includes all jQuery-USOS JS dependencies! >> %BUILDTARGET2%
-echo  * Produced out of respect for the authors of http://rawgithub.com/ and used in demos ONLY. >> %BUILDTARGET2%
+echo  * jQuery-USOS *BUNDLE VERSION* -- this file includes all jQuery-USOS >> %BUILDTARGET2%
+echo  * JavaScript dependencies except jQuery and jQuery-UI. >> %BUILDTARGET2%
 echo  */ >> %BUILDTARGET2%
-echo. >> %BUILDTARGET2%
-cat %DEST%/js/jquery-1.9.1.min.js >> %BUILDTARGET2%
-echo. >> %BUILDTARGET2%
-cat %DEST%/js/jquery-migrate-1.1.0.min.js >> %BUILDTARGET2%
-echo. >> %BUILDTARGET2%
-cat %DEST%/js/jquery-ui-1.10.1.custom.min.js >> %BUILDTARGET2%
 echo. >> %BUILDTARGET2%
 cat %DEST%/js/jquery.ba-bbq-1.2.1.min.js >> %BUILDTARGET2%
 echo. >> %BUILDTARGET2%
@@ -64,3 +59,4 @@ echo. >> %BUILDTARGET2%
 cat %DEST%/js/jquery.tooltipster.2.1.min.js >> %BUILDTARGET2%
 echo. >> %BUILDTARGET2%
 cat %BUILDTARGET% >> %BUILDTARGET2%
+cp %BUILDTARGET2% %BUILDTARGET2COPY%
