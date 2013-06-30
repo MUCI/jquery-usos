@@ -498,7 +498,7 @@
 				.html($.usosCore.langSelect(settings.message))
 			)
 		);
-		$ul = $("<ul>");
+		var $ul = $("<ul>");
 		$msg.append($ul);
 		if (settings.adviseRefreshing !== false) {
 			$ul.append($("<li>")

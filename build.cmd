@@ -5,7 +5,7 @@ rem * This is a simple build script template. I use it to build a new
 rem * version from the sources kept in my copy of the USOSweb project.
 rem * Currently this works in my personal environent only.
 
-set VERSION=0.9.3
+set VERSION=0.9.4
 
 set USOSWEB=D:/PRIV/Projekty/usosweb
 set DEST=D:/PRIV/Projekty/jquery-usos
@@ -15,11 +15,14 @@ set BUILDTARGET=%DEST%/js/jquery-usos-%VERSION%.min.js
 set BUILDTARGET2=%DEST%/js/jquery-usos-%VERSION%-bundle.min.js
 set BUILDTARGET2COPY=%DEST%/jsfiddle-demos/latest-bundle.min.js
 
-rem * Copy new JS development files. Remove the old ones.
+rem * Copy new JS development files, remove the old ones. Remove old production
+rem * packages from the development USOSweb site. Copy the current libraries.
 
 rm %DEST%/js/jquery-usos*
 rm %DEST%/js/devel/*
 cp %USOSWEB%/www/js/jquery-usos/devel/* %DEST%/js/devel
+rm %USOSWEB%/www/js/jquery-usos-*
+cp %USOSWEB%/www/js/jquery-usos/* %DEST%/js
 
 rem * Copy new CSS and images.
 
