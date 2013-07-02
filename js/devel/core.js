@@ -39,8 +39,9 @@
 			 * USOS API upon click.
 			 */
 			entityURLs: {
-				user: "auto",
-				faculty: "auto"
+				"entity/users/user": null,
+				"entity/fac/faculty": null,
+				"entity/slips/template": null
 			}
 		};
 		mydata.settings = $.extend(true, {}, defaultSettings, options);
@@ -426,54 +427,6 @@
 		};
 	}();
 	
-	
-	var _autoUserClick = function() {
-		var user_id = $(this).attr('data-user-id');
-		$.usosCore.usosapiFetch({
-			method: "services/users/user",
-			params: {
-				user_id: user_id,
-				fields: "profile_url"
-			}
-		}).done(function(user) {
-			document.location = user.profile_url;
-		});
-	};
-	
-	/**
-	 * Get the URL of the user page. This will return URL *or* a function to be
-	 * executed upon click.
-	 */
-	var getUserLink = function(user) {
-		user = $.usosCore.filterFields(user, "id|first_name|last_name");
-		var $a = $("<a>")
-			.attr('class', 'ua-link')
-			.attr("data-user-id", user.id)
-			.text(user.first_name + " " + user.last_name);
-		var url = mydata.settings.entityURLs.user;
-		if (typeof url === "function") {
-			url = url(user.id);
-		}
-		if (url == "auto") {
-			url = _autoUserClick;
-		}
-		if (typeof url === "string") {
-			$a.attr("href", url.replace("{0}", user.id));
-		} else if (typeof url === "function") {
-			$a.click(url);
-		} else {
-			$.usosCore.console.error("entityURLs returned data in invalid format.");
-		}
-		return $a;
-	};
-	
-	var getUserLabel = function(user) {
-		// To be expanded in the future (will show more info on hover).
-		return $("<span>")
-			.attr("data-user-id", user.id)
-			.text(user.first_name + " " + user.last_name);
-	};
-	
 	/**
 	 * Display a "panic screen". This should be called when unrecoverable errors
 	 * are encountered. The user is advised to refresh the screen, contact the
@@ -589,26 +542,14 @@
 		return $result.children();
 	};
 	
-	var getSlipTemplateUrl = function(tpl_id) {
-		return mydata.settings.entityURLs.slip_template.replace("{0}", tpl_id);
-	};
-	
 	$[NS] = {
+		_getSettings: function() { return mydata.settings; },
 		init: init,
 		usosapiFetch: usosapiFetch,
 		getLangPref: getLangPref,
 		langSelect: langSelect,
 		console: fixedConsole,
 		filterFields: filterFields,
-		entities: {
-			user: {
-				link: getUserLink,
-				label: getUserLabel
-			},
-			slip_template: {
-				url: getSlipTemplateUrl
-			}
-		},
 		panic: panic,
 		makeParagraphs: makeParagraphs
 	};

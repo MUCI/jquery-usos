@@ -507,12 +507,15 @@
 						'text-overflow': 'ellipsis'
 					})
 					.click(function() {
+						var url = $.usosEntity.url('entity/slips/template', item.id);
+						if (!url) {
+							return;
+						}
 						var msg = $.usosCore.langSelect(
 							"Przejść do strony szablonu \"" + item.name + "\"?",
 							"Go to the \"" + item.name + "\" template page?"
 						);
 						if (confirm(msg)) {
-							var url = $.usosCore.entities.slip_template.url(item.id);
 							document.location = url;
 						}
 					});
