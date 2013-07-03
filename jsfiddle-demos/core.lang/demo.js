@@ -9,6 +9,7 @@ $(function() {
 	// $('#result').text($.usosCore.lang(null, null));
 	// $('#result').text($.usosCore.lang(null));
 	// $('#result').text($.usosCore.lang("Untranslated"));
+	// $('#result').text($.usosCore.lang());
 	
 	$('#result').html($.usosCore.lang({
 		langdict: {pl: "Po polsku", en: null},

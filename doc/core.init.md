@@ -4,6 +4,58 @@ $.usosCore.init(options)
 Before you start working with jQuery-USOS, you must initialize it by
 calling this method.
 
+Demos
+-----
+
+Since `$.usosCore.init` has to be called every time, it is used in every Demo
+page in the docs. You can see it for example here:
+
+  * [$.usosCore.usosapiFetch Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch)
+  * [$.usosSelector Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/selector)
+
+Examples
+--------
+
+### Example 1
+
+Simple connection (no OAuth, anonymous methods only):
+
+```javascript
+$.usosCore.init({
+    langpref: 'pl',
+    usosAPIs: {
+        'default': {
+            methodUrl: "http://apps.usos.edu.pl/%s"
+        }
+    }
+});
+```
+
+### Example 2
+
+Connection via a custom proxy:
+
+```javascript
+$.usosCore.init({
+    langpref: 'pl',
+    usosAPIs: {
+        'default': {
+            methodUrl: "http://example.com/usosapiProxy.php?method=%s"
+            extraParams: {
+                csrftoken: "someToken"
+            }
+        }
+    },
+    entityURLs: {
+        'entity/users/user': "http://example.com/user.php?user_id=${user_id}",
+        'entity/fac/faculty': function(fac_id) {
+            return "http://example.com/faculty.php?fac_id=" + fac_id;
+        },
+        'entity/slips/template': null
+    }
+});
+```
+  
 Options
 -------
 
@@ -52,54 +104,3 @@ future, jQuery-USOS will retrieve default profile URLs from USOS API
 dynamically.
 
   
-Examples
---------
-
-### Example 1
-
-Simple connection (no OAuth, anonymous methods only):
-
-```javascript
-$.usosCore.init({
-    langpref: 'pl',
-    usosAPIs: {
-        'default': {
-            methodUrl: "http://apps.usos.edu.pl/%s"
-        }
-    }
-});
-```
-
-### Example 2
-
-Connection via a custom proxy:
-
-```javascript
-$.usosCore.init({
-    langpref: 'pl',
-    usosAPIs: {
-        'default': {
-            methodUrl: "http://example.com/usosapiProxy.php?method=%s"
-            extraParams: {
-                csrftoken: "someToken"
-            }
-        }
-    },
-    entityURLs: {
-        'entity/users/user': "http://example.com/user.php?user_id=${user_id}",
-        'entity/fac/faculty': function(fac_id) {
-            return "http://example.com/faculty.php?fac_id=" + fac_id;
-        },
-        'entity/slips/template': null
-    }
-});
-```
-
-Demos
------
-
-Since `$.usosCore.init` has to be called every time, it is used in every Demo
-page in the docs. You can see it for example here:
-
-[$.usosCore.usosapiFetch Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch)
-[$.usosSelector Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/selector)

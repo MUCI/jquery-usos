@@ -11,6 +11,11 @@ in any way. However, if it used in combination of AJAX calls (like
 directly in the `.fail` callback**. In the future, the content of the panic
 screen may be determined from the AJAX error response.
 
+Demos
+-----
+
+[$.usosCore.panic Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.panic)
+
 Examples
 --------
 
@@ -39,8 +44,3 @@ $.usosCore.usosapiFetch(
     }
 });
 ```
-
-Demos
------
-
-[$.usosCore.panic Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.panic)

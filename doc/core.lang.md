@@ -4,6 +4,11 @@ $.usosCore.lang(...)
 This is used internally, but you can use it in your code too. Helps with
 common translation-related operations. Can be called in numerous ways.
 
+Demos
+-----
+
+  * [$.usosCore.lang Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.lang)
+
 `$.usosCore.lang()`
 -------------------
 

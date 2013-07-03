@@ -49,14 +49,14 @@ Installation
 $.usosCore
 ----------
 
-  * [$.usosCore.init](https://github.com/MUCI/jquery-usos/blob/master/doc/core.init.md)
-    - you need to call this before using any other functions.
-  * [$.usosCore.usosapiFetch](https://github.com/MUCI/jquery-usos/blob/master/doc/core.usosapiFetch.md)
-    - fetch/post data from/to USOS API.
-  * [$.usosCore.lang](https://github.com/MUCI/jquery-usos/blob/master/doc/core.lang.md)
-    - primary language-helper.
-  * [$.usosCore.panic](https://github.com/MUCI/jquery-usos/blob/master/doc/core.panic.md)
-    - display a "panic screen".
+  * [$.usosCore.init](https://github.com/MUCI/jquery-usos/blob/master/doc/core.init.md) -
+    you need to call this before using any other functions.
+  * [$.usosCore.usosapiFetch](https://github.com/MUCI/jquery-usos/blob/master/doc/core.usosapiFetch.md) -
+    fetch/post data from/to USOS API.
+  * [$.usosCore.lang](https://github.com/MUCI/jquery-usos/blob/master/doc/core.lang.md) -
+    primary language-helper.
+  * [$.usosCore.panic](https://github.com/MUCI/jquery-usos/blob/master/doc/core.panic.md) -
+    display a "panic screen".
 
 
 Selector widget

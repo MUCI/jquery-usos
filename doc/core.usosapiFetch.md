@@ -5,6 +5,75 @@ Perform an AJAX request to USOS API method. This works very similar to the
 regular `jQuery.ajax` function. There are lots of options, but usually you
 won't need them.
 
+Demos
+-----
+
+  * [$.usosCore.usosapiFetch Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch)
+
+Examples
+--------
+
+### Simple usage
+
+Note that `params` is optional.
+
+```javascript
+$.usosCore.usosapiFetch({
+    method: 'services/apiref/method_index'
+}).done(function(lst) {
+    alert(lst.length + " methods found.");
+}).fail($.usosCore.panic);
+```
+
+### Usage with a `syncObject`
+
+Example usecase: In case of AJAX searching you will often want to use
+`receiveIncrementalFast`, so that - if you'll receive a response for the
+"programmi" query *after* you have already received the response for
+"programming" - your handler won't get called.
+
+```javascript
+var syncObject = {};
+// ...
+$someInput.change(function() {
+    $.usosCore.usosapiFetch({
+        method: 'services/courses/search',
+        params: {
+            name: $someInput.val(),
+            fac_id: "10000000",
+            fac_deep: true
+        },
+        success: mySuccessHandler,
+        error: myErrorHandler,
+        syncMode: "receiveIncrementalFast",
+        syncObject: syncObject,
+    });
+});
+```
+
+### Deferred chaining
+
+As in `jQuery.ajax`, you can chain the calls, etc.
+
+```javascript
+// This will issue three simultaneous requests
+var prerequisite1 = $.usosCore.usosapiFetch({ /* ... */ });
+var prerequisite2 = $.usosCore.usosapiFetch({ /* ... */ });
+var prerequisite3 = $.usosCore.usosapiFetch({ /* ... */ });
+$.when(prerequisite1, prerequisite2, prerequisite3)
+    .then(function(result1, result2, result3) {
+        return result1 + result2 + result3;
+    })
+    .then(function(sum) {
+        // This will be issued after all prerequsites are fetched and processed.
+        return $.usosCore.usosapiFetch(/* ... */);
+    })
+    .then(function() {
+        alert("Done!");
+    })
+    .fail($.usosCore.panic);
+```
+
 Options
 -------
 
@@ -80,71 +149,3 @@ If `syncMode` was left at `noSync`, it will return jQuery Promise object
 (as the regular `jQuery.ajax` would do). For other modes, nothing
 will be returned.
 
-Examples
---------
-
-### Simple usage
-
-Note that `params` is optional.
-
-```javascript
-$.usosCore.usosapiFetch({
-    method: 'services/apiref/method_index'
-}).done(function(lst) {
-    alert(lst.length + " methods found.");
-}).fail($.usosCore.panic);
-```
-
-### Usage with a `syncObject`
-
-Example usecase: In case of AJAX searching you will often want to use
-`receiveIncrementalFast`, so that - if you'll receive a response for the
-"programmi" query *after* you have already received the response for
-"programming" - your handler won't get called.
-
-```javascript
-var syncObject = {};
-// ...
-$someInput.change(function() {
-    $.usosCore.usosapiFetch({
-        method: 'services/courses/search',
-        params: {
-            name: $someInput.val(),
-            fac_id: "10000000",
-            fac_deep: true
-        },
-        success: mySuccessHandler,
-        error: myErrorHandler,
-        syncMode: "receiveIncrementalFast",
-        syncObject: syncObject,
-    });
-});
-```
-
-### Deferred chaining
-
-As in `jQuery.ajax`, you can chain the calls, etc.
-
-```javascript
-// This will issue three simultaneous requests
-var prerequisite1 = $.usosCore.usosapiFetch({ /* ... */ });
-var prerequisite2 = $.usosCore.usosapiFetch({ /* ... */ });
-var prerequisite3 = $.usosCore.usosapiFetch({ /* ... */ });
-$.when(prerequisite1, prerequisite2, prerequisite3)
-    .then(function(result1, result2, result3) {
-        return result1 + result2 + result3;
-    })
-    .then(function(sum) {
-        // This will be issued after all prerequsites are fetched and processed.
-        return $.usosCore.usosapiFetch(/* ... */);
-    })
-    .then(function() {
-        alert("Done!");
-    })
-    .fail($.usosCore.panic);
-```
-
-Demos
------
-
-[$.usosCore.usosapiFetch Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch)
