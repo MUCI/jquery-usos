@@ -1,43 +1,44 @@
-$.usosCore.lang
-===============
+$.usosCore.lang(...)
+====================
 
-There are a couple of ways to call `$.usosCore.lang`.
+This is used internally, but you can use it in your code too. Helps with
+common translation-related operations. Can be called in numerous ways.
 
-$.usosCore.lang()
------------------
+`$.usosCore.lang()`
+-------------------
 
 This will return the currently used language code (the one which was set during
-`$.usosCore.init`).
+[$.usosCore.init](core.init.md)).
 
-$.usosCore.lang(langdict)
--------------------------
+`$.usosCore.lang(langdict)`
+---------------------------
 
 Extract the proper translation from the given LangDict object (format commonly
 used in USOS API). Works the same as if you called
 `$.usosCore.lang({langdict: {pl: "Po polsku", en: "In English"}})`
 
-$.usosCore.lang("Po polsku", "In English")
-------------------------------------------
+`$.usosCore.lang("Po polsku", "In English")`
+--------------------------------------------
 
 Another shorthand for `$.usosCore.lang({langdict: {pl: "Po polsku", en: "In English"}})`.
 
-$.usosCore.lang(string)
------------------------
+`$.usosCore.lang(string)`
+-------------------------
 
 Safety measure. It will simply return the given string.
 
-$.usosCore.lang(options)
-------------------------
+`$.usosCore.lang(options)`
+--------------------------
 
 The valid options are:
 
 ### langdict
 
-Required. The LangDict object with translated strings.
+**Required.** The LangDict object with translated strings.
 
 ### format
 
-Optional. The format of the returned value. One of the following:
+*Optional.* The format of the returned value. One of the following:
 
   * `plaintext` (default) - return a plaintext string. If the current
     language could not be found in the given `langdict`, the string will contain
@@ -48,5 +49,5 @@ Optional. The format of the returned value. One of the following:
 
 ### langpref
 
-Optional. You can use it to override the language set during `$.usosCore.init`.
-Default value is `inherit`.
+*Optional.* You can use it to override the language set during
+[$.usosCore.init](core.init.md). Default value is `inherit`.

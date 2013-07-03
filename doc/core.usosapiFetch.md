@@ -10,29 +10,27 @@ Options
 
 ### method
 
-Required. The name of the method (starts with `services/`).
+**Required.** The name of the method (starts with `services/`).
 
 ### sourceId
 
-Optional. Use it if you want to use non-default USOS API installation (see
-the usosAPIs option in [$.usosCore.init](core.init.md)).
+*Optional.* Use it if you want to use non-default USOS API installation (see
+the `usosAPIs` option in [$.usosCore.init](core.init.md)).
 
 ### params
 
-Dictionary of all the method parameter values. The values **don't** have to be
-strings. All complex structures will be converted internally to a proper
-format recognized by USOS API.
+*Optional.* Dictionary of all the method parameter values. The values do *not*
+have to be strings. All complex structures will be converted internally to a
+proper format recognized by USOS API.
 
 ### success / error
 
-These work the same as in `jQuery.ajax` call.
+*Optional.* These work the same as in `jQuery.ajax` call.
 
 ### syncMode
 
-This is an extra addition. You don't have it in `jQuery.ajax` call. Useful when
-you're issuing lots of subsequent queries.
-
-One of the following values:
+*Optional.* Useful when you're issuing lots of subsequent queries. One of the
+following values:
 
   * `noSync` (default)
   * `receiveIncrementalFast`,
@@ -47,8 +45,11 @@ If you call `usosapiFetch` five times in a row (in the `ABCDE` order), then:
     handler is called only if the response if "newer" than previously handled
     response. If responses are received in the `BDAEC` order, then your handler
     will be called three times only: `BDE`
-  * `receiveLast`: This will wait for the response of the request which was issued
-    last. Your handler will be called only once, when the response `E` is received.
+  * `receiveLast`: Five requests are issued (`ABCDE`), but only the last one
+    is remembered. Your handler will be called only once, when the response `E`
+	is received.
+
+More *syncTypes* may be added in the future.
 
 <!--
 
@@ -66,7 +67,8 @@ TODO: Other options to be (possibly) implemented in the future:
 
 ### syncObject
 
-If you use any `syncMode` other than `noSync`, then this is required.
+*Optional.* If you use any `syncMode` other than `noSync`, then it is **required**.
+
 You should initialize an **empty object** somewhere in your namespace and
 provide *the same* object for all calls you want synchronized. Internal format
 of this object is left undocumented and may change in the future.
@@ -75,7 +77,7 @@ Returned value
 --------------
 
 If `syncMode` was left at `noSync`, it will return jQuery Promise object
-(as the regular `jQuery.ajax` would do). For other `syncMode`s, nothing
+(as the regular `jQuery.ajax` would do). For other modes, nothing
 will be returned.
 
 Examples
@@ -93,11 +95,12 @@ $.usosCore.usosapiFetch({
 }).fail($.usosCore.panic);
 ```
 
-### Usage with a `syncObject`.
+### Usage with a `syncObject`
 
-In case of AJAX searching you will often want to use `receiveIncrementalFast`,
-so that - if you'll receive a response for the "programmi" *after* you have
-already received the response for "programming" - your handler won't get called.
+Example usecase: In case of AJAX searching you will often want to use
+`receiveIncrementalFast`, so that - if you'll receive a response for the
+"programmi" query *after* you have already received the response for
+"programming" - your handler won't get called.
 
 ```javascript
 var syncObject = {};
@@ -140,3 +143,8 @@ $.when(prerequisite1, prerequisite2, prerequisite3)
     })
     .fail($.usosCore.panic);
 ```
+
+Demos
+-----
+
+[$.usosCore.usosapiFetch Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch)

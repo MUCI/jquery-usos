@@ -41,11 +41,11 @@
 				scrollToBeVisible: true
 			}, options);
 			if (mydata.settings.type !== 'error') {
-				$.usosCore.console.error("Message type must equal 'error'.");
+				$.usosCore._console.error("Message type must equal 'error'.");
 				return;
 			}
 			if (mydata.settings.message === null) {
-				$.usosCore.console.error("Message parameter is missing.");
+				$.usosCore._console.error("Message parameter is missing.");
 				return;
 			}
 			$this.data(NS1, mydata);

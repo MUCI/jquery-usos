@@ -52,13 +52,13 @@
 		var entityCode = args[0];
 		switch (entityCode) {
 			case 'entity/users/user':
-				e = $.usosCore.filterFields(args[1], "id|first_name|last_name");
+				e = $.usosUtils.requireFields(args[1], "id|first_name|last_name");
 				$a.text(e.first_name + " " + e.last_name);
 				url = _getEntityURL(entityCode, e.id);
 				break;
 			case 'entity/fac/faculty':
 			case 'entity/slips/template':
-				var e = $.usosCore.filterFields(args[1], "id|name");
+				e = $.usosUtils.requireFields(args[1], "id|name");
 				$a.text(e.name);
 				url = _getEntityURL(entityCode, e.id);
 				break;

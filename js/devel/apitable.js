@@ -376,7 +376,7 @@
 				throw "Unknown serializer version";
 			}
 		} catch(err) {
-			$.usosCore.console.error("Could not deserialize apiTable state:", err);
+			$.usosCore._console.error("Could not deserialize apiTable state:", err);
 			return {offset: 0, orderRules: []};
 		}
 	};
@@ -565,7 +565,7 @@
 			$.each(mydata.settings.actions, function(_, action) {
 				if (action.isDefault) {
 					if (mydata.defaultAction) {
-						$.usosCore.console.error("More than one default action defined.");
+						$.usosCore._console.error("More than one default action defined.");
 						return false;  // breaks the loop
 					}
 					mydata.defaultAction = action;
@@ -620,7 +620,7 @@
 		return this.each(function() {
 			var $this = $(this);
 			var mydata = $this.data(NS);
-			$.usosCore.console.log("Reloading with order " + _orderRulesToString(mydata.currentOrder) + "...");
+			$.usosCore._console.log("Reloading with order " + _orderRulesToString(mydata.currentOrder) + "...");
 			_refreshSorterImages(mydata);
 			_overlayContentWith(mydata, $("<span>").addClass("ua-loading"));
 			_updateSummary(mydata, $("<span>")

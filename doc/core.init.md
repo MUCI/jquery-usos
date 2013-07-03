@@ -2,26 +2,26 @@ $.usosCore.init(options)
 ========================
 
 Before you start working with jQuery-USOS, you must initialize it by
-calling this method. Possible parameters are:
+calling this method.
 
 Options
 -------
 
 ### langpref
 
-Optional. Language of the interface - "pl" or "en" (default: "en").
+*Optional.* Language of the interface - `pl` or `en` (default: `en`).
 
 ### usosAPIs
 
-Optional. Object (*handle => description*) describing USOS API servers which
-you'll use within your app. Usually you will need to define only the "default"
-handle. Each "description" is an object of the following structure:
+*Optional.* Object *(handle => description)* describing USOS API servers which
+you'll use within your app. Usually you will need to define only the `default`
+handle. Each *description* is an object of the following structure:
 
-    * **methodUrl** - Required. Where to send the USOS API request? "%s" will be
-      replaced with the method name.
+  * **methodUrl** - Required. Where to send the USOS API request? `%s` will be
+    replaced with the method name.
 
-    * **extraParams** - Optional. Extra parameters to be appended to all issued
-      requests. This is useful for passing CSRF tokens when you're using a proxy.
+  * **extraParams** - Optional. Extra parameters to be appended to all issued
+    requests. This is useful for passing CSRF tokens when you're using a proxy.
     
 Currently, all requests are sent using POST and without OAuth. You will
 probably need to set up your own USOS API proxy. The proxy should sign all the
@@ -30,32 +30,34 @@ your user's Access Token. Make sure your proxy is guarded against CSRF attacks.
 
 ### entityURLs
 
-Optional. Object (*entity code => string*) used for overriding entity URLs
-produced by jQuery-USOS.
-
-By default, jQuery-USOS will fetch default entity profile URLs from USOS API.
-These URLs are sometimes not what you want, because the user will leave your
-site upon clicking them. You can override these URLs with the ones of used
-within your application.
+*Optional.* Object *(entity code => string)* used for overriding entity URLs
+produced by jQuery-USOS. Here you should define the URLs which describe the
+given entities inside your application.
 
 Currently recognised entity codes:
 
-    * **entity/users/user**(user_id)
-    * **entity/fac/faculty**(fac_id)
-    * **entity/slips/template**(tpl_id)
+  * `entity/users/user`(user_id)
+  * `entity/fac/faculty`(fac_id)
+  * `entity/slips/template`(tpl_id)
 
 Possible values:
 
-    * An URL with placeholders. Entity IDs will be inserted in place of the
-      matching placeholders. E.g. "http://example.com/user.php?user_id=${user_id}"
-    * A function which takes the IDs and returns the URL to be used.
-    * null - indicates that entity links should not be shown at all.
+  * An URL with placeholders. Entity IDs will be inserted in place of the
+    matching placeholders. E.g. `http://example.com/user.php?user_id=${user_id}`
+  * A function which takes the IDs and returns the URL to be used.
+  * **null** - indicates that entity links should not be shown at all.
 
+Note: Currently *null* is the default, but it will not stay this way. In the
+future, jQuery-USOS will retrieve default profile URLs from USOS API
+dynamically.
+
+  
 Examples
 --------
 
-Simple connection to a public USOS API server (with no OAuth, you will be
-allowed to call anonymous methods only):
+### Example 1
+
+Simple connection (no OAuth, anonymous methods only):
 
 ```javascript
 $.usosCore.init({
@@ -68,6 +70,8 @@ $.usosCore.init({
 });
 ```
 
+### Example 2
+
 Connection via a custom proxy:
 
 ```javascript
@@ -77,7 +81,7 @@ $.usosCore.init({
         'default': {
             methodUrl: "http://example.com/usosapiProxy.php?method=%s"
             extraParams: {
-                csrftoken: "some token"
+                csrftoken: "someToken"
             }
         }
     },
@@ -86,9 +90,16 @@ $.usosCore.init({
         'entity/fac/faculty': function(fac_id) {
             return "http://example.com/faculty.php?fac_id=" + fac_id;
         },
-        'entity/slips/template': function(tpl_id) {
-            return function() { alert("Custom click action"); };
-        }
+        'entity/slips/template': null
     }
 });
 ```
+
+Demos
+-----
+
+Since `$.usosCore.init` has to be called every time, it is used in every Demo
+page in the docs. You can see it for example here:
+
+[$.usosCore.usosapiFetch Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch)
+[$.usosSelector Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/selector)

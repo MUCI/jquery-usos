@@ -13,7 +13,7 @@
 		/* Check if previously initialized. */
 		
 		if (mydata.settings !== null) {
-			$.usosCore.console.error("jQuery.usosCore is already initialized! Subsequent calls to init will be ingored!");
+			$.usosCore._console.error("jQuery.usosCore is already initialized! Subsequent calls to init will be ingored!");
 			return;
 		}
 		
@@ -163,8 +163,15 @@
 	
 	var lang = function() {
 		if (arguments.length == 1) {
-			if (typeof arguments[0].langdict !== 'undefined') {
-				/* The default syntax, nothing to "fix". */
+			if (arguments[0] === null) {
+				/* lang(null) */
+				return lang({
+					langdict: {pl: null, en: null}
+				});
+			} else if (typeof arguments[0].langdict !== 'undefined') {
+				
+				/* Fall out of the if block! */
+				
 			} else if (
 				(typeof arguments[0].pl !== 'undefined')
 				|| (typeof arguments[0].en !== 'undefined')
@@ -172,11 +179,6 @@
 				/* lang(langdict) */
 				return lang({
 					langdict: arguments[0]
-				});
-			} else if (arguments[0] === null) {
-				/* lang(null) */
-				return lang({
-					langdict: {pl: null, en: null}
 				});
 			} else if (arguments[0] == 'pl') {
 				/* lang('pl') -> true, is current language is 'pl' */
@@ -186,7 +188,7 @@
 				return mydata.settings.langpref == 'en';
 			} else {
 				/* lang('Other string') -> warning + 'Other string' */
-				$.usosCore.console.warn("$.usosCore.lang called with a single plaintext string!");
+				$.usosCore._console.warn("$.usosCore.lang called with a single plaintext string!");
 				return arguments[0];
 			}
 		} else if (arguments.length == 2) {
@@ -271,140 +273,55 @@
 		}
 	};
 	
-	var _freezeOne = function(arg) {
-		if (typeof arg === 'object') {
-			return $.extend(true, {}, arg);
-		} else {
-			return arg;
-		}
-	};
-	var _freezeAll = function(args) {
-		var frozen = [];
-		for (var i=0; i<args.length; i++) {
-			frozen.push(_freezeOne(args[i]));
-		}
-		return frozen;
-	};
-	
-	/** Wrapper for 'console' object. Deals with http://stackoverflow.com/questions/4057440/ */
-	var fixedConsole = {};
-	$.each(["log", "warn", "error", "assert"], function(_, funcName) {
-		fixedConsole[funcName] = function() {
-			if (window.console && window.console[funcName]) {
-				/* We want to call the underlying console with frozen arguments (some
-				 * consoles are evaluated lazily), hence the need for ".apply". However,
-				 * we cannot use window.console.apply directly in IE8, hence the ".call". */
-				Function.prototype.apply.call(
-					window.console[funcName],
-					window.console,
-					_freezeAll(arguments)
-				);
+	var fixedConsole = function() {
+		
+		var _freezeOne = function(arg) {
+			if (typeof arg === 'object') {
+				return $.extend(true, {}, arg);
+			} else {
+				return arg;
 			}
 		};
-	});
-	
-	/**
-	 * Filter the fields inside the object based on the given fields description
-	 * (in the same format as in the USOS API "fields" parameter). Log an error
-	 * if required field is not found (used for deep-checking required
-	 * parameters).
-	 * 
-	 * Example:
-	 * filterFields({a: {b: 3, c: 2}, b: 1, c: 1}, "a[c]|c") -> {a: {c: 2}, c: 1}.
-	 */
-	var filterFields = function() {
-		
-		/**
-		 * Check if given path is defined within an object and return the value
-		 * stored at this path. E.g. within:
-		 *   {a: {b: 3, c: 2}}
-		 * four paths are defined:
-		 *   [], ["a"], ["a", "b"], ["a", "c"].
-		 */
-		var _getPath = function(obj, path) {
-			var ref = obj;
-			$.each(path, function(_, e) {
-				ref = ref[e];
-				if (typeof ref === "undefined")
-					return ref;
-			});
-			return ref;
-		};
-		
-		/**
-		 * Store the value at the given path within the obj.
-		 */
-		var _setPath = function(obj, path, value) {
-			var ref = obj;
-			var last = path.length - 1;
-			$.each(path, function(i, e) {
-				if (i == last) {
-					ref[e] = value;
-				} else {
-					if (typeof ref[e] === "undefined") {
-						ref[e] = {};
-					}
-					ref = ref[e];
-				}
-			});
-		};
-		
-		return function(obj, fieldsDesc) {
-			var newObj = {};
-			var dfsPath = [];
-			var field = "";
-			var s = fieldsDesc + "$";
-			for (var i=0; i<s.length; i++) {
-				var c = s.charAt(i);
-				if (c == "[" || c == "]" || c == "|" || c == "$") {
-					dfsPath.push(field);
-					var x = null;
-					if (field !== "") {
-						x = _getPath(obj, dfsPath);
-						if (typeof x === "undefined") {
-							$.usosCore.console.error("Required field " + dfsPath.join(".") + " not found.");
-						}
-					}
-					if (c == "[") {
-						// nothing!
-					} else if (c == "|" || c == "$") {
-						if (field !== "") {
-							_setPath(newObj, dfsPath, x);
-						}
-						dfsPath.pop();
-					} else if (c == "]") {
-						if (field !== "") {
-							_setPath(newObj, dfsPath, x);
-						}
-						dfsPath.pop();
-						dfsPath.pop();
-					}
-					field = "";
-				} else {
-					field += c;
-				}
+		var _freezeAll = function(args) {
+			var frozen = [];
+			for (var i=0; i<args.length; i++) {
+				frozen.push(_freezeOne(args[i]));
 			}
-			return newObj;
+			return frozen;
 		};
+		var fixedConsole = {};
+		$.each(["log", "warn", "error", "assert"], function(_, funcName) {
+			/** Deals with http://stackoverflow.com/questions/4057440/ */
+			fixedConsole[funcName] = function() {
+				if (window.console && window.console[funcName]) {
+					/* We want to call the underlying console with frozen arguments (some
+					 * consoles are evaluated lazily), hence the need for ".apply". However,
+					 * we cannot use window.console.apply directly in IE8, hence the ".call". */
+					Function.prototype.apply.call(
+						window.console[funcName],
+						window.console,
+						_freezeAll(arguments)
+					);
+				}
+			};
+		});
+		return fixedConsole;
 	}();
 	
-	/**
-	 * Display a "panic screen". This should be called when unrecoverable errors
-	 * are encountered. The user is advised to refresh the screen, contact the
-	 * administrators etc.
-	 */
-	var panic = function(options) {
+	var panic = function() {
 		
-		var settings = $.extend({}, {
+		/* Currently, all the settings are hardcoded. */
+		
+		var settings = {
 			message: {
 				pl: "Wystąpił niespodziewany błąd.",
 				en: "Unexpected error occured."
 			},
 			adviseRefreshing: null, // true, false or null (null = "auto")
 			adviseRepeating: null,
-			adviceCheckingPermissions: null,
+			adviseCheckingPermissions: null,
 			adviseContactingAdmins: null
-		}, options);
+		};
 		
 		var $msg = $("<div class='ua-paragraphs ua-container'>");
 		$msg.append($("<p style='font-size: 120%; margin-bottom: 25px'>")
@@ -443,7 +360,7 @@
 				"a one-time network error caused by bad Internet connection?"
 			)));
 		}
-		if (settings.adviceCheckingPermissions !== false) {
+		if (settings.adviseCheckingPermissions !== false) {
 			$ul.append($("<li>").html($.usosCore.lang(
 				"Upewnij się, czy posiadasz odpowiednie uprawnienia. Czy jesteś zalogowany? " +
 				"Być może musisz uzyskać pewne dodatkowe uprawnienia, aby móc wyświetlić stronę " +
@@ -485,33 +402,26 @@
 			});
 		};
 		
-		/* The timeout is tempoarary. Currently, panic is often fired when AJAX
-		 * requrests are being cancelled because the user is nevigating away. We
-		 * don't want the user to see a panic screen in such case, so we'll wait
-		 * for the navigation to complete. This can be fixed by catching the
-		 * AJAX error and interpretting it appropriately. */
+		/* Currently, panic is often fired when AJAX requrests are being
+		 * cancelled because the user is nevigating away. We don't want the
+		 * user to see a panic screen in such case, so we'll wait for the
+		 * navigation to complete.
+		 * 
+		 * This can be done better, by catching the AJAX error (via the
+		 * arguments) and interpretting it appropriately.
+		 */
 		
 		setTimeout(showIt, 2000);
 	};
 	
-	var makeParagraphs = function(s) {
-		var pars = s.split(/[\r\n]{2,}/);
-		var $result = $("<div>");
-		$.each(pars, function(_, par) {
-			$result.append($("<p>").text(par));
-		});
-		return $result.children();
-	};
-	
 	$[NS] = {
 		_getSettings: function() { return mydata.settings; },
+		_console: fixedConsole,
+		
 		init: init,
 		usosapiFetch: usosapiFetch,
 		lang: lang,
-		console: fixedConsole,
-		filterFields: filterFields,
-		panic: panic,
-		makeParagraphs: makeParagraphs
+		panic: panic
 	};
 	
 })(jQuery);

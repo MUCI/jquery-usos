@@ -1,0 +1,13 @@
+
+---
+ name: jQuery-USOS $.usosCore.lang
+ description: jQuery-USOS $.usosCore.lang Demo
+ authors:
+   - Wojciech Rygielski
+ resources:
+   - http://rawgithub.com/MUCI/jquery-usos/master/jsfiddle-demos/latest-bundle.min.js
+   - http://rawgithub.com/MUCI/jquery-usos/master/css/tooltipster.css
+   - http://rawgithub.com/MUCI/jquery-usos/master/css/jquery-usos/jquery-usos.css
+   - http://rawgithub.com/MUCI/jquery-usos/master/css/jquery-ui-theme/jquery-ui-1.10.1.custom.css
+ normalize_css: no
+ ...

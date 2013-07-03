@@ -1,5 +1,5 @@
-jQuery-USOS - USOS plugin for jQuery
-====================================
+jQuery-USOS plugin
+==================
 
 This is a set of jQuery plugins intended to help developers with their work
 with USOS API. Most of it is designed specificly to work with USOS-related
@@ -15,10 +15,10 @@ Demos
 
   * Widgets:
     * [Selector](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/selector)
-    * [Multiselector](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/multiselector)
+    * [Multiselector](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/selector.multi)
     * [Context message](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/contextMessage)
   * Core:
-    * [USOS API Fetch](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/usosapiFetch)
+    * [USOS API Fetch](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch)
 
 
 Installation
@@ -46,136 +46,17 @@ Installation
     your proxy is guarded against CSRF attacks.
 
 
-Core
-----
+$.usosCore
+----------
 
-### $.usosCore.init(options)
-
-Before you start working with widgets, you **must** initialize the core by
-calling this method. Possible parameters are:
-
-```javascript
-$.usosCore.init({
-
-	/** Optional. Language of the interface - "pl" or "en" (default: "en"). */
-	langpref: 'en',
-	
-	/**
-	 * Optional. Dictionary of USOS API servers which you want to use. Usually
-	 * you will need to define only the "default" key.
-	 */
-	usosAPIs: {
-		'default': {
-		
-			/**
-			 * Required. Where to send the USOS API request? "%s" will be
-			 * replaced with the method name.
-			 */
-			methodUrl: "http://apps.usos.edu.pl/%s"
-			
-			/**
-			 * Optional. Extra parameters to be appended to all issued
-			 * requests. This is useful for passing CSRF tokens when you're
-			 * using a proxy.
-			 */
-			extraParams: {}
-		}
-	}
-});
-```
-
-### $.usosCore.usosapiFetch(options)
-
-Perform an AJAX request to USOS API method.
-
-```javascript
-$.usosCore.usosapiFetch({
-
-	/** Required. The name of the method (starts with "services/"). */
-	method: null,
-
-	/** Optional. Use it if you want to use non-default USOS API installation. */
-	sourceId: "default",
-	
-	/** Optional. Parameters of the method. */
-	params: {},
-	
-	/** Optional. Same as in jQuery's .ajax function. */
-	success: null,
-	
-	/** Optional. Same as in jQuery's .ajax function. */
-	error: null,
-
-	/**
-	 * Optional. Useful when you're issuing lots of subsequent queries.
-	 *
-	 * One of the following values:
-	 * - "noSync" (default)
-	 * - "receiveIncrementalFast",
-	 * - "receiveLast".
-	 *
-	 * By default ("noSync"), if you:
-	 * [1] call usosapiFetch five times (in the =ABCDE= order), then:
-	 * [2] five requests will be issued (=ABCDE=),
-	 * [3] your success/error handler will be called five times, in order
-	 * in which the responses are received (for example, =ADBEC=).
-	 *
-	 * If you use syncMode "receiveIncrementalFast", then for the above example
-	 * your handler will be called three times only: [2] =ABCDE= [3] =ADE=.
-	 *
-	 * If you use syncMode "receiveLast", your handler will be called just
-	 * once: [2] =ABCDE= [3] =E=.
-	 *
-	 * TODO: Other options to be (possibly) implemented in the future:
-	 * - "receiveIncremental": [2] =ABCDE= [3] =ABCDE=
-	 * - "sendIncremental": Same as above, but B is issued after the response
-	 *   to A is received and handled (may take much more time!):
-	 *   [2] =ABCDE= [3] =ABCDE=
-	 * - "sendLast": B-D are not issued at all. E is issued after the response
-	 *   to A is received and handled: [2] =AE= [3] =AE=
-	 * - "sendAndReceiveLast": This behaves like "receiveLast" and "sendLast"
-	 *   together: [2] =AE= [3] =E=.
-	 */
-	syncMode: "noSync",
-	
-	/**
-	 * If you use any syncMode other than "noSync", then this is required.
-	 * You should provide an empty object here. You must use *the same* object
-	 * for all calls in your synchronized "torrent". Internal format of a
-	 * syncObject is left undocumented and may change in the future.
-	 */
-	syncObject: null,
-});
-```
-
-### $.usosCore.getLangPref()
-
-Returns the current language (the one provided during `$.usosCore.init`).
-
-### $.usosCore.langSelect(...)
-
-Choose an appropriate text based on the current UI language. It might be called
-in multiple ways:
-
-  * `$.usosCore.langSelect("Po polsku", "In English")`,
-  * `$.usosCore.langSelect(langdict)`, where `langdict` is USOS API's LangDict
-    object.
-  * `$.usosCore.langSelect(langdict, format)`, where `format` is one of the
-    following:
-    * `"text"`, when you want the result to be a simple string,
-    * `"$span"`, when you want the result to be a jQuery HTML node. In this
-      case, the result may contain additional notes such as `"(in Polish)"` or
-      `"(brak danych)"`.
-  * `$.usosCore.langSelect(options)` - you may use this if you need to provide
-    even more options. Currently, the options are:
-    * `langdict` - as described above, USOS API's LangDict object,
-    * `format` - as described above, `"text"` or `"$span"`,
-    * `langpref` - `pl`, `en` or `inherit`. Use this if you want to override
-      the language provided during `$.usosCore.init`.
-
-### $.usosCore.console object
-
-Internal and undocumented. You should not use it.
+  * [$.usosCore.init](https://github.com/MUCI/jquery-usos/blob/master/doc/core.init.md)
+    - you need to call this before using any other functions.
+  * [$.usosCore.usosapiFetch](https://github.com/MUCI/jquery-usos/blob/master/doc/core.usosapiFetch.md)
+    - fetch/post data from/to USOS API.
+  * [$.usosCore.lang](https://github.com/MUCI/jquery-usos/blob/master/doc/core.lang.md)
+    - primary language-helper.
+  * [$.usosCore.panic](https://github.com/MUCI/jquery-usos/blob/master/doc/core.panic.md)
+    - display a "panic screen".
 
 
 Selector widget

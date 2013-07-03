@@ -69,7 +69,7 @@
 		},
 		showErrors: function(resp) {
 			if ($(this).attr('data-fname')) {
-				// $.usosCore.console.warn("Named widgets SHOULD implement showErrors!");
+				// $.usosCore._console.warn("Named widgets SHOULD implement showErrors!");
 				return _showErr(resp, $(this).attr('data-fname'), $(this));
 			} else {
 				throw "Calling showErrors on an unnamed widget!";
@@ -112,7 +112,7 @@
 		textbox: function() {
 			var getValue = function() {
 				var $input = $(this).find('input, textarea');
-				// $.usosCore.console.assert($input.length == 1);
+				// $.usosCore._console.assert($input.length == 1);
 				return $input.val();
 			};
 			var setValue = function(value) {
@@ -197,22 +197,22 @@
 			var getValue = function() {
 				var $textboxPL = $(this).find('.ua-lang-PL').closest(".ua-widget");
 				var $textboxEN = $(this).find('.ua-lang-EN').closest(".ua-widget");
-				// $.usosCore.console.assert($textboxPL.length == 1);
-				// $.usosCore.console.assert($textboxEN.length == 1);
+				// $.usosCore._console.assert($textboxPL.length == 1);
+				// $.usosCore._console.assert($textboxEN.length == 1);
 				return {
 					pl: $textboxPL.usosForms('value'),
 					en: $textboxEN.usosForms('value')
 				};
 			};
 			var setValue = function(value) {
-				// $.usosCore.console.assert(value && typeof value.pl !== 'undefined', "langdictbox.setValue called with non-langdict");
-				// $.usosCore.console.assert($(this).find('.ua-lang-PL').closest(".ua-widget").attr('data-fname') === undefined);
+				// $.usosCore._console.assert(value && typeof value.pl !== 'undefined', "langdictbox.setValue called with non-langdict");
+				// $.usosCore._console.assert($(this).find('.ua-lang-PL').closest(".ua-widget").attr('data-fname') === undefined);
 				$(this).find('.ua-lang-PL').closest(".ua-widget").usosForms('value', value.pl);
 				$(this).find('.ua-lang-EN').closest(".ua-widget").usosForms('value', value.en);
 			};
 			var getFlatValues = function() {
 				var value = $(this).usosForms('value');
-				// $.usosCore.console.assert(value.pl !== undefined);
+				// $.usosCore._console.assert(value.pl !== undefined);
 				var values = {};
 				var name = $(this).attr('data-fname');
 				values[name + "_pl"] = value.pl;
@@ -222,8 +222,8 @@
 			var showErrors = function(resp) {
 				var $textboxPL = $(this).find('.ua-lang-PL').closest(".ua-widget");
 				var $textboxEN = $(this).find('.ua-lang-EN').closest(".ua-widget");
-				// $.usosCore.console.assert($textboxPL.length == 1);
-				// $.usosCore.console.assert($textboxEN.length == 1);
+				// $.usosCore._console.assert($textboxPL.length == 1);
+				// $.usosCore._console.assert($textboxEN.length == 1);
 				var name = $(this).attr('data-fname');
 				var a = _showErr(resp, name + "_pl", $textboxPL.find('input, textarea'));
 				var b = _showErr(resp, name + "_en", $textboxEN.find('input, textarea'));
@@ -401,8 +401,8 @@
 				/* A getter. Every widget defines its own getValue func, we just
 				 * need to call it. */
 				value = $(this).data(NS).getValue.apply(this);
-				// $.usosCore.console.assert(!(value instanceof $));
-				// $.usosCore.console.assert(value !== undefined);
+				// $.usosCore._console.assert(!(value instanceof $));
+				// $.usosCore._console.assert(value !== undefined);
 				return false; // break the .each loop
 			} else {
 				/* A setter. As above - we have the setValue function. */
@@ -443,7 +443,7 @@
 			$.each(arg, function(key, value) {
 				var $input = _findNamedWidgets($form).filter('[data-fname=' + key + ']');
 				if ($input.length === 0) {
-					$.usosCore.console.log("Could not find a widget named '" + key + "'");
+					$.usosCore._console.log("Could not find a widget named '" + key + "'");
 				}
 				$input.each(function() {
 					$(this).usosForms('value', value);
@@ -474,13 +474,13 @@
 	 */
 	var flatValues = function() {
 		var extractValues = function($e) {
-			// $.usosCore.console.assert($e instanceof $);
+			// $.usosCore._console.assert($e instanceof $);
 			var data = $e.data(NS);
 			if (!data.getFlatValues) {
 				throw "Missing methods in widget's data!";
 			}
 			var values = data.getFlatValues.apply($e);
-			// $.usosCore.console.assert(typeof values === "object");
+			// $.usosCore._console.assert(typeof values === "object");
 			return values;
 		};
 		return function() {
@@ -510,7 +510,7 @@
 			if ($this.hasClass('ua-widget')) {
 				result = $this.data(NS)[methodName].apply(this, args);
 			} else {
-				$.usosCore.console.error("Calling widgetCall on a non-widget!");
+				$.usosCore._console.error("Calling widgetCall on a non-widget!");
 			}
 			return false; // break the .each loop
 		});

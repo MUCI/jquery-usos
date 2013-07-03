@@ -253,7 +253,7 @@
 					var items = [];
 					$.each(data, function(user_id, user) {
 						if (user === null) {
-							$.usosCore.console.warn("User " + user_id + " not found! Will be skipped!");
+							$.usosCore._console.warn("User " + user_id + " not found! Will be skipped!");
 							return true; // continue
 						}
 						items.push(user);
@@ -329,7 +329,7 @@
 					var items = [];
 					$.each(data, function(course_id, course) {
 						if (course === null) {
-							$.usosCore.console.warn("Course " + course_id + " not found! Will be skipped!");
+							$.usosCore._console.warn("Course " + course_id + " not found! Will be skipped!");
 							return true; // continue
 						}
 						items.push(course);
@@ -408,7 +408,7 @@
 					var items = [];
 					$.each(data, function(fac_id, faculty) {
 						if (faculty === null) {
-							$.usosCore.console.warn("Faculty " + fac_id + " not found! Will be skipped!");
+							$.usosCore._console.warn("Faculty " + fac_id + " not found! Will be skipped!");
 							return true; // continue
 						}
 						items.push(faculty);
@@ -473,7 +473,7 @@
 					var items = [];
 					$.each(data, function(tpl_id, template) {
 						if (template === null) {
-							$.usosCore.console.warn("Template " + tpl_id + " not found! Will be skipped!");
+							$.usosCore._console.warn("Template " + tpl_id + " not found! Will be skipped!");
 							return true; // continue
 						}
 						items.push(template);
