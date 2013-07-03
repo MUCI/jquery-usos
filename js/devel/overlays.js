@@ -213,8 +213,8 @@
 			
 			var title;
 			switch (mydata.settings.state) {
-				case 'loading': title = $.usosCore.langSelect("Wczytywanie...", "Loading..."); break;
-				case 'saving': title = $.usosCore.langSelect("Zapisywanie...", "Saving..."); break;
+				case 'loading': title = $.usosCore.lang("Wczytywanie...", "Loading..."); break;
+				case 'saving': title = $.usosCore.lang("Zapisywanie...", "Saving..."); break;
 				case 'hide': throw("Should return eariler!");
 				default: throw("Unknown state: " + mydata.settings.state);
 			}

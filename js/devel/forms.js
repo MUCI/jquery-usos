@@ -25,7 +25,7 @@
 				.addClass(NS + "-showErr")
 				.usosOverlays("showContextMessage", {
 					type: "error",
-					message: $.usosCore.langSelect(error)
+					message: $.usosCore.lang(error)
 				});
 			return [key];
 		} else {
@@ -143,7 +143,7 @@
 				}
 				$input.css("width", (outerWidth - 9) + "px"); // f93ko: 9 = padding+border
 				if (settings.placeholder) {
-					$input.attr('placeholder', $.usosCore.langSelect(settings.placeholder));
+					$input.attr('placeholder', $.usosCore.lang(settings.placeholder));
 				}
 				return _emptyWidget("div", settings.name)
 					.append($input)
@@ -170,7 +170,7 @@
 				if (label instanceof $) {
 					$content = label;
 				} else {
-					$content = $("<span>").html(" " + $.usosCore.langSelect(label));
+					$content = $("<span>").html(" " + $.usosCore.lang(label));
 				}
 				return _emptyWidget("div", name)
 					.append($("<label>")
@@ -305,7 +305,7 @@
 					.append(_createTipTd(settings.tip))
 					.append($("<td class='ua-strong'>")
 						.css("text-align", "right")
-						.html(settings.title !== null ? $.usosCore.langSelect(settings.title) + ":" : "")
+						.html(settings.title !== null ? $.usosCore.lang(settings.title) + ":" : "")
 					).append($("<td>")
 						.html(settings.content)
 					);
@@ -328,7 +328,7 @@
 				$.each(options, function(value, caption) {
 					$select.append($("<option>")
 						.attr('value', value)
-						.text($.usosCore.langSelect(caption))
+						.text($.usosCore.lang(caption))
 					);
 				});
 			};
@@ -562,7 +562,7 @@
 		var $msg = $("<div class='ua-paragraphs ua-container'>");
 		$msg.append($("<p style='font-size: 120%; margin-bottom: 15px'>")
 			.append($("<b>")
-				.html($.usosCore.langSelect(
+				.html($.usosCore.lang(
 					"Zmiany nie mogły zostać zapisane.",
 					"Unable to save changes."
 				))
@@ -571,11 +571,11 @@
 		$ul = $("<ul>");
 		$msg.append($ul);
 		$.each(todo, function(key, error) {
-			$ul.append($("<li>").html($.usosCore.langSelect(error)));
+			$ul.append($("<li>").html($.usosCore.lang(error)));
 		});
 		$msg.append($("<p style='text-align: center; font-size: 120%; margin-top: 20px'>")
 			.html($("<a class='ua-link'>")
-				.html($.usosCore.langSelect("Zamknij", "Close"))
+				.html($.usosCore.lang("Zamknij", "Close"))
 				.click(function() {
 					$msg.dialog('close');
 				})
@@ -588,7 +588,7 @@
 			modal: true,
 			width: "500px",
 			height: "auto",
-			closeText: $.usosCore.langSelect("Zamknij", "Close")
+			closeText: $.usosCore.lang("Zamknij", "Close")
 		});
 
 	};

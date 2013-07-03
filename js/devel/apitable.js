@@ -293,7 +293,7 @@
 						.button({
 							disabled: true,
 							icons: { primary: "ui-icon-carat-1-w" },
-							label: $.usosCore.langSelect("POPRZEDNIA STRONA", "PREVIOUS PAGE")
+							label: $.usosCore.lang("POPRZEDNIA STRONA", "PREVIOUS PAGE")
 						})
 					)
 					.append($("<div>")
@@ -301,7 +301,7 @@
 						.button({
 							disabled: true,
 							icons: { secondary: "ui-icon-carat-1-e" },
-							label: $.usosCore.langSelect("NASTĘPNA STRONA", "NEXT PAGE")
+							label: $.usosCore.lang("NASTĘPNA STRONA", "NEXT PAGE")
 						})
 					)
 				)
@@ -323,9 +323,9 @@
 	var _langDictTdFormatter = function(value) {
 		return $("<td>")
 			.addClass("ua-datatype-langdict")
-			.append($.usosCore.langSelect({
+			.append($.usosCore.lang({
 				langdict: value,
-				format: "$span"
+				format: "jQuery"
 			}));
 	};
 	
@@ -337,11 +337,11 @@
 		if (value) {
 			$td
 				.addClass("ua-true")
-				.text($.usosCore.langSelect("TAK", "YES"));
+				.text($.usosCore.lang("TAK", "YES"));
 		} else {
 			$td
 				.addClass("ua-false")
-				.text($.usosCore.langSelect("NIE", "NO"));
+				.text($.usosCore.lang("NIE", "NO"));
 		}
 		return $td;
 	};
@@ -402,7 +402,7 @@
 			$td = $("<td>")
 				.append($("<span>")
 					.addClass("ua-note")
-					.text($.usosCore.langSelect("(brak danych)", "(no data)"))
+					.text($.usosCore.lang("(brak danych)", "(no data)"))
 				);
 		} else if (value === undefined) {
 			$td = $("<td>").text(
@@ -625,7 +625,7 @@
 			_overlayContentWith(mydata, $("<span>").addClass("ua-loading"));
 			_updateSummary(mydata, $("<span>")
 				.addClass("ua-loading")
-				.text($.usosCore.langSelect("Wczytywanie...", "Loading..."))
+				.text($.usosCore.lang("Wczytywanie...", "Loading..."))
 			);
 			$.usosCore.usosapiFetch({
 				sourceId: mydata.settings.sourceId,
@@ -744,12 +744,12 @@
 					if (mydata.currentOffset + data.items.length === 0) {
 						/* No data to display. */
 						var $span = $("<span>")
-							.html($.usosCore.langSelect(mydata.settings.emptyMessage));
+							.html($.usosCore.lang(mydata.settings.emptyMessage));
 						_overlayContentWith(mydata, $span);
 						_updateSummary(mydata, "");
 					} else {
 						_updateSummary(mydata,
-							$.usosCore.langSelect("Pokazywane elementy ", "Showing items ") +
+							$.usosCore.lang("Pokazywane elementy ", "Showing items ") +
 							(mydata.currentOffset + 1) + ".." +
 							(mydata.currentOffset + data.items.length)
 						);
@@ -757,7 +757,7 @@
 				},
 				error: function(xhr, errorCode, errorMessage) {
 					var $errorSpan = $("<span>")
-						.html($.usosCore.langSelect(
+						.html($.usosCore.lang(
 							"Wystąpił błąd podczas wczytywania. Spróbuj odświeżyć stronę (F5).",
 							"There was an error while loading. Try to refresh the page (F5)."
 						));

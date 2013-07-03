@@ -15,7 +15,10 @@
 			$content = obj;
 		} else if (obj.pl || obj.en) {
 			/* LangDict. */
-			$content = $.usosCore.langSelect(obj, "$span");
+			$content = $.usosCore.lang({
+				langdict: obj,
+				format: "jQuery"
+			});
 		} else {
 			$content = $("<span>").html(obj);
 		}
@@ -71,7 +74,7 @@
 		var content = null;
 		var contentProvider = null;
 		if (typeof mydata.settings.content === 'function') {
-			content = $.usosCore.langSelect("Wczytywanie...", "Loading...");
+			content = $.usosCore.lang("Wczytywanie...", "Loading...");
 			contentProvider = mydata.settings.content;
 		} else {
 			content = _getContentFromNonfunction(mydata.settings.content);
@@ -94,7 +97,7 @@
 						var newContent = _getContentFromNonfunction(obj);
 						mydata.$img.tooltipster('update', _formatContentForTooltipster(newContent));
 					}).fail(function() {
-						var $newContent = $("<div>").text($.usosCore.langSelect(
+						var $newContent = $("<div>").text($.usosCore.lang(
 							"Nie udało się załadować treści podpowiedzi. " +
 							"Odśwież stronę i spróbuj ponownie.",
 							"Could not load the content of the tip. " +

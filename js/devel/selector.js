@@ -161,7 +161,7 @@
 							error: function(xhr, errorCode, errorMessage) {
 								mydata.$textarea.usosOverlays("showContextMessage", {
 									type: "error",
-									message: $.usosCore.langSelect(
+									message: $.usosCore.lang(
 										"Nie udało się wczytać listy sugestii. Spróbuj odświeżyć stronę (F5).",
 										"Could not load the list of suggestions. Try to refresh tha page (F5)."
 									)
@@ -175,7 +175,7 @@
 				if (!mydata.knownItems[data.tag]) {
 					mydata.$textarea.usosOverlays("showContextMessage", {
 						type: "error",
-						message: $.usosCore.langSelect(
+						message: $.usosCore.lang(
 							"Przed wciśnięciem Enter należy poczekać na załadowanie listy sugestii.",
 							"Before pressing Enter, you should wait until the suggestions show up."
 						)
@@ -191,7 +191,7 @@
 				if (mydata.settings.multi && $.inArray(data.tag, values) >= 0) {
 					mydata.$textarea.usosOverlays("showContextMessage", {
 						type: "error",
-						message: $.usosCore.langSelect(
+						message: $.usosCore.lang(
 							"Ta pozycja już znajduje się na liście.",
 							"This item is already on the list."
 						)
@@ -225,7 +225,7 @@
 	 */
 	var _entitySetup_user = function(settings) {
 		return {
-			prompt: $.usosCore.langSelect("Wpisz imię i nazwisko", "Enter the user's name"),
+			prompt: $.usosCore.lang("Wpisz imię i nazwisko", "Enter the user's name"),
 			search: {
 				method: 'services/users/search',
 				paramsProvider: function(query) {
@@ -273,14 +273,14 @@
 				$.each(item.active_employment_functions, function(_, f) {
 					$div.append(" ").append($("<span class='ua-note'>")
 						.text(
-							"- " + $.usosCore.langSelect(f['function']) +
-							" (" + $.usosCore.langSelect(f.faculty.name) + ")"
+							"- " + $.usosCore.lang(f['function']) +
+							" (" + $.usosCore.lang(f.faculty.name) + ")"
 						)
 					);
 				});
 				$.each(item.active_student_programmes, function(_, f) {
 					$div.append(" ").append($("<span class='ua-note'>")
-						.text("- " + $.usosCore.langSelect(f.programme.description))
+						.text("- " + $.usosCore.lang(f.programme.description))
 					);
 				});
 				return $div;
@@ -301,12 +301,12 @@
 	 */
 	var _entitySetup_course = function(settings) {
 		return {
-			prompt: $.usosCore.langSelect("Wpisz nazwę przedmiotu", "Enter a course name"),
+			prompt: $.usosCore.lang("Wpisz nazwę przedmiotu", "Enter a course name"),
 			search: {
 				method: 'services/courses/search',
 				paramsProvider: function(query) {
 					return {
-						'lang': $.usosCore.getLangPref(),
+						'lang': $.usosCore.lang(),
 						'name': query
 					};
 				},
@@ -358,7 +358,7 @@
 						name = name.substring(0, i);
 					}
 				} else {
-					name = $.usosCore.langSelect(item.name);
+					name = $.usosCore.lang(item.name);
 				}
 				
 				/* Return in a block with decent max-width applied. */
@@ -379,12 +379,12 @@
 	 */
 	var _entitySetup_faculty = function(settings) {
 		return {
-			prompt: $.usosCore.langSelect("Wpisz nazwę jednostki", "Enter a faculty name"),
+			prompt: $.usosCore.lang("Wpisz nazwę jednostki", "Enter a faculty name"),
 			search: {
 				method: 'services/fac/search',
 				paramsProvider: function(query) {
 					return {
-						'lang': $.usosCore.getLangPref(),
+						'lang': $.usosCore.lang(),
 						'fields': 'id|match|name',
 						'query': query
 					};
@@ -427,7 +427,7 @@
 				
 				/* Both methods have the "name" field. */
 				
-				var name = $.usosCore.langSelect(item.name);
+				var name = $.usosCore.lang(item.name);
 				
 				/* Return in a block with decent max-width applied. */
 				
@@ -447,12 +447,12 @@
 	 */
 	var _entitySetup_slip_template = function(settings) {
 		return {
-			prompt: $.usosCore.langSelect("Wpisz nazwę szablonu obiegówki", "Enter a slip template name"),
+			prompt: $.usosCore.lang("Wpisz nazwę szablonu obiegówki", "Enter a slip template name"),
 			search: {
 				method: 'services/slips/search_templates',
 				paramsProvider: function(query) {
 					return {
-						'langpref': $.usosCore.getLangPref(),
+						'langpref': $.usosCore.lang(),
 						'fields': 'id|match|name|state',
 						'query': query
 					};
@@ -490,8 +490,8 @@
 				if (item.state != 'active') {
 					$div.append(" ").append($("<span class='ua-note'>").text(
 						item.state == 'draft' ?
-						$.usosCore.langSelect("(kopia robocza)", "(draft)") :
-						$.usosCore.langSelect("(przestarzały)", "(obsolete)")
+						$.usosCore.lang("(kopia robocza)", "(draft)") :
+						$.usosCore.lang("(przestarzały)", "(obsolete)")
 					));
 				}
 				return $div;
@@ -511,7 +511,7 @@
 						if (!url) {
 							return;
 						}
-						var msg = $.usosCore.langSelect(
+						var msg = $.usosCore.lang(
 							"Przejść do strony szablonu \"" + item.name + "\"?",
 							"Go to the \"" + item.name + "\" template page?"
 						);
@@ -600,7 +600,7 @@
 			if (validIds.length < ids.length) {
 				mydata.$textarea.usosOverlays("showContextMessage", {
 					type: "error",
-					message: $.usosCore.langSelect(
+					message: $.usosCore.lang(
 						"Wystąpił błąd podczas wczytywania wartości tego pola. Sprawdź, czy pole " +
 						"zawiera pożądaną wartość. Jeśli problem będzie się powtarzał, proszę " +
 						"skontaktować się z administratorem.",
@@ -639,7 +639,7 @@
 				error: function(xhr, errorCode, errorMessage) {
 					mydata.$textarea.usosOverlays("showContextMessage", {
 						type: "error",
-						message: $.usosCore.langSelect(
+						message: $.usosCore.lang(
 							"Wystąpił błąd podczas wczytywania wartości tego pola. Spróbuj " +
 							"odświeżyć stronę (F5).",
 							"Error occured while loading values for this form field. Try to " +
