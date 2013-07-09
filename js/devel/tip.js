@@ -48,20 +48,42 @@
 		return $("<div>").append($content).html();
 	};
 	
-	/**
-	 * Options:
-	 * 
-	 * content - LangDict or jQuery elementset or a function.
-	 * 
-	 * If content is a function F, then F should *return* a Promise object which
-	 * - when it's done - should return a LangDict or jQuery elementset. F will
-	 * be called at most once (only if tooltip is about to be displayed), in the
-	 * context ("this") of the jQuery-wrapped tooltip's DOM element.
-	 * 
-	 * position - left, right, top, bottom.
-	 */
-	var create = function(options) {
+	var create = function() {
 		
+		if (arguments.length == 1) {
+			if (arguments[0] instanceof $) {
+				/* create(jQuery_object) */
+				return create({
+					content: arguments[0]
+				});
+			} else if (typeof arguments[0].content !== 'undefined') {
+				
+				/* Fall out of the if block! */
+				
+			} else if (
+				(typeof arguments[0].pl !== 'undefined')
+				|| (typeof arguments[0].en !== 'undefined')
+			) {
+				/* create(langdict) */
+				return create({
+					content: arguments[0]
+				});
+			} else {
+				/* create(string) */
+				return create(arguments[0], arguments[0]);
+			}
+		} else if (arguments.length == 2) {
+			/* create(pl, en) */
+			return create({
+				content: {
+					pl: arguments[0],
+					en: arguments[1]
+				}
+			});
+		} else {
+			throw("Invalid arguments");
+		}
+
 		var $this = $("<div class='ua-tip'><div/></div>");
 
 		var mydata = {};
@@ -69,7 +91,7 @@
 		mydata.settings = $.extend({}, {
 			content: null,
 			position: "top"
-		}, options);
+		}, arguments[0]);
 		
 		var content = null;
 		var contentProvider = null;

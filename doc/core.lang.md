@@ -9,33 +9,20 @@ Demos
 
   * [$.usosCore.lang Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.lang)
 
-`$.usosCore.lang()`
--------------------
+How to call it
+--------------
+  
+  * `$.usosCore.lang()` - Return the currently used language code (the one
+    set during [$.usosCore.init](core.init.md)).
+  * `$.usosCore.lang(langdict)` - Extract the proper translation from the given
+  LangDict object.
+  * `$.usosCore.lang("Po polsku", "In English")` - Shorthand version of the
+    form above.
+  * `$.usosCore.lang(string)` - Safety measure. Will return the given string.
+  * `$.usosCore.lang(options)` - See the options below.
 
-This will return the currently used language code (the one which was set during
-[$.usosCore.init](core.init.md)).
-
-`$.usosCore.lang(langdict)`
----------------------------
-
-Extract the proper translation from the given LangDict object (format commonly
-used in USOS API). Works the same as if you called
-`$.usosCore.lang({langdict: {pl: "Po polsku", en: "In English"}})`
-
-`$.usosCore.lang("Po polsku", "In English")`
---------------------------------------------
-
-Another shorthand for `$.usosCore.lang({langdict: {pl: "Po polsku", en: "In English"}})`.
-
-`$.usosCore.lang(string)`
--------------------------
-
-Safety measure. It will simply return the given string.
-
-`$.usosCore.lang(options)`
---------------------------
-
-The valid options are:
+Options
+-------
 
 ### langdict
 

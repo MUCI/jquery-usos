@@ -58,6 +58,11 @@ $.usosCore
   * [$.usosCore.panic](https://github.com/MUCI/jquery-usos/blob/master/doc/core.panic.md) -
     display a "panic screen".
 
+$.usosTip
+---------
+
+  * [$.usosTip.create](https://github.com/MUCI/jquery-usos/blob/master/doc/tip.create.md) -
+    display a "info" tooltip icon.
 
 Selector widget
 ---------------
@@ -66,7 +71,6 @@ Lets your user search and select one or more USOS entities. You will get a set
 of unique entity IDs.
 
 ![Example selector widget](http://i.imgur.com/k3wlwEA.png)
-
 
 ### .usosSelector(options)
 

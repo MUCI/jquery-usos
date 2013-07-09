@@ -180,16 +180,9 @@
 				return lang({
 					langdict: arguments[0]
 				});
-			} else if (arguments[0] == 'pl') {
-				/* lang('pl') -> true, is current language is 'pl' */
-				return mydata.settings.langpref == 'pl';
-			} else if (arguments[0] == 'en') {
-				/* lang('en') -> true, is current language is 'en' */
-				return mydata.settings.langpref == 'en';
 			} else {
-				/* lang('Other string') -> warning + 'Other string' */
-				$.usosCore._console.warn("$.usosCore.lang called with a single plaintext string!");
-				return arguments[0];
+				/* lang(string) */
+				return lang(arguments[0], arguments[0]);
 			}
 		} else if (arguments.length == 2) {
 			/* lang(pl, en) */
@@ -402,7 +395,8 @@
 			});
 		};
 		
-		/* Currently, panic is often fired when AJAX requrests are being
+		/* 
+		 * Currently, panic is often fired when AJAX requrests are being
 		 * cancelled because the user is nevigating away. We don't want the
 		 * user to see a panic screen in such case, so we'll wait for the
 		 * navigation to complete.
