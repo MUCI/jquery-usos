@@ -64,55 +64,12 @@ $.usosTip
   * [$.usosTip.create](https://github.com/MUCI/jquery-usos/blob/master/doc/tip.create.md) -
     display a "info" tooltip icon.
 
-Selector widget
----------------
+UI Widgets
+----------
 
-Lets your user search and select one or more USOS entities. You will get a set
-of unique entity IDs.
+All of these inherit from the standard [jQuery-UI Widget](http://api.jqueryui.com/jQuery.widget/).
 
-![Example selector widget](http://i.imgur.com/k3wlwEA.png)
-
-### .usosSelector(options)
-
-Create the widget.
-
-```javascript
-$('#element').usosSelector({
-	
-	/* Required. Type of the USOS entity you're interested in. Currently
-	 * supported values are: "course", "user" and "faculty". Please note, that
-	 * you must use your own USOS API proxy in order to access some entities. */
-	entity: null,
-	
-	/* Optional. Use it if you want to use non-default USOS API installation. */
-	sourceId: "default",
-	
-	/* Optional. Width of the widget. */
-	width: "300px",
-	
-	/* Optional. Set it to true, if you want your user to select more than
-	 * one value. */
-	multi: false,
-	
-	/* Optional. If you want the widget to be prefilled, set the ID of an
-	 * entity here. In case of multiselectors ('multi' set to true) this should
-	 * be a *list* of IDs. */
-	value: null
-});
-```
-
-### .usosSelector('value', [newValue])
-
-Get or set the value of the widget. Format of the value depends on the value of
-the **multi** paremeter with which the widget was initialized.
-
-  * If **multi** is `false`, then value is a string or null,
-  * If **multi** is `true`, then value is a list.
-
-### .usosSelector('destroy')
-
-Destroy the widget.
-
+  * [UsosSelector Widget](https://github.com/MUCI/jquery-usos/blob/master/doc/widget.selector.md)
 
 Overlays
 --------

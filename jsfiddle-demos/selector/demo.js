@@ -9,9 +9,9 @@ $(function() {
 	});
 
 	$('#course').usosSelector({
-		entity: "course"
-	});
-	$('#course').change(function () {
-		$('#result').text(JSON.stringify($(this).usosSelector('value')));
+		entity: "entity/courses/course",
+		change: function () {
+			$('#result').text(JSON.stringify($(this).usosSelector('value')));
+		}
 	});
 });

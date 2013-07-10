@@ -9,12 +9,12 @@ $(function() {
 	});
 
 	$('#course').usosSelector({
-		entity: "course",
+		entity: "entity/courses/course",
 		width: "450px",
 		multi: true,
 		value: ["1000-412SOP"]
 	});
-	$('#course').change(function () {
+	$('#course').on("usosselector:change", function () {
 		$('#result').text(JSON.stringify($(this).usosSelector('value')));
 	});
 });
