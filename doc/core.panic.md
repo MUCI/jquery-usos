@@ -5,11 +5,11 @@ Display a "panic screen". This should be called when unrecoverable errors
 are encountered. The user is advised to refresh the screen, contact the
 administrators etc.
 
-Currently, this function does not take any parameters, nor is it configurable
-in any way. However, if it used in combination of AJAX calls (like
-[$.usosCore.usosapiFetch](core.usosapiFetch.md)), **it is advised to call it
-directly in the `.fail` callback**. In the future, the content of the panic
-screen may be determined from the AJAX error response.
+  * Currently, this function does not take any parameters. **But:**
+  * If you use it with AJAX calls, **it is advised to call it directly in the
+    `.fail` callback**, so that the panic function gets the HTTP response
+    In the future, the content of the panic screen may be affected by this
+    response.
 
 Demos
 -----

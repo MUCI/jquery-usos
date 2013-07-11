@@ -13,6 +13,6 @@ $(function() {
 	
 	$('#result').html($.usosCore.lang({
 		langdict: {pl: "Po <b>polsku</b>", en: null},
-		format: 'jQuery.html' // also try 'jQuery.text'
+		wrapper: 'jQuery.html' // also try 'jQuery.text'
 	}));
 });

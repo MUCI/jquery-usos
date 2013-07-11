@@ -1,9 +1,9 @@
 $.usosCore.usosapiFetch(options)
 ================================
 
-Perform an AJAX request to USOS API method. This works very similar to the
-regular `jQuery.ajax` function. There are lots of options, but usually you
-won't need them.
+Perform an AJAX request to the given USOS API method. This works very similar
+to the regular `jQuery.ajax` function. There are lots of options, but usually
+you won't need them.
 
 Demos
 -----
@@ -15,8 +15,6 @@ Examples
 
 ### Simple usage
 
-Note that `params` is optional.
-
 ```javascript
 $.usosCore.usosapiFetch({
     method: 'services/apiref/method_index'
@@ -25,9 +23,9 @@ $.usosCore.usosapiFetch({
 }).fail($.usosCore.panic);
 ```
 
-### Usage with a `syncObject`
+### Usage with a syncObject
 
-Example usecase: In case of AJAX searching you will often want to use
+Use case: When designing AJAX searching, you will often want to use
 `receiveIncrementalFast`, so that - if you'll receive a response for the
 "programmi" query *after* you have already received the response for
 "programming" - your handler won't get called.
@@ -116,9 +114,7 @@ If you call `usosapiFetch` five times in a row (in the `ABCDE` order), then:
     will be called three times only: `BDE`
   * `receiveLast`: Five requests are issued (`ABCDE`), but only the last one
     is remembered. Your handler will be called only once, when the response `E`
-	is received.
-
-More *syncTypes* may be added in the future.
+    is received.
 
 <!--
 
