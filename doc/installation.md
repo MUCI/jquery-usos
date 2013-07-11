@@ -29,7 +29,7 @@ USOS API Proxy
 --------------
 
 You will probably also need to set up your own USOS API proxy (and point to it
-when calling [$.usosCore.init](https://github.com/MUCI/jquery-usos/blob/master/doc/core.init.md#usosapis).
+when calling [$.usosCore.init](https://github.com/MUCI/jquery-usos/blob/master/doc/core.init.md#usosapis)).
 
 ### Why?
 
