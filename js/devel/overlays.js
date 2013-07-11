@@ -2,135 +2,8 @@
 	
 	"use strict";
 	
-	var NS1 = "usosOverlays.contextMessage";
 	var NS2 = "usosOverlays.progress";
 	
-	var _isScrolling = false;
-	
-	var _isScrolledIntoView = function(elem) {
-		var docViewTop = $(window).scrollTop();
-		var docViewBottom = docViewTop + $(window).height();
-		var elemTop = $(elem).offset().top;
-		var elemBottom = elemTop + $(elem).height();
-		return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-	};
-	
-	/**
-	 * Show an overlay with given error message above matched element(s).
-	 */
-	var showContextMessage = function(options) {
-		return this.each(function() {
-			var $this = $(this);
-			
-			/* Check if previously initialized. */
-			
-			if ($this.data(NS1)) {
-				/* Delay execution after hide is complete. */
-				$this.usosOverlays('hideContextMessage', function() {
-					$this.usosOverlays('showContextMessage', options);
-				});
-				return;
-			}
-			
-			/* Load settings, override with options. */
-			
-			var mydata = {};
-			mydata.settings = $.extend({}, {
-				type: null,
-				message: null,
-				scrollToBeVisible: true
-			}, options);
-			if (mydata.settings.type !== 'error') {
-				$.usosCore._console.error("Message type must equal 'error'.");
-				return;
-			}
-			if (mydata.settings.message === null) {
-				$.usosCore._console.error("Message parameter is missing.");
-				return;
-			}
-			$this.data(NS1, mydata);
-			
-			mydata.$error = $("<div>")
-				.addClass("ua-container")
-				.addClass("ua-form-error")
-				.css("opacity", ".1")
-				.text(mydata.settings.message);
-			$('body').append(mydata.$error);
-			mydata.$error.position({
-				my: "center-20 bottom-3",
-				at: "right top",
-				of: $this,
-				using: function(position, feedback) {
-					$(this).css(position);
-					$("<div>")
-						.addClass("ua-form-error-arrow")
-						.addClass(feedback.vertical)
-						.addClass(feedback.horizontal)
-						.appendTo(this);
-				}
-			});
-			mydata.$error.click(function() {
-				/* When the user clicks the error message, we want to focus on the
-				 * errornous field. However, we don't know if $this is focusable.
-				 * That's why we will first try to find focusable elements "below" it. */
-				
-				var $tmp = $this.find("input:visible, select:visible, textarea:visible");
-				if ($tmp.length === 0) {
-					$this.trigger('focus');
-				} else if ($tmp.length == 1) {
-					$tmp.trigger('focus');
-				} else {
-					/* Multiple focusable elements found. Trigger nothing, but hide
-					 * the error (usually hiding is triggered after the focus is gained). */
-					
-					$this.usosOverlays("hideContextMessage");
-				}
-			});
-			
-			/* We don't know if the item is focusable or not. That's why we will also
-			 * try to observe all focusable items "below" it. */
-			
-			$this.find("input:visible, select:visible, textarea:visible").addBack()
-				.on("focus." + NS1 + " keypress." + NS1 + " change." + NS1, function() {
-					$this.usosOverlays("hideContextMessage");
-				});
-			mydata.$error.fadeTo("fast", 1.0);
-			if (
-				mydata.settings.scrollToBeVisible &&
-				(!_isScrolledIntoView(mydata.$error)) &&
-				(!_isScrolling)
-			) {
-				_isScrolling = true;
-				$('html, body').animate({
-					scrollTop: mydata.$error.offset().top - 30
-				}, 500, function() {
-					_isScrolling = false;
-				});
-			}
-		});
-	};
-	
-	/**
-	 * Hide overlays previously shown with 'showContextMessage'.
-	 */
-	var hideContextMessage = function(callback) {
-		return this.each(function() {
-			var $this = $(this);
-			var mydata = $this.data(NS1);
-			if (!mydata)
-				return;
-			mydata.$error.unbind();
-			$this.unbind('.' + NS1);
-			$this.removeData(NS1);
-			mydata.$error.fadeTo("fast", 0, function() {
-				mydata.$error.remove();
-				if (callback) {
-					callback();
-				}
-			});
-		});
-	};
-
 	var _findZIndex = function($node) {
 		var max = 0;
 		$node.parents().each(function() {
@@ -240,8 +113,6 @@
 	};
 
 	var PUBLIC = {
-		'showContextMessage': showContextMessage,
-		'hideContextMessage': hideContextMessage,
 		'progressIndicator': progressIndicator
 	};
 

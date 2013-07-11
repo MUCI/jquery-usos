@@ -74,11 +74,19 @@ handle. Each *description* is an object of the following structure:
 
   * **extraParams** - Optional. Extra parameters to be appended to all issued
     requests. This is useful for passing CSRF tokens when you're using a proxy.
-    
-Currently, all requests are sent using POST and without OAuth. You will
-probably need to set up your own USOS API proxy. The proxy should sign all the
-incoming USOS API requests with your USOS API Consumer Key and (optionally)
-your user's Access Token. Make sure your proxy is guarded against CSRF attacks.
+
+#### A note on USOS API proxy setup
+
+Currently, jQuery-USOS sends all requests using POST and without OAuth. You will
+need to set up your own USOS API proxy if you need to access non-anonymous methods.
+
+  * The proxy should sign all the incoming USOS API requests with your USOS API
+    Consumer Key and (optionally) your user's Access Token.
+  * If you have an Administrative Consumer Key, then you can usually use
+    `as_user_id` parameter with ID extracted from your `$_SESSION`.
+  * Your proxy should be guarded against CSRF attacks (especially if you're an
+    administrative consumer!).
+  * If needed, we may provide a code sample.
 
 ### entityURLs
 

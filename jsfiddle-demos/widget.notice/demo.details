@@ -1,7 +1,7 @@
 
 ---
- name: jQuery-USOS Multi-Selector
- description: jQuery-USOS Multi-Selector Demo
+ name: jQuery-USOS Notice
+ description: jQuery-USOS Notice Demo
  authors:
    - Wojciech Rygielski
  resources:

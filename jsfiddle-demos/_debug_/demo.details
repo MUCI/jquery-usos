@@ -32,5 +32,6 @@ jsfiddle-provided locations):
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/overlays.js
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/tip.js
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.selector.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.notice.js
  normalize_css: no
  ...

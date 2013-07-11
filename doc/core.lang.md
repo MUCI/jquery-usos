@@ -1,8 +1,8 @@
 $.usosCore.lang(...)
 ====================
 
-This is used internally, but you can use it in your code too. Helps with
-common translation-related operations. Can be called in numerous ways.
+Helps with common translation-related operations. Returns plaintext string *or*
+jQuery object (depending on the `format` parameter).
 
 Demos
 -----
@@ -18,7 +18,8 @@ How to call it
   LangDict object.
   * `$.usosCore.lang("Po polsku", "In English")` - Shorthand version of the
     form above.
-  * `$.usosCore.lang(string)` - Safety measure. Will return the given string.
+  * `$.usosCore.lang(string)` - Will simply return the given string (in the
+    wanted format).
   * `$.usosCore.lang(options)` - See the options below.
 
 Options
@@ -26,18 +27,20 @@ Options
 
 ### langdict
 
-**Required.** The LangDict object with translated strings.
+**Required.** The LangDict object with translated strings. Or, a string in
+a single language.
 
 ### format
 
 *Optional.* The format of the returned value. One of the following:
 
-  * `plaintext` (default) - return a plaintext string. If the current
+  * `plaintext` *(default)* - return a plaintext string. If the current
     language could not be found in the given `langdict`, the string will contain
     a prefix (e.g. "(in Polish)").
-  * `jQuery` - return a jQuery object. In this case, the prefix will be wrapped
-    in `<span class='ua-note' />`. The content itself will still be treated as
-    plaintext.
+  * `jQuery` - return a jQuery object with a `<span />` element. The content
+    will be treated as plaintext.
+  * `jQuery-HTML` - return a jQuery object with a `<div />` element. The content
+    will be treated as HTML.
 
 ### langpref
 

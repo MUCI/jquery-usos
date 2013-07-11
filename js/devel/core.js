@@ -210,8 +210,15 @@
 			options.langpref = mydata.settings.langpref;
 		}
 		
-		var pl = options.langdict.pl;
-		var en = options.langdict.en;
+		var pl, en;
+		
+		if (typeof options.langdict !== 'object') {
+			pl = options.langdict;
+			en = options.langdict;
+		} else {
+			pl = options.langdict.pl;
+			en = options.langdict.en;
+		}
 		
 		if (options.format == "plaintext") {
 			var ret;
@@ -233,34 +240,42 @@
 				}
 			}
 			return ret;
-		} else if (options.format == "jQuery") {
-			var $ret = $("<span>");
+		} else if ((options.format == "jQuery") || (options.format == "jQuery-HTML")) {
+			var tag, func;
+			if (options.format == "jQuery-HTML") {
+				tag = "<div>";
+				func = "html";
+			} else {
+				tag = "<span>";
+				func = "text";
+			}
+			var $ret = $(tag);
 			if (options.langpref == 'pl') {
 				if (pl) {
-					$ret.html(pl);
+					$ret[func](pl);
 				} else if (en) {
 					$ret
-						.append($("<span>").addClass("ua-note").text("(po angielsku)"))
+						.append($(tag).addClass("ua-note").text("(po angielsku)"))
 						.append(" ")
-						.append($("<span>").html(en));
+						.append($(tag)[func](en));
 				} else {
-					$ret.append($("<span>").addClass("ua-note").text("(brak danych)"));
+					$ret.append($(tag).addClass("ua-note").text("(brak danych)"));
 				}
 			} else {
 				if (en) {
-					$ret.html(en);
+					$ret[func](en);
 				} else if (pl) {
 					$ret
-						.append($("<span>").addClass("ua-note").text("(in Polish)"))
+						.append($(tag).addClass("ua-note").text("(in Polish)"))
 						.append(" ")
-						.append($("<span>").html(pl));
+						.append($(tag)[func](pl));
 				} else {
-					$ret.append($("<span>").addClass("ua-note").text("(unknown)"));
+					$ret.append($(tag).addClass("ua-note").text("(unknown)"));
 				}
 			}
 			return $ret;
 		} else {
-			$.usosCore.error("Unknown format " + options.format + ", assuming plaintext.");
+			$.usosCore._console.error("Unknown format " + options.format + ", assuming plaintext.");
 			options.format = "plaintext";
 			return lang(options);
 		}

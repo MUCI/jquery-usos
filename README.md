@@ -24,30 +24,26 @@ Demos
 Installation
 ------------
 
-  * Make sure you have all the dependencies installed (all of these are
-    included in jQuery-USOS repository too):
-    * jQuery 1.9.1 (older versions MAY work, but I did not test them),
-    * jQuery-UI 1.10.1 (same as above),
-    * [jQuery BBQ](http://benalman.com/code/projects/jquery-bbq/docs/files/jquery-ba-bbq-js.html) 1.2.1 (included in the bundle package),
-    * [jQuery TextExt](http://textextjs.com/) 1.3.1 (included in the bundle package)
-      * This library needed some fixes. The attached version differs from the official one!
-    * [jQuery colResizable](http://quocity.com/colresizable/) 1.3 (included in the bundle package).
-  * Copy `css/jquery-usos` directory to your `css` directory.
-  * Copy `js/jquery-usos-x.y.z.min.js` file to your `js` directory.
-    * You may also use `js/jquery-usos-x.y.z-bundle.min.js` if you want to
-      include all the dependencies in one file. This does NOT include jQuery nor jQuery-UI,
-      you need to load them separately.
-    * For development, you can use unminified `js/devel/*.js` files.
-  * Include CSS and JS files (along with all the dependencies) in your HTML.
-  * Advanced usage:
-    If your users are not anonymous, then you will probably need to set up your
-    own USOS API proxy. The proxy should sign all the incoming USOS API requests
-    with your USOS API Consumer Key and your user's Access Token. Make sure
-    your proxy is guarded against CSRF attacks.
+  * Dependencies:
+    * jQuery 1.9.1,
+    * jQuery-UI 1.10.1 (theme included),
+    * Plugins (included in the `jquery-usos-x.y.z-bundle.min.js`):
+      * [BBQ](http://benalman.com/code/projects/jquery-bbq/docs/files/jquery-ba-bbq-js.html) 1.2.1,
+      * [TextExt](http://textextjs.com/) - *modified* 1.3.1 version (our version differs from the official one!),
+      * [colResizable](http://quocity.com/colresizable/) 1.3.
+  * Include all CSS and JS files in your HTML.
+    * You may use `js/jquery-usos-x.y.z-bundle.min.js` if you want to
+      fetch jQuery-USOS *and* all the required plugins in one file (this does *not*
+      include jQuery nor jQuery-UI).
+    * For development, you can use `js/devel/*.js` files (and unminified plugin
+      versions).
 
+Later, you will probably also need to [set up your own USOS API proxy](https://github.com/MUCI/jquery-usos/blob/master/doc/core.init.md#usosapis).
 
-$.usosCore
-----------
+API
+---
+  
+### $.usosCore
 
   * [$.usosCore.init](https://github.com/MUCI/jquery-usos/blob/master/doc/core.init.md) -
     you need to call this before using any other functions.
@@ -56,63 +52,18 @@ $.usosCore
   * [$.usosCore.lang](https://github.com/MUCI/jquery-usos/blob/master/doc/core.lang.md) -
     primary language-helper.
   * [$.usosCore.panic](https://github.com/MUCI/jquery-usos/blob/master/doc/core.panic.md) -
-    display a "panic screen".
+    display a "panic" screen.
 
-$.usosTip
----------
+### $.usosTip
 
   * [$.usosTip.create](https://github.com/MUCI/jquery-usos/blob/master/doc/tip.create.md) -
-    display a "info" tooltip icon.
+    display an "info" icon with a given tooltip on hover.
 
-UI Widgets
-----------
+### Widgets
 
-All of these inherit from the standard [jQuery-UI Widget](http://api.jqueryui.com/jQuery.widget/).
+  * [usosSelector Widget](https://github.com/MUCI/jquery-usos/blob/master/doc/widget.selector.md)
 
-  * [UsosSelector Widget](https://github.com/MUCI/jquery-usos/blob/master/doc/widget.selector.md)
-
-Overlays
---------
-
-Overlays module groups methods related to some special UI features. These
-features are primarily used by other modules, but you may want to use them
-yourself too.
-
-![Example context error overlay](http://i.imgur.com/zaxoyx7.png)
-
-### .usosOverlays('showContextMessage', options)
-
-Show a context message, related to the specific element (usually a form field).
-
-```javascript
-$('#element').usosOverlays('showContextMessage', {
-	
-	/**
-	 * Required. Type of the message. Currently, only one value is allowed:
-	 * "error". There will be more in the future.
-	 */
-	type: "error",
-	
-	/** Required. The message to be displayed (text). */
-	message: null,
-	
-	/**
-	 * Optional. Set this to false, if you don't want the browser to scroll
-	 * to the message. By default, the browser *will* scroll so that the
-	 * message is visible.
-	 */
-	scrollToBeVisible: true
-});
-```
-
-### .usosOverlays('hideContextMessage')
-
-Hide previously shown context message.
-
-### .usosOverlays('progressIndicator')
-
-Currently undocumented. You should not use it. <!-- WRTODO -->
-
+<!--
 
 ApiTable
 --------
@@ -125,3 +76,4 @@ documented).
 **This module is currently undocumented. You should not use it.**
 
 ![Example apitable screenshot](http://i.imgur.com/hngxh9J.png)
+-->

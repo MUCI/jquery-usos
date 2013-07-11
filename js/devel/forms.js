@@ -23,9 +23,8 @@
 		if (error) {
 			$target
 				.addClass(NS + "-showErr")
-				.usosOverlays("showContextMessage", {
-					type: "error",
-					message: $.usosCore.lang(error)
+				.usosNotice({
+					content: $.usosCore.lang(error)
 				});
 			return [key];
 		} else {
@@ -370,7 +369,7 @@
 	var hideErrors = function() {
 		$(this).find('.' + NS + "-showErr")
 			.removeClass(NS + "-showErr")
-			.usosOverlays("hideContextMessage");
+			.usosNotice("hide");
 	};
 	
 		

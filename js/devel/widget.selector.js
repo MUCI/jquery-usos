@@ -462,9 +462,8 @@
 									$self.trigger('setSuggestions', { result: keys });
 								},
 								error: function(xhr, errorCode, errorMessage) {
-									widget._textarea.usosOverlays("showContextMessage", {
-										type: "error",
-										message: $.usosCore.lang(
+									widget._textarea.usosNotice({
+										content: $.usosCore.lang(
 											"Nie udało się wczytać listy sugestii. Spróbuj odświeżyć stronę (F5).",
 											"Could not load the list of suggestions. Try to refresh tha page (F5)."
 										)
@@ -476,9 +475,8 @@
 				})
 				.bind('isTagAllowed', function(e, data) {
 					if (!widget._knownItems[data.tag]) {
-						widget._textarea.usosOverlays("showContextMessage", {
-							type: "error",
-							message: $.usosCore.lang(
+						widget._textarea.usosNotice({
+							content: $.usosCore.lang(
 								"Przed wciśnięciem Enter należy poczekać na załadowanie listy sugestii.",
 								"Before pressing Enter, you should wait until the suggestions show up."
 							)
@@ -492,9 +490,8 @@
 						return;
 					}
 					if (widget.options.multi && $.inArray(data.tag, values) >= 0) {
-						widget._textarea.usosOverlays("showContextMessage", {
-							type: "error",
-							message: $.usosCore.lang(
+						widget._textarea.usosNotice({
+							content: $.usosCore.lang(
 								"Ta pozycja już znajduje się na liście.",
 								"This item is already on the list."
 							)
@@ -578,9 +575,8 @@
 				widget._textarea.textext()[0].tags().addTags(validIds);
 				widget._textarea.prop("disabled", previousDisabledState);
 				if (validIds.length < ids.length) {
-					widget._textarea.usosOverlays("showContextMessage", {
-						type: "error",
-						message: $.usosCore.lang(
+					widget._textarea.usosNotice({
+						content: $.usosCore.lang(
 							"Wystąpił błąd podczas wczytywania wartości tego pola. Sprawdź, czy pole " +
 							"zawiera pożądaną wartość. Jeśli problem będzie się powtarzał, proszę " +
 							"skontaktować się z administratorem.",
@@ -617,9 +613,8 @@
 						continuation();
 					},
 					error: function(xhr, errorCode, errorMessage) {
-						widget._textarea.usosOverlays("showContextMessage", {
-							type: "error",
-							message: $.usosCore.lang(
+						widget._textarea.usosNotice({
+							content: $.usosCore.lang(
 								"Wystąpił błąd podczas wczytywania wartości tego pola. Spróbuj " +
 								"odświeżyć stronę (F5).",
 								"Error occured while loading values for this form field. Try to " +
@@ -633,12 +628,6 @@
 			}
 		},
 		
-		/**
-		 * Multipurpose function. When called with no arguments, it returns the ID
-		 * of currently selected item (or IDs, when initialized with 'multi' set to true).
-		 * When called with an argument, it sets the given ID (or IDs) to the matched
-		 * elements.
-		 */
 		value: function(val) {
 			
 			/* getter */

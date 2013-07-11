@@ -169,57 +169,6 @@ a.ua-link:hover {
 	background-image: -ms-linear-gradient(bottom, rgb(242,242,242) 0%, rgb(255,255,255) 100%);
 	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, rgb(242,242,242)),color-stop(1, rgb(255,255,255)));
 }
-.ua-form-error, .ua-form-error-arrow:after {
-	background: #d22;
-	border: 1px solid rgba(255, 255, 255, 1.0);
-	cursor: pointer;
-	z-index: 1100;
-}
-.ua-form-error {
-	position: absolute;
-	display: inline-block;
-	max-width: 300px;
-	color: #fff;
-	padding: 3px 5px;
-	font-size: 12px;
-	font-weight: bold;
-	font-family: arial;
-	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-}
-.ua-form-error-arrow {
-	z-index: 1100;
-	width: 35px;
-	height: 8px;
-	overflow: hidden;
-	position: absolute;
-	left: 50%;
-	margin-left: -8px;
-	bottom: -8px;
-}
-.ua-form-error-arrow.top {
-	top: -8px;
-	bottom: auto;
-}
-.ua-form-error-arrow.left {
-	left: 20%;
-}
-.ua-form-error-arrow:after {
-	content: "";
-	position: absolute;
-	left: 10px;
-	top: -10px;
-	width: 13px;
-	height: 13px;
-	-webkit-transform: rotate(45deg);
-	-moz-transform: rotate(45deg);
-	-ms-transform: rotate(45deg);
-	-o-transform: rotate(45deg);
-	tranform: rotate(45deg);
-}
-.ua-form-error-arrow.top:after {
-	bottom: -10px;
-	top: auto;
-}
 .ua-ascending {
 	display: inline-block !important;
 	width: 16px;
@@ -336,7 +285,6 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 	font-size: 12px;
 	line-height: 16px;
 	padding: 7px 10px 8px 10px;
-	color: #000;
 }
 .ua-tooltip .tooltipster-content b {
 	color: #444;
@@ -353,6 +301,14 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 	background: #ffffe1;
 	color: #000;
 }
+.ua-tooltip.ua-tooltip-error {
+	border: 1px solid #fff;
+	cursor: pointer;
+	background: #d22;
+	color: #fff;
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+.ua-tooltip.ua-tooltip-error .ua-note { color: #ddd; }
 
 .ua-small-button { width: 20px !important; height: 20px !important; }
 

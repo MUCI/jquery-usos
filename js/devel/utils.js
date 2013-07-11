@@ -98,7 +98,58 @@
 		return $result.children();
 	};
 	
+	/**
+	 * Convert a content parameter (passed as the "content" option to various
+	 * jQuery-USOS functions and widgets) to HTML string, suitable to be used
+	 * as content for tooltipster.
+	 * 
+	 * Currently, tooltipster is used by various other plugins, that's why this
+	 * needs to be put in the utils module.
+	 */
+	var _tooltipster_html = function(obj) {
+		
+		var $content;
+		
+		/* Convert obj to jQuery element. */
+		
+		if (obj instanceof $) {
+			/* jQuery elementset */
+			$content = obj;
+		} else {
+			$content = $.usosCore.lang({
+				langdict: obj,
+				format: "jQuery-HTML"
+			});
+		}
+		
+		/* Tooltips should not be too wide. We need to guess a proper max-width
+		 * for the given content. We'll use simple heuristics, based on the
+		 * length of the text given. */
+		
+		var len = $content.text().length;
+		var maxWidth;
+		if (len < 30) {
+			maxWidth = "auto";
+		} else if (len < 300) {
+			maxWidth = "300px";
+		} else if (len < 1200) {
+			/* We don't want it to be too high, so it is better to make it wider. */
+			var scale = 1.0 - ((1200 - len) / 900.0);
+			maxWidth = (300 + 300 * scale) + "px";
+		} else {
+			maxWidth = "600px";
+		}
+		return $("<div>")
+			.append($("<div>")
+				.append($content)
+				.css("max-width", maxWidth)
+			)
+			.html();
+	};
+	
 	$[NS] = {
+		_tooltipster_html: _tooltipster_html,
+		
 		requireFields: requireFields,
 		makeParagraphs: makeParagraphs
 	};

@@ -10,11 +10,12 @@ $(function() {
 
 	$('#course').usosSelector({
 		entity: "entity/courses/course",
-		width: "450px",
-		multi: true,
-		value: ["1000-412SOP"]
-	});
-	$('#course').on("usosselector:change", function () {
-		$('#result').text(JSON.stringify($(this).usosSelector('value')));
+		// multi: true,
+		// value: ["1000-412SOP"],
+		change: function () {
+			$('#result').text(JSON.stringify(
+				$(this).usosSelector('value')
+			));
+		}
 	});
 });

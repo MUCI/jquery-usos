@@ -4,50 +4,6 @@
 	
 	var NS = "usosTip";
 	
-	/**
-	 * Convert a "non-function" content parameter (passed as the "content"
-	 * option) to jQuery elementset.
-	 */
-	var _getContentFromNonfunction = function(obj) {
-		var $content;
-		if (obj instanceof $) {
-			/* jQuery elementset */
-			$content = obj;
-		} else if (obj.pl || obj.en) {
-			/* LangDict. */
-			$content = $.usosCore.lang({
-				langdict: obj,
-				format: "jQuery"
-			});
-		} else {
-			$content = $("<span>").html(obj);
-		}
-		
-		/* We need to guess a proper max-width for the given content. We'll
-		 * use simple heuristics, based on the length of the text given. */
-		
-		var len = $content.text().length;
-		var maxWidth;
-		if (len < 30) {
-			maxWidth = "auto";
-		} else if (len < 300) {
-			maxWidth = "300px";
-		} else if (len < 1200) {
-			/* We don't want it to be too high, so it is better to make it wider. */
-			var scale = 1.0 - ((1200 - len) / 900.0);
-			maxWidth = (300 + 300 * scale) + "px";
-		} else {
-			maxWidth = "600px";
-		}
-		return $("<div>")
-			.append($content)
-			.css("max-width", maxWidth);
-	};
-	
-	var _formatContentForTooltipster = function($content) {
-		return $("<div>").append($content).html();
-	};
-	
 	var create = function() {
 		
 		if (arguments.length == 1) {
@@ -99,12 +55,13 @@
 			content = $.usosCore.lang("Wczytywanie...", "Loading...");
 			contentProvider = mydata.settings.content;
 		} else {
-			content = _getContentFromNonfunction(mydata.settings.content);
+			content = mydata.settings.content;
 		}
 		mydata.$img = $this.find('div');
 		mydata.$img
 			.tooltipster({
-				content: _formatContentForTooltipster(content),
+				content: $.usosUtils._tooltipster_html(content),
+				onlyOne: false,
 				delay: contentProvider ? 200 : 0,
 				speed: 0,
 				position: mydata.settings.position,
@@ -116,17 +73,15 @@
 					var promise = contentProvider.apply($this);
 					contentProvider = null;  // so it will get called once only
 					promise.done(function(obj) {
-						var newContent = _getContentFromNonfunction(obj);
-						mydata.$img.tooltipster('update', _formatContentForTooltipster(newContent));
+						mydata.$img.tooltipster('update', $.usosUtils._tooltipster_html(obj));
 					}).fail(function() {
-						var $newContent = $("<div>").text($.usosCore.lang(
+						var content = $.usosCore.lang(
 							"Nie udało się załadować treści podpowiedzi. " +
 							"Odśwież stronę i spróbuj ponownie.",
 							"Could not load the content of the tip. " +
 							"Refresh the page and try again."
-						));
-						$newContent.css("max-width", "200px");
-						mydata.$img.tooltipster('update', _formatContentForTooltipster($newContent));
+						);
+						mydata.$img.tooltipster('update', $.usosUtils._tooltipster_html(content));
 					});
 				}
 			})
