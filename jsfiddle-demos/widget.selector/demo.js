@@ -12,6 +12,7 @@ $(function() {
 		entity: "entity/courses/course",
 		// multi: true,
 		// value: ["1000-412SOP"],
+		// width: "450px",
 		change: function () {
 			$('#result').text(JSON.stringify(
 				$(this).usosSelector('value')

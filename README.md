@@ -1,45 +1,25 @@
 jQuery-USOS plugin
 ==================
 
-This is a set of jQuery plugins intended to help developers with their work
-with USOS API. Most of it is designed specificly to work with USOS-related
-projects. It you don't know what USOS is, you are probably in a wrong place!
+This is a set of [jQuery](http://jquery.com/) plugins intended to help developers
+with their work with [USOS API](http://apps.usos.edu.pl/developers/api/). If you
+don't know what USOS is, then you are probably in a wrong place!
 
-**This is an unreleased Alpha version!** It is used inside USOSweb, but is
-still in active pre-release development phase. API **will** change in
-a backward-incompatible way.
-
+**ALPHA VERSION: the API will change in a backward-incompatible way!**
 
 Demos
 -----
 
-  * Widgets:
-    * [Selector](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/selector)
-    * [Multiselector](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/selector.multi)
-    * [Context message](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/contextMessage)
-  * Core:
-    * [USOS API Fetch](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch)
-
+  * [usosSelector Widget Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/selector)
+  * [$.usosCore.usosapiFetch Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch)
+  * You will find *much* more demos in the API section.
 
 Installation
 ------------
 
-  * Dependencies:
-    * jQuery 1.9.1,
-    * jQuery-UI 1.10.1 (theme included),
-    * Plugins (included in the `jquery-usos-x.y.z-bundle.min.js`):
-      * [BBQ](http://benalman.com/code/projects/jquery-bbq/docs/files/jquery-ba-bbq-js.html) 1.2.1,
-      * [TextExt](http://textextjs.com/) - *modified* 1.3.1 version (our version differs from the official one!),
-      * [colResizable](http://quocity.com/colresizable/) 1.3.
-  * Include all CSS and JS files in your HTML.
-    * You may use `js/jquery-usos-x.y.z-bundle.min.js` if you want to
-      fetch jQuery-USOS *and* all the required plugins in one file (this does *not*
-      include jQuery nor jQuery-UI).
-    * For development, you can use `js/devel/*.js` files (and unminified plugin
-      versions).
+  * [Installation instructions](https://github.com/MUCI/jquery-usos/blob/master/doc/installation.md)
 
-Later, you will probably also need to [set up your own USOS API proxy](https://github.com/MUCI/jquery-usos/blob/master/doc/core.init.md#usosapis).
-
+	
 API
 ---
   
@@ -62,6 +42,7 @@ API
 ### Widgets
 
   * [usosSelector Widget](https://github.com/MUCI/jquery-usos/blob/master/doc/widget.selector.md)
+  * [usosNotice Widget](https://github.com/MUCI/jquery-usos/blob/master/doc/widget.notice.md)
 
 <!--
 

@@ -7,11 +7,10 @@ calling this method.
 Demos
 -----
 
-Since `$.usosCore.init` has to be called every time, it is used in every Demo
-page in the docs. You can see it for example here:
-
-  * [$.usosCore.usosapiFetch Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch)
-  * [$.usosSelector Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/selector)
+The `$.usosCore.init` is called in **all** (!) demo pages in the docs. It affects
+all other functions and widgets. You can try it, for example
+[here](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch)
+or [here](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/selector)...
 
 Examples
 --------
@@ -74,19 +73,6 @@ handle. Each *description* is an object of the following structure:
 
   * **extraParams** - Optional. Extra parameters to be appended to all issued
     requests. This is useful for passing CSRF tokens when you're using a proxy.
-
-#### A note on USOS API proxy setup
-
-Currently, jQuery-USOS sends all requests using POST and without OAuth. You will
-need to set up your own USOS API proxy if you need to access non-anonymous methods.
-
-  * The proxy should sign all the incoming USOS API requests with your USOS API
-    Consumer Key and (optionally) your user's Access Token.
-  * If you have an Administrative Consumer Key, then you can usually use
-    `as_user_id` parameter with ID extracted from your `$_SESSION`.
-  * Your proxy should be guarded against CSRF attacks (especially if you're an
-    administrative consumer!).
-  * If needed, we may provide a code sample.
 
 ### entityURLs
 

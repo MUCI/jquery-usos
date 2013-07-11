@@ -1,15 +1,18 @@
-UsosSelector Widget
+usosSelector Widget
 ===================
 
 This widget lets the users search and select one or more USOS entities. You
 will get a set of unique entity IDs.
 
-![Example selector widget](http://i.imgur.com/k3wlwEA.png)
+Screenshot
+----------
+
+![Example usosSelector widget](http://i.imgur.com/k3wlwEA.png)
 
 Demos
 -----
 
-  * [UsosSelector Widget Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.selector)
+  * [usosSelector Widget Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.selector)
 
 Example
 -------
@@ -41,15 +44,14 @@ Options
     * `entity/courses/course`
     * `entity/fac/faculty`
     * `entity/slips/template`
-  * **multi** - *Optional.* Default is `false`. Set to `true` if you want the
-    user to select multiple elements (instead of just one).
-  * **value** - *Optional.* Initial value. The default is `null` (for non-multi
+  * **multi** *(default: `false`)* - Set to `true` if you want the user to
+    select multiple elements (instead of just one).
+  * **value** - Initial value for the selector. The default is `null` (for non-multi
     widgets) or an empty list (for multi widgets).
-  * **width** - *Optional.* Default is `300px`.
-  * **change** - *Optional.* A function to be called upon `usosselector:change`
-    event.
-  * **sourceId** - *Optional.* Use it if you want to use non-default USOS API
-    installation (see [$.usosCore.init](core.init.md)).
+  * **width** *(default: `300px`)* - The width of the widget.
+  * **change** - A function to be called upon `usosselector:change` event.
+  * **sourceId** - If you want to use non-default USOS API installation
+  (see [$.usosCore.init](core.init.md)).
 
 Methods
 -------
