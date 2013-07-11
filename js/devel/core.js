@@ -202,7 +202,7 @@
 		var defaultOptions = {
 			langdict: null,
 			langpref: "inherit",
-			format: "plaintext"
+			wrapper: "simple"
 		};
 		var options = $.extend({}, defaultOptions, arguments[0]);
 		
@@ -210,7 +210,7 @@
 			options.langpref = mydata.settings.langpref;
 		}
 		
-		var pl, en;
+		var pl, en, ret;
 		
 		if (typeof options.langdict !== 'object') {
 			pl = options.langdict;
@@ -220,8 +220,13 @@
 			en = options.langdict.en;
 		}
 		
-		if (options.format == "plaintext") {
-			var ret;
+		if (options.wrapper == "none") {
+			if (options.langpref == 'pl') {
+				return pl;
+			} else {
+				return en;
+			}
+		} else if (options.wrapper == "simple") {
 			if (options.langpref == 'pl') {
 				if (pl) {
 					ret = pl;
@@ -240,43 +245,43 @@
 				}
 			}
 			return ret;
-		} else if ((options.format == "jQuery") || (options.format == "jQuery-HTML")) {
+		} else if ((options.wrapper == "jQuery.text") || (options.wrapper == "jQuery.html")) {
 			var tag, func;
-			if (options.format == "jQuery-HTML") {
+			if (options.wrapper == "jQuery.html") {
 				tag = "<div>";
 				func = "html";
 			} else {
 				tag = "<span>";
 				func = "text";
 			}
-			var $ret = $(tag);
+			ret = $(tag);
 			if (options.langpref == 'pl') {
 				if (pl) {
-					$ret[func](pl);
+					ret[func](pl);
 				} else if (en) {
-					$ret
+					ret
 						.append($(tag).addClass("ua-note").text("(po angielsku)"))
 						.append(" ")
 						.append($(tag)[func](en));
 				} else {
-					$ret.append($(tag).addClass("ua-note").text("(brak danych)"));
+					ret.append($(tag).addClass("ua-note").text("(brak danych)"));
 				}
 			} else {
 				if (en) {
-					$ret[func](en);
+					ret[func](en);
 				} else if (pl) {
-					$ret
+					ret
 						.append($(tag).addClass("ua-note").text("(in Polish)"))
 						.append(" ")
 						.append($(tag)[func](pl));
 				} else {
-					$ret.append($(tag).addClass("ua-note").text("(unknown)"));
+					ret.append($(tag).addClass("ua-note").text("(unknown)"));
 				}
 			}
-			return $ret;
+			return ret;
 		} else {
-			$.usosCore._console.error("Unknown format " + options.format + ", assuming plaintext.");
-			options.format = "plaintext";
+			$.usosCore._console.error("Unknown wrapper " + options.wrapper + ", assuming 'default'.");
+			options.wrapper = "default";
 			return lang(options);
 		}
 	};

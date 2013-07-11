@@ -30,19 +30,23 @@ Options
 **Required.** The LangDict object with translated strings. Or, a string in
 a single language.
 
-### format
+### wrapper
 
-*Optional.* The format of the returned value. One of the following:
+*Optional.* One of the following:
 
-  * `plaintext` *(default)* - return a plaintext string. If the current
-    language could not be found in the given `langdict`, the string will contain
-    a prefix (e.g. "(in Polish)").
-  * `jQuery` - return a jQuery object with a `<span />` element. The content
-    will be treated as plaintext.
-  * `jQuery-HTML` - return a jQuery object with a `<div />` element. The content
-    will be treated as HTML.
+  * `none` - return an item from the given *langdict*, exactly as it was defined
+    (i.e. no prefix will be added, nor any formatting applied).
+  * `simple` *(default)* - return a string, as it was defined in given *langdict*,
+    possibly with a simple plaintext prefix (if the current language could not be found in the given `langdict`).
+  * `jQuery.text` - wrap the result in a jQuery `<span />` object.
+    * If the prefix will be needed, it will be formatted (with the `ua-note` class).
+    * The content will be treated as plaintext (safe for user input).
+  * `jQuery.html` - wrap the result in a jQuery `<div />` object.
+    * If the prefix will be needed, it will be formatted (with the `ua-note` class)
+      and possibly placed in a separate paragraph.
+    * The content will be treated as HTML.
 
 ### langpref
 
 *Optional.* You can use it to override the language set during
-[$.usosCore.init](core.init.md). Default value is `inherit`.
+[$.usosCore.init](core.init.md).

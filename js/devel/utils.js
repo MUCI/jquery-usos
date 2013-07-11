@@ -118,7 +118,7 @@
 		} else {
 			$content = $.usosCore.lang({
 				langdict: obj,
-				format: "jQuery-HTML"
+				wrapper: "jQuery.html"
 			});
 		}
 		

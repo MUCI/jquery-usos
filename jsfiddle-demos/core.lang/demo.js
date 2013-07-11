@@ -12,7 +12,7 @@ $(function() {
 	// $('#result').text($.usosCore.lang());
 	
 	$('#result').html($.usosCore.lang({
-		langdict: {pl: "Po polsku", en: null},
-		format: 'jQuery'
+		langdict: {pl: "Po <b>polsku</b>", en: null},
+		format: 'jQuery.html' // also try 'jQuery.text'
 	}));
 });

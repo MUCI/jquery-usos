@@ -325,7 +325,7 @@
 			.addClass("ua-datatype-langdict")
 			.append($.usosCore.lang({
 				langdict: value,
-				format: "jQuery"
+				wrapper: "jQuery.text"
 			}));
 	};
 	
