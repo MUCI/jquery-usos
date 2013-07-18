@@ -40,10 +40,18 @@ need to set up USOS API proxy if you need to access **non-anonymous** methods.
 ### Some guidelines
 
   * The proxy should sign all incoming USOS API requests with your USOS API
-    Consumer Key and (optionally) your user's Access Token.
-  * If you have an Administrative Consumer Key, then you can usually use
-    `as_user_id` parameter with ID extracted from your `$_SESSION`.
+    Consumer Key and your user's Access Token.
+  * If you have an Administrative Consumer Key, then you can simply use the
+    `as_user_id` (instead of going through the
+    [OAuth dance](http://apps.usos.edu.pl/developers/api/authorization/#workflow)).
+  * For majority of the widgets, using `as_user_id` or user's Access Token is
+    **optional**. In other words, you can use jQuery-USOS plugins with anonymous
+    users. However, if you know the ID of your user, it is recommended that you
+    provide it. This way, for example, when you're using the
+    [usosSelector Widget](https://github.com/MUCI/jquery-usos/blob/master/doc/widget.selector.md),
+    USOS API may suggest results more relevant for the currently signed-in user
+    (other similar features might be added in time).
   * Your proxy should be guarded against CSRF attacks (especially if you're an
     administrative consumer!).
-  * If needed, we may provide a code sample.
- 
+  * If needed, we may provide a code sample (for example, a copy of `usosapiProxy.php`
+    from the USOSweb project).

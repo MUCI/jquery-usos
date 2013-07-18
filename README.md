@@ -1,9 +1,14 @@
 jQuery-USOS plugin
 ==================
 
-This is a set of [jQuery](http://jquery.com/) plugins intended to help developers
-with their work with [USOS API](http://apps.usos.edu.pl/developers/api/). If you
-don't know what USOS is, then you are probably in a wrong place!
+This is a set of [jQuery](http://jquery.com/) utilities and simple widgets, intended
+to help web developers with their work with [USOS](http://usos.edu.pl/)-related projects.
+If you don't know what jQuery and USOS are, then you are probably in a wrong place!
+
+jQuery-USOS has strong connections to [USOS API](http://apps.usos.edu.pl/developers/api/).
+Most of the methods and widgets require you to use one of the existing USOS API
+[installations](http://apps.usos.edu.pl/developers/api/definitions/installations/)
+(via [proxy](https://github.com/MUCI/jquery-usos/blob/master/doc/installation.md)).
 
 **ALPHA VERSION: the API will change in a backward-incompatible way!**
 
