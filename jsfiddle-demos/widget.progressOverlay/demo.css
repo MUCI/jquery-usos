@@ -3,10 +3,10 @@ body {
     margin-top: 10px;
     font-size: 15px;
 }
-td {
+#mytable td {
     width: 80px;
     height: 80px;
-    border: 1px solid #ddd;
+    border: 1px solid #aaa;
     text-align: center;
     color: #666;
 }
