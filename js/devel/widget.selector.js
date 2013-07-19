@@ -597,15 +597,13 @@
 			/* If not empty, make an AJAX call to retrieve the missing items. */
 			
 			if (unknownIds.length > 0) {
-				widget.element.usosOverlays('progressIndicator', {
-					state: 'loading'
-				});
+				widget.element.usosProgressOverlay();
 				$.usosCore.usosapiFetch({
 					sourceId: widget.options.sourceId,
 					method: widget._entitySetup.get.method,
 					params: widget._entitySetup.get.paramsProvider(unknownIds),
 					success: function(data) {
-						widget.element.usosOverlays('progressIndicator', 'hide');
+						widget.element.usosProgressOverlay('destroy');
 						$.each(widget._entitySetup.get.itemsExtractor(data), function(_, item) {
 							var id = widget._entitySetup.idExtractor(item);
 							widget._knownItems[id] = item;

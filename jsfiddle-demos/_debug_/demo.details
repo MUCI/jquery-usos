@@ -29,9 +29,9 @@ jsfiddle-provided locations):
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/utils.js
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/entity.js
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/forms.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/overlays.js
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.tip.js
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.selector.js
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.notice.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.progressOverlay.js
  normalize_css: no
  ...
