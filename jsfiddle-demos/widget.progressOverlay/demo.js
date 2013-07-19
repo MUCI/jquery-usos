@@ -2,11 +2,10 @@ $(function () {
     $.usosCore.init();
 
     var fakeRequest = function () {
-        /* Simulate 2 sec AJAX request. */
         var deferred = $.Deferred();
-        var delay = Math.random() * 5.0;
-        setTimeout(function (delay) {
-            deferred.resolve();
+        var delay = Math.floor(Math.random() * 7000);
+        setTimeout(function () {
+            deferred.resolve(delay + "ms");
         }, delay);
         return deferred;
     };

@@ -3,6 +3,11 @@ usosTip widget
 
 Display an "info" icon. When hovered or focused, a tooltip will be displayed. (Currently, there is no way to customize the icon image.)
 
+Screenshot
+----------
+
+![Screenshot](http://i.imgur.com/g68wXm2.png)
+
 Demos
 -----
 
