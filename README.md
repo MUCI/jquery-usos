@@ -67,6 +67,7 @@ API
 ### $.usosUtils
 
   * [$.usosUtils.makeParagraphs](https://github.com/MUCI/jquery-usos/blob/master/doc/utils.makeParagraphs.md) - sanitize multi-line user-supplied input.
+  * [$.usosUtils.requireFields](https://github.com/MUCI/jquery-usos/blob/master/doc/utils.requireFields.md) - verify signatures of complex input objects.
 
 ### $.usosWidgets
 

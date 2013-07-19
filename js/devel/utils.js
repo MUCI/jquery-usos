@@ -4,15 +4,6 @@
 	
 	var NS = "usosUtils";
 	
-	/**
-	 * Filter the fields inside the object based on the given fields description
-	 * (in the same format as in the USOS API "fields" parameter). Log an error
-	 * if required field is not found (used for deep-checking required
-	 * parameters).
-	 * 
-	 * Example:
-	 * requireFields({a: {b: 3, c: 2}, b: 1, c: 1}, "a[c]|c") -> {a: {c: 2}, c: 1}.
-	 */
 	var requireFields = function() {
 		
 		/**
@@ -50,7 +41,8 @@
 			});
 		};
 		
-		return function(obj, fieldsDesc) {
+		var prodFunc = function(obj, _) { return obj; };
+		var debugFunc = function(obj, fieldsDesc) {
 			var newObj = {};
 			var dfsPath = [];
 			var field = "";
@@ -86,6 +78,16 @@
 				}
 			}
 			return newObj;
+		};
+		
+		var funcToCall = null;
+		return function() {
+			/* Upon first execution, determine which of the two functions we want
+			 * to call. */
+			if (!funcToCall) {
+				funcToCall = $.usosCore._getSettings().debug ? debugFunc : prodFunc;
+			}
+			return funcToCall.apply(null, arguments);
 		};
 	}();
 

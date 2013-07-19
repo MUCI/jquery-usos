@@ -6,7 +6,6 @@ with formatted and sanitized paragraphs.
 
 For best results, try wrapping the result in `<div class='ua-paragraphs'>`.
 
-
 Demos
 -----
 

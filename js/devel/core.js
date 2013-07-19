@@ -20,6 +20,7 @@
 		/* Load settings, override with options. */
 		
 		var defaultSettings = {
+			debug: false,
 			langpref: "en",
 			usosAPIs: {
 				"default": {
@@ -302,19 +303,27 @@
 			}
 			return frozen;
 		};
+		var errorAlertShown = false;
 		var fixedConsole = {};
 		$.each(["log", "warn", "error", "assert"], function(_, funcName) {
 			/** Deals with http://stackoverflow.com/questions/4057440/ */
 			fixedConsole[funcName] = function() {
-				if (window.console && window.console[funcName]) {
+				if (mydata.settings.debug && window.console && window.console[funcName]) {
+					
 					/* We want to call the underlying console with frozen arguments (some
 					 * consoles are evaluated lazily), hence the need for ".apply". However,
 					 * we cannot use window.console.apply directly in IE8, hence the ".call". */
+					
 					Function.prototype.apply.call(
 						window.console[funcName],
 						window.console,
 						_freezeAll(arguments)
 					);
+					
+					if (funcName == "error" && (!errorAlertShown)) {
+						errorAlertShown = true;
+						alert("There are errors in the jQuery-USOS console.");
+					}
 				}
 			};
 		});

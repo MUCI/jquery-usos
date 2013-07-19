@@ -58,13 +58,20 @@ $.usosCore.init({
 Options
 -------
 
+### debug
+
+Boolean. The default is `false`. You **SHOULD** set it to `true` in development
+environment. It affects behavior of various functions, e.g.
+[$.usosUtils.requireFields](utils.requireFields.md).
+
 ### langpref
 
-*Optional.* Language of the interface - `pl` or `en` (default: `en`).
+Language of the interface - `pl` or `en` (default: `en`).
+See [$.usosCore.lang](core.lang.md) function.
 
 ### usosAPIs
 
-*Optional.* Object *(handle => description)* describing USOS API servers which
+Object *(handle => description)* describing USOS API servers which
 you'll use within your app. Usually you will need to define only the `default`
 handle. Each *description* is an object of the following structure:
 
@@ -74,9 +81,16 @@ handle. Each *description* is an object of the following structure:
   * **extraParams** - Optional. Extra parameters to be appended to all issued
     requests. This is useful for passing CSRF tokens when you're using a proxy.
 
+See also: [$.usosCore.usosapiFetch](core.usosapiFetch.md) (the `sourceId`
+parameter). The `sourceId` parameter is also accepted in various other functions
+and widgets.
+
+*A note of warning:* Since most of the applications use only one (`default`)
+USOS API server, the multi-server setup was not tested much.
+
 ### entityURLs
 
-*Optional.* Object *(entity code => string)* used for overriding entity URLs
+Object *(entity code => string)* used for overriding entity URLs
 produced by jQuery-USOS. Here you should define the URLs which describe the
 given entities inside your application.
 
@@ -97,4 +111,4 @@ Note: Currently *null* is the default, but it will not stay this way. In the
 future, jQuery-USOS will retrieve default profile URLs from USOS API
 dynamically.
 
-  
+See also: `$.usosEntity.*` family of functions.
