@@ -343,7 +343,7 @@
 		}
 	};
 	
-	$.widget('usoswidgets.usosSelector', {
+	$.widget('usosWidgets.usosSelector', {
 		options: {
 			entity: null,
 			sourceId: "default",
@@ -658,5 +658,5 @@
 			this.element.empty();
 		}
 	});
-
+	
 })(jQuery);

@@ -1,4 +1,4 @@
-usosSelector Widget
+usosSelector widget
 ===================
 
 This widget lets the users search and select one or more USOS entities. You
@@ -12,7 +12,7 @@ Screenshot
 Demos
 -----
 
-  * [usosSelector Widget Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.selector)
+  * [usosSelector widget Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.selector)
 
 Example
 -------
@@ -61,10 +61,10 @@ Methods
   * `destroy()` - see [here](http://api.jqueryui.com/jQuery.widget/#method-destroy)
   * `value()` - get the current value of the selector:
     * For non-multi widgets this will be either *null* or *a string*.
-	* For multi widgets this will be *a list*.
+    * For multi widgets this will be *a list*.
   * `value(newValue)` - set the current value of the selector. This will often
     start an AJAX request in the background, to determine display name(s) from
-	the given ID(s).
+    the given ID(s).
 
 Events
 ------

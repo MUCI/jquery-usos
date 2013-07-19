@@ -1,4 +1,4 @@
-usosNotice Widget
+usosNotice widget
 ===================
 
 This widget lets you display an error message regarding a selected element
@@ -13,7 +13,7 @@ Screenshot
 Demos
 -----
 
-  * [usosNotice Widget Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.notice)
+  * [usosNotice widget Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.notice)
 
 Example
 -------
@@ -32,8 +32,8 @@ Options
 
   * **content** - The content to be displayed. Allowed formats:
     * string (HTML!),
-	* LangDict (HTML!),
-	* jQuery object.
+    * LangDict (HTML!),
+    * jQuery object.
   * **scroll** *(default: `true`)* - If set to `true`, and the notice is outside
     of the user's view, then the page will scroll to show the content of the
 	notice.

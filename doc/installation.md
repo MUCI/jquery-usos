@@ -48,7 +48,7 @@ need to set up USOS API proxy if you need to access **non-anonymous** methods.
     **optional**. In other words, you can use jQuery-USOS plugins with anonymous
     users. However, if you know the ID of your user, it is recommended that you
     provide it. This way, for example, when you're using the
-    [usosSelector Widget](https://github.com/MUCI/jquery-usos/blob/master/doc/widget.selector.md),
+    [usosSelector widget](https://github.com/MUCI/jquery-usos/blob/master/doc/widget.selector.md),
     USOS API may suggest results more relevant for the currently signed-in user
     (other similar features might be added in time).
   * Your proxy should be guarded against CSRF attacks (especially if you're an

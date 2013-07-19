@@ -286,7 +286,7 @@
 			var _createTipTd = function(tip) {
 				var $td = $("<td>");
 				if (tip) {
-					$td.append($.usosTip.create(tip));
+					$td.append($.usosWidgets.usosTip.create(tip));
 				}
 				return $td;
 			};

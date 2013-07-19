@@ -1,49 +1,54 @@
-$.usosTip.create(options)
-=========================
+usosTip widget
+==============
 
-Creates a jQuery object with "info" icon. When hovered or focused, it will
-display a tooltip with the given content.
-
-Currently, there is no way to customize the icon image.
+Display an "info" icon. When hovered or focused, a tooltip will be displayed. (Currently, there is no way to customize the icon image.)
 
 Demos
 -----
 
-  * [$.usosTip.create Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/tip.create)
+  * [usosTip widget Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.tip)
 
 How to call it
 --------------
-  
-  * `$.usosTip.create(langdict)` (HTML!)
-  * `$.usosTip.create("Po polsku", "In English")` (HTML!)
-  * `$.usosTip.create(jQuery_object)`
-  * `$.usosTip.create(string)` (HTML!)
-  * `$.usosTip.create(options)` - See the options below.
+
+It can be called as a regular widget:
+
+  * `$("#element").usosTip(options)` - *see the options below!*
+
+Or, using one of the forms of the **static constructor**:
+
+  * `$.usosWidgets.usosTip.create(options)` - *see the options below!*
+  * `$.usosWidgets.usosTip.create(string)` - *HTML!*
+  * `$.usosWidgets.usosTip.create(langdict)` - *HTML!*
+  * `$.usosWidgets.usosTip.create("Po polsku", "In English")` - *HTML!*
+  * `$.usosWidgets.usosTip.create(jQuery_object)`
+  * `$.usosWidgets.usosTip.create(function)` - *see the **content** option below!*
   
 Examples
 --------
 
-=== Simple (static content)
+### Simple (static content)
 
 ```javascript
-$('body').append($.usosTip.create("Przyk³adowa treœæ", "Example content"));
+$('body').append($.usosWidgets.usosTip.create(
+    "PrzykÅ‚adowa treÅ›Ä‡", "Example content"
+));
 ```
 
-=== Content loaded on hover
+### Content loaded on hover
 
 ```javascript
-$('body').append($.usosTip.create({
+$('body').append($.usosWidgets.usosTip.create({
 	content: function() {
 		return $.usosCore.usosapiFetch({
 			method: 'services/some_service',
 			params: {
-				// Find closest <tr> within which the tip was placed
-				some_id: $(this).closest('tr').data('row_id')
+				item_id: $(this).closest('tr').attr('item_id')
 			}
 		}).then(function(response) {
 			return $("<p>")
 				.css('text-color', 'red')
-				.text(response.some_field);
+				.text(response.description);
 		});
 	},
 	position: 'left'

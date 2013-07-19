@@ -11,7 +11,7 @@
 		return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
 	};
 	
-	$.widget('usoswidgets.usosNotice', {
+	$.widget('usosWidgets.usosNotice', {
 		options: {
 			content: "",
 			scroll: true
