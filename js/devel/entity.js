@@ -59,7 +59,7 @@
 			case 'entity/fac/faculty':
 			case 'entity/slips/template':
 				e = $.usosUtils.requireFields(args[1], "id|name");
-				$a.text(e.name);
+				$a.text($.usosCore.lang(e.name));
 				url = _getEntityURL(entityCode, e.id);
 				break;
 			default:
