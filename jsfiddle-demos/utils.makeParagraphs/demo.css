@@ -1,0 +1,16 @@
+body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+table textarea {
+    width: 300px;
+    height: 180px;
+}
+table td {
+    vertical-align: top;
+}
+.ua-paragraphs {
+    padding: 10px;
+    border: 1px solid #ddd;
+}

@@ -31,8 +31,9 @@ Backward compatibility notes
       **look** the same.
     * We'll try to avoid it, but there still can be some backward-incompatible 
       changes. This means, that you may be required to change your code once
-      you upgrade your jQuery-USOS library. Especially if customize things.
-    * We will describe backward-incompatible changes in our changelog.
+      you upgrade your jQuery-USOS library. Especially if you customized things.
+    * We will describe backward-incompatible changes in our changelog (to be
+      created).
   * Undocumented stuff - usually (but not necessarily) prefixed with an 
     underscore (_) - is **private** and it is **NOT**  backward compatible.
 
@@ -63,11 +64,16 @@ API
   * [$.usosEntity.link](https://github.com/MUCI/jquery-usos/blob/master/doc/entity.link.md) - display a link pointing to an entity.
   * [$.usosEntity.url](https://github.com/MUCI/jquery-usos/blob/master/doc/entity.url.md) - get an URL of entity's home page.
 
+### $.usosUtils
+
+  * [$.usosUtils.makeParagraphs](https://github.com/MUCI/jquery-usos/blob/master/doc/utils.makeParagraphs.md) - sanitize multi-line user-supplied input.
+
 ### $.usosWidgets
 
   * [usosSelector widget](https://github.com/MUCI/jquery-usos/blob/master/doc/widget.selector.md) - search for an entity and get its ID.
   * [usosNotice widget](https://github.com/MUCI/jquery-usos/blob/master/doc/widget.notice.md) - display notices or errors on form elements.
   * [usosTip widget](https://github.com/MUCI/jquery-usos/blob/master/doc/widget.tip.md) - display "info" icon with a message on hover.
+  * [usosProgressOverlay widget](https://github.com/MUCI/jquery-usos/blob/master/doc/widget.progressOverlay.md) - display a progress indicator over an element.
 
 *Note:* All widgets are [jQuery-UI widgets](http://api.jqueryui.com/jQuery.widget/).
 

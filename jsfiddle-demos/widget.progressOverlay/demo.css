@@ -1,0 +1,10 @@
+body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+td {
+    width: 80px;
+    height: 80px;
+    border: 1px solid #ddd;
+}
