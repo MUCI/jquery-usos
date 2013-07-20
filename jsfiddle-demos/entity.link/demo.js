@@ -1,15 +1,16 @@
-$(function() {
-	$.usosCore.init({
-		langpref: "pl",
-		usosAPIs: {
-			'default': {
-				'methodUrl': "http://apps.usos.edu.pl/%s"
-			}
-		},
-		entityURLs: {
-			'entity/fac/faculty': "http://example.com/faculty/${fac_id}"
+$.usosCore.init({
+	langpref: "pl",
+	usosAPIs: {
+		'default': {
+			'methodUrl': "http://apps.usos.edu.pl/%s"
 		}
-	});
+	},
+	entityURLs: {
+		'entity/fac/faculty': "http://example.com/faculty/${fac_id}"
+	}
+});
+
+$(function() {
 	$.usosCore.usosapiFetch({
 		method: 'services/fac/search',
 		params: {

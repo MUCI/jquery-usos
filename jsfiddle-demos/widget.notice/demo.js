@@ -1,5 +1,6 @@
+$.usosCore.init();
+
 $(function () {
-    $.usosCore.init();
     $('input').click(function () {
         if ($('textarea').val()) {
             alert("OK!");

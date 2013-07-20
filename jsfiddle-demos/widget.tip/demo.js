@@ -1,5 +1,6 @@
+$.usosCore.init();
+
 $(function() {
-	$.usosCore.init();
 	
 	/* Simplest (and most common) use case */
 	

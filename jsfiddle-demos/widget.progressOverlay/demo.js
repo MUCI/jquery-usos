@@ -1,6 +1,6 @@
-$(function () {
-    $.usosCore.init();
+$.usosCore.init();
 
+$(function () {
     var fakeRequest = function () {
         var deferred = $.Deferred();
         /* Change "7000" to "1000" to simulate a fast connection. */

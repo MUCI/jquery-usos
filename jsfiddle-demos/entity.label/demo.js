@@ -1,12 +1,13 @@
-$(function() {
-	$.usosCore.init({
-		langpref: "pl",
-		usosAPIs: {
-			'default': {
-				'methodUrl': "http://apps.usos.edu.pl/%s"
-			}
+$.usosCore.init({
+	langpref: "pl",
+	usosAPIs: {
+		'default': {
+			'methodUrl': "http://apps.usos.edu.pl/%s"
 		}
-	});
+	}
+});
+
+$(function() {
 	$.usosCore.usosapiFetch({
 		method: 'services/fac/search',
 		params: {

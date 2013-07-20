@@ -1,8 +1,8 @@
-$(function() {
-	$.usosCore.init({
-		langpref: "en"
-	});
+$.usosCore.init({
+	langpref: "en"
+});
 
+$(function() {
 	// $('#result').text($.usosCore.lang("Po polsku", "In English"));
 	// $('#result').text($.usosCore.lang("Po polsku", null));
 	// $('#result').text($.usosCore.lang(null, "In English"));

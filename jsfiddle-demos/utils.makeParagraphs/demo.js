@@ -1,5 +1,6 @@
+$.usosCore.init();
+
 $(function () {
-    $.usosCore.init();
     $("#tip").usosTip();
 
     var update = function () {
