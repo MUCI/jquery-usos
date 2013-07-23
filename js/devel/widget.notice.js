@@ -55,21 +55,15 @@
 		},
 		
 		_init: function() {
-			this.element.tooltipster('show');
+			var widget = this;
+			widget.element.tooltipster('show');
+			widget._scroll();
 		},
 		
-		_tooltipReady: function() {
-			
+		/** Scroll the view so that the tooltip is visible. */
+		_scroll: function() {
 			var widget = this;
-			
-			/* Tooltipster keeps the tooltip element in .data('tooltipster'), but
-			 * this is currently undocumented and I guess it may change in future
-			 * versions. */
-			
 			var tooltipster = widget.element.data('tooltipster');
-			
-			/* Scroll the view so that the tooltip is visible. */
-			
 			if (
 				tooltipster &&
 				widget.options.scroll &&
@@ -83,6 +77,23 @@
 					_isScrolling = false;
 				});
 			};
+		},
+		
+		_tooltipReady: function() {
+			
+			var widget = this;
+			
+			/* Tooltipster keeps the tooltip element in .data('tooltipster'), but
+			 * this is currently undocumented and I guess it may change in future
+			 * versions. */
+			
+			var tooltipster = widget.element.data('tooltipster');
+			tooltipster.css("pointer-events", "");
+			tooltipster.find('.tooltipster-content').css("pointer-events", "auto");
+			
+			/* Scroll the view so that the tooltip is visible. */
+			
+			widget._scroll();
 			
 			/* Capture some events on the tooltipster content. */
 			
@@ -116,14 +127,15 @@
 		},
 		
 		_setOption: function(key, value) {
-			this._super(key, value);
+			var widget = this;
+			widget._super(key, value);
 			if (key == 'content') {
-				this.element.tooltipster(
+				widget.element.tooltipster(
 					'update',
 					$.usosUtils._tooltipster_html(widget.options.content)
 				);
 			}
-			return this;
+			return widget;
 		},
 				
 		_destroy: function() {

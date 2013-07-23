@@ -565,7 +565,7 @@
 				))
 			)
 		);
-		$ul = $("<ul>");
+		var $ul = $("<ul>");
 		$msg.append($ul);
 		$.each(todo, function(key, error) {
 			$ul.append($("<li>").html($.usosCore.lang(error)));

@@ -1,6 +1,6 @@
 /* Simple "css reset" rule - for debugging. */
 
-.ua-container, .ua-container * {
+.ua-container {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -9,11 +9,8 @@
 	text-decoration: none;
 	outline: 0;
 	font-family: tahoma, verdana, arial, sans-serif;
-}
-.ua-container {
 	font-size: 13px;
 }
-
 
 a.ua-link, .ui-widget-content a.ua-link {
 	color: #449;
