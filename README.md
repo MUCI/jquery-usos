@@ -4,14 +4,19 @@ jQuery-USOS plugin
 This is a set of [jQuery](http://jquery.com/) utilities and simple widgets, 
 intended to help web developers with their work with
 [USOS](http://usos.edu.pl/about-usos)-related projects (primarily, the *USOSweb*
-project). If you don't know what *jQuery* and *USOS* are, then you're in a wrong
-place!
+project).
 
-*jQuery-USOS* has strong connections to
-[USOS API](http://apps.usos.edu.pl/developers/api/). Most of the methods and
-widgets require you to use one of the existing USOS API
-[installations](http://apps.usos.edu.pl/developers/api/definitions/installations/)
-(via [proxy](https://github.com/MUCI/jquery-usos/blob/master/doc/installation.md)).
+  * If you don't know what *jQuery* and/or *USOS* are, then you're in a wrong
+    place!
+  * *jQuery-USOS* has strong connections to
+    [USOS API](http://apps.usos.edu.pl/developers/api/). Most of the methods and
+    widgets require you to use one of the existing USOS API
+    [installations](http://apps.usos.edu.pl/developers/api/definitions/installations/)
+    (via [proxy](https://github.com/MUCI/jquery-usos/blob/master/doc/installation.md)).
+  * The official project homepage is:
+    [https://github.com/MUCI/jquery-usos](https://github.com/MUCI/jquery-usos).
+    If you're reading this README file in a fork, please visit the official page
+    for most up-to-date info.
 
 Contents
 --------
@@ -59,4 +64,4 @@ API
   * [usosTip widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.tip.md) - display "info" icon with a message on hover.
   * [usosProgressOverlay widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.progressOverlay.md) - display a progress indicator over an element.
 
-*Note:* All widgets are [jQuery-UI widgets](http://api.jqueryui.com/jQuery.widget/).
+*Note:* All usosWidgets are [jQuery-UI widgets](http://api.jqueryui.com/jQuery.widget/).
