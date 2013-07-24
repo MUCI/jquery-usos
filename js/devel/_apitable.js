@@ -1,8 +1,11 @@
+/* This module is in the ALPHA stage. It is NOT backward-compatible. Please
+ * avoid using it. */
+
 (function($) {
 	
 	"use strict";
 	
-	var NS = "usosApiTable";
+	var NS = "_usosApiTable";
 	
 	/**
 	 * InvisibleStateCoordinator simply stores the state in memory and
@@ -424,7 +427,7 @@
 			/* Check if previously initialized. */
 			
 			if ($this.data(NS)) {
-				$this.usosApiTable('destroy');
+				$this._usosApiTable('destroy');
 			}
 			$this.empty();
 			
@@ -591,7 +594,7 @@
 				var newState = _unserializeState(serializedState);
 				mydata.currentOrder = newState.orderRules;
 				mydata.currentOffset = newState.offset;
-				$this.usosApiTable('reload');
+				$this._usosApiTable('reload');
 			};
 			if (mydata.settings.hashParam) {
 				mydata.stateCoordinator = new UrlHashStateCoordinator(
@@ -789,7 +792,7 @@
 		'destroy': destroy
 	};
 
-	$.fn.usosApiTable = function(method) {
+	$.fn._usosApiTable = function(method) {
 		if (PUBLIC[method]) {
 			return PUBLIC[method].apply(this, Array.prototype.slice.call(arguments, 1));
 		} else if ((typeof method === 'object') || (!method)) {
