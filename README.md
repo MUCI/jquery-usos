@@ -21,12 +21,12 @@ Demos
   * [$.usosCore.usosapiFetch Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch)
   * You will find *much* more demos in the API section.
 
-Backward compatibility notes
-----------------------------
+Versioning and backward compatibility
+-------------------------------------
 
-  * Versions `0.x.y` (alpha versions) are **NOT** backward compatible.
-  * Starting from version `1.0`, all stuff which is **documented** on GitHub is
-    **planned** to be backward compatible. However:
+  * **Versions 0.x.y** (alpha versions) are **NOT** backward compatible.
+  * Starting from **version 1.0**, all stuff which is **documented on GitHub** is
+    *planned* to be backward compatible. However:
     * This does **NOT** mean, that future versions of *jQuery-USOS* will
       **look** the same.
     * We'll try to avoid it, but there still can be some backward-incompatible 
@@ -34,9 +34,16 @@ Backward compatibility notes
       you upgrade your jQuery-USOS library. Especially if you customized things.
     * We will describe backward-incompatible changes in our changelog (to be
       created).
-  * Undocumented stuff - usually (but not necessarily) prefixed with an 
+  * **Undocumented stuff** - usually (but not necessarily) prefixed with an 
     underscore (_) - is **private** and it is **NOT**  backward compatible.
 
+**If you want to extend jQuery-USOS:**
+
+  * All new widgets and plugins should pass a
+    [proof of concept](https://en.wikipedia.org/wiki/Proof_of_concept#In_Software_Development)
+    test before being officially added to *jQuery-USOS*. E.g. they should be
+    previously tested in a
+    [pilot](https://en.wikipedia.org/wiki/Software_prototyping) project.
 
 Installation
 ------------
