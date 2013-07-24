@@ -21,6 +21,7 @@ Contents
     [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.tip),
     [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.progressOverlay), or
     [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch).
+    * Doesn't work? Try refreshing! ([why?](https://github.com/MUCI/jquery-usos/issues/1))
   * [Installation instructions](https://github.com/MUCI/jquery-usos/blob/master/doc/installation.md)
   * [Extending and backward compatibility](https://github.com/MUCI/jquery-usos/blob/master/doc/backward-compatibility.md)
   * [Change Log](https://github.com/MUCI/jquery-usos/blob/master/doc/changelog.md)
