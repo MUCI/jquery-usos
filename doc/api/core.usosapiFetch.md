@@ -79,7 +79,7 @@ Options
 
 **Required.** The name of the method (starts with `services/`).
 
-### sourceId
+### source_id
 
 *Optional.* Use it if you want to use non-default USOS API installation (see
 the `usosAPIs` option in [$.usosCore.init](core.init.md)).

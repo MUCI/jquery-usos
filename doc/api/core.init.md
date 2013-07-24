@@ -81,8 +81,8 @@ handle. Each *description* is an object of the following structure:
   * **extraParams** - Optional. Extra parameters to be appended to all issued
     requests. This is useful for passing CSRF tokens when you're using a proxy.
 
-See also: [$.usosCore.usosapiFetch](core.usosapiFetch.md) (the `sourceId`
-parameter). The `sourceId` parameter is also accepted in various other functions
+See also: [$.usosCore.usosapiFetch](core.usosapiFetch.md) (the `source_id`
+parameter). The `source_id` parameter is also accepted in various other functions
 and widgets.
 
 *A note of warning:* Since most of the applications use only one (`default`)

@@ -53,16 +53,9 @@
 		};
 		
 		return function(opts) {
-			if (typeof opts === "string") {
-				/* ALIAS: usosapiFetch(method, params) */
-				return usosapiFetch({
-					method: arguments[0],
-					params: (arguments.length >= 2) ? arguments[1] : {}
-				});
-			}
-			
+
 			var defaultOptions = {
-				sourceId: "default",
+				source_id: "default",
 				method: "method_name",
 				params: {},
 				syncMode: "noSync",  // "noSync", "receiveIncrementalFast", "receiveLast"
@@ -98,13 +91,13 @@
 				requestId = options.syncObject.lastIssuedRequestId;
 			}
 			
-			/* Contruct the method URL for the given sourceId and method. */
+			/* Contruct the method URL for the given source_id and method. */
 			
-			var url = mydata.settings.usosAPIs[options.sourceId].methodUrl.replace("%s", options.method);
+			var url = mydata.settings.usosAPIs[options.source_id].methodUrl.replace("%s", options.method);
 			
-			/* Append extraParams (overwrite existing params!) defined for the given sourceId. */
+			/* Append extraParams (overwrite existing params!) defined for the given source_id. */
 			
-			var params = $.extend({}, options.params, mydata.settings.usosAPIs[options.sourceId].extraParams);
+			var params = $.extend({}, options.params, mydata.settings.usosAPIs[options.source_id].extraParams);
 			
 			/* Make the call. */
 			

@@ -346,7 +346,7 @@
 	$.widget('usosWidgets.usosSelector', {
 		options: {
 			entity: null,
-			sourceId: "default",
+			source_id: "default",
 			width: "300px",
 			multi: false,
 			value: null
@@ -447,7 +447,7 @@
 						function()
 						{
 							$.usosCore.usosapiFetch({
-								sourceId: widget.options.sourceId,
+								source_id: widget.options.source_id,
 								method: widget._entitySetup.search.method,
 								params: widget._entitySetup.search.paramsProvider(query),
 								syncMode: 'receiveIncrementalFast',
@@ -599,7 +599,7 @@
 			if (unknownIds.length > 0) {
 				widget.element.usosProgressOverlay();
 				$.usosCore.usosapiFetch({
-					sourceId: widget.options.sourceId,
+					source_id: widget.options.source_id,
 					method: widget._entitySetup.get.method,
 					params: widget._entitySetup.get.paramsProvider(unknownIds),
 					success: function(data) {

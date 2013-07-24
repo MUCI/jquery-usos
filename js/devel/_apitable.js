@@ -437,7 +437,7 @@
 			$this.data(NS, mydata);
 			var defaultSettings = {
 				hashParam: null,
-				sourceId: "default",
+				source_id: "default",
 				method: null,
 				params: {},
 				offsetReset: false,
@@ -631,7 +631,7 @@
 				.text($.usosCore.lang("Wczytywanie...", "Loading..."))
 			);
 			$.usosCore.usosapiFetch({
-				sourceId: mydata.settings.sourceId,
+				source_id: mydata.settings.source_id,
 				method: mydata.settings.method,
 				params: _constructMethodParameters(mydata),
 				syncMode: "receiveLast",

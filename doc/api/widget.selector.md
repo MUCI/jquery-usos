@@ -50,7 +50,7 @@ Options
     widgets) or an empty list (for multi widgets).
   * **width** *(default: `300px`)* - The width of the widget.
   * **change** - A function to be called upon `usosselector:change` event.
-  * **sourceId** - If you want to use non-default USOS API installation
+  * **source_id** - If you want to use non-default USOS API installation
   (see [$.usosCore.init](core.init.md)).
 
 Methods
