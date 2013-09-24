@@ -52,7 +52,7 @@ Options
     * Users - `services/users/search`
     * Courses - `services/courses/search`
     * Faculties - `services/fac/search`
-    * Slip templates - `entity/slips/search_templates`
+    * Slip templates - `services/slips/search_templates`
   * **value** - Initial value for the selector. The default is `null` (for non-multi
     widgets) or an empty list (for multi widgets).
   * **width** *(default: `300px`)* - The width of the widget.
