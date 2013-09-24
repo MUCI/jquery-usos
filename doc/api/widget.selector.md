@@ -40,12 +40,19 @@ Options
 
   * **entity** - **Required.** Which entity you want to search for? Currently
     supported values are:
-    * `entity/users/user`
-    * `entity/courses/course`
-    * `entity/fac/faculty`
-    * `entity/slips/template`
+    * Users - `entity/users/user`
+    * Courses - `entity/courses/course`
+    * Faculties - `entity/fac/faculty`
+    * Slip templates - `entity/slips/template`
   * **multi** *(default: `false`)* - Set to `true` if you want the user to
     select multiple elements (instead of just one).
+  * **searchParams** *(default: `{}`)* - Extra parameters to be passed to the
+    USOS API method while searching. Consult proper USOS API method documentation
+    for the list of allowed parameters:
+    * Users - `services/users/search`
+    * Courses - `services/courses/search`
+    * Faculties - `services/fac/search`
+    * Slip templates - `entity/slips/search_templates`
   * **value** - Initial value for the selector. The default is `null` (for non-multi
     widgets) or an empty list (for multi widgets).
   * **width** *(default: `300px`)* - The width of the widget.

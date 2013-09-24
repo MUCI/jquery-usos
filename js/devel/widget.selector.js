@@ -349,7 +349,8 @@
 			source_id: "default",
 			width: "300px",
 			multi: false,
-			value: null
+			value: null,
+			searchParams: {}
 		},
 		widgetEventPrefix: "usosselector:",
 		
@@ -449,7 +450,11 @@
 							$.usosCore.usosapiFetch({
 								source_id: widget.options.source_id,
 								method: widget._entitySetup.search.method,
-								params: widget._entitySetup.search.paramsProvider(query),
+								params: $.extend(
+									{},
+									widget.options.searchParams,
+									widget._entitySetup.search.paramsProvider(query)
+								),
 								syncMode: 'receiveIncrementalFast',
 								syncObject: widget._suggestionsSyncObject,
 								success: function(data) {

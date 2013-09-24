@@ -1,6 +1,11 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.0.2** - *2013-09-24*
+  
+    * Added `searchParams` parameter to the
+      [usosSelector widget](api/widget.selector.md).
+
   * **Version 1.0.1** - *2013-07-24*
 
     * Removed some undocumented features.
