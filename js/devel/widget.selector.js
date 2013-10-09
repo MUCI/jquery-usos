@@ -343,7 +343,7 @@
 		}
 	};
 	
-	$.widget('usosWidgets.usosSelector', {
+	$.widget('usosWidgets.usosSelector', $.usosWidgets.usosValue, {
 		options: {
 			entity: null,
 			source_id: "default",
@@ -354,13 +354,17 @@
 		},
 		widgetEventPrefix: "usosselector:",
 		
+		/**
+		 * @memberOf $.usosWidgets.usosSelector
+		 */
 		_init: function() {
+			this._super("_init");
 			this._recreate();
 		},
 		
 		_setOption: function(key, value) {
 			this._super(key, value);
-			if ($.inArray(key, ['entity', 'width', 'multi'])) {
+			if ($.inArray(key, ['entity', 'width', 'multi']) !== -1) {
 				this._recreate();
 			} else if (key == 'value') {
 				this.value(key, value);
@@ -494,7 +498,7 @@
 						widget._setIds([]);
 						return;
 					}
-					if (widget.options.multi && $.inArray(data.tag, values) >= 0) {
+					if (widget.options.multi && $.inArray(data.tag, values) !== -1) {
 						widget._textarea.usosNotice({
 							content: $.usosCore.lang(
 								"Ta pozycja już znajduje się na liście.",
@@ -659,6 +663,7 @@
 		
 		_destroy: function() {
 			this.element.empty();
+			this._super("_destroy");
 		}
 	});
 	

@@ -1,15 +1,17 @@
-$.usosCore.panic()
-=====================
+$.usosCore.panic([response])
+============================
 
 Display a "panic screen". This should be called when unrecoverable errors
-are encountered. The user is advised to refresh the screen, contact the
-administrators etc.
+are encountered. **Depending on the content of the response**, the user
+will be advised to do different things (e.g. to refresh the page, contact
+the administrators etc.).
 
-  * Currently, this function does not take any parameters. **But:**
-  * If you use it with AJAX calls, **it is advised to call it directly in the
-    `.fail` callback**, so that the panic function gets the HTTP response
-    In the future, the content of the panic screen may be affected by this
-    response.
+The **response** parameter should be one of the following:
+
+  * **undefined** - if the error was not caused by any AJAX response.
+  * **USOS API response object** - the one returned by the 
+    [$.usosCore.usosapiFetch](core.usosapiFetch.md) method.
+  * **xhr** - in case you use `$.ajax` instead of *usosapiFetch*.
 
 Demos
 -----
@@ -40,7 +42,7 @@ $.usosCore.usosapiFetch(
     if (response.someKey == "someValue") {
         doSomethingDifferent();
     } else {
-        $.usosCore.panic.apply(null, arguments);
+        $.usosCore.panic(response);
     }
 });
 ```

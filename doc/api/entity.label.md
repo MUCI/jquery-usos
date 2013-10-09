@@ -35,3 +35,7 @@ returned by USOS API.
   * `entity/users/user` requires: `id|first_name|last_name`.
   * `entity/fac/faculty` requires: `id|name`.
   * `entity/slips/template` requires: `id|name`.
+  * `entity/progs/programme` requires: `id|description`.
+
+If the object is not provided (either `null` or `undefined` is found), a simple
+"no data" placeholder will be displayed.

@@ -57,11 +57,28 @@ API
   * [$.usosUtils.makeParagraphs](https://github.com/MUCI/jquery-usos/blob/master/doc/api/utils.makeParagraphs.md) - sanitize multi-line user-supplied input.
   * [$.usosUtils.requireFields](https://github.com/MUCI/jquery-usos/blob/master/doc/api/utils.requireFields.md) - verify signatures of complex input objects.
 
-### $.usosWidgets
+### jQuery-UI widgets ([see here](http://api.jqueryui.com/jQuery.widget/))
 
-  * [usosSelector widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.selector.md) - search for an entity and get its ID.
+  * usosValue widget - *(undocumented beta)* a base class for all widgets which hold a **value**.
+    * [usosSelector widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.selector.md) - search for an entity and get its ID.
+    * usosCheckbox widget - *(undocumented beta)*
+    * usosSelectbox widget - *(undocumented beta)*
+    * usosTextbox widget - *(undocumented beta)*
   * [usosNotice widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.notice.md) - display notices or errors on form elements.
   * [usosTip widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.tip.md) - display "info" icon with a message on hover.
   * [usosProgressOverlay widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.progressOverlay.md) - display a progress indicator over an element.
 
-*Note:* All usosWidgets are [jQuery-UI widgets](http://api.jqueryui.com/jQuery.widget/).
+### .usosForms()
+
+These plugins simplify the work with **usosValue widgets**.
+
+  * `.usosForms('findValueWidgets')` - *(undocumented beta)*
+  * `.usosForms('value', [...])` - *(undocumented beta)*
+  * `.usosForms('enable')` - *(undocumented beta)*
+  * `.usosForms('disable')` - *(undocumented beta)*
+  * `.usosForms('focus')` - *(undocumented beta)*
+  * `.usosForms('showErrors', [...])` - *(undocumented beta)*
+  * `.usosForms('hideErrors')` - *(undocumented beta)*
+  * `.usosForms('cumulativeValues', [...])` - *(undocumented beta)*
+  * `.usosForms('cumulativeFlatValues')` - *(undocumented beta)*
+ 

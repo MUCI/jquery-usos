@@ -511,7 +511,7 @@
 						var newRules = [];
 						var i;
 						for (i=0; i<mydata.currentOrder.length; i++) {
-							if ($.inArray(mydata.currentOrder[i].column, clickedColumns) != -1)
+							if ($.inArray(mydata.currentOrder[i].column, clickedColumns) !== -1)
 								references[mydata.currentOrder[i].column] = mydata.currentOrder[i];
 							else
 								newRules.push(mydata.currentOrder[i]);

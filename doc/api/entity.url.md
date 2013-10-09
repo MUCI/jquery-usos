@@ -15,7 +15,6 @@ How to call it
 
   * `$.usosEntity.url('entity/users/user', user_id)`
   * `$.usosEntity.url('entity/fac/faculty', fac_id)`
-  * `$.usosEntity.url('entity/slips/template', slip_id)`
   * etc.
 
 It should work with all entities described in the

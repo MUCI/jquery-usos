@@ -92,7 +92,26 @@ proper format recognized by USOS API.
 
 ### success / error
 
-*Optional.* These work the same as in `jQuery.ajax` call.
+*Optional.* Similar to the success/error handlers of the `jQuery.ajax` call,
+but there are differences:
+
+  * Both handlers have the same signature: `function(response)`, where
+    `response` is **always** an Object.
+  * In case of **success** (HTTP 200), response contains the parsed USOS API
+    response. The same response will be *resolved* into the returned *Promise
+    object*.
+  * In case of **error** (HTTP 4xx), response contains the parsed USOS API
+    error response. The same response will be *rejected* into the returned
+    *Promise object*. You should pass such response to
+    `.usosForms('showErrors', response)` or `$.usosCore.panic`.
+  * In case of **server error** (HTTP 5xx), response contains a "fake" object
+    with the `message` field. The same response will be *rejected* into the
+    returned *Promise object*. You should pass such response to
+    `.usosForms('showErrors', response)` or `$.usosCore.panic`.
+
+*Note:* If you're not using `syncMode` (in most cases you won't), then it is
+advised to use the returned *Promise object* instead of defining success/error
+callbacks.
 
 ### syncMode
 
