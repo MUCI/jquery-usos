@@ -5,15 +5,15 @@ http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos
 Provided that you have a development USOSweb VM running at
 http://xusosweb.rygielski.net/.
 
-These resources WILL NOT be loaded from your local VM (they will be loaded from
-jsfiddle-provided locations):
+These resources WILL NOT be loaded from your local VM (they are provided
+by jsfiddle itself):
    - http://xusosweb.rygielski.net/js/jquery-1.9.1.js
    - http://xusosweb.rygielski.net/js/jquery-migrate-1.1.0.js
    - http://xusosweb.rygielski.net/js/jquery-ui-1.10.1.custom.js
 
 ---
  name: jQuery-USOS Debug
- description: Used for debugging. Resources are loaded from local USOSweb VM.
+ description: Used for debugging. Resources are loaded from my local USOSweb VM.
  authors:
    - Wojciech Rygielski
  resources:
@@ -24,14 +24,19 @@ jsfiddle-provided locations):
    - http://xusosweb.rygielski.net/js/jquery-usos/jquery.textext.1.3.1.js
    - http://xusosweb.rygielski.net/js/jquery-usos/jquery.ba-bbq-1.2.1.js
    - http://xusosweb.rygielski.net/js/jquery-usos/jquery.colResizable-1.3.min.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/apitable.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/_apitable.js
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/core.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/utils.js
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/entity.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/utils.js
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/forms.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.tip.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/value.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget._value.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.selectbox.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.textbox.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.checkbox.js
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.selector.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.notice.js
    - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.progressOverlay.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.notice.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.tip.js
  normalize_css: no
  ...
