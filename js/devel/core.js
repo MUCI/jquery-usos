@@ -365,7 +365,7 @@
 				"Być może w trakcie, gdy ją oglądałeś, utraciłeś uprawnienia do wykonania akcji, " +
 				"którą chciałeś wykonać.",
 				"If the notice displayed above is vague, then we advise you to refresh the page. " +
-				"Perhaps you have just lost permissions to perform the action you've been tring to " +
+				"Perhaps you have just lost permissions to perform the action you've been trying to " +
 				"perform."
 			)));
 			var refresh = $("<a class='ua-link'>")
@@ -474,9 +474,35 @@
 		setTimeout(showIt, showDelay);
 	};
 	
+	var _usosValueForward = function(funcName, type) {
+		return function() {
+			var widget;
+			var myArgs = arguments;
+			
+			/* getter */
+			if ((type == 'getter') || ((type == 'auto') && (arguments.length == 0))) {
+				var ret = undefined;
+				this.each(function() {
+					widget = $(this).data("usosValue");
+					ret = widget[funcName].apply(widget, myArgs);
+					return false; // break
+				});
+				return ret;
+			}
+			
+			/* setter */
+				
+			return this.each(function(i) {
+				widget = $(this).data('usosValue');
+				widget[funcName].apply(widget, myArgs);
+			});
+		};
+	};
+	
 	$[NS] = {
 		_getSettings: function() { return mydata.settings; },
 		_console: fixedConsole,
+		_usosValueForward: _usosValueForward,
 		
 		init: init,
 		usosapiFetch: usosapiFetch,

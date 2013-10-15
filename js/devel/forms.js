@@ -1,50 +1,12 @@
-/* The "00-" prefix is for ordering. Widgets need to be initialized in
- * alphabetical order! */
-
 (function($) {
 	
 	"use strict";
 	
 	var NS = "usosForms";
 	
-	var _forward = function(funcName, type) {
-		return function() {
-			var widget;
-			var myArgs = arguments;
-			
-			/* getter */
-			if ((type == 'getter') || ((type == 'auto') && (arguments.length == 0))) {
-				var ret = undefined;
-				this.each(function() {
-					widget = $(this).data("usosValue");
-					ret = widget[funcName].apply(widget, myArgs);
-					return false; // break
-				});
-				return ret;
-			}
-			
-			/* setter */
-				
-			return this.each(function(i) {
-				widget = $(this).data('usosValue');
-				widget[funcName].apply(widget, myArgs);
-			});
-		};
-	};
-	
 	var FN = {
 		
-		/* Public usosValue methods. */
-		
-		value: _forward("value", "auto"),
-		enable: _forward("enable", "setter"),
-		disable: _forward("disable", "setter"),
-		focus: _forward("focus", "setter"),
-		
-		/* The rest of the methods are not directly mapped to public
-		 * usosValue methods. */
-		
-		hideErrors: _forward("_hideErrors", "setter"),
+		hideErrors: $.usosCore._usosValueForward("_hideErrors", "setter"),
 		
 		/**
 		 * @memberOf $.fn.usosForms
@@ -94,7 +56,7 @@
 			return false;
 		},
 		
-		cumulativeFlatValues: function() {
+		flatValues: function() {
 			
 			/* getter only */
 			
@@ -107,7 +69,7 @@
 			return results;
 		},
 		
-		cumulativeValues: function() {
+		values: function() {
 			
 			/* getter */
 			if (arguments.length == 0) {

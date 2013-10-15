@@ -2,7 +2,7 @@
 	
 	"use strict";
 
-	$.widget('usosWidgets.usosTextbox', $.usosWidgets.usosValue, {
+	$.widget('usosWidgets.usosTextbox', $.usosWidgets._usosValue, {
 		options: {
 			value: '',
 			placeholder: null,

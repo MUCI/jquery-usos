@@ -2,9 +2,10 @@
 	
 	"use strict";
 
-	$.widget('usosWidgets.usosValue', {
+	$.widget('usosWidgets._usosValue', {
 		options: {
-			'name': null
+			'name': null,
+			'value': null
 		},
 		
 		_init: function() {

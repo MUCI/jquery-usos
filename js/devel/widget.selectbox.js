@@ -2,7 +2,7 @@
 	
 	"use strict";
 
-	$.widget('usosWidgets.usosSelectbox', $.usosWidgets.usosValue, {
+	$.widget('usosWidgets.usosSelectbox', $.usosWidgets._usosValue, {
 		options: {
 			width: "300px",
 			value: '',
@@ -36,11 +36,11 @@
 		},
 		
 		_getOptionValue: function(option) {
-			if (option.data('value') !== undefined) {
+			if ($(option).data('value') !== undefined) {
 				// For non-string values
-				return option.data('value');
+				return $(option).data('value');
 			} else {
-				return option.attr('value');
+				return $(option).attr('value');
 			}
 		},
 		

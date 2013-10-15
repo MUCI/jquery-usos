@@ -343,7 +343,7 @@
 		}
 	};
 	
-	$.widget('usosWidgets.usosSelector', $.usosWidgets.usosValue, {
+	$.widget('usosWidgets.usosSelector', $.usosWidgets._usosValue, {
 		options: {
 			entity: null,
 			source_id: "default",

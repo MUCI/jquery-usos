@@ -2,7 +2,7 @@
 	
 	"use strict";
 
-	$.widget('usosWidgets.usosCheckbox', $.usosWidgets.usosValue, {
+	$.widget('usosWidgets.usosCheckbox', $.usosWidgets._usosValue, {
 		options: {
 			value: false,
 			caption: ""
