@@ -3,6 +3,17 @@
 
 Utility functions for working with [usosValue](widget.value.md) AJAX forms.
 
+  * [showErrors(response)](#showerrorsresponse) - display USOS API form errors.
+  * [hideErrors()](#hideerrors) - hide previously shown errors.
+  * [findValueWidgets()](#findvaluewidgets) - find topmost *usosValue* widgets.
+  * [values(...)](#values) - cumulative get/set many *usosValues*. 
+  * [flatValues()](#flatValues) - get flat values (for USOS API input).
+
+
+Demos
+-----
+
+  * [usosForms Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/forms)
 
 Use case example
 ----------------

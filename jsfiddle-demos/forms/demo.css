@@ -1,0 +1,19 @@
+body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+#myForm {
+    border-spacing: 1px;
+    border: 1px solid #aaa;
+    margin-bottom: 10px;
+}
+#myForm > tbody > tr > td {
+    background: #e4e4e4;
+    padding: 5px 8px;
+    font-size: 13px;
+}
+#myForm > tbody > tr > td:first-child {
+    background: #d8d8d8;
+    text-align: right;
+}

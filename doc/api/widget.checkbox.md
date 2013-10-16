@@ -8,9 +8,15 @@ Screenshot
 
 ![Example usosCheckbox widget](http://i.imgur.com/BRETgVT.png)
 
+
+Demos
+-----
+
+  * [usosForms Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/forms)
+
+
 Example
 -------
-
 
 ```javascript
 $("#container").append($("<div>").usosCheckbox());

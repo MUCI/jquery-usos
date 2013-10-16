@@ -4,9 +4,15 @@ usosTextbox widget
 This widget simply displays a textbox - `<input type='text'>` or `<textarea>`
 (depending on the **multiline** option).
 
+
+Demos
+-----
+
+  * [usosForms Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/forms)
+
+
 Example
 -------
-
 
 ```javascript
 $("#container").append($("<div>").usosTextbox({

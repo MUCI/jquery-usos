@@ -3,9 +3,15 @@ usosSelectbox widget
 
 This widget simply displays a `<select>` input.
 
+
+Demos
+-----
+
+  * [usosForms Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/forms)
+
+
 Example
 -------
-
 
 ```javascript
 $("#container").append($("<div>").usosSelectbox({
