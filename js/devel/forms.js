@@ -13,10 +13,12 @@
 		 */
 		showErrors: function(response) {
 			if ((!response) || (!response.user_messages)) {
+				$.usosCore.panic(response);
 				return false;
 			}
 			var fieldMessages = response.user_messages.fields;
 			if (!fieldMessages) {
+				$.usosCore.panic(response);
 				return false;
 			}
 			

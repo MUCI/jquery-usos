@@ -71,5 +71,3 @@ API
 ### Other
 
   * [.usosForms(...)](https://github.com/MUCI/jquery-usos/blob/master/doc/api/forms.md) - utility functions for working with **usosValue forms** (i.e. server-side validation).
-
- 

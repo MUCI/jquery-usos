@@ -1,6 +1,10 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.1.1** - *2013-10-16*
+
+    * Minor bug fixed in the `.usosForms('showErrors', response)` function.
+
   * **Version 1.1** - *2013-10-16*
   
     * Added support for forms and server-side validation.
