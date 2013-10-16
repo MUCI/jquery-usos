@@ -38,6 +38,9 @@ $('#course').usosSelector({
 Options
 -------
 
+  * All inherited options of the [usosValue widget](widget.value.md), in particular:
+    * **value** - Initial value for the selector. The default is `null` (for
+      non-multi widgets) or an empty list (for multi widgets).
   * **entity** - **Required.** Which entity you want to search for? Currently
     supported values are:
     * Users - `entity/users/user`
@@ -53,8 +56,6 @@ Options
     * Courses - `services/courses/search`
     * Faculties - `services/fac/search`
     * Slip templates - `services/slips/search_templates`
-  * **value** - Initial value for the selector. The default is `null` (for non-multi
-    widgets) or an empty list (for multi widgets).
   * **width** *(default: `300px`)* - The width of the widget.
   * **change** - A function to be called upon `usosselector:change` event.
   * **source_id** - If you want to use non-default USOS API installation
@@ -63,13 +64,11 @@ Options
 Methods
 -------
 
-  * `option()`, `option(optionName)`, `option(optionName, value)`, `option(options)` -
-    see [here](http://api.jqueryui.com/jQuery.widget/#method-option).
-  * `destroy()` - see [here](http://api.jqueryui.com/jQuery.widget/#method-destroy)
-  * `value()` - get the current value of the selector:
-    * For non-multi widgets this will be either *null* or *a string*.
-    * For multi widgets this will be *a list*.
-  * `value(newValue)` - set the current value of the selector. This will often
+  * All inherited options of the [usosValue widget](widget.value.md), in particular:
+    * `value()` - get the current value of the selector:
+      * For non-multi widgets this will be either *null* or *a string*.
+      * For multi widgets this will be *a list*.
+    * `value(newValue)` - set the current value of the selector. This will often
     start an AJAX request in the background, to determine display name(s) from
     the given ID(s).
 

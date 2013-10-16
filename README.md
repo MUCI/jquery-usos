@@ -57,11 +57,19 @@ API
   * [$.usosUtils.makeParagraphs](https://github.com/MUCI/jquery-usos/blob/master/doc/api/utils.makeParagraphs.md) - sanitize multi-line user-supplied input.
   * [$.usosUtils.requireFields](https://github.com/MUCI/jquery-usos/blob/master/doc/api/utils.requireFields.md) - verify signatures of complex input objects.
 
-### $.usosWidgets
+### jQuery-UI widgets ([see here](http://api.jqueryui.com/jQuery.widget/))
 
-  * [usosSelector widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.selector.md) - search for an entity and get its ID.
+  * [usosValue widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.value.md) - a base class for all widgets which hold a **value**.
+    * [usosSelector widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.selector.md) - allow the user to search for an entity and get its ID.
+    * [usosCheckbox widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.checkbox.md) - *usosValue* equivalent of `<input type='checkbox'>` with a label.
+    * [usosSelectbox widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.selectbox.md) - *usosValue* equivalent of `<select>` input.
+    * [usosTextbox widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.textbox.md) - *usosValue* equivalent of `<input type='text'>` and `<textarea>` inputs.
   * [usosNotice widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.notice.md) - display notices or errors on form elements.
   * [usosTip widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.tip.md) - display "info" icon with a message on hover.
   * [usosProgressOverlay widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.progressOverlay.md) - display a progress indicator over an element.
 
-*Note:* All usosWidgets are [jQuery-UI widgets](http://api.jqueryui.com/jQuery.widget/).
+### Other
+
+  * [.usosForms(...)](https://github.com/MUCI/jquery-usos/blob/master/doc/api/forms.md) - utility functions for working with **usosValue forms** (i.e. server-side validation).
+
+ 

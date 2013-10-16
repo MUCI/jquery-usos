@@ -27,7 +27,7 @@ Or, using one of the forms of the **static constructor**:
   * `$.usosWidgets.usosTip.create(langdict)` - *HTML!*
   * `$.usosWidgets.usosTip.create("Po polsku", "In English")` - *HTML!*
   * `$.usosWidgets.usosTip.create(jQuery_object)`
-  * `$.usosWidgets.usosTip.create(function)` - *see the **content** option below!*
+  * `$.usosWidgets.usosTip.create(function)` - *see the options below!*
   
 Examples
 --------

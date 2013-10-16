@@ -21,6 +21,9 @@
 			case 'entity/slips/template':
 				add("tpl_id", arguments[1]);
 				break;
+			case 'entity/progs/programme':
+				add("programme_id", arguments[1]);
+				break;
 			default:
 				throw "Unknown entity: " + entityCode;
 		}
@@ -50,6 +53,12 @@
 		var url;
 		var e;
 		var entityCode = args[0];
+		if ((args[1] === null) || (args[1] === undefined)) {
+			return $("<span class='ua-note'>").text($.usosCore.lang(
+				"(brak danych)",
+				"(no data)"
+			));
+		}
 		switch (entityCode) {
 			case 'entity/users/user':
 				e = $.usosUtils.requireFields(args[1], "id|first_name|last_name");
@@ -60,6 +69,11 @@
 			case 'entity/slips/template':
 				e = $.usosUtils.requireFields(args[1], "id|name");
 				$a.text($.usosCore.lang(e.name));
+				url = _getEntityURL(entityCode, e.id);
+				break;
+			case 'entity/progs/programme':
+				e = $.usosUtils.requireFields(args[1], "id|description");
+				$a.text($.usosCore.lang(e.description));
 				url = _getEntityURL(entityCode, e.id);
 				break;
 			default:

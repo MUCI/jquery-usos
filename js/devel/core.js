@@ -143,10 +143,22 @@
 						options.syncObject.lastReceivedRequestId = requestId;
 					}
 					
-					if (options.error !== null) {
-						options.error(xhr, errorCode, errorMessage);
+					var response;
+					
+					try {
+						if (xhr && xhr.responseText) {
+							response = $.parseJSON(xhr.responseText);
+						} else {
+							throw "Missing responseText";
+						}
+					} catch (err) {
+						response = {"message": "USOS API communication error."};
+						$.usosCore._console.error("usosapiFetch: Failed to parse the error as JSON: " + err.message);
 					}
-					deferred.reject();
+					if (options.error !== null) {
+						options.error(response);
+					}
+					deferred.reject(response);
 				}
 			});
 			if (options.syncMode == 'noSync') {
@@ -323,31 +335,80 @@
 		return fixedConsole;
 	}();
 	
-	var panic = function() {
+	var panic = function(response) {
 		
-		/* Currently, all the settings are hardcoded. */
+		/**
+		 * Currently, we don't detect if panic was fired as a result of AJAX
+		 * requests being cancelled because the user is nevigating away.
+		 * We don't want the user to see a panic screen in such case, so we'll
+		 * wait a moment for the navigation to complete.
+		 * 
+		 * This can be implemented better in the future. For example, by
+		 * catching the AJAX error (via the arguments) and interpretting it
+		 * appropriately.
+		 */
+		var showDelay = 2000;
 		
-		var settings = {
-			message: {
-				pl: "Wystąpił niespodziewany błąd.",
-				en: "Unexpected error occured."
-			},
-			adviseRefreshing: null, // true, false or null (null = "auto")
-			adviseRepeating: null,
-			adviseCheckingPermissions: null,
-			adviseContactingAdmins: null
-		};
+		var msg = $("<div class='ua-paragraphs ua-container'>");
 		
-		var $msg = $("<div class='ua-paragraphs ua-container'>");
-		$msg.append($("<p style='font-size: 120%; margin-bottom: 25px'>")
-			.append($("<b>")
-				.html($.usosCore.lang(settings.message))
-			)
-		);
-		var $ul = $("<ul>");
-		$msg.append($ul);
-		if (settings.adviseRefreshing !== false) {
-			$ul.append($("<li>")
+		if (typeof response === 'object' && response.user_messages && response.user_messages.fields) {
+			
+			showDelay = 0;
+			
+			$.each(response.user_messages.fields, function(key, message) {
+				msg.append($("<p style='font-size: 120%; line-height: 130%; margin-bottom: 25px'>")
+					.append($("<b>").html($.usosCore.lang(message))
+				));
+			});
+			msg.append($("<p>").text($.usosCore.lang(
+				"Jeśli powyższy komunikat jest niezrozumiały, to zalecamy odświeżyć stronę. " +
+				"Być może w trakcie, gdy ją oglądałeś, utraciłeś uprawnienia do wykonania akcji, " +
+				"którą chciałeś wykonać.",
+				"If the notice displayed above is vague, then we advise you to refresh the page. " +
+				"Perhaps you have just lost permissions to perform the action you've been trying to " +
+				"perform."
+			)));
+			var refresh = $("<a class='ua-link'>")
+				.html($.usosCore.lang("Odśwież stronę", "Reload the page"))
+				.click(function() {
+					window.location.reload(true);
+				});
+			var close = $("<a class='ua-link'>")
+				.html($.usosCore.lang("Zamknij i kontynuuj", "Close and continue"))
+				.click(function() {
+					msg.dialog('close');
+				});
+			msg.append($("<p style='text-align: center; font-size: 120%; margin-top: 20px'>")
+				.append(refresh)
+				.append(" ")
+				.append($("<span class='ua-note'>")
+					.css({
+						'display': 'inline-block',
+						'width': '60px'
+					})
+				)
+				.append(" ")
+				.append(close)
+			);
+			if (mydata.settings.debug) {
+				$.usosCore._console.warn(
+					"Displaying panic screen based on `user_messages` response. " +
+					"Try to use `yourValueInputs.usosForms('showErrors', response)` if possible."
+				);
+			}
+		} else {
+			msg.append($("<p style='font-size: 120%; margin-bottom: 25px'>")
+				.append($("<b>")
+					.html($.usosCore.lang({
+						pl: "Wystąpił niespodziewany błąd.",
+						en: "Unexpected error occured."
+					}))
+				)
+			);
+			var ul = $("<ul>");
+			msg.append(ul);
+		
+			ul.append($("<li>")
 				.html($.usosCore.lang(
 					"<p><b>Najpierw spróbuj odświeżyć stronę.</b> Odwieżenie strony często może pomóc, " +
 					"np. jeśli błąd jest spowodowany automatycznym wylogowaniem po dłuższej nieaktywności.</p>" +
@@ -365,18 +426,14 @@
 						});
 				})
 			);
-		}
-		if (settings.adviseRepeating !== false) {
-			$ul.append($("<li>").html($.usosCore.lang(
+			ul.append($("<li>").html($.usosCore.lang(
 				"Spróbuj ponownie wykonać akcję, która spowodowała wystąpienie błędu. Być może był " +
 				"to jednorazowy błąd spowodowany chwilową utratą połączenia z Internetem?",
 				
 				"Try to repeat the action which you were doing when the error occured. Perhaps it was " +
 				"a one-time network error caused by bad Internet connection?"
 			)));
-		}
-		if (settings.adviseCheckingPermissions !== false) {
-			$ul.append($("<li>").html($.usosCore.lang(
+			ul.append($("<li>").html($.usosCore.lang(
 				"Upewnij się, czy posiadasz odpowiednie uprawnienia. Czy jesteś zalogowany? " +
 				"Być może musisz uzyskać pewne dodatkowe uprawnienia, aby móc wyświetlić stronę " +
 				"lub wykonać akcję, którą właśnie próbowałeś wykonać?",
@@ -384,9 +441,7 @@
 				"Make sure you have proper privileges. Are you signed in? Perhaps, you need to " +
 				"acquire some special privileges before you can view this page or perform this action?"
 			)));
-		}
-		if (settings.adviseContactingAdmins !== false) {
-			$ul.append($("<li>").html($.usosCore.lang(
+			ul.append($("<li>").html($.usosCore.lang(
 				"Jeśli problem będzie się powtarzał, to skontaktuj się z administratorem. Napisz " +
 				"na której stronie i w którym momencie problem wystąpuje, tak aby administrator " +
 				"mógł go dokładniej zbadać.",
@@ -395,19 +450,18 @@
 				"descriptions of where and when the error occurs, so that the administrator " +
 				"will be able to examine it closely."
 			)));
+			msg.append($("<p style='text-align: center; font-size: 120%; margin-top: 20px'>")
+					.html($("<a class='ua-link'>")
+						.html($.usosCore.lang("Zamknij i kontynuuj", "Close and continue"))
+						.click(function() {
+							msg.dialog('close');
+						})
+					)
+				);
 		}
 		
-		$msg.append($("<p style='text-align: center; font-size: 120%; margin-top: 20px'>")
-			.html($("<a class='ua-link'>")
-				.html($.usosCore.lang("Zamknij i kontynuuj", "Close and continue"))
-				.click(function() {
-					$msg.dialog('close');
-				})
-			)
-		);
-		
 		var showIt = function() {
-			$msg.dialog({
+			msg.dialog({
 				dialogClass: "ua-panic-dialog",
 				resizable: false,
 				modal: true,
@@ -417,22 +471,38 @@
 			});
 		};
 		
-		/* 
-		 * Currently, panic is often fired when AJAX requrests are being
-		 * cancelled because the user is nevigating away. We don't want the
-		 * user to see a panic screen in such case, so we'll wait for the
-		 * navigation to complete.
-		 * 
-		 * This can be done better, by catching the AJAX error (via the
-		 * arguments) and interpretting it appropriately.
-		 */
-		
-		setTimeout(showIt, 2000);
+		setTimeout(showIt, showDelay);
+	};
+	
+	var _usosValueForward = function(funcName, type) {
+		return function() {
+			var widget;
+			var myArgs = arguments;
+			
+			/* getter */
+			if ((type == 'getter') || ((type == 'auto') && (arguments.length == 0))) {
+				var ret = undefined;
+				this.each(function() {
+					widget = $(this).data("usosValue");
+					ret = widget[funcName].apply(widget, myArgs);
+					return false; // break
+				});
+				return ret;
+			}
+			
+			/* setter */
+				
+			return this.each(function(i) {
+				widget = $(this).data('usosValue');
+				widget[funcName].apply(widget, myArgs);
+			});
+		};
 	};
 	
 	$[NS] = {
 		_getSettings: function() { return mydata.settings; },
 		_console: fixedConsole,
+		_usosValueForward: _usosValueForward,
 		
 		init: init,
 		usosapiFetch: usosapiFetch,

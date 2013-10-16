@@ -3,9 +3,9 @@ rem * js/jquery.usos-XYZ.min.js file!
 
 rem * This is a simple build script template. I use it to build a new
 rem * version from the sources kept in my copy of the USOSweb project.
-rem * Currently this works in my personal environent only.
+rem * Currently this works in my personal environment only.
 
-set VERSION=1.0.2
+set VERSION=1.1-rc2
 
 set USOSWEB=D:/PRIV/Projekty/usosweb
 set DEST=D:/PRIV/Projekty/jquery-usos
