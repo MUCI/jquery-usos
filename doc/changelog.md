@@ -1,7 +1,7 @@
 jQuery-USOS Change Log
 ======================
 
-  * **Version 1.1-rc2** - *2013-10-16*
+  * **Version 1.1** - *2013-10-16*
   
     * Added support for forms and server-side validation.
       This includes some new widgets
