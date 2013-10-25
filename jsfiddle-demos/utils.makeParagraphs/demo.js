@@ -1,14 +1,16 @@
-$.usosCore.init();
+$(function() {
+	$.usosCore.init();
 
-$(function () {
-    $("#tip").usosTip();
+	$(function () {
+		$("#tip").usosTip();
 
-    var update = function () {
-        var paragraphs = $.usosUtils.makeParagraphs($('textarea').val());
-        $('#result').html(paragraphs);
-        $("#tip").usosTip("option", "content", paragraphs.clone());
-    };
+		var update = function () {
+			var paragraphs = $.usosUtils.makeParagraphs($('textarea').val());
+			$('#result').html(paragraphs);
+			$("#tip").usosTip("option", "content", paragraphs.clone());
+		};
 
-    update();
-    $('textarea').on('keyup', update);
+		update();
+		$('textarea').on('keyup', update);
+	});
 });

@@ -1,26 +1,28 @@
-$.usosCore.init({
-	langpref: "pl",
-	usosAPIs: {
-		'default': {
-			'methodUrl': "http://apps.usos.edu.pl/%s"
-		}
-	},
-	entityURLs: {
-		'entity/fac/faculty': "http://example.com/faculty/${fac_id}"
-	}
-});
-
 $(function() {
-	$.usosCore.usosapiFetch({
-		method: 'services/fac/search',
-		params: {
-			lang: "pl",
-			query: "matemat",
-			fields: "id|name"
+	$.usosCore.init({
+		langpref: "pl",
+		usosAPIs: {
+			'default': {
+				'methodUrl': "http://apps.usos.edu.pl/%s"
+			}
+		},
+		entityURLs: {
+			'entity/fac/faculty': "http://example.com/faculty/${fac_id}"
 		}
-	}).done(function(response) {
-		$.each(response.items, function(_, fac) {
-			$('#result').append($('<li>').html($.usosEntity.link('entity/fac/faculty', fac)));
+	});
+
+	$(function() {
+		$.usosCore.usosapiFetch({
+			method: 'services/fac/search',
+			params: {
+				lang: "pl",
+				query: "matemat",
+				fields: "id|name"
+			}
+		}).done(function(response) {
+			$.each(response.items, function(_, fac) {
+				$('#result').append($('<li>').html($.usosEntity.link('entity/fac/faculty', fac)));
+			});
 		});
 	});
 });
