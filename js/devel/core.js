@@ -41,7 +41,8 @@
 		
 		/** 
 		 * Convert method parameters given by the user to the "final" parameters
-		 * used in the AJAX call. Return an object.
+		 * used in the AJAX call. This method MAY return (1) a dictionary, or
+		 * (2) a FormData object. 
 		 */
 		var _prepare = function(params) {
 			
@@ -49,15 +50,35 @@
 			 * parameters is a file object. */
 			
 			var copy = {};
+			var useFormData = false;
 			$.each(params, function(key, value) {
 				if ($.isArray(value)) {
 					value = value.join("|");
 				} else if (typeof value !== "string") {
-					value = "" + value;
+					if (File && File.prototype.isPrototypeOf(value)) {
+						useFormData = true;
+					} else {
+						value = "" + value;
+					}
 				}
 				copy[key] = value;
 			});
-			return copy;
+			if (!useFormData) {
+				
+				/* None of the parameters are file objects. */
+				
+				return copy;
+			}
+			
+			/* Some of the parameters are file objects. We will transform the object
+			 * into a FormData object. (We could do that in either case, but not all browsers
+			 * support file and FormData objects.) */
+				
+			var formData = new FormData();
+			$.each(copy, function(key, value) {
+				formData.append(key, value);
+			});
+			return formData;
 		};
 		
 		return function(opts) {
@@ -166,7 +187,9 @@
 				deferred.reject(response);
 			};
 			
-			/* Prepare AJAX parameters. */
+			/* Prepare the request data. This can be either a simple dictionary, or
+			 * a FormData object. Both cases need to be handled differently. See
+			 * http://stackoverflow.com/a/5976031/1010931 for the details. */
 			
 			var ajaxParams = {
 				type: 'POST',
@@ -176,6 +199,10 @@
 				success: success,
 				error: error
 			};
+			if (FormData && FormData.prototype.isPrototypeOf(ajaxParams.data)) {
+				ajaxParams.contentType = false;
+				ajaxParams.processData = false;
+			}
 			
 			/* Make the call. */
 			

@@ -86,9 +86,15 @@ the `usosAPIs` option in [$.usosCore.init](core.init.md)).
 
 ### params
 
-*Optional.* Dictionary of all the method parameter values. The values do *not*
-have to be strings. All complex structures will be converted internally to a
-proper format recognized by USOS API.
+*Optional.* Dictionary of all the method parameter values.
+
+The values do *not* have to be strings.
+
+  * All non-string structures will be converted internally to a proper format
+    recognized by USOS API (e.g. a pipe-separated list).
+  * If any of the values is a `File` object, then all the parameters will be
+    posted using the `FormData` object. This is useful for some USOS API methods
+    which accept files.
 
 ### success / error
 

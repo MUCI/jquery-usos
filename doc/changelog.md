@@ -1,6 +1,12 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Beta branch** - *(unpublished)*
+
+    * **1.1.1.1** -
+      [$.usosCore.usosapiFetch](api/core.usosapiFetch.md) now supports
+      `File`-type parameters.
+
   * **Version 1.1.1** - *2013-10-16*
 
     * Minor bug fixed in the `.usosForms('showErrors', response)` function.
