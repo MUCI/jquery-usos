@@ -39,7 +39,15 @@
 	
 	var usosapiFetch = function() {
 		
-		var _flatten = function(params) {
+		/** 
+		 * Convert method parameters given by the user to the "final" parameters
+		 * used in the AJAX call. Return an object.
+		 */
+		var _prepare = function(params) {
+			
+			/* Make a "flat" copy of the parameters. Determine if any of the
+			 * parameters is a file object. */
+			
 			var copy = {};
 			$.each(params, function(key, value) {
 				if ($.isArray(value)) {
@@ -99,68 +107,84 @@
 			
 			var params = $.extend({}, options.params, mydata.settings.usosAPIs[options.source_id].extraParams);
 			
-			/* Make the call. */
+			/* Prepare the callbacks. */
 			
 			var deferred = $.Deferred();
-			$.ajax({
+			
+			var success = function(data, textStatus, jqXHR) {
+				if (options.syncObject !== null) {
+					if (options.syncObject.lastReceivedRequestId > requestId) {
+						
+						/* This response is overdue. We already received other response with
+						 * greater requestId. We will ignore this response. */
+						
+						return;
+					}
+					if (
+						(options.syncMode == "receiveLast") &&
+						requestId < options.syncObject.lastIssuedRequestId
+					) {
+						
+						/* This response is obolete. A request with greater requestId was
+						 * already issued. We will ignore this response. */
+						
+						return;
+					}
+					options.syncObject.lastReceivedRequestId = requestId;
+				}
+				
+				if (options.success !== null) {
+					options.success(data);
+				}
+				deferred.resolve(data);
+			};
+			
+			var error = function(xhr, errorCode, errorMessage) {
+				if (options.syncObject !== null) {
+					if (options.syncObject.lastReceivedRequestId > requestId) {
+						/* As above. */
+						return;
+					}
+					options.syncObject.lastReceivedRequestId = requestId;
+				}
+				
+				var response;
+				
+				try {
+					if (xhr && xhr.responseText) {
+						response = $.parseJSON(xhr.responseText);
+					} else {
+						throw "Missing responseText";
+					}
+				} catch (err) {
+					response = {"message": "USOS API communication error."};
+					$.usosCore._console.error("usosapiFetch: Failed to parse the error response: " + err.message);
+				}
+				if (options.error !== null) {
+					options.error(response);
+				}
+				deferred.reject(response);
+			};
+			
+			/* Prepare AJAX parameters. */
+			
+			var ajaxParams = {
 				type: 'POST',
 				url: url,
-				data: _flatten(params),
+				data: _prepare(params),
 				dataType: 'json',
-				success: function(data, textStatus, jqXHR) {
-					if (options.syncObject !== null) {
-						if (options.syncObject.lastReceivedRequestId > requestId) {
-							
-							/* This response is overdue. We already received other response with
-							 * greater requestId. We will ignore this response. */
-							
-							return;
-						}
-						if (
-							(options.syncMode == "receiveLast") &&
-							requestId < options.syncObject.lastIssuedRequestId
-						) {
-							
-							/* This response is obolete. A request with greater requestId was
-							 * already issued. We will ignore this response. */
-							
-							return;
-						}
-						options.syncObject.lastReceivedRequestId = requestId;
-					}
-					
-					if (options.success !== null) {
-						options.success(data);
-					}
-					deferred.resolve(data);
-				},
-				error: function(xhr, errorCode, errorMessage) {
-					if (options.syncObject !== null) {
-						if (options.syncObject.lastReceivedRequestId > requestId) {
-							/* As above. */
-							return;
-						}
-						options.syncObject.lastReceivedRequestId = requestId;
-					}
-					
-					var response;
-					
-					try {
-						if (xhr && xhr.responseText) {
-							response = $.parseJSON(xhr.responseText);
-						} else {
-							throw "Missing responseText";
-						}
-					} catch (err) {
-						response = {"message": "USOS API communication error."};
-						$.usosCore._console.error("usosapiFetch: Failed to parse the error as JSON: " + err.message);
-					}
-					if (options.error !== null) {
-						options.error(response);
-					}
-					deferred.reject(response);
-				}
-			});
+				success: success,
+				error: error
+			};
+			
+			/* Make the call. */
+			
+			$.ajax(ajaxParams);
+			
+			/* Return the Promise object only when syncMode is left at the default
+			 * 'noSync' value. (The Deferred framework is not compatible with all the
+			 * other syncModes.) */
+			
 			if (options.syncMode == 'noSync') {
 				return deferred.promise();
 			}
@@ -509,5 +533,5 @@
 		lang: lang,
 		panic: panic
 	};
-	
+
 })(jQuery);
