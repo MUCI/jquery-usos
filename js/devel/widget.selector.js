@@ -69,11 +69,17 @@
 					},
 					tagRenderer: function(item) {
 						/* 'search' method returns 'match', 'users' method returns first_name and last_name. */
+						var label;
 						if (item.match) {
-							return $("<span>").html(item.match).text();
+							label = $("<span>").html(item.match).text();
 						} else {
-							return item.first_name + " " + item.last_name;
+							label = item.first_name + " " + item.last_name;
 						}
+						return $("<span>")
+							.text(label)
+							.usosUserTip({
+								user_id: item.user_id || item.id
+							});
 					}
 				},
 				

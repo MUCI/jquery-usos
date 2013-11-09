@@ -5,7 +5,8 @@
 	var NS = "usosCore";
 	
 	var mydata = {
-		settings: null
+		settings: null,
+		preloaderElement: null
 	};
 	
 	var init = function(options) {
@@ -37,6 +38,10 @@
 			}
 		};
 		mydata.settings = $.extend(true, {}, defaultSettings, options);
+		mydata.preloaderElement = $("<div style='display: none'>");
+		$(function() {
+			$(document.body).append(mydata.preloaderElement);
+		});
 	};
 	
 	var _getExtraParams = function(source_id, method) {
@@ -594,10 +599,19 @@
 		};
 	};
 	
+	/**
+	 * Attach the jQuery element(s) to an invisible element in the DOM.
+	 * Useful for prefetching images in <a hrefs>.
+	 */
+	var _preload = function(elements) {
+		mydata.preloaderElement.append(elements);
+	};
+	
 	$[NS] = {
 		_getSettings: function() { return mydata.settings; },
 		_console: fixedConsole,
 		_usosValueForward: _usosValueForward,
+		_preload: _preload,
 		
 		init: init,
 		usosapiFetch: usosapiFetch,

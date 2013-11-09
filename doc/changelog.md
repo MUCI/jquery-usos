@@ -1,8 +1,12 @@
 jQuery-USOS Change Log
 ======================
 
-  * **Beta branch** - *(unpublished)*
+  * **Beta branch** - *(unreleased - things may change here!)*
 
+    * **1.1.1.3**
+      * usosUserTip widget added.
+      * $.usosEntity.link and $.usosEntity.label now make use of the usosUserTip
+        widget (when used with `entity/users/user`). 
     * **1.1.1.2**
       * $.usosCore.usosapiUrl method added.
       * $.usosCore.init's `extraParams` deprecated. `extraParamsForPOST` and

@@ -271,20 +271,16 @@ textarea.ua-form { height: 40px; resize: vertical; }
 
 hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; border-bottom: 1px dotted #bbb; height: 1px; margin: 3px 0 4px 0; }
 
+/* Tooltip: Base */
+
 .ua-tooltip {
 	border-radius: 0px; 
-	/*border: 1px solid #555;
-	background: #ffffe1;
-	color: #000;*/
 }
 .ua-tooltip .tooltipster-content {
 	font-family: Tahoma, Arial, sans-serif;
 	font-size: 12px;
 	line-height: 16px;
 	padding: 7px 10px 8px 10px;
-}
-.ua-tooltip .tooltipster-content b {
-	color: #444;
 }
 .ua-tooltip .tooltipster-content p { margin: 10px 0; }
 .ua-tooltip .tooltipster-content p:first-child { margin-top: 0; }
@@ -293,11 +289,20 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ua-tooltip .tooltipster-content ul li { margin: 5px 0; }
 .ua-tooltip .tooltipster-content ul li:first-child { margin-top: 0; }
 .ua-tooltip .tooltipster-content ul li:last-child { margin-bottom: 3px; }
+
+/* Tooltip: info subclass */
+
 .ua-tooltip.ua-tooltip-info {
 	border: 1px solid #555;
 	background: #ffffe1;
 	color: #000;
 }
+.ua-tooltip.ua-tooltip-info .tooltipster-content b {
+	color: #444;
+}
+
+/* Tooltip: error subclass */
+
 .ua-tooltip.ua-tooltip-error {
 	border: 1px solid #fff;
 	cursor: pointer;
@@ -306,6 +311,70 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
 .ua-tooltip.ua-tooltip-error .ua-note { color: #ddd; }
+
+/* Tooltip: userTip subclass */
+
+.ua-tooltip.ua-tooltip-userbadge {
+	border: 1px solid #8c8c8c;
+	background: #fff;
+	box-shadow: 0 4px 5px rgba(0,0,0,0.4);
+}
+.ua-tooltip.ua-tooltip-userbadge .tooltipster-content {
+	padding: 5px;
+}
+.ua-tooltip.ua-tooltip-userbadge .ua-loading {
+	color: #444;
+	font-size: 11px;
+	padding: 0 3px;
+}
+.ua-tooltip.ua-tooltip-userbadge table {
+	border-spacing: 0;
+	width: 355px;
+}
+.ua-tooltip.ua-tooltip-userbadge td {
+	vertical-align: top;
+	text-align: left;
+}
+.ua-tooltip.ua-tooltip-userbadge .ua-td1 {
+	width: 108px;
+}
+.ua-tooltip.ua-tooltip-userbadge .ua-td2 {
+	padding: 5px 0 3px 8px;
+}
+.ua-tooltip.ua-tooltip-userbadge .ua-photo {
+	width: 100px;
+	height: 100px;
+	padding: 3px;
+	border: 1px solid #d1d1d1;
+}
+.ua-tooltip.ua-tooltip-userbadge .ua-name a {
+	cursor: pointer;
+	font-weight: bold;
+	color: #3b5998;
+	text-decoration: none;
+	font-size: 13px;
+}
+.ua-tooltip.ua-tooltip-userbadge .ua-name a:hover {
+	text-decoration: underline;
+}
+.ua-tooltip.ua-tooltip-userbadge .ua-functions {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	font-size: 11px;
+	line-height: 1.2em;
+}
+.ua-tooltip.ua-tooltip-userbadge .ua-functions li {
+	padding-top: 5px;
+	opacity: 0.85;
+}
+.ua-tooltip.ua-tooltip-userbadge .ua-functions li.ua-commons {
+	opacity: 1;
+}
+.ua-tooltip.ua-tooltip-userbadge .ua-functions li.ua-commons a {
+	color: #3b5998;
+	text-decoration: none;
+}
 
 .ua-small-button { width: 20px !important; height: 20px !important; }
 

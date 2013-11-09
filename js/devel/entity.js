@@ -63,6 +63,9 @@
 			case 'entity/users/user':
 				e = $.usosUtils.requireFields(args[1], "id|first_name|last_name");
 				$a.text(e.first_name + " " + e.last_name);
+				$a.usosUserTip({
+					user_id: e.id
+				});
 				url = _getEntityURL(entityCode, e.id);
 				break;
 			case 'entity/fac/faculty':
