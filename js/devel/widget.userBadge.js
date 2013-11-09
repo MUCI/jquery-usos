@@ -4,12 +4,12 @@
 	
 	var badges = {};
 	
-	$.widget('usosWidgets.usosUserTip', {
+	$.widget('usosWidgets.usosUserBadge', {
 		options: {
 			user_id: null,
 			position: "right"
 		},
-		widgetEventPrefix: "usosusertip:",
+		widgetEventPrefix: "usosUserBadge:",
 		
 		_create: function() {
 			

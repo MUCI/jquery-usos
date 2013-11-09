@@ -77,8 +77,9 @@
 						}
 						return $("<span>")
 							.text(label)
-							.usosUserTip({
-								user_id: item.user_id || item.id
+							.usosUserBadge({
+								user_id: item.user_id || item.id,
+								position: "top"
 							});
 					}
 				},

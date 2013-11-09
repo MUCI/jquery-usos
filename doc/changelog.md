@@ -3,6 +3,8 @@ jQuery-USOS Change Log
 
   * **Beta branch** - *(unreleased - things may change here!)*
 
+    * **1.1.1.4**
+      * Renamed usosUserTip widget to usosUserBadge.
     * **1.1.1.3**
       * usosUserTip widget added.
       * $.usosEntity.link and $.usosEntity.label now make use of the usosUserTip
