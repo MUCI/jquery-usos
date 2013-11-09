@@ -3,9 +3,13 @@ jQuery-USOS Change Log
 
   * **Beta branch** - *(unpublished)*
 
-    * **1.1.1.1** -
-      [$.usosCore.usosapiFetch](api/core.usosapiFetch.md) now supports
-      `File`-type parameters.
+    * **1.1.1.2**
+      * $.usosCore.usosapiUrl method added.
+      * $.usosCore.init's `extraParams` deprecated. `extraParamsForPOST` and
+        `extraParamsForGET` added instead. 
+    * **1.1.1.1**
+      * [$.usosCore.usosapiFetch](api/core.usosapiFetch.md) now supports
+        `File`-type parameters.
 
   * **Version 1.1.1** - *2013-10-16*
 

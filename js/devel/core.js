@@ -25,7 +25,9 @@
 			usosAPIs: {
 				"default": {
 					methodUrl: null,  // e.g. "https://usosapps.usos.edu.pl/%s"
-					extraParams: {}
+					extraParamsForPOST: {},
+					extraParamsForGET: {}
+					/* + deprecated: extraParams (alias for extraParamsForPOST) */
 				}
 			},
 			entityURLs: {
@@ -37,186 +39,228 @@
 		mydata.settings = $.extend(true, {}, defaultSettings, options);
 	};
 	
-	var usosapiFetch = function() {
-		
-		/** 
-		 * Convert method parameters given by the user to the "final" parameters
-		 * used in the AJAX call. This method MAY return (1) a dictionary, or
-		 * (2) a FormData object. 
-		 */
-		var _prepare = function(params) {
-			
-			/* Make a "flat" copy of the parameters. Determine if any of the
-			 * parameters is a file object. */
-			
-			var copy = {};
-			var useFormData = false;
-			$.each(params, function(key, value) {
-				if ($.isArray(value)) {
-					value = value.join("|");
-				} else if (typeof value !== "string") {
-					if (File && File.prototype.isPrototypeOf(value)) {
-						useFormData = true;
-					} else {
-						value = "" + value;
-					}
-				}
-				copy[key] = value;
-			});
-			if (!useFormData) {
-				
-				/* None of the parameters are file objects. */
-				
-				return copy;
+	var _getExtraParams = function(source_id, method) {
+		var api = mydata.settings.usosAPIs[source_id];
+		if (method == 'POST') {
+			var ret = api.extraParams; // deprecated, backward-compatibility
+			if (typeof ret === "undefined") {
+				ret = api.extraParamsForPOST;
 			}
-			
-			/* Some of the parameters are file objects. We will transform the object
-			 * into a FormData object. (We could do that in either case, but not all browsers
-			 * support file and FormData objects.) */
-				
-			var formData = new FormData();
-			$.each(copy, function(key, value) {
-				formData.append(key, value);
-			});
-			return formData;
-		};
+			return ret;
+		} else if (method == 'GET') {
+			return api.extraParamsForGET;
+		} else {
+			throw "Invalid method";
+		}
+	};
+	
+	/** 
+	 * Convert method parameters given by the user to the "final" parameters
+	 * used in the AJAX call. This method MAY return (1) a dictionary, or
+	 * (2) a FormData object. 
+	 */
+	var _prepareApiParams = function(params) {
 		
-		return function(opts) {
+		/* Make a "flat" copy of the parameters. Determine if any of the
+		 * parameters is a file object. */
+		
+		var copy = {};
+		var useFormData = false;
+		$.each(params, function(key, value) {
+			if ($.isArray(value)) {
+				value = value.join("|");
+			} else if (typeof value !== "string") {
+				if (File && File.prototype.isPrototypeOf(value)) {
+					useFormData = true;
+				} else {
+					value = "" + value;
+				}
+			}
+			copy[key] = value;
+		});
+		if (!useFormData) {
+			
+			/* None of the parameters are file objects. */
+			
+			return copy;
+		}
+		
+		/* Some of the parameters are file objects. We will transform the object
+		 * into a FormData object. (We could do that in either case, but not all browsers
+		 * support file and FormData objects.) */
+			
+		var formData = new FormData();
+		$.each(copy, function(key, value) {
+			formData.append(key, value);
+		});
+		return formData;
+	};
+	
+	var usosapiUrl = function(opts) {
+		
+		var defaultOptions = {
+			source_id: "default",
+			method: "method_name",
+			params: {}
+		};
+		var options = $.extend({}, defaultOptions, opts);
+		
+		/* Base URL. */
+		
+		var url = mydata.settings.usosAPIs[options.source_id].methodUrl.replace("%s", options.method);
+		
+		/* Append extraParams (overwrite existing params!) defined for the given source_id. */
+		
+		var params = $.extend({}, options.params, _getExtraParams(options.source_id, 'GET'));
+		
+		/* Join the URL and encoded params. */
+		
+		var parts = [];
+		$.each(_prepareApiParams(params), function(key, value) {
+			parts.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+		});
+		if (parts.length > 0) {
+			url += (url.indexOf("?") > -1) ? "&" : "?";
+			url += parts.join("&");
+		}
+		return url;
+	};
+	
+	var usosapiFetch = function(opts) {
 
-			var defaultOptions = {
-				source_id: "default",
-				method: "method_name",
-				params: {},
-				syncMode: "noSync",  // "noSync", "receiveIncrementalFast", "receiveLast"
-				syncObject: null,
-				success: null,
-				error: null
-			};
-			var options = $.extend({}, defaultOptions, opts);
-			
-			/* Verify params (especially those prone for spelling errors). */
-			
-			if (options.syncMode == "noSync") {
-				if (options.syncObject !== null) {
-					throw("syncObject must stay null if syncMode is 'noSync'");
-				}
-			} else if ((options.syncMode == "receiveLast") || (options.syncMode == "receiveIncrementalFast")) {
-				if (options.syncObject === null) {
-					throw("syncObject must be an object if syncMode is other than 'noSync'. Check out the docs!");
-				}
-			} else {
-				throw("Invalid syncMode: " + options.syncMode);
-			}
-			
-			/* If the uses a syncObject, then get the new request id. */
-			
-			var requestId = null;
-			if (options.syncObject !== null) {
-				if (typeof options.syncObject.lastIssuedRequestId === "undefined") {
-					options.syncObject.lastIssuedRequestId = 0;
-					options.syncObject.lastReceivedRequestId = 0;
-				}
-				options.syncObject.lastIssuedRequestId++;
-				requestId = options.syncObject.lastIssuedRequestId;
-			}
-			
-			/* Contruct the method URL for the given source_id and method. */
-			
-			var url = mydata.settings.usosAPIs[options.source_id].methodUrl.replace("%s", options.method);
-			
-			/* Append extraParams (overwrite existing params!) defined for the given source_id. */
-			
-			var params = $.extend({}, options.params, mydata.settings.usosAPIs[options.source_id].extraParams);
-			
-			/* Prepare the callbacks. */
-			
-			var deferred = $.Deferred();
-			
-			var success = function(data, textStatus, jqXHR) {
-				if (options.syncObject !== null) {
-					if (options.syncObject.lastReceivedRequestId > requestId) {
-						
-						/* This response is overdue. We already received other response with
-						 * greater requestId. We will ignore this response. */
-						
-						return;
-					}
-					if (
-						(options.syncMode == "receiveLast") &&
-						requestId < options.syncObject.lastIssuedRequestId
-					) {
-						
-						/* This response is obolete. A request with greater requestId was
-						 * already issued. We will ignore this response. */
-						
-						return;
-					}
-					options.syncObject.lastReceivedRequestId = requestId;
-				}
-				
-				if (options.success !== null) {
-					options.success(data);
-				}
-				deferred.resolve(data);
-			};
-			
-			var error = function(xhr, errorCode, errorMessage) {
-				if (options.syncObject !== null) {
-					if (options.syncObject.lastReceivedRequestId > requestId) {
-						/* As above. */
-						return;
-					}
-					options.syncObject.lastReceivedRequestId = requestId;
-				}
-				
-				var response;
-				
-				try {
-					if (xhr && xhr.responseText) {
-						response = $.parseJSON(xhr.responseText);
-					} else {
-						throw "Missing responseText";
-					}
-				} catch (err) {
-					response = {"message": "USOS API communication error."};
-					$.usosCore._console.error("usosapiFetch: Failed to parse the error response: " + err.message);
-				}
-				if (options.error !== null) {
-					options.error(response);
-				}
-				deferred.reject(response);
-			};
-			
-			/* Prepare the request data. This can be either a simple dictionary, or
-			 * a FormData object. Both cases need to be handled differently. See
-			 * http://stackoverflow.com/a/5976031/1010931 for the details. */
-			
-			var ajaxParams = {
-				type: 'POST',
-				url: url,
-				data: _prepare(params),
-				dataType: 'json',
-				success: success,
-				error: error
-			};
-			if (FormData && FormData.prototype.isPrototypeOf(ajaxParams.data)) {
-				ajaxParams.contentType = false;
-				ajaxParams.processData = false;
-			}
-			
-			/* Make the call. */
-			
-			$.ajax(ajaxParams);
-			
-			/* Return the Promise object only when syncMode is left at the default
-			 * 'noSync' value. (The Deferred framework is not compatible with all the
-			 * other syncModes.) */
-			
-			if (options.syncMode == 'noSync') {
-				return deferred.promise();
-			}
+		var defaultOptions = {
+			source_id: "default",
+			method: "method_name",
+			params: {},
+			syncMode: "noSync",  // "noSync", "receiveIncrementalFast", "receiveLast"
+			syncObject: null,
+			success: null,
+			error: null
 		};
-	}();
+		var options = $.extend({}, defaultOptions, opts);
+		
+		/* Verify params (especially those prone for spelling errors). */
+		
+		if (options.syncMode == "noSync") {
+			if (options.syncObject !== null) {
+				throw("syncObject must stay null if syncMode is 'noSync'");
+			}
+		} else if ((options.syncMode == "receiveLast") || (options.syncMode == "receiveIncrementalFast")) {
+			if (options.syncObject === null) {
+				throw("syncObject must be an object if syncMode is other than 'noSync'. Check out the docs!");
+			}
+		} else {
+			throw("Invalid syncMode: " + options.syncMode);
+		}
+		
+		/* If the uses a syncObject, then get the new request id. */
+		
+		var requestId = null;
+		if (options.syncObject !== null) {
+			if (typeof options.syncObject.lastIssuedRequestId === "undefined") {
+				options.syncObject.lastIssuedRequestId = 0;
+				options.syncObject.lastReceivedRequestId = 0;
+			}
+			options.syncObject.lastIssuedRequestId++;
+			requestId = options.syncObject.lastIssuedRequestId;
+		}
+		
+		/* Contruct the method URL for the given source_id and method. */
+		
+		var url = mydata.settings.usosAPIs[options.source_id].methodUrl.replace("%s", options.method);
+		
+		/* Append extraParams (overwrite existing params!) defined for the given source_id. */
+		
+		var params = $.extend({}, options.params, _getExtraParams(options.source_id, 'POST'));
+		
+		/* Prepare the callbacks. */
+		
+		var deferred = $.Deferred();
+		
+		var success = function(data, textStatus, jqXHR) {
+			if (options.syncObject !== null) {
+				if (options.syncObject.lastReceivedRequestId > requestId) {
+					
+					/* This response is overdue. We already received other response with
+					 * greater requestId. We will ignore this response. */
+					
+					return;
+				}
+				if (
+					(options.syncMode == "receiveLast") &&
+					requestId < options.syncObject.lastIssuedRequestId
+				) {
+					
+					/* This response is obolete. A request with greater requestId was
+					 * already issued. We will ignore this response. */
+					
+					return;
+				}
+				options.syncObject.lastReceivedRequestId = requestId;
+			}
+			
+			if (options.success !== null) {
+				options.success(data);
+			}
+			deferred.resolve(data);
+		};
+		
+		var error = function(xhr, errorCode, errorMessage) {
+			if (options.syncObject !== null) {
+				if (options.syncObject.lastReceivedRequestId > requestId) {
+					/* As above. */
+					return;
+				}
+				options.syncObject.lastReceivedRequestId = requestId;
+			}
+			
+			var response;
+			
+			try {
+				if (xhr && xhr.responseText) {
+					response = $.parseJSON(xhr.responseText);
+				} else {
+					throw "Missing responseText";
+				}
+			} catch (err) {
+				response = {"message": "USOS API communication error."};
+				$.usosCore._console.error("usosapiFetch: Failed to parse the error response: " + err.message);
+			}
+			if (options.error !== null) {
+				options.error(response);
+			}
+			deferred.reject(response);
+		};
+		
+		/* Prepare the request data. This can be either a simple dictionary, or
+		 * a FormData object. Both cases need to be handled differently. See
+		 * http://stackoverflow.com/a/5976031/1010931 for the details. */
+		
+		var ajaxParams = {
+			type: 'POST',
+			url: url,
+			data: _prepareApiParams(params),
+			dataType: 'json',
+			success: success,
+			error: error
+		};
+		if (FormData && FormData.prototype.isPrototypeOf(ajaxParams.data)) {
+			ajaxParams.contentType = false;
+			ajaxParams.processData = false;
+		}
+		
+		/* Make the call. */
+		
+		$.ajax(ajaxParams);
+		
+		/* Return the Promise object only when syncMode is left at the default
+		 * 'noSync' value. (The Deferred framework is not compatible with all the
+		 * other syncModes.) */
+		
+		if (options.syncMode == 'noSync') {
+			return deferred.promise();
+		}
+	};
 	
 	var lang = function() {
 		if (arguments.length == 1) {
@@ -557,6 +601,7 @@
 		
 		init: init,
 		usosapiFetch: usosapiFetch,
+		usosapiUrl: usosapiUrl,
 		lang: lang,
 		panic: panic
 	};
