@@ -12,7 +12,8 @@
 						method: 'services/users/search',
 						paramsProvider: function(query) {
 							return {
-								'name': query
+								'name': query,
+								'num': 4
 							};
 						},
 						itemsExtractor: function(data) {
@@ -50,20 +51,33 @@
 					suggestionRenderer: function(item) {
 						/* Suggestions are feeded from the "search" method which includes
 						 * some additional info. */
-						var $div = $("<div>");
-						$div.append($("<span>").html(item.match));
+						var $div = $(
+							"<div class='ua-usersuggestion'><table><tr>" +
+							"<td class='ua-td1'><img/></td>" +
+							"<td class='ua-td2'><div class='ua-match'></div><div class='ua-tagline'></div></td>" +
+							"</tr></table></div>"
+						);
+						$div.find(".ua-match").html(item.match);
+						$div.find("img").attr("src", $.usosCore._userPhotoUrl(item.user_id || item.id));
 						$.each(item.active_employment_functions, function(_, f) {
-							$div.append(" ").append($("<span class='ua-note'>")
-								.text(
-									"- " + $.usosCore.lang(f['function']) +
-									" (" + $.usosCore.lang(f.faculty.name) + ")"
+							$div.find(".ua-tagline")
+								.append($("<span class='ua-note'>")
+									.text(
+										$.usosCore.lang(f['function']) +
+										" (" + $.usosCore.lang(f.faculty.name) + ")"
+									)
 								)
-							);
+								.append(" ");
 						});
 						$.each(item.active_student_programmes, function(_, f) {
-							$div.append(" ").append($("<span class='ua-note'>")
-								.text("- " + $.usosCore.lang(f.programme.description))
-							);
+							$div.find(".ua-tagline")
+								.append($("<span class='ua-note'>")
+									.text($.usosCore.lang(f.programme.description))
+								)
+								.append(" ");
+						});
+						$div.usosUserBadge({
+							user_id: item.user_id || item.id
 						});
 						return $div;
 					},
@@ -418,7 +432,7 @@
 					prompt: widget._entitySetup.prompt,
 					autocomplete: {
 						dropdown: {
-							maxHeight: "200px",
+							maxHeight: "250px",
 							position:
 								(distanceToBottom > 200) ? "below" :
 								((distanceToTop > distanceToBottom) ? "above" : "below")

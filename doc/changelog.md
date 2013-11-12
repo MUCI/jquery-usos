@@ -3,6 +3,15 @@ jQuery-USOS Change Log
 
   * **Beta branch** - *(unreleased - things may change here!)*
 
+    * **1.1.1.5**
+      * usosTip widget gets new "type" parameter.
+      * usosUserBadge displays privacy note (when viewing ones own badge).
+      * user selector displays photos in suggestions.
+      * $.usosCore.init takes user_id parameter.
+      * $.usosCore.usosapiFetch takes errorOnUnload parameter.
+      * usosTip widget doesn't create an icon when initialized directly on
+        other element (possibly backward incompatible!).
+      * textext and tooltipster libraries were tweaked. Rename them?
     * **1.1.1.4**
       * Renamed usosUserTip widget to usosUserBadge.
     * **1.1.1.3**

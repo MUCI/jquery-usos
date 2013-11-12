@@ -35,7 +35,8 @@
 				"entity/users/user": null,
 				"entity/fac/faculty": null,
 				"entity/slips/template": null
-			}
+			},
+			user_id: null
 		};
 		mydata.settings = $.extend(true, {}, defaultSettings, options);
 		mydata.preloaderElement = $("<div style='display: none'>");
@@ -140,7 +141,8 @@
 			syncMode: "noSync",  // "noSync", "receiveIncrementalFast", "receiveLast"
 			syncObject: null,
 			success: null,
-			error: null
+			error: null,
+			errorOnUnload: false
 		};
 		var options = $.extend({}, defaultOptions, opts);
 		
@@ -228,13 +230,19 @@
 					throw "Missing responseText";
 				}
 			} catch (err) {
-				response = {"message": "USOS API communication error."};
-				$.usosCore._console.error("usosapiFetch: Failed to parse the error response: " + err.message);
+				if (xhr.status != 0) {
+					$.usosCore._console.error("usosapiFetch: Failed to parse the error response: ", err);
+					response = {"message": "USOS API communication error."};
+				} else {
+					response = undefined;
+				}
 			}
-			if (options.error !== null) {
-				options.error(response);
+			if ((xhr.status != 0) || options.errorOnUnload) {
+				if (options.error !== null) {
+					options.error(response);
+				}
+				deferred.reject(response);
 			}
-			deferred.reject(response);
 		};
 		
 		/* Prepare the request data. This can be either a simple dictionary, or
@@ -607,11 +615,27 @@
 		mydata.preloaderElement.append(elements);
 	};
 	
+	var _userPhotoUrl = function(user_id) {
+		return $.usosCore.usosapiUrl({
+			method: "services/photos/photo",
+			params: {
+				user_id: user_id,
+				blank_photo: true,
+				transform: true,
+				max_width: 100,
+				max_height: 100,
+				enlarge: true,
+				cover: true
+			}
+		});
+	};
+	
 	$[NS] = {
 		_getSettings: function() { return mydata.settings; },
 		_console: fixedConsole,
 		_usosValueForward: _usosValueForward,
 		_preload: _preload,
+		_userPhotoUrl: _userPhotoUrl,
 		
 		init: init,
 		usosapiFetch: usosapiFetch,

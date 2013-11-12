@@ -1,5 +1,8 @@
 /*
 
+WARNING: THIS IS A MODIFIED VERSION OF THE PLUGIN!
+Run the diff on jQuery-USOS repository to see what was changed.
+
 Tooltipster 2.1 | 2/12/13
 A rockin' custom tooltip jQuery plugin
 
@@ -110,7 +113,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 				}
 			
 				// first, strip the title off of the element and set it as a data attribute to prevent the default tooltips from popping up
-				var tooltipsterContent = $.trim(object.options.content).length > 0 ? object.options.content : $this.attr('title');
+				var tooltipsterContent = object.options.content || $this.attr('title');
 				$this.data('tooltipsterContent', tooltipsterContent);
 				$this.removeAttr('title');
 				
@@ -284,7 +287,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 							var pointerEvents = object.options.interactive == true ? 'pointer-events: auto;' : '';
 												
 							// build the base of our tooltip
-							var tooltipster = $('<div class="tooltipster-base '+ themeClass +' '+ animation +'" style="'+ fixedWidth +' '+ maxWidth +' '+ pointerEvents +' '+ animationSpeed +'"><div class="tooltipster-content">'+content+'</div></div>');
+							var tooltipster = $('<div class="tooltipster-base '+ themeClass +' '+ animation +'" style="'+ fixedWidth +' '+ maxWidth +' '+ pointerEvents +' '+ animationSpeed +'"><div class="tooltipster-content"></div></div>');
+							tooltipster.find('.tooltipster-content').html(content);
 							tooltipster.appendTo('body');
 							
 							// attach the tooltip to its origin

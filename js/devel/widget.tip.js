@@ -5,7 +5,9 @@
 	$.widget('usosWidgets.usosTip', {
 		options: {
 			content: "",
-			position: "top"
+			position: "top",
+			type: "default",
+			_autoWidth: true
 		},
 		widgetEventPrefix: "usostip:",
 		defaultElement: "<span>",
@@ -13,9 +15,6 @@
 		_create: function() {
 			
 			var widget = this;
-			
-			widget.element.empty();
-			widget.element.append($("<div class='ua-tip'><div/></div>"));
 
 			var content = null;
 			var contentProvider = null;
@@ -25,14 +24,29 @@
 			} else {
 				content = widget.options.content;
 			}
-			widget.img = widget.element.find('.ua-tip div');
-			widget.img.tooltipster({
-				content: $.usosUtils._tooltipster_html(content),
+			var theme = "ua-tooltip ";
+			var offsetX = 0;
+			var offsetY = 0;
+			if (widget.options.type == "tool") {
+				theme += "ua-tooltip-tool";
+				if (widget.options.position == "left" || widget.options.position == "right") {
+					offsetX = -4;
+				} else {
+					offsetY = -4;
+				}
+			} else {
+				theme += "ua-tooltip-default";
+			}
+			widget.element.tooltipster({
+				content: $.usosUtils._tooltipster_html(content, widget.options._autoWidth),
 				onlyOne: false,
 				delay: contentProvider ? 200 : 50,
 				speed: 0,
 				position: widget.options.position,
-				theme: "ua-tooltip ua-tooltip-info",
+				offsetX: offsetX,
+				offsetY: offsetY,
+				updateAnimation: false,
+				theme: theme,
 				functionReady: function() {
 					if (contentProvider === null) {
 						return;
@@ -40,7 +54,7 @@
 					var promise = contentProvider.apply(widget.element);
 					contentProvider = null;  // so it will get called once only
 					promise.done(function(obj) {
-						widget.img.tooltipster('update', $.usosUtils._tooltipster_html(obj));
+						widget.element.tooltipster('update', $.usosUtils._tooltipster_html(obj, widget.options._autoWidth));
 					}).fail(function() {
 						var content = $.usosCore.lang(
 							"Nie udało się załadować treści podpowiedzi. " +
@@ -48,14 +62,14 @@
 							"Could not load the content of the tip. " +
 							"Refresh the page and try again."
 						);
-						widget.img.tooltipster('update', $.usosUtils._tooltipster_html(content));
+						widget.element.tooltipster('update', $.usosUtils._tooltipster_html(content));
 					});
 				}
 			});
-			widget.img.attr("tabindex", 0);
-			widget._on(widget.img, {
-				focus: function() { widget.img.tooltipster('show'); },
-				blur: function() { widget.img.tooltipster('hide'); }
+			widget.element.attr("tabindex", 0);
+			widget._on(widget.element, {
+				focus: function() { widget.element.tooltipster('show'); },
+				blur: function() { widget.element.tooltipster('hide'); }
 			});
 		},
 		
@@ -63,17 +77,16 @@
 			var widget = this;
 			this._super(key, value);
 			if (key == 'content') {
-				widget.img.tooltipster(
+				widget.element.tooltipster(
 					'update',
-					$.usosUtils._tooltipster_html(widget.options.content)
+					$.usosUtils._tooltipster_html(widget.options.content, widget.options._autoWidth)
 				);
 			}
 			return widget;
 		},
 				
 		_destroy: function() {
-			this.img.tooltipster('destroy');
-			this.element.empty();
+			this.element.tooltipster('destroy');
 		}
 	});
 	
@@ -117,7 +130,7 @@
 			throw("Invalid arguments");
 		}
 		
-		return $("<span>").usosTip(arguments[0]);
+		return $("<div class='ua-tip'><div/></div>").usosTip(arguments[0]);
 	};
 	$.usosWidgets.usosTip.create = create;
 	

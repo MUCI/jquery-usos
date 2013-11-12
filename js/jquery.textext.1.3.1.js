@@ -2,6 +2,9 @@
  * jQuery TextExt Plugin
  * http://textextjs.com
  *
+ * WARNING: THIS IS A MODIFIED VERSION OF THE PLUGIN!
+ * Run the diff on jQuery-USOS repository to see what was changed.
+ *
  * @version 1.3.1
  * @copyright Copyright (C) 2011 Alex Gorbatchev. All rights reserved.
  * @license MIT License
@@ -2427,8 +2430,10 @@
 			target = $(e.target)
 			;
 
-		if(target.is(CSS_DOT_SUGGESTION))
-		{
+		if(!target.is(CSS_DOT_SUGGESTION)) {
+			target = target.closest(CSS_DOT_SUGGESTION)
+		}
+		if (target) {
 			self.clearSelected();
 			target.addClass(CSS_SELECTED);
 		}
@@ -2466,8 +2471,14 @@
 		var self   = this,
 			target = $(e.target)
 			;
-
-		if(target.is(CSS_DOT_SUGGESTION) || target.is(CSS_DOT_LABEL))
+		
+		if (target.is(CSS_DOT_SUGGESTION)) {
+			/* direct hit */
+		} else {
+			/* child hit? */
+			target = target.closest(CSS_DOT_SUGGESTION)
+		}
+		if(target)
 			self.trigger('enterKeyPress');
 		
 		if (self.core().hasPlugin('tags'))
