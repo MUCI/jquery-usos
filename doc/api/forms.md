@@ -79,8 +79,9 @@ showErrors(response)
 ### Parameters
 
   * Context: jQuery set of [usosValue widgets](widget.value.md).
-  * **response** - USOS API error response. It *may* contain `user_messages`
-    field, but it doesn't have to.
+  * **response** - USOS API
+    [error response](https://usosapps.uw.edu.pl/developers/api/definitions/errors/).
+    It works best if it contains `user_messages` field, but it doesn't have to.
 
 ### Result
 
