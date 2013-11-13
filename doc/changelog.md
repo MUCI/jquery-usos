@@ -3,6 +3,8 @@ jQuery-USOS Change Log
 
   * **Beta branch** - *(unreleased - things may change here!)*
 
+    * **1.1.1.6**
+      * usosUserBadge renamed to usosBadge (with entity parameter).
     * **1.1.1.5**
       * usosTip widget gets new "type" parameter.
       * usosUserBadge displays privacy note (when viewing ones own badge).

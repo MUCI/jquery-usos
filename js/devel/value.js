@@ -8,10 +8,10 @@
 		
 		/* Public usosValue methods. */
 		
-		value: $.usosCore._usosValueForward("value", "auto"),
-		enable: $.usosCore._usosValueForward("enable", "setter"),
-		disable: $.usosCore._usosValueForward("disable", "setter"),
-		focus: $.usosCore._usosValueForward("focus", "setter"),
+		value: $.usosCore._methodForwarder("usosValue", "value", "auto"),
+		enable: $.usosCore._methodForwarder("usosValue", "enable", "setter"),
+		disable: $.usosCore._methodForwarder("usosValue", "disable", "setter"),
+		focus: $.usosCore._methodForwarder("usosValue", "focus", "setter"),
 	};
 	
 	$.fn[NS] = function(method) {

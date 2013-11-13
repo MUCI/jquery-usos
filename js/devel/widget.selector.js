@@ -76,7 +76,8 @@
 								)
 								.append(" ");
 						});
-						$div.usosUserBadge({
+						$div.usosBadge({
+							entity: 'entity/users/user',
 							user_id: item.user_id || item.id
 						});
 						return $div;
@@ -91,7 +92,8 @@
 						}
 						return $("<span>")
 							.text(label)
-							.usosUserBadge({
+							.usosBadge({
+								entity: 'entity/users/user',
 								user_id: item.user_id || item.id,
 								position: "top"
 							});

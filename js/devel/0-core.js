@@ -582,7 +582,7 @@
 		setTimeout(showIt, showDelay);
 	};
 	
-	var _usosValueForward = function(funcName, type) {
+	var _methodForwarder = function(dataKey, funcName, type) {
 		return function() {
 			var widget;
 			var myArgs = arguments;
@@ -591,7 +591,7 @@
 			if ((type == 'getter') || ((type == 'auto') && (arguments.length == 0))) {
 				var ret = undefined;
 				this.each(function() {
-					widget = $(this).data("usosValue");
+					widget = $(this).data(dataKey);
 					ret = widget[funcName].apply(widget, myArgs);
 					return false; // break
 				});
@@ -601,7 +601,7 @@
 			/* setter */
 				
 			return this.each(function(i) {
-				widget = $(this).data('usosValue');
+				widget = $(this).data(dataKey);
 				widget[funcName].apply(widget, myArgs);
 			});
 		};
@@ -633,7 +633,7 @@
 	$[NS] = {
 		_getSettings: function() { return mydata.settings; },
 		_console: fixedConsole,
-		_usosValueForward: _usosValueForward,
+		_methodForwarder: _methodForwarder,
 		_preload: _preload,
 		_userPhotoUrl: _userPhotoUrl,
 		

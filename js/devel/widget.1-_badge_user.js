@@ -4,19 +4,20 @@
 	
 	var mycache = {};
 	
-	$.widget('usosWidgets.usosUserBadge', {
+	$.widget('usosWidgets._usosUserBadge', $.usosWidgets._usosBadge, {
 		options: {
-			user_id: null,
-			position: "right"
+			user_id: null
 		},
-		widgetEventPrefix: "usosUserBadge:",
+		widgetEventPrefix: "usosbadge:",
 		
 		_create: function() {
+			
+			var widget = this;
+			widget._super("_create");
 			
 			/* Postpone actual initialization until the user hovers over
 			 * the item for some time. */
 			
-			var widget = this;
 			widget._on(widget.element, {
 				mouseenter: function() {
 					widget.timeoutId = setTimeout(function() {
@@ -311,7 +312,9 @@
 		},
 		
 		_destroy: function() {
-			this.element.tooltipster('destroy');
+			var widget = this;
+			widget.element.tooltipster('destroy');
+			widget._super("_destroy");
 		}
 	});
 	
