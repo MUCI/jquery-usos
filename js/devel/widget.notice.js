@@ -21,8 +21,7 @@
 		_create: function() {
 			
 			var widget = this;
-			
-			widget.originalTitle = widget.element.attr('title');
+			widget.element.addClass("ua-usosnotice");
 			
 			/* Start creating the tooltip. When it's ready, _tooltipReady will
 			 * be called. */
@@ -139,18 +138,8 @@
 		},
 				
 		_destroy: function() {
-			
-			/* Tooltipster has a subtle bug. Once it's destroyed, it tends to
-			 * set the title attribute to the element, even if there was no
-			 * title before it was originally created. We need to counteract
-			 * this behavior. */
-			
 			this.element.tooltipster('destroy');
-			if (this.originalTitle) {
-				this.element.attr('title', this.originalTitle);
-			} else {
-				this.element.removeAttr('title');
-			}
+			this.element.removeClass("ua-usosnotice");
 		}
 	});
 

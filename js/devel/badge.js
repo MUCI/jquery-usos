@@ -20,9 +20,14 @@
 			case 'entity/users/user':
 				this._usosUserBadge(options);
 				break;
+			case 'entity/fac/faculty':
+				/* Ignore. Still working on this one! */
+				// this._usosFacultyBadge(options);
+				break;
 			default:
 				throw "Unknown entity: " + options.entity;
 		}
+		return this;
 	};
 	
 	$.fn[NS] = function(method) {

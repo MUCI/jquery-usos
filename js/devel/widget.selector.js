@@ -216,7 +216,13 @@
 						return item.fac_id || item.id;
 					},
 					suggestionRenderer: function(item) {
-						return item.match;
+						var div = $("<div>");
+						div.html(item.match);
+						div.usosBadge({
+							entity: 'entity/fac/faculty',
+							fac_id: item.fac_id || item.id
+						});
+						return div;
 					},
 					tagRenderer: function(item) {
 						
@@ -226,13 +232,20 @@
 						
 						/* Return in a block with decent max-width applied. */
 						
-						return $('<span>').text(name).css({
-							'white-space': 'nowrap',
-							'display': 'inline-block',
-							'overflow': 'hidden',
-							'max-width': '250px',
-							'text-overflow': 'ellipsis'
-						});
+						return $('<span>')
+							.text(name)
+							.css({
+								'white-space': 'nowrap',
+								'display': 'inline-block',
+								'overflow': 'hidden',
+								'max-width': '250px',
+								'text-overflow': 'ellipsis'
+							})
+							.usosBadge({
+								entity: 'entity/fac/faculty',
+								fac_id: item.fac_id || item.id,
+								position: "top"
+							});
 					}
 				},
 				

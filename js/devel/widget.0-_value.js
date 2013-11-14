@@ -72,7 +72,6 @@
 		 */
 		_displayError: function(message, key) {
 			this.element
-				.addClass("ua-error-shown")
 				.usosNotice({
 					content: $.usosCore.lang(message)
 				});
@@ -82,8 +81,7 @@
 		 * Hide all errors previously shown by _displayError.
 		 */
 		_hideErrors: function() {
-			this.element.find(".ua-error-shown").addBack(".ua-error-shown")
-				.removeClass("ua-error-shown")
+			this.element.find(".ua-usosnotice").addBack(".ua-usosnotice")
 				.usosNotice("hide");
 		},
 		

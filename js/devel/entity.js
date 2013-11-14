@@ -70,6 +70,14 @@
 				url = _getEntityURL(entityCode, e.id);
 				break;
 			case 'entity/fac/faculty':
+				e = $.usosUtils.requireFields(args[1], "id|name");
+				$a.text($.usosCore.lang(e.name));
+				$a.usosBadge({
+					entity: entityCode,
+					fac_id: e.id
+				});
+				url = _getEntityURL(entityCode, e.id);
+				break;
 			case 'entity/slips/template':
 				e = $.usosUtils.requireFields(args[1], "id|name");
 				$a.text($.usosCore.lang(e.name));

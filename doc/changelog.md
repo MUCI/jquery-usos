@@ -3,6 +3,11 @@ jQuery-USOS Change Log
 
   * **Beta branch** - *(unreleased - things may change here!)*
 
+    * **1.1.1.7**
+      * abstracted most of the badge logic to a separate base.
+      * fixed some issues with tooltipster showing "[object]" title after
+        destroyed.
+      * CSS fixes.
     * **1.1.1.6**
       * usosUserBadge renamed to usosBadge (with entity parameter).
     * **1.1.1.5**

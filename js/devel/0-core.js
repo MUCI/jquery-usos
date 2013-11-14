@@ -416,7 +416,6 @@
 			}
 			return frozen;
 		};
-		var errorAlertShown = false;
 		var fixedConsole = {};
 		$.each(["log", "warn", "error", "assert"], function(_, funcName) {
 			/** Deals with http://stackoverflow.com/questions/4057440/ */
@@ -432,11 +431,6 @@
 						window.console,
 						_freezeAll(arguments)
 					);
-					
-					if (funcName == "error" && (!errorAlertShown)) {
-						errorAlertShown = true;
-						alert("There are errors in the jQuery-USOS console.");
-					}
 				}
 			};
 		});
