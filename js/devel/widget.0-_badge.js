@@ -60,6 +60,13 @@
 				});
 			}
 			
+			/* Prevent creation of a badge inside of another badge/tooltip. */
+			
+			if (widget.element.closest(".ua-tooltip").length > 0) {
+				widget.destroy();
+				return;
+			}
+			
 			/* Initialize tooltipster. */
 
 			widget.element.tooltipster({
@@ -77,6 +84,7 @@
 				speed: 0,
 				position: widget.options.position,
 				theme: "ua-tooltip ua-tooltip-badge " + widget._cssClass(),
+				arrowColor: widget._getArrowColor(widget.options.position),
 				functionAfter: function() {
 					
 					/* When tooltip is closed, tooltipster removes it from the DOM. This in turn,
@@ -167,6 +175,10 @@
 				values.push(widget.options[optionName]);
 			});
 			return JSON.stringify(values);
+		},
+		
+		_getArrowColor: function(tooltipPosition) {
+			return undefined;
 		}
 	});
 	

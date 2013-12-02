@@ -36,7 +36,8 @@
 				"entity/fac/faculty": null,
 				"entity/slips/template": null
 			},
-			user_id: null
+			user_id: null,
+			_requestDelay: 0
 		};
 		mydata.settings = $.extend(true, {}, defaultSettings, options);
 		mydata.preloaderElement = $("<div style='display: none'>");
@@ -264,7 +265,13 @@
 		
 		/* Make the call. */
 		
-		$.ajax(ajaxParams);
+		if (mydata.settings._requestDelay != 0) {
+			setTimeout(function() {
+				$.ajax(ajaxParams);
+			}, mydata.settings._requestDelay);
+		} else {
+			$.ajax(ajaxParams);
+		}
 		
 		/* Return the Promise object only when syncMode is left at the default
 		 * 'noSync' value. (The Deferred framework is not compatible with all the
@@ -397,6 +404,28 @@
 			$.usosCore._console.error("Unknown wrapper " + options.wrapper + ", assuming 'default'.");
 			options.wrapper = "default";
 			return lang(options);
+		}
+	};
+	
+	var _nlang = function(value, pl1, pl2, pl5, en1, en2) {
+		if (mydata.settings.langpref == "pl") {
+			if (value == 1) {
+				return pl1;
+			}
+			var d = value % 10;
+			var h = value % 100;
+			if ((h >= 12) && (h <= 14)) {
+				return pl5;
+			}
+			if ((d >= 2) && (d <= 4)) {
+				return pl2;
+			}
+			return pl5;
+		} else {
+			if (value == 1) {
+				return en1;
+			}
+			return en2;
 		}
 	};
 	
@@ -609,27 +638,12 @@
 		mydata.preloaderElement.append(elements);
 	};
 	
-	var _userPhotoUrl = function(user_id) {
-		return $.usosCore.usosapiUrl({
-			method: "services/photos/photo",
-			params: {
-				user_id: user_id,
-				blank_photo: true,
-				transform: true,
-				max_width: 100,
-				max_height: 100,
-				enlarge: true,
-				cover: true
-			}
-		});
-	};
-	
 	$[NS] = {
 		_getSettings: function() { return mydata.settings; },
 		_console: fixedConsole,
 		_methodForwarder: _methodForwarder,
 		_preload: _preload,
-		_userPhotoUrl: _userPhotoUrl,
+		_nlang: _nlang,
 		
 		init: init,
 		usosapiFetch: usosapiFetch,

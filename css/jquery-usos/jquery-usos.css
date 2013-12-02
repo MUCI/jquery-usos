@@ -410,13 +410,13 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 	box-shadow: 0 4px 5px rgba(0,0,0,0.4);
 }
 .ua-tooltip.ua-tooltip-badge .tooltipster-content {
-	padding: 5px;
+	padding: 0;
 }
 .ua-tooltip.ua-tooltip-badge .ua-loading {
 	color: #444;
 	font-size: 11px;
 	line-height: 1.2em;
-	padding: 0 3px;
+	padding: 5px 8px;
 	margin: 0;
 }
 
@@ -425,6 +425,7 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ua-badge-user table {
 	border-spacing: 0;
 	width: 355px;
+	margin: 5px;
 }
 .ua-badge-user td {
 	vertical-align: top;
@@ -443,7 +444,7 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 	border: 1px solid #d1d1d1;
 }
 .ua-badge-user .ua-td2top {
-	min-height: 78px;
+	min-height: 81px;
 }
 .ua-badge-user .ua-name a {
 	cursor: pointer;
@@ -474,6 +475,110 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 	cursor: pointer;
 }
 
+/* Faculty badge */
+
+.ua-tooltip.ua-tooltip-badge.ua-badge-fac .tooltipster-content {
+	padding: 0;
+}
+.ua-badge-fac table {
+	border-spacing: 0;
+	width: 355px;
+}
+.ua-badge-fac td.ua-cover {
+	background: #ddd;
+	width: 355px;
+	height: 130px;
+	background-attachament: fixed;
+	background-position: 50% 85%;
+	padding: 0;
+	border-bottom: 1px solid #555;
+}
+.ua-badge-fac td.ua-cover .ua-cover-inner {
+	vertical-align: bottom;
+	text-align: left;
+	display: table-cell;
+	width: 335px; /* 355 - 10 - 10 */
+	height: 122px; /* 130 - 8 */
+	background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.5) 100%);
+	padding: 0 10px 8px 10px;
+}
+.ua-badge-fac .ua-cover .ua-ancestor {
+	line-height: 1.05em;
+}
+.ua-badge-fac .ua-cover .ua-ancestor a {
+	color: #fff;
+	font-size: 10px;
+	padding: 0 0 0 0;
+	text-shadow: 0 0 2px rgba(0,0,0,1.0);
+	white-space: nowrap;
+	overflow: ellipsis;
+	opacity: 0.9;
+}
+.ua-badge-fac .ua-cover .ua-ancestor a:hover {
+	opacity: 0.99;
+	text-shadow: 0 0 2px rgba(0,0,0,1.0), 0 0 1px rgba(0,0,0,0.8);
+}
+.ua-badge-fac .ua-cover .ua-name {
+    padding-top: 3px;
+}
+.ua-badge-fac .ua-cover .ua-name a {
+	font-weight: bold;
+	color: #fff;
+	font-size: 14px;
+	text-shadow: 0 0 3px rgba(0,0,0,0.8);
+}
+.ua-badge-fac td.ua-stats {
+	background: #fff;
+	vertical-align: middle;
+	border-bottom: 1px solid #888;
+}
+.ua-badge-fac td.ua-stats > div {
+	text-align: center;
+	font-size: 10px;
+	line-height: 1em;
+	padding: 9px 5px 10px 5px;
+}
+.ua-badge-fac .ua-stat-entry {
+	color: #888;
+	font-size: 10px;
+	white-space: nowrap;
+	display: inline-block;
+	margin: 3px;
+}
+.ua-badge-fac .ua-stat-entry b {
+	color: #444;
+	font-weight: bold;
+	font-size: 11px;
+	padding-right: 2px;
+	/* text-shadow: 1px 1px 0px rgba(0,0,0,0.7); */
+}
+.ua-badge-fac td.ua-desc {
+	background: #fff;
+}
+.ua-badge-fac td.ua-desc > div {
+	font-family: Tahoma;
+	padding: 6px 10px;
+	min-height: 8px;
+}
+.ua-badge-fac .ua-address {
+	color: #777;
+	font-size: 11px;
+	margin-bottom: 10px;
+}
+.ua-badge-fac .ua-address .ua-relative {
+	position: relative;
+}
+.ua-badge-fac .ua-address .ui-icon {
+	display: inline-block;
+	opacity: 0.5;
+	position: absolute;
+	top: -1px;
+}
+.ua-badge-fac a.ua-www {
+	font-size: 11px;
+}
+
+
 /* user suggestions */
 
 .ua-usersuggestion table {
@@ -483,17 +588,8 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 	vertical-align: top;
 	text-align: left;
 }
-.ua-usersuggestion .ua-td1 {
-	width: 42px;
-}
-.ua-usersuggestion .ua-td1 img {
-	width: 40px;
-	height: 40px;
-	background: #eee;
-	border: 1px solid rgba(128,128,128,0.5);
-}
 .ua-usersuggestion .ua-td2 {
-	padding: 2px 0 0 6px;
+	padding: 2px 0 0 0;
 }
 .ua-usersuggestion .ua-td2 .ua-tagline {
 	padding-top: 4px;

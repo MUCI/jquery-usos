@@ -493,7 +493,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 				var containerWidth = $this.outerWidth(false);
 				var containerHeight = $this.outerHeight(false);
 				var tooltipWidth = tooltipster.outerWidth(false);
-				var tooltipInnerWidth = tooltipster.innerWidth() + 1; // this +1 stops FireFox from sometimes forcing an additional text line
+				var tooltipInnerWidth = tooltipster.innerWidth(); // removed the "+1"! (this +1 presumably stopped FireFox from sometimes forcing an additional text line)
 				var tooltipHeight = tooltipster.outerHeight(false);
 				var offset = $this.offset();
 				var offsetTop = offset.top;

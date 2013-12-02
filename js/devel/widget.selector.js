@@ -12,8 +12,8 @@
 						method: 'services/users/search',
 						paramsProvider: function(query) {
 							return {
-								'name': query,
-								'num': 4
+								name: query,
+								num: 6
 							};
 						},
 						itemsExtractor: function(data) {
@@ -24,8 +24,8 @@
 						method: 'services/users/users',
 						paramsProvider: function(ids) {
 							return {
-								'user_ids': ids.join("|"),
-								'fields': 'id|first_name|last_name'
+								user_ids: ids.join("|"),
+								fields: 'id|first_name|last_name'
 							};
 						},
 						itemsExtractor: function(data) {
@@ -53,12 +53,10 @@
 						 * some additional info. */
 						var $div = $(
 							"<div class='ua-usersuggestion'><table><tr>" +
-							"<td class='ua-td1'><img/></td>" +
 							"<td class='ua-td2'><div class='ua-match'></div><div class='ua-tagline'></div></td>" +
 							"</tr></table></div>"
 						);
 						$div.find(".ua-match").html(item.match);
-						$div.find("img").attr("src", $.usosCore._userPhotoUrl(item.user_id || item.id));
 						$.each(item.active_employment_functions, function(_, f) {
 							$div.find(".ua-tagline")
 								.append($("<span class='ua-note'>")

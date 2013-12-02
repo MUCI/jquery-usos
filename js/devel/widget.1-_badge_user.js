@@ -19,16 +19,10 @@
 			 * instead. */
 			
 			var local_profile_url = $.usosEntity.url("entity/users/user", widget.options.user_id);
-			var fields = "id|first_name|last_name|sex|student_programmes|employment_functions|employment_positions";
+			var fields = "id|first_name|last_name|photo_urls[100x100]|sex|student_programmes|employment_functions|employment_positions";
 			if (!local_profile_url) {
 				fields += "|profile_url";
 			}
-			
-			/* Preload user's photo - the result is discarded, but the browser should
-			 * cache it (provided that our proxy issues proper caching headers!). */
-			
-			var photoUrl = $.usosCore._userPhotoUrl(widget.options.user_id);
-			$.usosCore._preload($("<img>").attr("src", photoUrl));
 			
 			/* Fetch the data. */
 			
@@ -47,6 +41,7 @@
 				}
 				return user;
 				
+				// WRTODO: preload photo? still possible!
 			});
 		},
 		
@@ -66,8 +61,7 @@
 			
 			/* Photo */
 			
-			var photoUrl = $.usosCore._userPhotoUrl(widget.options.user_id);
-			badge.find('.ua-photo').attr("src", photoUrl);
+			badge.find('.ua-photo').attr("src", user.photo_urls['100x100']);
 			
 			/* Name and profile link */
 
@@ -150,7 +144,7 @@
 										"preferences page."
 									)));
 									return message;
-								})
+								});
 							},
 							position: "bottom",
 							type: "tool",

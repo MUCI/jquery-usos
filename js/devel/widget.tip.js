@@ -6,6 +6,7 @@
 		options: {
 			content: "",
 			position: "top",
+			delayed: false,
 			type: "default",
 			_autoWidth: true
 		},
@@ -40,7 +41,7 @@
 			widget.element.tooltipster({
 				content: $.usosUtils._tooltipster_html(content, widget.options._autoWidth),
 				onlyOne: false,
-				delay: contentProvider ? 200 : 50,
+				delay: widget.options.delayed ? 500 : (contentProvider ? 200 : 50),
 				speed: 0,
 				position: widget.options.position,
 				offsetX: offsetX,

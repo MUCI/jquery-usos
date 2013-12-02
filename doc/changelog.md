@@ -1,8 +1,15 @@
 jQuery-USOS Change Log
 ======================
 
-  * **Beta branch** - *(unreleased - things may change here!)*
+  * **Beta branch** - *(unreleased)*
 
+    Beta branches of jQuery-USOS are undocumented, backward-incompatible, and
+    may depend on unreleased USOS API features! You should not use it.
+
+    * **1.1.1.8**
+      * added faculty badge.
+      * removed user photos from suggestions (while searching for users).
+      * added "delayed" to usosTip (docs missing).
     * **1.1.1.7**
       * abstracted most of the badge logic to a separate base.
       * fixed some issues with tooltipster showing "[object]" title after
