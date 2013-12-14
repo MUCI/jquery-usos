@@ -23,7 +23,32 @@ $.usosCore.usosapiFetch({
 }).fail($.usosCore.panic);
 ```
 
+### Deferred chaining
+
+As in `jQuery.ajax`, you can chain the calls, etc.
+
+```javascript
+// This will issue three simultaneous requests
+var prerequisite1 = $.usosCore.usosapiFetch({ /* ... */ });
+var prerequisite2 = $.usosCore.usosapiFetch({ /* ... */ });
+var prerequisite3 = $.usosCore.usosapiFetch({ /* ... */ });
+$.when(prerequisite1, prerequisite2, prerequisite3)
+    .then(function(result1, result2, result3) {
+        return result1 + result2 + result3;
+    })
+    .then(function(sum) {
+        // This will be issued after all prerequsites are fetched and processed.
+        return $.usosCore.usosapiFetch(/* ... */);
+    })
+    .then(function() {
+        alert("Done!");
+    })
+    .fail($.usosCore.panic);
+```
+
 ### Usage with a syncObject
+
+Non-standard feature. In most cases you don't need syncObjects.
 
 Use case: When designing AJAX searching, you will often want to use
 `receiveIncrementalFast`, so that - if you'll receive a response for the
@@ -49,28 +74,6 @@ $someInput.change(function() {
 });
 ```
 
-### Deferred chaining
-
-As in `jQuery.ajax`, you can chain the calls, etc.
-
-```javascript
-// This will issue three simultaneous requests
-var prerequisite1 = $.usosCore.usosapiFetch({ /* ... */ });
-var prerequisite2 = $.usosCore.usosapiFetch({ /* ... */ });
-var prerequisite3 = $.usosCore.usosapiFetch({ /* ... */ });
-$.when(prerequisite1, prerequisite2, prerequisite3)
-    .then(function(result1, result2, result3) {
-        return result1 + result2 + result3;
-    })
-    .then(function(sum) {
-        // This will be issued after all prerequsites are fetched and processed.
-        return $.usosCore.usosapiFetch(/* ... */);
-    })
-    .then(function() {
-        alert("Done!");
-    })
-    .fail($.usosCore.panic);
-```
 
 Options
 -------
@@ -99,7 +102,8 @@ The values do *not* have to be strings.
 ### success / error
 
 **Important:** Unless you're using non-default `syncMode`, it's better to use
-the returned *Promise object* instead of success/error callbacks.
+the returned *usosXHR* object (which implements the *Promise interface*)
+instead of success/error callbacks.
 
 *Optional.* Similar to the success/error handlers of the `jQuery.ajax` call,
 but there are differences:
@@ -172,7 +176,14 @@ then set this to `true`.
 Returned value
 --------------
 
-If `syncMode` was left at `noSync`, it will return jQuery Promise object
-(as the regular `jQuery.ajax` would do). For other modes, nothing
-will be returned.
+If `syncMode` was left at `noSync`, it will return an `usosXHR` object:
 
+  * `usosXHR` implements the Promise interface (as `jQuery.ajax` does). It
+    has the `always`, `done` and `fail` methods. (See descriptions of the
+    `success` and `error` options for details. Also review the examples.)
+  * It also has the `abort()` method, in case you want to abort the request.
+  * Currently, it doesn't expose any other jqXHR methods. In theory, you
+    shouldn't need them as all USOS API errors and responses are handled 
+    internally and forwarded to your `done` and `fail` callbacks.
+
+For other modes `syncModes`, nothing will be returned.

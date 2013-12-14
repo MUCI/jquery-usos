@@ -221,12 +221,13 @@
 		
 		/* Make the call. */
 		
+		var xhrOrTimeoutHandle = null;
 		if (mydata.settings._requestDelay != 0) {
-			setTimeout(function() {
-				$.ajax(ajaxParams);
+			xhrOrTimeoutHandle = setTimeout(function() {
+				xhrOrTimeoutHandle = $.ajax(ajaxParams);
 			}, mydata.settings._requestDelay);
 		} else {
-			$.ajax(ajaxParams);
+			xhrOrTimeoutHandle = $.ajax(ajaxParams);
 		}
 		
 		/* Return the Promise object only when syncMode is left at the default
@@ -234,7 +235,21 @@
 		 * other syncModes.) */
 		
 		if (options.syncMode == 'noSync') {
-			return deferred.promise();
+			
+			/* We want to extend our Promise object with extra "abort" method. */
+			
+			return deferred.promise({
+				abort: function() {
+					/* Do we have jqXHR or setTimeout handle? */
+					if (xhrOrTimeoutHandle.abort) {
+						/* Abort the request. */
+						xhrOrTimeoutHandle.abort();
+					} else {
+						/* The request was not yet sent. Abort the timer. */
+						clearTimeout(xhrOrTimeoutHandle);
+					}
+				}
+			});
 		}
 	};
 	

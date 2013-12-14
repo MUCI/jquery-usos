@@ -5,7 +5,7 @@ rem * This is a simple build script template. I use it to build a new
 rem * version from the sources kept in my copy of the USOSweb project.
 rem * Currently this works in my personal environment only.
 
-set VERSION=1.1.1.9
+set VERSION=1.1.1.10
 
 set USOSWEB=D:/PRIV/Projekty/usosweb
 set DEST=D:/PRIV/Projekty/jquery-usos

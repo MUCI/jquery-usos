@@ -18,7 +18,8 @@ jQuery-USOS Change Log
         methods make use of the usosBadge widget automatically.
       * [$.usosCore.usosapiFetch](api/core.usosapiFetch.md)
          * Now supports `File`-type parameters.
-         * New parameter: `errorOnUnload`
+         * New parameter: `errorOnUnload`.
+         * Returned Promise object now includes XHR's `abort()` method.
       * [$.usosCore.init](api/core.init.md)
          * New `USOSapis` parameter: `user_id`
       * [usosTip widget](api/widget.tip.md)
@@ -29,6 +30,8 @@ jQuery-USOS Change Log
     Beta branches of jQuery-USOS are undocumented, backward-incompatible, and
     may depend on unreleased USOS API features! You should not use it.
 
+    * **1.1.1.10**
+      * added `abort()` method to the Promise object returned by usosapiFetch.
     * **1.1.1.9**
       * removed extraParamsForPOST and extraParamsForGET; in the end they turned
         out to be unnecessary (for now). Brought back the "old" extraParams.
