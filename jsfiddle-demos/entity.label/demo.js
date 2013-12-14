@@ -3,7 +3,7 @@ $(function() {
 		langpref: "pl",
 		usosAPIs: {
 			'default': {
-				'methodUrl': "http://apps.usos.edu.pl/%s"
+				'methodUrl': "https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=%s"
 			}
 		}
 	});
