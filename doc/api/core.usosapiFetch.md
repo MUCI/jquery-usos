@@ -98,6 +98,9 @@ The values do *not* have to be strings.
 
 ### success / error
 
+**Important:** Unless you're using non-default `syncMode`, it's better to use
+the returned *Promise object* instead of success/error callbacks.
+
 *Optional.* Similar to the success/error handlers of the `jQuery.ajax` call,
 but there are differences:
 
@@ -114,10 +117,6 @@ but there are differences:
     with the `message` field. The same response will be *rejected* into the
     returned *Promise object*. You should pass such response to
     `.usosForms('showErrors', response)` or `$.usosCore.panic`.
-
-*Note:* If you're not using `syncMode` (in most cases you won't), then it is
-advised to use the returned *Promise object* instead of defining success/error
-callbacks.
 
 ### syncMode
 
@@ -162,6 +161,13 @@ TODO: Other options to be (possibly) implemented in the future:
 You should initialize an **empty object** somewhere in your namespace and
 provide *the same* object for all calls you want synchronized. Internal format
 of this object is left undocumented and may change in the future.
+
+### errorOnUnload
+
+*Optional.* Boolean. By default (`false`), jQuery-USOS will ignore errors caused
+by the user navigating away from the page. If you wish to catch such errors,
+then set this to `true`.
+
 
 Returned value
 --------------

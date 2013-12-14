@@ -122,7 +122,7 @@
 				
 			/* Photo privacy reminder */
 				
-			if (user.id == $.usosCore._getSettings().user_id) {
+			if (user.id == $.usosCore._getSettings().usosAPIs['default'].user_id) {
 				badge.find(".ua-td2").append($("<div class='ua-privacy-note'>")
 					.append($("<span>")
 						.text($.usosCore.lang(

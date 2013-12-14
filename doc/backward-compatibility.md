@@ -1,10 +1,7 @@
-Extending and backward compatibility
+Backward compatibility
 ====================================
 
 Some notes jQuery-USOS backward compatibility "policy".
-
-Backward compatibility
-----------------------
 
   * **Versions 0.x.y** (alpha versions) are **NOT** backward compatible.
   * Starting from **version 1.0**, all stuff which is **documented on GitHub** is
@@ -23,13 +20,16 @@ Backward compatibility
     underscore (_) - is **private** and is **NOT** planned to stay backward
     compatible.
 
-Extending jQuery-USOS
----------------------
+Beta branch
+-----------
 
-If you want to extend jQuery-USOS with some new plugins, please keep in mind,
-that all new widgets and plugins should pass a
+All new widgets and plugins should pass a
 [proof of concept](https://en.wikipedia.org/wiki/Proof_of_concept#In_Software_Development)
 test before being officially added to *jQuery-USOS*. E.g. they should be
 previously tested and published as separate widgets in a
 [pilot](https://en.wikipedia.org/wiki/Software_prototyping) project
 (i.e. an *USOSweb* module).
+
+Such untested features are put "on hold" into the beta branch. Only after they
+are properly tested, they will be included in the official release (master
+branch).

@@ -6,31 +6,25 @@ intended to help web developers with their work with
 [USOS](http://usos.edu.pl/about-usos)-related projects (primarily, the *USOSweb*
 project).
 
-  * If you don't know what *jQuery* and/or *USOS* are, then you're in a wrong
-    place!
-  * *jQuery-USOS* has strong connections to
-    [USOS API](http://apps.usos.edu.pl/developers/api/). Most of the methods and
-    widgets require you to use one of the existing USOS API
-    [installations](http://apps.usos.edu.pl/developers/api/definitions/installations/)
-    (via [proxy](https://github.com/MUCI/jquery-usos/blob/master/doc/installation.md)).
-  * The official project homepage is:
-    [https://github.com/MUCI/jquery-usos](https://github.com/MUCI/jquery-usos).
-    If you're reading this README file in a fork, please visit the official page
-    for most up-to-date info.
+Official project homepage:
+[https://github.com/MUCI/jquery-usos](https://github.com/MUCI/jquery-usos).
 
-Contents
---------
 
-  * Quick demo? Try 
-    [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.selector),
-    [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.notice),
-    [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.tip),
-    [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.progressOverlay), or
-    [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch).
-    * Doesn't work? Try refreshing! ([why?](https://github.com/MUCI/jquery-usos/issues/1))
-  * [Installation instructions](https://github.com/MUCI/jquery-usos/blob/master/doc/installation.md)
-  * [Extending and backward compatibility](https://github.com/MUCI/jquery-usos/blob/master/doc/backward-compatibility.md)
+About
+-----
+
+  * Quick demos
+    * Try 
+      [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.selector),
+      [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.notice),
+      [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.tip),
+      [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.progressOverlay), or
+      [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch).
+    * Doesn't work? Click the "Run" button one more time ([why?](https://github.com/MUCI/jquery-usos/issues/1))
+  * [Requirements and installation instructions](https://github.com/MUCI/jquery-usos/blob/master/doc/installation.md)
   * [Change Log](https://github.com/MUCI/jquery-usos/blob/master/doc/changelog.md)
+  * [Backward compatibility policy](https://github.com/MUCI/jquery-usos/blob/master/doc/backward-compatibility.md)
+    * [Beta branch](https://github.com/MUCI/jquery-usos/blob/master/doc/backward-compatibility.md)
 
 API
 ---

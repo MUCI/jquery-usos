@@ -21,7 +21,7 @@ Example
 $.usosCore.init({
 	usosAPIs: {
 		'default': {
-			'methodUrl': "http://apps.usos.edu.pl/%s"
+			'methodUrl': "http://example.com/yourProxy.php?_method_=%s"
 		}
 	}
 });

@@ -1,10 +1,9 @@
 $.usosEntity.label(entityCode, entityObject)
 ============================================
 
-Simply extracts a label from the given `entityObject`.
+Creates a label for given `entityObject`. It also creates the
+[usosBadge widget](widget.badge.md) on that label, if available.
 
-**Why you'd want to use that?** The secret is, in the future versions of
-*jQuery-USOS* the label will gain some special events (i.e. a badge on hover). 
 
 Demos
 -----

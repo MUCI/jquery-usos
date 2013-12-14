@@ -26,9 +26,8 @@
 			usosAPIs: {
 				"default": {
 					methodUrl: null,  // e.g. "https://usosapps.usos.edu.pl/%s"
-					extraParamsForPOST: {},
-					extraParamsForGET: {}
-					/* + deprecated: extraParams (alias for extraParamsForPOST) */
+					extraParams: {},
+					user_id: null
 				}
 			},
 			entityURLs: {
@@ -36,7 +35,6 @@
 				"entity/fac/faculty": null,
 				"entity/slips/template": null
 			},
-			user_id: null,
 			_requestDelay: 0
 		};
 		mydata.settings = $.extend(true, {}, defaultSettings, options);
@@ -44,21 +42,6 @@
 		$(function() {
 			$(document.body).append(mydata.preloaderElement);
 		});
-	};
-	
-	var _getExtraParams = function(source_id, method) {
-		var api = mydata.settings.usosAPIs[source_id];
-		if (method == 'POST') {
-			var ret = api.extraParams; // deprecated, backward-compatibility
-			if (typeof ret === "undefined") {
-				ret = api.extraParamsForPOST;
-			}
-			return ret;
-		} else if (method == 'GET') {
-			return api.extraParamsForGET;
-		} else {
-			throw "Invalid method";
-		}
 	};
 	
 	/** 
@@ -101,36 +84,6 @@
 			formData.append(key, value);
 		});
 		return formData;
-	};
-	
-	var usosapiUrl = function(opts) {
-		
-		var defaultOptions = {
-			source_id: "default",
-			method: "method_name",
-			params: {}
-		};
-		var options = $.extend({}, defaultOptions, opts);
-		
-		/* Base URL. */
-		
-		var url = mydata.settings.usosAPIs[options.source_id].methodUrl.replace("%s", options.method);
-		
-		/* Append extraParams (overwrite existing params!) defined for the given source_id. */
-		
-		var params = $.extend({}, options.params, _getExtraParams(options.source_id, 'GET'));
-		
-		/* Join the URL and encoded params. */
-		
-		var parts = [];
-		$.each(_prepareApiParams(params), function(key, value) {
-			parts.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
-		});
-		if (parts.length > 0) {
-			url += (url.indexOf("?") > -1) ? "&" : "?";
-			url += parts.join("&");
-		}
-		return url;
 	};
 	
 	var usosapiFetch = function(opts) {
@@ -179,7 +132,10 @@
 		
 		/* Append extraParams (overwrite existing params!) defined for the given source_id. */
 		
-		var params = $.extend({}, options.params, _getExtraParams(options.source_id, 'POST'));
+		var params = $.extend(
+			{}, options.params,
+			mydata.settings.usosAPIs[options.source_id].extraParams
+		);
 		
 		/* Prepare the callbacks. */
 		
@@ -647,7 +603,6 @@
 		
 		init: init,
 		usosapiFetch: usosapiFetch,
-		usosapiUrl: usosapiUrl,
 		lang: lang,
 		panic: panic
 	};

@@ -4,6 +4,7 @@
 	
 	$.widget('usosWidgets._usosFacultyBadge', $.usosWidgets._usosBadge, {
 		options: {
+			position: "top",  // overrides default "right"
 			fac_id: null
 		},
 		widgetEventPrefix: "usosbadge:",
