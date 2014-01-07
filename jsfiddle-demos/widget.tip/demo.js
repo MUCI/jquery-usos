@@ -26,7 +26,7 @@ $(function() {
 		/* Nonstatic constructor */
 		
 		var sentence = "This is a sample <b>sentence</b>. ";
-		$("#result").append($("<span id='myTip'>"));
+		$("#result").append($("<span id='myTip'>").text('CUSTOM'));
 		$("#myTip").usosTip({content: sentence});
 		
 		/* Changing the content. */

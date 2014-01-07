@@ -3,3 +3,14 @@ body {
     margin-top: 10px;
     font-size: 15px;
 }
+#myTip {
+    display: inline-block;
+    background: #c00;
+    padding: 2px 4px;
+    color: white;
+    font-weight: bold;
+    font-size: 10px;
+    cursor: default;
+    margin-left: 3px;
+    border: 1px outset #c44;
+}
