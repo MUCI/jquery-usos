@@ -49,13 +49,13 @@ echo  * jQuery-USOS *BUNDLE VERSION* -- this file includes all jQuery-USOS >> %B
 echo  * JavaScript dependencies except jQuery and jQuery-UI. >> %BUILDTARGET2%
 echo  */ >> %BUILDTARGET2%
 echo. >> %BUILDTARGET2%
-cat %DEST%/js/jquery.ba-bbq-1.2.1.min.js >> %BUILDTARGET2%
+cat %DEST%/js/jquery.ba-bbq-1.2.1.js >> %BUILDTARGET2%
 echo. >> %BUILDTARGET2%
 cat %DEST%/js/jquery.colResizable-1.3.min.js >> %BUILDTARGET2%
 echo. >> %BUILDTARGET2%
-cat %DEST%/js/jquery.textext.1.3.1.min.js >> %BUILDTARGET2%
+cat %DEST%/js/jquery.textext.1.3.1.js >> %BUILDTARGET2%
 echo. >> %BUILDTARGET2%
-cat %DEST%/js/jquery.tooltipster.2.1.min.js >> %BUILDTARGET2%
+cat %DEST%/js/jquery.tooltipster.2.1.js >> %BUILDTARGET2%
 echo. >> %BUILDTARGET2%
 cat %BUILDTARGET% >> %BUILDTARGET2%
 
