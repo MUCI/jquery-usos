@@ -53,6 +53,7 @@ API
 
 ### jQuery-UI widgets ([see here](http://api.jqueryui.com/jQuery.widget/))
 
+  * [usosBadge widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.badge.md) - display a badge when user hovers over USOS entities.
   * [usosValue widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.value.md) - a base class for all widgets which hold a **value**.
     * [usosSelector widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.selector.md) - allow the user to search for an entity and get its ID.
     * [usosCheckbox widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.checkbox.md) - *usosValue* equivalent of `<input type='checkbox'>` with a label.
