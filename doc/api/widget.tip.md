@@ -82,7 +82,7 @@ Options
 **Important:** All content must be provided in **HTML format** (not plaintext).
 Majority of tips are written by developers, but if you intend to display
 user-supplied content you must sanitize it (e.g. with
-[$.usosUtils.makeParagraphs](WRTODO) or with jQuery's
+[$.usosUtils.makeParagraphs](utils.makeParagraphs.md) or with jQuery's
 [.text](http://api.jquery.com/text/#text-textString))
 
 ### position

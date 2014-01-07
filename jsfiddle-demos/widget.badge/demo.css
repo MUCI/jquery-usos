@@ -1,0 +1,15 @@
+body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+.fancy {
+    cursor: default;
+    background: #88f;
+    color: white;
+    font-weight: bold;
+    padding: 2px 5px;
+    font-size: 12px;
+    border-radius: 3px;
+    border: 1px solid #55d;
+}

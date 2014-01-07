@@ -11,7 +11,7 @@ Screenshot
 Demos
 -----
 
-  * usosBadge widget Demo - WRTODO
+  * [usosBadge widget Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.badge)
 
 Example
 -------
