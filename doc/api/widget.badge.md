@@ -38,10 +38,12 @@ Options
     * User - `entity/users/user`.
     * Faculty - `entity/fac/faculty`.
   * ID of the entity. Parameter name varies on entity type:
-    **`user_id`** for user badges, and **`fac_id`** for faculty badges.
-  * **position** - *Optional.* Preferred position of the tooltip: `left`,
-    `right`, `top` or `bottom`. Default is undefined and it can be different
-    for each entity type. Please note, that some badges do not support all 
+    * **user_id** - for user badges,
+    * **fac_id** - for faculty badges.
+  * **position** - *Optional.* Preferred position of the tooltip. Allowed
+    values include: `left`, `right`, `top` and `bottom`.
+    Default is undefined and it can be different
+    for each entity type. Please note, that some badges may not support all 
     possible position values (for example, they must be "top" and ignore any
     other values).
 
