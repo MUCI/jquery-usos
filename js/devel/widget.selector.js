@@ -12,7 +12,8 @@
 						method: 'services/users/search',
 						paramsProvider: function(query) {
 							return {
-								'name': query
+								name: query,
+								num: 6
 							};
 						},
 						itemsExtractor: function(data) {
@@ -23,8 +24,8 @@
 						method: 'services/users/users',
 						paramsProvider: function(ids) {
 							return {
-								'user_ids': ids.join("|"),
-								'fields': 'id|first_name|last_name'
+								user_ids: ids.join("|"),
+								fields: 'id|first_name|last_name'
 							};
 						},
 						itemsExtractor: function(data) {
@@ -50,30 +51,50 @@
 					suggestionRenderer: function(item) {
 						/* Suggestions are feeded from the "search" method which includes
 						 * some additional info. */
-						var $div = $("<div>");
-						$div.append($("<span>").html(item.match));
+						var $div = $(
+							"<div class='ua-usersuggestion'><table><tr>" +
+							"<td class='ua-td2'><div class='ua-match'></div><div class='ua-tagline'></div></td>" +
+							"</tr></table></div>"
+						);
+						$div.find(".ua-match").html(item.match);
 						$.each(item.active_employment_functions, function(_, f) {
-							$div.append(" ").append($("<span class='ua-note'>")
-								.text(
-									"- " + $.usosCore.lang(f['function']) +
-									" (" + $.usosCore.lang(f.faculty.name) + ")"
+							$div.find(".ua-tagline")
+								.append($("<span class='ua-note'>")
+									.text(
+										$.usosCore.lang(f['function']) +
+										" (" + $.usosCore.lang(f.faculty.name) + ")"
+									)
 								)
-							);
+								.append(" ");
 						});
 						$.each(item.active_student_programmes, function(_, f) {
-							$div.append(" ").append($("<span class='ua-note'>")
-								.text("- " + $.usosCore.lang(f.programme.description))
-							);
+							$div.find(".ua-tagline")
+								.append($("<span class='ua-note'>")
+									.text($.usosCore.lang(f.programme.description))
+								)
+								.append(" ");
+						});
+						$div.usosBadge({
+							entity: 'entity/users/user',
+							user_id: item.user_id || item.id
 						});
 						return $div;
 					},
 					tagRenderer: function(item) {
 						/* 'search' method returns 'match', 'users' method returns first_name and last_name. */
+						var label;
 						if (item.match) {
-							return $("<span>").html(item.match).text();
+							label = $("<span>").html(item.match).text();
 						} else {
-							return item.first_name + " " + item.last_name;
+							label = item.first_name + " " + item.last_name;
 						}
+						return $("<span>")
+							.text(label)
+							.usosBadge({
+								entity: 'entity/users/user',
+								user_id: item.user_id || item.id,
+								position: "top"
+							});
 					}
 				},
 				
@@ -193,7 +214,13 @@
 						return item.fac_id || item.id;
 					},
 					suggestionRenderer: function(item) {
-						return item.match;
+						var div = $("<div>");
+						div.html(item.match);
+						div.usosBadge({
+							entity: 'entity/fac/faculty',
+							fac_id: item.fac_id || item.id
+						});
+						return div;
 					},
 					tagRenderer: function(item) {
 						
@@ -203,13 +230,20 @@
 						
 						/* Return in a block with decent max-width applied. */
 						
-						return $('<span>').text(name).css({
-							'white-space': 'nowrap',
-							'display': 'inline-block',
-							'overflow': 'hidden',
-							'max-width': '250px',
-							'text-overflow': 'ellipsis'
-						});
+						return $('<span>')
+							.text(name)
+							.css({
+								'white-space': 'nowrap',
+								'display': 'inline-block',
+								'overflow': 'hidden',
+								'max-width': '250px',
+								'text-overflow': 'ellipsis'
+							})
+							.usosBadge({
+								entity: 'entity/fac/faculty',
+								fac_id: item.fac_id || item.id,
+								position: "top"
+							});
 					}
 				},
 				
@@ -411,7 +445,7 @@
 					prompt: widget._entitySetup.prompt,
 					autocomplete: {
 						dropdown: {
-							maxHeight: "200px",
+							maxHeight: "250px",
 							position:
 								(distanceToBottom > 200) ? "below" :
 								((distanceToTop > distanceToBottom) ? "above" : "below")

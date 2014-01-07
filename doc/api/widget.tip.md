@@ -18,9 +18,12 @@ How to call it
 
 It can be called as a regular widget:
 
-  * `$("#element").usosTip(options)` - *see the options below!*
+  * `$("#element").usosTip(options)` - In this case, **it will not create the "i"
+    icon**, it will simply add a tooltip to your element. (See below for the
+    full list of options.)
 
-Or, using one of the forms of the **static constructor**:
+Or, using one of the forms of the **static constructor** (these **will** create
+the "i" icon):
 
   * `$.usosWidgets.usosTip.create(options)` - *see the options below!*
   * `$.usosWidgets.usosTip.create(string)` - *HTML!*
@@ -85,3 +88,20 @@ user-supplied content you must sanitize it (e.g. with
 ### position
 
 *Optional.* Either `left`, `right`, `top` or `bottom`. Default: `top`.
+
+### type
+
+*Optional.* Currently, there are two types of tips:
+
+  * `default` - used in conjunction with the "i" icon. The content can be fairly
+    long.
+
+  * `tool` - used on other tool icons or on short paragraphs of text. Has a
+    different "look and feel". Should be rather short (one or two paragraphs of
+    text).
+
+### delayed
+
+*Optional.* Default is `false`. If set to `true`, then the showing of the tip
+will be additionally delayed (the user needs to hover for a longer period of
+time).

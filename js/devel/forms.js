@@ -6,7 +6,7 @@
 	
 	var FN = {
 		
-		hideErrors: $.usosCore._usosValueForward("_hideErrors", "setter"),
+		hideErrors: $.usosCore._methodForwarder("usosValue", "_hideErrors", "setter"),
 		
 		/**
 		 * @memberOf $.fn.usosForms

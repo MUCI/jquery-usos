@@ -1,6 +1,30 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.2** - *2014-01-07*
+
+    * New requirements:
+      * jQuery-USOS 1.2 requires USOS API 5.4.4.
+      * TextExt and Tooltipster libraries were tweaked. Make sure you use the
+        ones provided in our repository.
+    * Backward-incompatible changes:
+      * [usosTip widget](api/widget.tip.md) won't create an icon anymore, if
+        it was initialized directly on other (existing) element.
+      * [$.usosCore.usosapiFetch](api/core.usosapiFetch.md) will no longer call
+        `fail` if the user is navigating away from page. You may bring back this
+        behavior with `errorOnUnload` parameter.
+    * New features and backward-compatible changes:
+      * **New widget:** [usosBadge](api/widget.badge.md). Many widgets and 
+        methods make use of the usosBadge widget automatically.
+      * [$.usosCore.usosapiFetch](api/core.usosapiFetch.md)
+         * Now supports `File`-type parameters.
+         * New parameter: `errorOnUnload`.
+         * Returned Promise object now includes XHR's `abort()` method.
+      * [$.usosCore.init](api/core.init.md)
+         * New `USOSapis` parameter: `user_id`
+      * [usosTip widget](api/widget.tip.md)
+         * New parameters: `type` and `delayed`
+
   * **Version 1.1.1** - *2013-10-16*
 
     * Minor bug fixed in the `.usosForms('showErrors', response)` function.

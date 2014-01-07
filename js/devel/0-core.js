@@ -5,7 +5,8 @@
 	var NS = "usosCore";
 	
 	var mydata = {
-		settings: null
+		settings: null,
+		preloaderElement: null
 	};
 	
 	var init = function(options) {
@@ -25,147 +26,232 @@
 			usosAPIs: {
 				"default": {
 					methodUrl: null,  // e.g. "https://usosapps.usos.edu.pl/%s"
-					extraParams: {}
+					extraParams: {},
+					user_id: null
 				}
 			},
 			entityURLs: {
 				"entity/users/user": null,
 				"entity/fac/faculty": null,
 				"entity/slips/template": null
-			}
+			},
+			_requestDelay: 0
 		};
 		mydata.settings = $.extend(true, {}, defaultSettings, options);
+		mydata.preloaderElement = $("<div style='display: none'>");
+		$(function() {
+			$(document.body).append(mydata.preloaderElement);
+		});
 	};
 	
-	var usosapiFetch = function() {
+	/** 
+	 * Convert method parameters given by the user to the "final" parameters
+	 * used in the AJAX call. This method MAY return (1) a dictionary, or
+	 * (2) a FormData object. 
+	 */
+	var _prepareApiParams = function(params) {
 		
-		var _flatten = function(params) {
-			var copy = {};
-			$.each(params, function(key, value) {
-				if ($.isArray(value)) {
-					value = value.join("|");
-				} else if (typeof value !== "string") {
+		/* Make a "flat" copy of the parameters. Determine if any of the
+		 * parameters is a file object. */
+		
+		var copy = {};
+		var useFormData = false;
+		$.each(params, function(key, value) {
+			if ($.isArray(value)) {
+				value = value.join("|");
+			} else if (typeof value !== "string") {
+				if (File && File.prototype.isPrototypeOf(value)) {
+					useFormData = true;
+				} else {
 					value = "" + value;
 				}
-				copy[key] = value;
-			});
+			}
+			copy[key] = value;
+		});
+		if (!useFormData) {
+			
+			/* None of the parameters are file objects. */
+			
 			return copy;
+		}
+		
+		/* Some of the parameters are file objects. We will transform the object
+		 * into a FormData object. (We could do that in either case, but not all browsers
+		 * support file and FormData objects.) */
+			
+		var formData = new FormData();
+		$.each(copy, function(key, value) {
+			formData.append(key, value);
+		});
+		return formData;
+	};
+	
+	var usosapiFetch = function(opts) {
+
+		var defaultOptions = {
+			source_id: "default",
+			method: "method_name",
+			params: {},
+			syncMode: "noSync",  // "noSync", "receiveIncrementalFast", "receiveLast"
+			syncObject: null,
+			success: null,
+			error: null,
+			errorOnUnload: false
+		};
+		var options = $.extend({}, defaultOptions, opts);
+		
+		/* Verify params (especially those prone for spelling errors). */
+		
+		if (options.syncMode == "noSync") {
+			if (options.syncObject !== null) {
+				throw("syncObject must stay null if syncMode is 'noSync'");
+			}
+		} else if ((options.syncMode == "receiveLast") || (options.syncMode == "receiveIncrementalFast")) {
+			if (options.syncObject === null) {
+				throw("syncObject must be an object if syncMode is other than 'noSync'. Check out the docs!");
+			}
+		} else {
+			throw("Invalid syncMode: " + options.syncMode);
+		}
+		
+		/* If the uses a syncObject, then get the new request id. */
+		
+		var requestId = null;
+		if (options.syncObject !== null) {
+			if (typeof options.syncObject.lastIssuedRequestId === "undefined") {
+				options.syncObject.lastIssuedRequestId = 0;
+				options.syncObject.lastReceivedRequestId = 0;
+			}
+			options.syncObject.lastIssuedRequestId++;
+			requestId = options.syncObject.lastIssuedRequestId;
+		}
+		
+		/* Contruct the method URL for the given source_id and method. */
+		
+		var url = mydata.settings.usosAPIs[options.source_id].methodUrl.replace("%s", options.method);
+		
+		/* Append extraParams (overwrite existing params!) defined for the given source_id. */
+		
+		var params = $.extend(
+			{}, options.params,
+			mydata.settings.usosAPIs[options.source_id].extraParams
+		);
+		
+		/* Prepare the callbacks. */
+		
+		var deferred = $.Deferred();
+		
+		var success = function(data, textStatus, jqXHR) {
+			if (options.syncObject !== null) {
+				if (options.syncObject.lastReceivedRequestId > requestId) {
+					
+					/* This response is overdue. We already received other response with
+					 * greater requestId. We will ignore this response. */
+					
+					return;
+				}
+				if (
+					(options.syncMode == "receiveLast") &&
+					requestId < options.syncObject.lastIssuedRequestId
+				) {
+					
+					/* This response is obolete. A request with greater requestId was
+					 * already issued. We will ignore this response. */
+					
+					return;
+				}
+				options.syncObject.lastReceivedRequestId = requestId;
+			}
+			
+			if (options.success !== null) {
+				options.success(data);
+			}
+			deferred.resolve(data);
 		};
 		
-		return function(opts) {
-
-			var defaultOptions = {
-				source_id: "default",
-				method: "method_name",
-				params: {},
-				syncMode: "noSync",  // "noSync", "receiveIncrementalFast", "receiveLast"
-				syncObject: null,
-				success: null,
-				error: null
-			};
-			var options = $.extend({}, defaultOptions, opts);
-			
-			/* Verify params (especially those prone for spelling errors). */
-			
-			if (options.syncMode == "noSync") {
-				if (options.syncObject !== null) {
-					throw("syncObject must stay null if syncMode is 'noSync'");
-				}
-			} else if ((options.syncMode == "receiveLast") || (options.syncMode == "receiveIncrementalFast")) {
-				if (options.syncObject === null) {
-					throw("syncObject must be an object if syncMode is other than 'noSync'. Check out the docs!");
-				}
-			} else {
-				throw("Invalid syncMode: " + options.syncMode);
-			}
-			
-			/* If the uses a syncObject, then get the new request id. */
-			
-			var requestId = null;
+		var error = function(xhr, errorCode, errorMessage) {
 			if (options.syncObject !== null) {
-				if (typeof options.syncObject.lastIssuedRequestId === "undefined") {
-					options.syncObject.lastIssuedRequestId = 0;
-					options.syncObject.lastReceivedRequestId = 0;
+				if (options.syncObject.lastReceivedRequestId > requestId) {
+					/* As above. */
+					return;
 				}
-				options.syncObject.lastIssuedRequestId++;
-				requestId = options.syncObject.lastIssuedRequestId;
+				options.syncObject.lastReceivedRequestId = requestId;
 			}
 			
-			/* Contruct the method URL for the given source_id and method. */
+			var response;
 			
-			var url = mydata.settings.usosAPIs[options.source_id].methodUrl.replace("%s", options.method);
-			
-			/* Append extraParams (overwrite existing params!) defined for the given source_id. */
-			
-			var params = $.extend({}, options.params, mydata.settings.usosAPIs[options.source_id].extraParams);
-			
-			/* Make the call. */
-			
-			var deferred = $.Deferred();
-			$.ajax({
-				type: 'POST',
-				url: url,
-				data: _flatten(params),
-				dataType: 'json',
-				success: function(data, textStatus, jqXHR) {
-					if (options.syncObject !== null) {
-						if (options.syncObject.lastReceivedRequestId > requestId) {
-							
-							/* This response is overdue. We already received other response with
-							 * greater requestId. We will ignore this response. */
-							
-							return;
-						}
-						if (
-							(options.syncMode == "receiveLast") &&
-							requestId < options.syncObject.lastIssuedRequestId
-						) {
-							
-							/* This response is obolete. A request with greater requestId was
-							 * already issued. We will ignore this response. */
-							
-							return;
-						}
-						options.syncObject.lastReceivedRequestId = requestId;
-					}
-					
-					if (options.success !== null) {
-						options.success(data);
-					}
-					deferred.resolve(data);
-				},
-				error: function(xhr, errorCode, errorMessage) {
-					if (options.syncObject !== null) {
-						if (options.syncObject.lastReceivedRequestId > requestId) {
-							/* As above. */
-							return;
-						}
-						options.syncObject.lastReceivedRequestId = requestId;
-					}
-					
-					var response;
-					
-					try {
-						if (xhr && xhr.responseText) {
-							response = $.parseJSON(xhr.responseText);
-						} else {
-							throw "Missing responseText";
-						}
-					} catch (err) {
-						response = {"message": "USOS API communication error."};
-						$.usosCore._console.error("usosapiFetch: Failed to parse the error as JSON: " + err.message);
-					}
-					if (options.error !== null) {
-						options.error(response);
-					}
-					deferred.reject(response);
+			try {
+				if (xhr && xhr.responseText) {
+					response = $.parseJSON(xhr.responseText);
+				} else {
+					throw "Missing responseText";
 				}
-			});
-			if (options.syncMode == 'noSync') {
-				return deferred.promise();
+			} catch (err) {
+				if (xhr.status != 0) {
+					$.usosCore._console.error("usosapiFetch: Failed to parse the error response: ", err);
+					response = {"message": "USOS API communication error."};
+				} else {
+					response = undefined;
+				}
+			}
+			if ((xhr.status != 0) || options.errorOnUnload) {
+				if (options.error !== null) {
+					options.error(response);
+				}
+				deferred.reject(response);
 			}
 		};
-	}();
+		
+		/* Prepare the request data. This can be either a simple dictionary, or
+		 * a FormData object. Both cases need to be handled differently. See
+		 * http://stackoverflow.com/a/5976031/1010931 for the details. */
+		
+		var ajaxParams = {
+			type: 'POST',
+			url: url,
+			data: _prepareApiParams(params),
+			dataType: 'json',
+			success: success,
+			error: error
+		};
+		if (FormData && FormData.prototype.isPrototypeOf(ajaxParams.data)) {
+			ajaxParams.contentType = false;
+			ajaxParams.processData = false;
+		}
+		
+		/* Make the call. */
+		
+		var xhrOrTimeoutHandle = null;
+		if (mydata.settings._requestDelay != 0) {
+			xhrOrTimeoutHandle = setTimeout(function() {
+				xhrOrTimeoutHandle = $.ajax(ajaxParams);
+			}, mydata.settings._requestDelay);
+		} else {
+			xhrOrTimeoutHandle = $.ajax(ajaxParams);
+		}
+		
+		/* Return the Promise object only when syncMode is left at the default
+		 * 'noSync' value. (The Deferred framework is not compatible with all the
+		 * other syncModes.) */
+		
+		if (options.syncMode == 'noSync') {
+			
+			/* We want to extend our Promise object with extra "abort" method. */
+			
+			return deferred.promise({
+				abort: function() {
+					/* Do we have jqXHR or setTimeout handle? */
+					if (xhrOrTimeoutHandle.abort) {
+						/* Abort the request. */
+						xhrOrTimeoutHandle.abort();
+					} else {
+						/* The request was not yet sent. Abort the timer. */
+						clearTimeout(xhrOrTimeoutHandle);
+					}
+				}
+			});
+		}
+	};
 	
 	var lang = function() {
 		if (arguments.length == 1) {
@@ -292,6 +378,28 @@
 		}
 	};
 	
+	var _nlang = function(value, pl1, pl2, pl5, en1, en2) {
+		if (mydata.settings.langpref == "pl") {
+			if (value == 1) {
+				return pl1;
+			}
+			var d = value % 10;
+			var h = value % 100;
+			if ((h >= 12) && (h <= 14)) {
+				return pl5;
+			}
+			if ((d >= 2) && (d <= 4)) {
+				return pl2;
+			}
+			return pl5;
+		} else {
+			if (value == 1) {
+				return en1;
+			}
+			return en2;
+		}
+	};
+	
 	var fixedConsole = function() {
 		
 		var _freezeOne = function(arg) {
@@ -308,7 +416,6 @@
 			}
 			return frozen;
 		};
-		var errorAlertShown = false;
 		var fixedConsole = {};
 		$.each(["log", "warn", "error", "assert"], function(_, funcName) {
 			/** Deals with http://stackoverflow.com/questions/4057440/ */
@@ -324,11 +431,6 @@
 						window.console,
 						_freezeAll(arguments)
 					);
-					
-					if (funcName == "error" && (!errorAlertShown)) {
-						errorAlertShown = true;
-						alert("There are errors in the jQuery-USOS console.");
-					}
 				}
 			};
 		});
@@ -474,7 +576,7 @@
 		setTimeout(showIt, showDelay);
 	};
 	
-	var _usosValueForward = function(funcName, type) {
+	var _methodForwarder = function(dataKey, funcName, type) {
 		return function() {
 			var widget;
 			var myArgs = arguments;
@@ -483,7 +585,7 @@
 			if ((type == 'getter') || ((type == 'auto') && (arguments.length == 0))) {
 				var ret = undefined;
 				this.each(function() {
-					widget = $(this).data("usosValue");
+					widget = $(this).data(dataKey);
 					ret = widget[funcName].apply(widget, myArgs);
 					return false; // break
 				});
@@ -493,21 +595,31 @@
 			/* setter */
 				
 			return this.each(function(i) {
-				widget = $(this).data('usosValue');
+				widget = $(this).data(dataKey);
 				widget[funcName].apply(widget, myArgs);
 			});
 		};
 	};
 	
+	/**
+	 * Attach the jQuery element(s) to an invisible element in the DOM.
+	 * Useful for prefetching images in <a hrefs>.
+	 */
+	var _preload = function(elements) {
+		mydata.preloaderElement.append(elements);
+	};
+	
 	$[NS] = {
 		_getSettings: function() { return mydata.settings; },
 		_console: fixedConsole,
-		_usosValueForward: _usosValueForward,
+		_methodForwarder: _methodForwarder,
+		_preload: _preload,
+		_nlang: _nlang,
 		
 		init: init,
 		usosapiFetch: usosapiFetch,
 		lang: lang,
 		panic: panic
 	};
-	
+
 })(jQuery);

@@ -7,10 +7,10 @@ calling this method.
 Demos
 -----
 
-The `$.usosCore.init` is called in **all** (!) demo pages in the docs. It affects
-all other functions and widgets. You can try it, for example
+The `$.usosCore.init` is called in **all** demo pages in the docs. You can try
+it, for example
 [here](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch)
-or [here](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/selector)...
+or [here](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/selector).
 
 Examples
 --------
@@ -24,7 +24,7 @@ $.usosCore.init({
     langpref: 'pl',
     usosAPIs: {
         'default': {
-            methodUrl: "http://apps.usos.edu.pl/%s"
+            methodUrl: "http://example.com/yourProxy.php?_method_=%s"
         }
     }
 });
@@ -40,7 +40,7 @@ $.usosCore.init({
     usosAPIs: {
         'default': {
             methodUrl: "http://example.com/usosapiProxy.php?method=%s"
-            extraParams: {
+            extraParamsForPOST: {
                 csrftoken: "someToken"
             }
         }
@@ -71,22 +71,29 @@ See [$.usosCore.lang](core.lang.md) function.
 
 ### usosAPIs
 
-Object *(handle => description)* describing USOS API servers which
+Object with *(handle => description)* pairs describing USOS API servers which
 you'll use within your app. Usually you will need to define only the `default`
-handle. Each *description* is an object of the following structure:
+handle.
+
+**Warning:** Currently, most of the widgets work only with the `default`
+USOS API server. In the future, we may completely resign from multi-server
+support. We advise against multi-server use.
+
+Each *description* is an object of the following structure:
 
   * **methodUrl** - Required. Where to send the USOS API request? `%s` will be
     replaced with the method name.
 
   * **extraParams** - Optional. Extra parameters to be appended to all issued
-    requests. This is useful for passing CSRF tokens when you're using a proxy.
+    POST requests. This is useful for passing CSRF tokens when you're using a
+    proxy.
+
+  * **user_id** - Optional. ID of the currently logged in user in this USOS API
+    installation. Some widgets may use it to fetch some extra info.
 
 See also: [$.usosCore.usosapiFetch](core.usosapiFetch.md) (the `source_id`
 parameter). The `source_id` parameter is also accepted in various other functions
 and widgets.
-
-*A note of warning:* Since most of the applications use only one (`default`)
-USOS API server, the multi-server setup was not tested much.
 
 ### entityURLs
 

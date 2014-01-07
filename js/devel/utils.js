@@ -108,9 +108,13 @@
 	 * Currently, tooltipster is used by various other plugins, that's why this
 	 * needs to be put in the utils module.
 	 */
-	var _tooltipster_html = function(obj) {
+	var _tooltipster_html = function(obj, autoWidth) {
 		
 		var $content;
+		
+		if (typeof autoWidth === "undefined") {
+			autoWidth = true;
+		}
 		
 		/* Convert obj to jQuery element. */
 		
@@ -128,25 +132,25 @@
 		 * for the given content. We'll use simple heuristics, based on the
 		 * length of the text given. */
 		
-		var len = $content.text().length;
-		var maxWidth;
-		if (len < 30) {
-			maxWidth = "auto";
-		} else if (len < 300) {
-			maxWidth = "300px";
-		} else if (len < 1200) {
-			/* We don't want it to be too high, so it is better to make it wider. */
-			var scale = 1.0 - ((1200 - len) / 900.0);
-			maxWidth = (300 + 300 * scale) + "px";
-		} else {
-			maxWidth = "600px";
-		}
-		return $("<div>")
-			.append($("<div>")
+		if (autoWidth) {
+			var len = $content.text().length;
+			var maxWidth;
+			if (len < 30) {
+				maxWidth = "auto";
+			} else if (len < 300) {
+				maxWidth = "300px";
+			} else if (len < 1200) {
+				/* We don't want it to be too high, so it is better to make it wider. */
+				var scale = 1.0 - ((1200 - len) / 900.0);
+				maxWidth = (300 + 300 * scale) + "px";
+			} else {
+				maxWidth = "600px";
+			}
+			$content = $("<div>")
 				.append($content)
-				.css("max-width", maxWidth)
-			)
-			.html();
+				.css("max-width", maxWidth);
+		}
+		return $("<div>").append($content);
 	};
 	
 	$[NS] = {
