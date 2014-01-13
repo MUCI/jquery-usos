@@ -9,7 +9,7 @@ set VERSION=1.2
 
 set USOSWEB=D:/PRIV/Projekty/usosweb
 set DEST=D:/PRIV/Projekty/jquery-usos
-set YUICOMPRESSOR=%DEST%/yuicompressor-2.4.2.jar
+set YUICOMPRESSOR=%DEST%/yuicompressor-2.4.8.jar
 
 set BUILDTARGET=%DEST%/js/jquery-usos-%VERSION%.min.js
 set BUILDTARGET2=%DEST%/js/jquery-usos-%VERSION%-bundle.min.js
@@ -35,29 +35,32 @@ cp -R %USOSWEB%/www/css/theme %DEST%/css/jquery-ui-theme
 rem * Merge all jquery-USOS development files into one minified library
 rem * (this will NOT include external libs).
 
-cat %DEST%/js/devel/* > %DEST%/js/tmp1.js
+echo /*! jQuery-USOS %VERSION% -- https://github.com/MUCI/jquery-usos */> %DEST%/js/tmp1.js
+echo. >> %DEST%/js/tmp1.js
+cat %DEST%/js/devel/* >> %DEST%/js/tmp1.js
 java -jar %YUICOMPRESSOR% --charset utf-8 --type js %DEST%/js/tmp1.js > %DEST%/js/tmp2.js
-echo /** jQuery-USOS %VERSION% -- https://github.com/MUCI/jquery-usos */ > %DEST%/js/tmp3.js
-cat %DEST%/js/tmp2.js >> %DEST%/js/tmp3.js
-mv %DEST%/js/tmp3.js %BUILDTARGET%
+mv %DEST%/js/tmp2.js %BUILDTARGET%
 rm %DEST%/js/tmp*.js
 
 rem * Create the "bundle" package.
 
-echo /** > %BUILDTARGET2%
-echo  * jQuery-USOS *BUNDLE VERSION* -- this file includes all jQuery-USOS >> %BUILDTARGET2%
-echo  * JavaScript dependencies except jQuery and jQuery-UI. >> %BUILDTARGET2%
-echo  */ >> %BUILDTARGET2%
-echo. >> %BUILDTARGET2%
-cat %DEST%/js/jquery.ba-bbq-1.2.1.js >> %BUILDTARGET2%
-echo. >> %BUILDTARGET2%
-cat %DEST%/js/jquery.colResizable-1.3.min.js >> %BUILDTARGET2%
-echo. >> %BUILDTARGET2%
-cat %DEST%/js/jquery.textext.1.3.1.js >> %BUILDTARGET2%
-echo. >> %BUILDTARGET2%
-cat %DEST%/js/jquery.tooltipster.2.1.js >> %BUILDTARGET2%
-echo. >> %BUILDTARGET2%
-cat %BUILDTARGET% >> %BUILDTARGET2%
+echo /*!> %DEST%/js/tmp1.js
+echo  * jQuery-USOS %VERSION% *BUNDLE VERSION* -- this file includes all jQuery-USOS>> %DEST%/js/tmp1.js
+echo  * JavaScript dependencies except jQuery and jQuery-UI.>> %DEST%/js/tmp1.js
+echo  */>> %DEST%/js/tmp1.js
+echo. >> %DEST%/js/tmp1.js
+cat %DEST%/js/jquery.ba-bbq-1.2.1.js >> %DEST%/js/tmp1.js
+echo. >> %DEST%/js/tmp1.js
+cat %DEST%/js/jquery.colResizable-1.3.min.js >> %DEST%/js/tmp1.js
+echo. >> %DEST%/js/tmp1.js
+cat %DEST%/js/jquery.textext.1.3.1.js >> %DEST%/js/tmp1.js
+echo. >> %DEST%/js/tmp1.js
+cat %DEST%/js/jquery.tooltipster.2.1.js >> %DEST%/js/tmp1.js
+echo. >> %DEST%/js/tmp1.js
+cat %BUILDTARGET% >> %DEST%/js/tmp1.js
+java -jar %YUICOMPRESSOR% --charset utf-8 --type js %DEST%/js/tmp1.js > %DEST%/js/tmp2.js
+mv %DEST%/js/tmp2.js %BUILDTARGET2%
+rm %DEST%/js/tmp*.js
 
 rem * Copy the "bundle" to jsfiddle directory. This is done so that there's no
 rem * need to update all resource URLs in demo pages (as the original URL
