@@ -2351,6 +2351,9 @@
         if(self.opts(OPT_ENABLED) === true)
         {
             self.on({
+                focus: function() {
+                    self.getSuggestions();
+                },
                 blur              : self.onBlur,
                 anyKeyUp          : self.onAnyKeyUp,
                 deleteKeyUp       : self.onAnyKeyUp,

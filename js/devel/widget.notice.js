@@ -32,7 +32,7 @@
                 content: $.usosUtils._tooltipster_html(widget.options.content),
                 onlyOne: false,
                 position: 'right',
-                theme: "ua-tooltip ua-tooltip-error",
+                theme: "ua-container ua-tooltip ua-tooltip-error",
                 functionReady: function() {
                     widget._tooltipReady();
                 },

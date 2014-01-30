@@ -83,8 +83,7 @@
                 interactive: true,
                 speed: 0,
                 position: widget.options.position,
-                theme: "ua-tooltip ua-tooltip-badge " + widget._cssClass(),
-                arrowColor: widget._getArrowColor(widget.options.position),
+                theme: "ua-container ua-tooltip ua-tooltip-badge " + widget._cssClass(),
                 functionAfter: function() {
 
                     /* When tooltip is closed, tooltipster removes it from the DOM. This in turn,
@@ -176,10 +175,6 @@
             });
             return JSON.stringify(values);
         },
-
-        _getArrowColor: function(tooltipPosition) {
-            return undefined;
-        }
     });
 
 })(jQuery);

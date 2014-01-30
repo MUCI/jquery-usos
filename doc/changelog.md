@@ -1,6 +1,15 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.2.1** - *2014-01-30*
+
+    * [$.usosCore.usosapiFetch](api/core.usosapiFetch.md): The `xhr` field was
+      added to the `response` objects sent to the error callbacks
+      (`usosXHR.fail(function(response) {...})` method).
+    * [usosSelector widget](api/widget.selector.md) now shows suggestions on
+      focus.
+    * Fixed some minor display errors in tooltips, notices and badges.
+
   * **Version 1.2** - *2014-01-07*
 
     * New requirements:

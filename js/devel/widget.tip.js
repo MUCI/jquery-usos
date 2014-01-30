@@ -25,7 +25,7 @@
             } else {
                 content = widget.options.content;
             }
-            var theme = "ua-tooltip ";
+            var theme = "ua-container ua-tooltip ";
             var offsetX = 0;
             var offsetY = 0;
             if (widget.options.type == "tool") {

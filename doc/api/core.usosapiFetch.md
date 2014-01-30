@@ -101,26 +101,9 @@ The values do *not* have to be strings.
 
 ### success / error
 
-**Important:** Unless you're using non-default `syncMode`, it's better to use
-the returned *usosXHR* object (which implements the *Promise interface*)
-instead of success/error callbacks.
-
-*Optional.* Similar to the success/error handlers of the `jQuery.ajax` call,
-but there are differences:
-
-  * Both handlers have the same signature: `function(response)`, where
-    `response` is **always** an Object.
-  * In case of **success** (HTTP 200), response contains the parsed USOS API
-    response. The same response will be *resolved* into the returned *Promise
-    object*.
-  * In case of **error** (HTTP 4xx), response contains the parsed USOS API
-    error response. The same response will be *rejected* into the returned
-    *Promise object*. You should pass such response to
-    `.usosForms('showErrors', response)` or `$.usosCore.panic`.
-  * In case of **server error** (HTTP 5xx), response contains a "fake" object
-    with the `message` field. The same response will be *rejected* into the
-    returned *Promise object*. You should pass such response to
-    `.usosForms('showErrors', response)` or `$.usosCore.panic`.
+*Optional.* Similar to the success/error handlers of the `jQuery.ajax` call.
+You should provide these callbacks only if you're using non-default `syncMode`.
+Otherwise, **you should make use of the returned *usosXHR* object** (see below).
 
 ### syncMode
 
@@ -176,14 +159,44 @@ then set this to `true`.
 Returned value
 --------------
 
-If `syncMode` was left at `noSync`, it will return an `usosXHR` object:
+* If `syncMode` was left at `noSync`, it will return an `usosXHR` object.
+* For other modes `syncModes`, nothing will be returned.
 
-  * `usosXHR` implements the Promise interface (as `jQuery.ajax` does). It
-    has the `always`, `done` and `fail` methods. (See descriptions of the
-    `success` and `error` options for details. Also review the examples.)
-  * It also has the `abort()` method, in case you want to abort the request.
-  * Currently, it doesn't expose any other jqXHR methods. In theory, you
-    shouldn't need them as all USOS API errors and responses are handled 
-    internally and forwarded to your `done` and `fail` callbacks.
+usosXHR object
+--------------
 
-For other modes `syncModes`, nothing will be returned.
+It implements the **Promise** interface (as `jqXHR` does) and the `abort()`
+method. However, it doesn't expose any other `jqXHR` methods.
+
+### .abort()
+
+Aborts the request.
+
+### .always(function() {...})
+
+Part of the *Promise* interface. The callback doesn't take any arguments.
+
+### .done(function(response) {...})
+
+  * Called when USOS API responded with HTTP 200, **and** the response was
+    successfully parsed (as JSON).
+  * The `response` will contain the parsed USOS API response.
+
+### .fail(function(response) {...})
+
+  * Called whenever the request has failed, for any reason.
+  * The `response` will **always be an object**, and it will always contain at
+    least the following keys:
+    * **message** - a short reason for the error, intended to be read **by
+      developers only**.
+    * **xhr** - the underlying `jqXHR` object. 
+  * **If any response has been received** from USOS API, then the `response`
+    object will contain the parsed USOS API response (plus the `xhr` entry).
+  * **If no response has been received** (or the browser did not allow us to
+    read the response), then the `response` object will simply contain a "fake"
+    messsage (plus the `xhr` entry).
+  * If you're not dealing with the errors your self, then you should pass the
+    `response` object to `$.usosCore.panic`, or `.usosForms('showErrors', response)`. In many cases, calling the `panic` method will be enough.
+  * Note that by default `.fail` will not be triggered if the error occured
+    while the page was unloading. See `errorOnUnload` option.
+ 

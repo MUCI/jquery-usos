@@ -40,8 +40,6 @@
                     user.profile_url = local_profile_url;
                 }
                 return user;
-
-                // WRTODO: preload photo? still possible!
             });
         },
 

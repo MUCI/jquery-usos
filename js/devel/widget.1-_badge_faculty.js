@@ -91,8 +91,6 @@
             if (fac.stats.course_count > 0) {
                 appendDiv(
                     fac.stats.course_count,
-                    /* WRCLEANIT "prowadzony przedmiot", "prowadzone przedmioty", "prowadzonych przedmiotów",
-                    "organized course", "organized courses"*/
                     "przedmiot", "przedmioty", "przedmiotów",
                     "course", "courses"
                 );
@@ -141,13 +139,6 @@
 
             return badge;
         },
-
-        /* WRCLEANIT
-        _getArrowColor: function(tooltipPosition) {
-            if ((tooltipPosition == "left") || (tooltipPosition == "right"))
-                return "#222222";
-            return "#ffffff";
-        }*/
     });
 
 })(jQuery);

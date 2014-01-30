@@ -6,7 +6,8 @@
 
     var mydata = {
         settings: null,
-        preloaderElement: null
+        preloaderElement: null,
+        unloading: false
     };
 
     var init = function(options) {
@@ -41,6 +42,9 @@
         mydata.preloaderElement = $("<div style='display: none'>");
         $(function() {
             $(document.body).append(mydata.preloaderElement);
+            $(window).on("beforeunload", function() {
+                mydata.unloading = true;
+            });
         });
     };
 
@@ -187,14 +191,24 @@
                     throw "Missing responseText";
                 }
             } catch (err) {
+                response = {"message": "USOS API communication error."};
                 if (xhr.status != 0) {
                     $.usosCore._console.error("usosapiFetch: Failed to parse the error response: ", err);
-                    response = {"message": "USOS API communication error."};
-                } else {
-                    response = undefined;
                 }
             }
-            if ((xhr.status != 0) || options.errorOnUnload) {
+
+            /* Add the xhr field. */
+
+            response.xhr = xhr;
+
+            if ((xhr.status == 0) && mydata.unloading && (!options.errorOnUnload)) {
+
+                /* This error was most probably triggered by the page being
+                 * unloaded. By default, we will stop propagating such errors.
+                 * User may still receive such responses if he sets errorOnUnload
+                 * option to true. */
+
+            } else {
                 if (options.error !== null) {
                     options.error(response);
                 }
