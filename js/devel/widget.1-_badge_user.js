@@ -19,7 +19,10 @@
              * instead. */
 
             var local_profile_url = $.usosEntity.url("entity/users/user", widget.options.user_id);
-            var fields = "id|first_name|last_name|photo_urls[100x100]|sex|student_programmes|employment_functions|employment_positions";
+            var fields = (
+                "id|first_name|last_name|photo_urls[100x100]|sex|employment_functions|" +
+                "employment_positions|student_programmes[programme|status]"
+            );
             if (!local_profile_url) {
                 fields += "|profile_url";
             }
@@ -69,6 +72,17 @@
             );
             badge.find('.ua-photo-link').attr('href', user.profile_url);
 
+            var makeLine = function(content) {
+                return content
+                    .addClass("ua-ellipsis")
+                    .css("max-width", "234px")  /* rel: g02d90l */
+                    .on('mouseenter', function() {
+                        var $this = $(this);
+                        if (this.offsetWidth < this.scrollWidth && !$this.attr('title'))
+                            $this.attr('title', $this.text());
+                    });
+            };
+
             /* Employment functions and positions (grouped by faculty) */
 
             var groups = {};
@@ -92,29 +106,83 @@
             });
             $.each(groups, function(_, group) {
                 var li = $("<li>")
-                    .append($.usosEntity.link("entity/fac/faculty", group.faculty))
-                    .append($("<br>"));
+                    .append(makeLine($.usosEntity.link("entity/fac/faculty", group.faculty)));
                 group.names.sort(function(a, b) { return a.length > b.length ? -1 : 1; });
                 $.each(group.names, function(i, name) {
-                    if (i > 0) {
-                        li.append($("<br>"));
-                    }
-                    li.append($("<span class='ua-func'>").text($.usosCore.lang(name)));
+                    li.append(makeLine($("<span class='ua-func'>").text($.usosCore.lang(name))));
                 });
                 badge.find(".ua-functions").append(li);
             });
 
-            /* Study programmes */
+            /* Study programmes. We want active programmes displayed separately. */
 
-            if (user.student_programmes.length > 0) {
+            var sp_active = [];
+            var sp_inactive = [];
+            $.each(user.student_programmes, function(_, sp) {
+                if (sp.status == "active" || sp.status == "graduated_before_diploma") {
+                    sp_active.push(sp);
+                } else {
+                    sp_inactive.push(sp);
+                }
+            });
+
+            var compressedHelper = function(sps, li) {
+                var tipContent = $("<div>");
+                $.each(sps, function(i, sp) {
+                    tipContent.append(makeLine(
+                        $.usosEntity.label("entity/progs/programme", sp.programme)
+                    ));
+                });
+                li.append($.usosCore.lang(" (na ", " (on "));
+                var link = $("<span class='ua-link ua-no-underline'>");
+                li.append(link);
+                link
+                    .append(sps.length + " ")
+                    .append($.usosCore.lang("programach", "programmes"))
+                    .usosTip({
+                        content: tipContent,
+                        position: "bottom",
+                        type: "tool",
+                        _autoWidth: false
+                    });
+                li.append(")");
+            };
+
+            if (sp_active.length > 0) {
                 var li = $("<li>").append($.usosCore.lang(
                     user.sex == 'M' ? "Student" : "Studentka",
                     "Student"
                 ));
-                $.each(user.student_programmes, function(_, sp) {
-                    li.append($("<br>"));
-                    li.append($.usosEntity.link("entity/progs/programme", sp.programme));
-                });
+                if (sp_active.length > 3) {
+                    /* Compressed view. */
+                    compressedHelper(sp_active, li);
+                } else {
+                    /* Expanded view. */
+                    $.each(sp_active, function(_, sp) {
+                        li.append(makeLine(
+                            $.usosEntity.link("entity/progs/programme", sp.programme)
+                        ));
+                    });
+                }
+                badge.find(".ua-functions").append(li);
+            }
+
+            if (sp_inactive.length > 0) {
+                var li = $("<li>").append($.usosCore.lang(
+                    user.sex == 'M' ? "Były student" : "Była studentka",
+                    "Ex-student"
+                ));
+                if (sp_inactive.length > 1) {
+                    /* Compressed view. */
+                    compressedHelper(sp_inactive, li);
+                } else {
+                    /* Expanded view. */
+                    $.each(sp_inactive, function(_, sp) {
+                        li.append(makeLine(
+                            $.usosEntity.link("entity/progs/programme", sp.programme)
+                        ));
+                    });
+                }
                 badge.find(".ua-functions").append(li);
             }
 
@@ -123,31 +191,34 @@
             if (user.id == $.usosCore._getSettings().usosAPIs['default'].user_id) {
                 badge.find(".ua-td2").append($("<div class='ua-privacy-note'>")
                     .append($("<span>")
-                        .text($.usosCore.lang(
-                            "Kto może oglądać moje zdjęcie?",
-                            "Who can see my photo?"
-                        ))
-                        .usosTip({
-                            content: function() {
-                                return $.usosCore.usosapiFetch({
-                                    method: "services/photos/my_photo_visibility"
-                                }).then(function(data) {
-                                    var message = $("<div>").css("max-width", "200px");
-                                    message.append($("<p>").text($.usosCore.lang(data.desc_for_user)));
-                                    message.append($("<p>").text($.usosCore.lang(
-                                        "Widoczność zdjęcia możesz zmienić na stronie preferencji " +
-                                        "w USOSweb.",
+                        .append(":: ")
+                        .append($("<span class='ua-link ua-no-underline'>")
+                            .text($.usosCore.lang(
+                                "Kto może oglądać moje zdjęcie?",
+                                "Who can see my photo?"
+                            ))
+                            .usosTip({
+                                content: function() {
+                                    return $.usosCore.usosapiFetch({
+                                        method: "services/photos/my_photo_visibility"
+                                    }).then(function(data) {
+                                        var message = $("<div>").css("max-width", "200px");
+                                        message.append($("<p>").text($.usosCore.lang(data.desc_for_user)));
+                                        message.append($("<p>").text($.usosCore.lang(
+                                            "Widoczność zdjęcia możesz zmienić na stronie preferencji " +
+                                            "w USOSweb.",
 
-                                        "You can change this visibility in your USOSweb " +
-                                        "preferences page."
-                                    )));
-                                    return message;
-                                });
-                            },
-                            position: "bottom",
-                            type: "tool",
-                            _autoWidth: false
-                        })
+                                            "You can change this visibility in your USOSweb " +
+                                            "preferences page."
+                                        )));
+                                        return message;
+                                    });
+                                },
+                                position: "bottom",
+                                type: "tool",
+                                _autoWidth: false
+                            })
+                        )
                     )
                 );
             }

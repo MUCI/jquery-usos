@@ -1,6 +1,12 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.2.2** - *2014-02-09*
+
+    * If connected to USOS API 5.4.5, [usosBadge widget](widget.badge.md) for
+      the `entity/users/user` displays active and inactive student programmes
+      separately.
+ 
   * **Version 1.2.1** - *2014-01-30*
 
     * [$.usosCore.usosapiFetch](api/core.usosapiFetch.md): The `xhr` field was
