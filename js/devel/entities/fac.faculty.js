@@ -1,6 +1,28 @@
 (function($) {
 
-    "use strict";
+    var MYCODE = "entity/fac/faculty";
+
+    $.usosEntity._register({
+
+        entityCode: MYCODE,
+        primaryKeyFields: ["fac_id"],
+
+        getLabel: function(faculty) {
+            var e = $.usosUtils.requireFields(faculty, "id|name");
+            return $("<span>")
+                .text($.usosCore.lang(e.name))
+                .usosBadge({
+                    entity: MYCODE,
+                    fac_id: e.id
+                });
+        },
+
+        initBadge: function(options) {
+            this._usosFacultyBadge(options);
+            return true;
+        }
+
+    });
 
     $.widget('usosWidgets._usosFacultyBadge', $.usosWidgets._usosBadge, {
         options: {
@@ -140,5 +162,6 @@
             return badge;
         },
     });
+
 
 })(jQuery);

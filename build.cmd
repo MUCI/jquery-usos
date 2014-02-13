@@ -5,7 +5,7 @@ rem * This is a simple build script template. I use it to build a new
 rem * version from the sources kept in my copy of the USOSweb project.
 rem * Currently this works in my personal environment only.
 
-set VERSION=1.2.2
+set VERSION=1.2.2.1
 
 set USOSWEB=D:/PRIV/Projekty/usosweb
 set DEST=D:/PRIV/Projekty/jquery-usos
@@ -21,6 +21,7 @@ rem * packages from the development USOSweb site. Copy the current libraries.
 rm %DEST%/js/jquery-usos*
 rm %DEST%/js/devel/*
 cp %USOSWEB%/www/js/jquery-usos/devel/*.js %DEST%/js/devel
+cp %USOSWEB%/www/js/jquery-usos/devel/entities/*.js %DEST%/js/devel/entities
 rm %USOSWEB%/www/js/jquery-usos/jquery-usos-*
 cp %USOSWEB%/www/js/jquery-usos/* %DEST%/js
 rm %DEST%/js/latest-bundle.min.js
@@ -38,6 +39,7 @@ rem * (this will NOT include external libs).
 echo /*! jQuery-USOS %VERSION% -- https://github.com/MUCI/jquery-usos */> %DEST%/js/tmp1.js
 echo. >> %DEST%/js/tmp1.js
 cat %DEST%/js/devel/* >> %DEST%/js/tmp1.js
+cat %DEST%/js/devel/entities/* >> %DEST%/js/tmp1.js
 java -jar %YUICOMPRESSOR% --charset utf-8 --type js %DEST%/js/tmp1.js > %DEST%/js/tmp2.js
 mv %DEST%/js/tmp2.js %BUILDTARGET%
 rm %DEST%/js/tmp*.js

@@ -195,6 +195,7 @@
 .ua-note {
     color: #888;
     font-size: 80%;
+    line-height: 1.2em;
 }
 .ua-selector.ua-filled textarea {
     z-index: 0;

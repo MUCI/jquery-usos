@@ -32,9 +32,7 @@
                 }
             },
             entityURLs: {
-                "entity/users/user": null,
-                "entity/fac/faculty": null,
-                "entity/slips/template": null
+                /* "entityCode": value, etc. */
             },
             _requestDelay: 0
         };

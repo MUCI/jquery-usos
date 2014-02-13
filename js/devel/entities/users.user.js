@@ -1,6 +1,28 @@
 (function($) {
 
-    "use strict";
+    var MYCODE = "entity/users/user";
+
+    $.usosEntity._register({
+
+        entityCode: MYCODE,
+        primaryKeyFields: ["user_id"],
+
+        getLabel: function(user) {
+            var e = $.usosUtils.requireFields(user, "id|first_name|last_name");
+            return $("<span>")
+                .text(e.first_name + " " + e.last_name)
+                .usosBadge({
+                    entity: MYCODE,
+                    user_id: e.id
+                });
+        },
+
+        initBadge: function(options) {
+            this._usosUserBadge(options);
+            return true;
+        }
+
+    });
 
     $.widget('usosWidgets._usosUserBadge', $.usosWidgets._usosBadge, {
         options: {

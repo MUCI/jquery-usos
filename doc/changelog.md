@@ -1,6 +1,11 @@
 jQuery-USOS Change Log
 ======================
 
+  * **BETA BRANCH** - *(unreleased)*
+
+    * **Version 1.2.2.1** - Move most of the entity-related stuff into
+      separate files.
+
   * **Version 1.2.2** - *2014-02-09*
 
     * If connected to USOS API 5.4.5, [usosBadge widget](widget.badge.md) for
