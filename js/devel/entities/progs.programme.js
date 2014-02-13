@@ -14,8 +14,9 @@
 
         initBadge: function(options) {
             return false;
-        }
+        },
 
+        getSelectorSetup: false
     });
 
 })(jQuery);

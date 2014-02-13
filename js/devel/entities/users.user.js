@@ -20,8 +20,101 @@
         initBadge: function(options) {
             this._usosUserBadge(options);
             return true;
-        }
+        },
 
+        getSelectorSetup: function() {
+            return {
+                prompt: $.usosCore.lang("Wpisz imię i nazwisko", "Enter the user's name"),
+                search: {
+                    method: 'services/users/search',
+                    paramsProvider: function(query) {
+                        return {
+                            name: query,
+                            num: 6
+                        };
+                    },
+                    itemsExtractor: function(data) {
+                        return data.items;
+                    }
+                },
+                get: {
+                    method: 'services/users/users',
+                    paramsProvider: function(ids) {
+                        return {
+                            user_ids: ids.join("|"),
+                            fields: 'id|first_name|last_name'
+                        };
+                    },
+                    itemsExtractor: function(data) {
+
+                        /* The users/users method returns results in an unordered {user_id: user}
+                         * format. */
+
+                        var items = [];
+                        $.each(data, function(user_id, user) {
+                            if (user === null) {
+                                $.usosCore._console.warn("User " + user_id + " not found! Will be skipped!");
+                                return true; // continue
+                            }
+                            items.push(user);
+                        });
+                        return items;
+                    }
+                },
+                idExtractor: function(item) {
+                    /* 'search' method returns user_ids, 'users' method returns ids. */
+                    return item.user_id || item.id;
+                },
+                suggestionRenderer: function(item) {
+                    /* Suggestions are feeded from the "search" method which includes
+                     * some additional info. */
+                    var $div = $(
+                        "<div class='ua-usersuggestion'><table><tr>" +
+                        "<td class='ua-td2'><div class='ua-match'></div><div class='ua-tagline'></div></td>" +
+                        "</tr></table></div>"
+                    );
+                    $div.find(".ua-match").html(item.match);
+                    $.each(item.active_employment_functions, function(_, f) {
+                        $div.find(".ua-tagline")
+                            .append($("<span class='ua-note'>")
+                                .text(
+                                    $.usosCore.lang(f['function']) +
+                                    " (" + $.usosCore.lang(f.faculty.name) + ")"
+                                )
+                            )
+                            .append(" ");
+                    });
+                    $.each(item.active_student_programmes, function(_, f) {
+                        $div.find(".ua-tagline")
+                            .append($("<span class='ua-note'>")
+                                .text($.usosCore.lang(f.programme.description))
+                            )
+                            .append(" ");
+                    });
+                    $div.usosBadge({
+                        entity: 'entity/users/user',
+                        user_id: item.user_id || item.id
+                    });
+                    return $div;
+                },
+                tagRenderer: function(item) {
+                    /* 'search' method returns 'match', 'users' method returns first_name and last_name. */
+                    var label;
+                    if (item.match) {
+                        label = $("<span>").html(item.match).text();
+                    } else {
+                        label = item.first_name + " " + item.last_name;
+                    }
+                    return $("<span>")
+                        .text(label)
+                        .usosBadge({
+                            entity: 'entity/users/user',
+                            user_id: item.user_id || item.id,
+                            position: "top"
+                        });
+                }
+            };
+        }
     });
 
     $.widget('usosWidgets._usosUserBadge', $.usosWidgets._usosBadge, {

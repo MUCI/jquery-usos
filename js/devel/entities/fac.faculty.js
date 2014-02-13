@@ -20,8 +20,85 @@
         initBadge: function(options) {
             this._usosFacultyBadge(options);
             return true;
-        }
+        },
 
+        getSelectorSetup: function() {
+            return {
+                prompt: $.usosCore.lang("Wpisz nazwę jednostki", "Enter a faculty name"),
+                search: {
+                    method: 'services/fac/search',
+                    paramsProvider: function(query) {
+                        return {
+                            'lang': $.usosCore.lang(),
+                            'fields': 'id|match|name',
+                            'query': query
+                        };
+                    },
+                    itemsExtractor: function(data) {
+                        return data.items;
+                    }
+                },
+                get: {
+                    method: 'services/fac/faculties',
+                    paramsProvider: function(ids) {
+                        return {
+                            'fac_ids': ids.join("|"),
+                            'fields': 'id|name'
+                        };
+                    },
+                    itemsExtractor: function(data) {
+
+                        /* The 'faculties' method returns an unordered dictionary of the {fac_id: faculty} form. */
+
+                        var items = [];
+                        $.each(data, function(fac_id, faculty) {
+                            if (faculty === null) {
+                                $.usosCore._console.warn("Faculty " + fac_id + " not found! Will be skipped!");
+                                return true; // continue
+                            }
+                            items.push(faculty);
+                        });
+                        return items;
+                    }
+                },
+                idExtractor: function(item) {
+                    /* Both methods have the "id" field. */
+                    return item.fac_id || item.id;
+                },
+                suggestionRenderer: function(item) {
+                    var div = $("<div>");
+                    div.html(item.match);
+                    div.usosBadge({
+                        entity: 'entity/fac/faculty',
+                        fac_id: item.fac_id || item.id
+                    });
+                    return div;
+                },
+                tagRenderer: function(item) {
+
+                    /* Both methods have the "name" field. */
+
+                    var name = $.usosCore.lang(item.name);
+
+                    /* Return in a block with decent max-width applied. */
+
+                    return $('<span>')
+                        .text(name)
+                        .css({
+                            'white-space': 'nowrap',
+                            'display': 'inline-block',
+                            'overflow': 'hidden',
+                            'max-width': '250px',
+                            'text-overflow': 'ellipsis'
+                        })
+                        .usosBadge({
+                            entity: 'entity/fac/faculty',
+                            fac_id: item.fac_id || item.id,
+                            position: "top"
+                        });
+                }
+            };
+        }
     });
 
     $.widget('usosWidgets._usosFacultyBadge', $.usosWidgets._usosBadge, {
