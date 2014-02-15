@@ -600,8 +600,17 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     vertical-align: top;
     text-align: left;
 }
+.ua-usersuggestion .ua-td1 {
+    width: 42px;
+}
+.ua-usersuggestion .ua-td1 img {
+    width: 40px;
+    height: 40px;
+    background: #eee;
+    border: 1px solid rgba(128,128,128,0.5);
+}
 .ua-usersuggestion .ua-td2 {
-    padding: 2px 0 0 0;
+    padding: 2px 0 0 6px;
 }
 .ua-usersuggestion .ua-td2 .ua-tagline {
     padding-top: 4px;

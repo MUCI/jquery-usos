@@ -23,14 +23,22 @@
         },
 
         getSelectorSetup: function() {
+            var user_fields = (
+                /* Possible performance gain: https://redmine.usos.edu.pl/issues/8158 */
+                "id|first_name|last_name|employment_functions|" +
+                "student_programmes[programme|status]|" +
+                "employment_positions|photo_urls[50x50]"
+            );
             return {
                 prompt: $.usosCore.lang("Wpisz imię i nazwisko", "Enter the user's name"),
                 search: {
-                    method: 'services/users/search',
+                    method: 'services/users/search2',
                     paramsProvider: function(query) {
                         return {
-                            name: query,
-                            num: 6
+                            lang: $.usosCore.lang(),
+                            query: query,
+                            num: 4,
+                            fields: "items[match|user[" + user_fields + "]]"
                         };
                     },
                     itemsExtractor: function(data) {
@@ -42,39 +50,44 @@
                     paramsProvider: function(ids) {
                         return {
                             user_ids: ids.join("|"),
-                            fields: 'id|first_name|last_name'
+                            fields: user_fields
                         };
                     },
                     itemsExtractor: function(data) {
-
-                        /* The users/users method returns results in an unordered {user_id: user}
-                         * format. */
-
                         var items = [];
                         $.each(data, function(user_id, user) {
                             if (user === null) {
                                 $.usosCore._console.warn("User " + user_id + " not found! Will be skipped!");
-                                return true; // continue
+                                return true;  // continue
                             }
-                            items.push(user);
+                            items.push({"user": user});
                         });
                         return items;
                     }
                 },
                 idExtractor: function(item) {
-                    /* 'search' method returns user_ids, 'users' method returns ids. */
-                    return item.user_id || item.id;
+                    return item.user.id;
                 },
                 suggestionRenderer: function(item) {
-                    /* Suggestions are feeded from the "search" method which includes
-                     * some additional info. */
                     var $div = $(
                         "<div class='ua-usersuggestion'><table><tr>" +
+                        "<td class='ua-td1'><img/></td>" +
                         "<td class='ua-td2'><div class='ua-match'></div><div class='ua-tagline'></div></td>" +
                         "</tr></table></div>"
                     );
                     $div.find(".ua-match").html(item.match);
-                    $.each(item.active_employment_functions, function(_, f) {
+                    $div.find("img").attr("src", item.user.photo_urls['50x50']);
+                    $.each(item.user.employment_positions, function(_, f) {
+                        $div.find(".ua-tagline")
+                            .append($("<span class='ua-note'>")
+                                .text(
+                                    $.usosCore.lang(f.position.name) +
+                                    " (" + $.usosCore.lang(f.faculty.name) + ")"
+                                )
+                            )
+                            .append(" ");
+                    });
+                    $.each(item.user.employment_functions, function(_, f) {
                         $div.find(".ua-tagline")
                             .append($("<span class='ua-note'>")
                                 .text(
@@ -84,32 +97,51 @@
                             )
                             .append(" ");
                     });
-                    $.each(item.active_student_programmes, function(_, f) {
-                        $div.find(".ua-tagline")
-                            .append($("<span class='ua-note'>")
-                                .text($.usosCore.lang(f.programme.description))
-                            )
-                            .append(" ");
+                    var active_sps = [];
+                    $.each(item.user.student_programmes, function(_, sp) {
+                        if ((sp.status == "active") || (sp.status == "graduated_before_diploma")) {
+                            active_sps.push(sp);
+                        }
                     });
+                    if (item.user.student_programmes.length > 0) {
+                        if (active_sps.length > 0) {
+                            $.each(active_sps, function(_, sp) {
+                                $div.find(".ua-tagline")
+                                    .append($("<span class='ua-note'>")
+                                        .text($.usosCore.lang(sp.programme.description))
+                                    )
+                                    .append(" ");
+                            });
+                        } else {
+                            $div.find(".ua-tagline")
+                                .append($("<span class='ua-note'>")
+                                    .text($.usosCore.lang(
+                                        "Były student", "Ex-student"
+                                    ))
+                                )
+                                .append(" ");
+                        }
+                    }
                     $div.usosBadge({
                         entity: 'entity/users/user',
-                        user_id: item.user_id || item.id
+                        user_id: item.user.id
+                    });
+                    $div.on("click", function() {
+                        $.usosCore.usosapiFetch({
+                            method: "services/users/search_history_affect",
+                            params: {
+                                user_id: item.user.id
+                            }
+                        });
                     });
                     return $div;
                 },
                 tagRenderer: function(item) {
-                    /* 'search' method returns 'match', 'users' method returns first_name and last_name. */
-                    var label;
-                    if (item.match) {
-                        label = $("<span>").html(item.match).text();
-                    } else {
-                        label = item.first_name + " " + item.last_name;
-                    }
                     return $("<span>")
-                        .text(label)
+                        .text(item.user.first_name + " " + item.user.last_name)
                         .usosBadge({
                             entity: 'entity/users/user',
-                            user_id: item.user_id || item.id,
+                            user_id: item.user.id,
                             position: "top"
                         });
                 }
@@ -220,12 +252,29 @@
                 groups[emp.faculty.id].names.push(emp['position'].name);
             });
             $.each(groups, function(_, group) {
-                var li = $("<li>")
-                    .append(makeLine($.usosEntity.link("entity/fac/faculty", group.faculty)));
-                group.names.sort(function(a, b) { return a.length > b.length ? -1 : 1; });
-                $.each(group.names, function(i, name) {
-                    li.append(makeLine($("<span class='ua-func'>").text($.usosCore.lang(name))));
-                });
+
+                /* If the words in those two lines http://i.imgur.com/hlVKJqq.png
+                 * are very short, then compress them into one line:
+                 * http://i.imgur.com/1Tby2DK.png */
+
+                var li;
+                var facLink = $.usosEntity.link("entity/fac/faculty", group.faculty);
+                if (
+                    group.names.length == 1 &&
+                    facLink.text().length + $.usosCore.lang(group.names[0]).length < 45
+                ) {
+                    li = $("<li>").append(makeLine($("<div>")
+                        .append(facLink)
+                        .append(" - ")
+                        .append($("<span class='ua-func'>").text($.usosCore.lang(group.names[0])))
+                    ));
+                } else {
+                    li = $("<li>").append(makeLine(facLink));
+                    group.names.sort(function(a, b) { return a.length > b.length ? -1 : 1; });
+                    $.each(group.names, function(i, name) {
+                        li.append(makeLine($("<span class='ua-func'>").text($.usosCore.lang(name))));
+                    });
+                }
                 badge.find(".ua-functions").append(li);
             });
 

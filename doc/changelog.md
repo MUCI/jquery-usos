@@ -3,6 +3,11 @@ jQuery-USOS Change Log
 
   * **BETA BRANCH** - *(unreleased)*
 
+    * **Version 1.2.2.3** - Bugfixes to the previous version (`$.usosEntity`
+      functions didn't work properly), added user photos and employment
+      positions to `$.usosSelector` suggestions, started making use of
+      USOS API's `services/users/search_history_affect` method, made some
+      user badge entries more compact.
     * **Version 1.2.2.2** - Moved more stuff into the entities directory.
       Added `entity/courses/course` to `$.usosEntity` family. 
     * **Version 1.2.2.1** - Moved most of the entity-related stuff into

@@ -25,6 +25,7 @@
     };
 
     var _getEntityURL = function(entityCode) {
+        var args = arguments;
         var entity = _get(entityCode);
         var dict = {};
         var lst = [];
@@ -33,7 +34,7 @@
             lst.push(value);
         };
         $.each(entity.primaryKeyFields, function(i, name) {
-            add(name, arguments[i+1]);
+            add(name, args[i+1]);
         });
         var url = $.usosCore._getSettings().entityURLs[entityCode];
         if (typeof url === "null") {
