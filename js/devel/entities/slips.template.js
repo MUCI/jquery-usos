@@ -5,7 +5,7 @@
     $.usosEntity._register({
 
         entityCode: MYCODE,
-        primaryKeyFields: ["template_id"],
+        primaryKeyFields: ["tpl_id"],
 
         getLabel: function(tpl) {
             var e = $.usosUtils.requireFields(tpl, "id|name");
