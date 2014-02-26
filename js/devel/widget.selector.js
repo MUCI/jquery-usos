@@ -460,7 +460,9 @@
                     {num: 20}
                 )
             }).always(function() {
-                div.usosProgressOverlay('destroy'); // WRBUG
+                try {
+                    div.usosProgressOverlay('destroy');
+                } catch(err) {}
             }).done(function(data) {
                 div.append($.usosCore.lang(
                     "<p class='ua-howto'><span class='if-query'>Wyniki dla zapytania <span class='query'></span>.<br></span>" +
@@ -514,12 +516,16 @@
                         "osoby, to możesz spróbować podać jej numer indeksu. Albo jeśli " +
                         "szukasz przedmiotu, spróbuj podać jego kod.",
 
-                        "WRTODO"
+                        "<p class='ua-warning'><b>Only the best 20 matches are displayed.</b> " +
+                        "If you still have trouble with your search then close this window and try " +
+                        "a more specific query. For example, if you're looking for a person " +
+                        "then you might want to try providing his/her student ID. Or, if you're looking " +
+                        "for a course then try providing its code."
                     ));
                 }
-                // WRTODO: jeśli nadal masz problemy, wpisz ID lub numer indeksu
             }).fail(function(response) {
-                // WRTODO
+                $.usosCore.panic(response);
+                div.dialog("close");
             });
         }
     });

@@ -3,6 +3,7 @@ jQuery-USOS Change Log
 
   * **BETA BRANCH** - *(unreleased)*
 
+    * **Version 1.2.2.6** - Some minor bugfixes.
     * **Version 1.2.2.5** - Added the "See more results" item in the
       [usosSelector widget](widget.selector.md).
     * **Version 1.2.2.4** - Bugfixes (`$.usosEntity` still didn't work
