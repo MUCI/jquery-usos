@@ -25,7 +25,7 @@
         getSelectorSetup: function() {
             var user_fields = (
                 /* Possible performance gain: https://redmine.usos.edu.pl/issues/8158 */
-                "id|first_name|last_name|employment_functions|" +
+                "id|sex|first_name|last_name|employment_functions|" +
                 "student_programmes[programme|status]|" +
                 "employment_positions|photo_urls[50x50]"
             );
@@ -116,7 +116,8 @@
                             $div.find(".ua-tagline")
                                 .append($("<span class='ua-note'>")
                                     .text($.usosCore.lang(
-                                        "Były student", "Ex-student"
+                                        (item.user.sex == "M") ? "Były student" : "Była studentka",
+                                        "Ex-student"
                                     ))
                                 )
                                 .append(" ");

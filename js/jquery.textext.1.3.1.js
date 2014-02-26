@@ -2352,7 +2352,9 @@
         {
             self.on({
                 focus: function() {
-                    self.getSuggestions();
+                    if (self._core.tags().tagElements().length == 0) {
+                        self.getSuggestions();
+                    }
                 },
                 blur              : self.onBlur,
                 anyKeyUp          : self.onAnyKeyUp,

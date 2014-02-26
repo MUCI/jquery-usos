@@ -3,8 +3,10 @@ jQuery-USOS Change Log
 
   * **BETA BRANCH** - *(unreleased)*
 
+    * **Version 1.2.2.5** - Added the "See more results" item in the
+      [usosSelector widget](widget.selector.md).
     * **Version 1.2.2.4** - Bugfixes (`$.usosEntity` still didn't work
-	  properly for some entities).
+      properly for some entities).
     * **Version 1.2.2.3** - Bugfixes to the previous version (`$.usosEntity`
       functions didn't work properly), added user photos and employment
       positions to `$.usosSelector` suggestions, started making use of

@@ -66,6 +66,7 @@
             searchParams: {}
         },
         widgetEventPrefix: "usosselector:",
+        _lastQuery: "",
 
         /**
          * @memberOf $.usosWidgets.usosSelector
@@ -92,10 +93,12 @@
 
             /* Create UI elements. */
 
+            this._progressIndicator = $("<span class='ua-progress'>").hide();
             this.element
                 .empty()
                 .addClass("ua-container ua-selector")
                 .css("width", this.options.width)
+                .append(this._progressIndicator)
                 .append($("<textarea>")
                     .attr("rows", "1")
                     .css("width", this.options.width)
@@ -130,12 +133,26 @@
                                 ((distanceToTop > distanceToBottom) ? "above" : "below")
                         },
                         render: function(suggestion) {
-                            var $span = $('<span>')
-                                .html(widget._entitySetup.suggestionRenderer(
+
+                            /* Usually, "suggestion" vartiable is the entity ID. However,
+                             * is also can be one of the "special values". */
+
+                            var span = $('<span>');
+                            if (suggestion == "empty") {
+                                span.addClass("ua-empty").html($.usosCore.lang(
+                                    "Brak wyników", "No results"
+                                ));
+                            } else if (suggestion == "more") {
+                                span.addClass("ua-more").html($.usosCore.lang(
+                                    "Pokaż więcej wyników", "See more results"
+                                ));
+                            } else {
+                                span.html(widget._entitySetup.suggestionRenderer(
                                     widget._knownItems[suggestion]
                                 ));
-                            $span.find("*").addBack().addClass("text-label");
-                            return $span;
+                            }
+                            span.find("*").addBack().addClass("text-label");
+                            return span;
                         }
                     },
                     ext: {
@@ -159,11 +176,13 @@
                     var $self = $(this);
                     var textext = $(e.target).textext()[0];
                     var query = (data ? data.query : '') || '';
+                    widget._lastQuery = query;
 
                     _startTimer(
                         _getAjaxDelay(),
                         function()
                         {
+                            widget._progressIndicator.delay(1000).fadeIn(100);
                             $.usosCore.usosapiFetch({
                                 source_id: widget.options.source_id,
                                 method: widget._entitySetup.search.method,
@@ -181,7 +200,13 @@
                                         widget._knownItems[id] = item;
                                         keys.push(id);
                                     });
+                                    if (keys.length > 3) {
+                                        keys.push("more");
+                                    } else if (keys.length == 0) {
+                                        keys.push("empty");
+                                    }
                                     $self.trigger('setSuggestions', { result: keys });
+                                    widget._checkProgress();
                                 },
                                 error: function(xhr, errorCode, errorMessage) {
                                     widget._textarea.usosNotice({
@@ -190,12 +215,22 @@
                                             "Could not load the list of suggestions. Try to refresh tha page (F5)."
                                         )
                                     });
+                                    widget._checkProgress();
                                 }
                             });
                         }
                     );
                 })
                 .bind('isTagAllowed', function(e, data) {
+                    if (data.tag == "empty") {
+                        data.result = false;
+                        return;
+                    }
+                    if (data.tag == "more") {
+                        widget._popout();
+                        data.result = false;
+                        return;
+                    }
                     if (!widget._knownItems[data.tag]) {
                         widget._textarea.usosNotice({
                             content: $.usosCore.lang(
@@ -270,6 +305,19 @@
             return keys;
         },
 
+        /**
+         * Check the internal syncObject and determine if we should still show the
+         * progress indicator or not. This is called after AJAX request completes
+         * (both after success of failure).
+         */
+        _checkProgress: function() {
+            var widget = this;
+            var so = widget._suggestionsSyncObject;
+            if (so.lastIssuedRequestId == so.lastReceivedRequestId) {
+                /* All AJAX requests complete. Hide the progress indicator. */
+                widget._progressIndicator.stop(true, false).hide();
+            }
+        },
 
         /**
          * Set the list of currently selected IDs. This will usually trigger an AJAX call
@@ -377,6 +425,102 @@
         _destroy: function() {
             this.element.empty();
             this._super("_destroy");
+        },
+
+        /**
+         * Display results in a separate window.
+         */
+        _popout: function() {
+            var widget = this;
+            var div = $("<div>");
+            $("body").addClass("ua-stop-scrolling");
+            div.dialog({
+                dialogClass: "ua-panic-dialog ua-scrollable ua-selector-popup",
+                resizable: false,
+                modal: true,
+                width: Math.min(parseInt(widget.options.width, 10) * 2.2 + 30, $(window).width() * 0.8),
+                minHeight: 200,
+                height: Math.min($(window).height() * 0.7, 600),
+                closeText: $.usosCore.lang("Zamknij", "Close"),
+                close: function() {
+                    $("body").removeClass("ua-stop-scrolling");
+                    try {
+                        div.usosProgressOverlay('destroy');
+                    } catch(err) {}
+                }
+            });
+            div.usosProgressOverlay();
+            $.usosCore.usosapiFetch({
+                source_id: widget.options.source_id,
+                method: widget._entitySetup.search.method,
+                params: $.extend(
+                    {},
+                    widget.options.searchParams,
+                    widget._entitySetup.search.paramsProvider(widget._lastQuery),
+                    {num: 20}
+                )
+            }).always(function() {
+                div.usosProgressOverlay('destroy'); // WRBUG
+            }).done(function(data) {
+                div.append($.usosCore.lang(
+                    "<p class='ua-howto'><span class='if-query'>Wyniki dla zapytania <span class='query'></span>.<br></span>" +
+                    "Kliknij element, aby go wybrać. Wciśnij klawisz Esc, aby anulować.</p>",
+
+                    "<p class='ua-howto'><span class='if-query'>Search results for <span class='query'></span>.<br></span>" +
+                    "Kliknij element, aby go wybrać. Wciśnij klawisz Esc, aby anulować.</p>"
+                ));
+                if (widget._lastQuery) {
+                    div.find(".ua-howto .query").text(widget._lastQuery);
+                } else {
+                    div.find(".ua-howto .if-query").hide();
+                }
+                var itemsContainer = $("<div style='display: inline-block'>");
+                div.append(itemsContainer);
+                var items = widget._entitySetup.search.itemsExtractor(data);
+                $.each(items, function(_, item) {
+                    var id = widget._entitySetup.idExtractor(item);
+                    var span = $("<span class='ua-inline-suggestion'>")
+                        .css("width", widget.options.width)
+                        .html(widget._entitySetup.suggestionRenderer(item))
+                        .attr("tabindex", 0)
+                        .on("focus", function() { $(this).addClass("text-selected"); })
+                        .on("blur", function() { $(this).removeClass("text-selected"); })
+                        .hover(
+                            function() { $(this).addClass("text-selected"); },
+                            function() { $(this).removeClass("text-selected"); }
+                        )
+                        .on("click keypress", function(e) {
+                            if (e.which && e.which != 13 && e.which != 32) {
+                                /* Ignore all keypresses other than space and enter */
+                                return;
+                            }
+                            var value;
+                            if (widget.options.multi) {
+                                value = widget.value();
+                                value.push(id);
+                            } else {
+                                value = id;
+                            }
+                            widget.value(value);
+                            div.dialog("close");
+                        });
+                    itemsContainer.append(span);
+                });
+                if (items.length >= 20) {
+                    div.append($.usosCore.lang(
+                        "<p class='ua-warning'><b>Wyświetlanych jest tylko 20 najlepszych trafień.</b> " +
+                        "Jeśli nadal nie możesz znaleźć, to zamknij okno i spróbuj " +
+                        "doprecyzować swoje zapytanie. Na przykład, jeśli szukasz " +
+                        "osoby, to możesz spróbować podać jej numer indeksu. Albo jeśli " +
+                        "szukasz przedmiotu, spróbuj podać jego kod.",
+
+                        "WRTODO"
+                    ));
+                }
+                // WRTODO: jeśli nadal masz problemy, wpisz ID lub numer indeksu
+            }).fail(function(response) {
+                // WRTODO
+            });
         }
     });
 
