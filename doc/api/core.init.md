@@ -40,7 +40,7 @@ $.usosCore.init({
     usosAPIs: {
         'default': {
             methodUrl: "http://example.com/usosapiProxy.php?method=%s"
-            extraParamsForPOST: {
+            extraParams: {
                 csrftoken: "someToken"
             }
         }
@@ -54,7 +54,7 @@ $.usosCore.init({
     }
 });
 ```
-  
+
 Options
 -------
 
