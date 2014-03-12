@@ -529,6 +529,12 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ua-badge-user .ua-name a:hover {
     text-decoration: underline;
 }
+.ua-badge-user .ua-name .ua-student-number {
+    display: inline-block;
+    font-size: 85%;
+    color: #888;
+    margin-left: 5px;
+}
 .ua-badge-user .ua-functions {
     margin: 0;
     padding: 0;

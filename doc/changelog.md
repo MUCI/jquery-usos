@@ -1,6 +1,10 @@
 jQuery-USOS Change Log
 ======================
 
+  * **BETA BRANCH** - *(unreleased)*
+
+    * **Version 1.2.3.1** - Display student number in user badge.
+
   * **Version 1.2.3** - *2014-03-17*
 
     * **Requires USOS API 5.4.5.**
