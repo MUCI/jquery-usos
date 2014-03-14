@@ -6,14 +6,15 @@ Pretty standard. You just have to include all JS and CSS files in your page.
 Requirements
 ------------
 
-  * USOS API 5.4.4,
-  * Your own USOS API Proxy (see below).
-  * jQuery 1.9.1,
-  * jQuery-UI 1.10.1 (we advise to use the theme included in jQuery-USOS
+  * USOS API 5.4.4+,
+  * Your own USOS API Proxy (see below),
+  * jQuery 1.9.1+,
+  * jQuery Migrate 1.1.0+,
+  * jQuery-UI 1.10.1+ (we advise to use the theme included in jQuery-USOS
     project),
   * **jQuery-USOS Bundle package** - the `js/jquery-usos-x.y.z-bundle.min.js`
-    contains both jQuery-USOS and all its dependencies (except jQuery and
-    jQuery-UI).
+    contains both jQuery-USOS and all its dependencies (except the ones listed
+    above).
 
 ### Debug version
 
@@ -39,16 +40,15 @@ need to set up USOS API proxy if you need to access **non-anonymous** methods.
 
   * The proxy should sign all incoming USOS API requests with your USOS API
     Consumer Key and your user's Access Token.
-  * If you use an Administrative Consumer Key, then you can use the `as_user_id`
-    parameter along with USOS API's
-    [proxy method](https://usosapps.uw.edu.pl/developers/api/services/oauth/#proxy).
+  * If you have an Administrative Consumer Key, then you **should** pass the
+    requests via USOS API's
+    [services/oauth/proxy method](https://usosapps.uw.edu.pl/developers/api/services/oauth/#proxy).
   * Your proxy should be guarded against CSRF attacks.
-  * If needed, we may provide a code sample (for example, a copy of
-    the `usosapiProxy.php` from the USOSweb project).
 
 ### Demo proxy
 
-All of our demos use a simple, anonymous proxy.
+All of our "live demos" use a simple, anonymous proxy connected to one of the
+USOS API installations.
 
   * **The source code is included in our repository.**
     * It can be used as a quick-starter.
@@ -60,7 +60,7 @@ All of our demos use a simple, anonymous proxy.
     * Sample request: [method_index](https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=services/apiref/method_index).
     * Currently, it is connected to the official USOS API server of the
       University of Warsaw. This may change in the future.
-    * This URL is intended to be used only with our demo pages, please set up
+    * *This URL is intended to be used only with our demo pages*, please set up
       your own proxy for your project. All responses include the
       `Access-Control-Allow-Origin` header which will restrict access from
       other domains.
