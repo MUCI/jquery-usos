@@ -4,29 +4,38 @@
 
     var NS = "usosEntity";
 
+    var _entdefs = {};
+    /**
+     * Register a new entity. Should be a subclass of entities/base.js.
+     */
+    var _register = function(entityDefinition) {
+        _entdefs[entityDefinition.entityCode] = entityDefinition;
+    };
+
+    /**
+     * Get the definition instance, or throw exception (if the code was not
+     * registered).
+     */
+    var _get = function(entityCode) {
+        if (_entdefs.hasOwnProperty(entityCode)) {
+            return _entdefs[entityCode];
+        } else {
+            throw "Unknown entityCode: " + entityCode;
+        }
+    };
+
     var _getEntityURL = function(entityCode) {
+        var args = arguments;
+        var entity = _get(entityCode);
         var dict = {};
         var lst = [];
         var add = function(name, value) {
             dict[name] = value;
             lst.push(value);
         };
-        switch (entityCode) {
-            case 'entity/users/user':
-                add("user_id", arguments[1]);
-                break;
-            case 'entity/fac/faculty':
-                add("fac_id", arguments[1]);
-                break;
-            case 'entity/slips/template':
-                add("tpl_id", arguments[1]);
-                break;
-            case 'entity/progs/programme':
-                add("programme_id", arguments[1]);
-                break;
-            default:
-                throw "Unknown entity: " + entityCode;
-        }
+        $.each(entity.primaryKeyFields, function(i, name) {
+            add(name, args[i+1]);
+        });
         var url = $.usosCore._getSettings().entityURLs[entityCode];
         if (typeof url === "null") {
             // No URL.
@@ -44,63 +53,37 @@
     };
 
     var _getEntityLabel = function(withLink, args) {
-        var $a;
-        if (withLink) {
-            $a = $("<a>").attr('class', 'ua-link');
-        } else {
-            $a = $("<span>");
-        }
-        var url;
-        var e;
+
         var entityCode = args[0];
-        if ((args[1] === null) || (args[1] === undefined)) {
+        var entityData = args[1];
+
+        if ((entityData === null) || (entityData === undefined)) {
             return $("<span class='ua-note'>").text($.usosCore.lang(
-                "(brak danych)",
-                "(no data)"
+                "(brak danych)", "(no data)"
             ));
         }
-        switch (entityCode) {
-            case 'entity/users/user':
-                e = $.usosUtils.requireFields(args[1], "id|first_name|last_name");
-                $a.text(e.first_name + " " + e.last_name);
-                $a.usosBadge({
-                    entity: entityCode,
-                    user_id: e.id
-                });
-                url = _getEntityURL(entityCode, e.id);
-                break;
-            case 'entity/fac/faculty':
-                e = $.usosUtils.requireFields(args[1], "id|name");
-                $a.text($.usosCore.lang(e.name));
-                $a.usosBadge({
-                    entity: entityCode,
-                    fac_id: e.id
-                });
-                url = _getEntityURL(entityCode, e.id);
-                break;
-            case 'entity/slips/template':
-                e = $.usosUtils.requireFields(args[1], "id|name");
-                $a.text($.usosCore.lang(e.name));
-                url = _getEntityURL(entityCode, e.id);
-                break;
-            case 'entity/progs/programme':
-                e = $.usosUtils.requireFields(args[1], "id|description");
-                $a.text($.usosCore.lang(e.description));
-                url = _getEntityURL(entityCode, e.id);
-                break;
-            default:
-                throw "Unknown entity: " + entityCode;
+
+        var entity = _get(entityCode);
+        var label = entity.getLabel(entityData);
+
+        if (!withLink) {
+            return label;
         }
-        if (withLink && url) {
-            $a.attr("href", url);
+
+        var a = $("<a>").attr('class', 'ua-link').html(label);
+        var url = _getEntityURL(entityCode, entityData.id);
+        if (url) {
+            a.attr("href", url);
         }
-        return $a;
+        return a;
     };
 
     $[NS] = {
         label: function() { return _getEntityLabel.call(null, false, arguments); },
         link: function() { return _getEntityLabel.call(null, true, arguments); },
-        url: _getEntityURL
+        url: _getEntityURL,
+        _register: _register,
+        _get: _get
     };
 
 })(jQuery);

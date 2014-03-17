@@ -16,16 +16,9 @@
         /* Extract the entity code and create the proper widget
          * based on it. */
 
-        switch (options.entity) {
-            case 'entity/users/user':
-                this._usosUserBadge(options);
-                break;
-            case 'entity/fac/faculty':
-                /* Ignore. Still working on this one! */
-                this._usosFacultyBadge(options);
-                break;
-            default:
-                throw "Unknown entity: " + options.entity;
+        var entityDef = $.usosEntity._get(options.entity);
+        if (!entityDef.initBadge.call(this, options)) {
+            throw "Badge not implemented for this entity: " + options.entity;
         }
         return this;
     };

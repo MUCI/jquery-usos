@@ -2,334 +2,13 @@
 
     "use strict";
 
-    var _entities = null;
-    var _getEntitySetup = function(entity) {
-        if (_entities === null) {
-            _entities = {
-                'entity/users/user': {
-                    prompt: $.usosCore.lang("Wpisz imię i nazwisko", "Enter the user's name"),
-                    search: {
-                        method: 'services/users/search',
-                        paramsProvider: function(query) {
-                            return {
-                                name: query,
-                                num: 6
-                            };
-                        },
-                        itemsExtractor: function(data) {
-                            return data.items;
-                        }
-                    },
-                    get: {
-                        method: 'services/users/users',
-                        paramsProvider: function(ids) {
-                            return {
-                                user_ids: ids.join("|"),
-                                fields: 'id|first_name|last_name'
-                            };
-                        },
-                        itemsExtractor: function(data) {
-
-                            /* The users/users method returns results in an unordered {user_id: user}
-                             * format. */
-
-                            var items = [];
-                            $.each(data, function(user_id, user) {
-                                if (user === null) {
-                                    $.usosCore._console.warn("User " + user_id + " not found! Will be skipped!");
-                                    return true; // continue
-                                }
-                                items.push(user);
-                            });
-                            return items;
-                        }
-                    },
-                    idExtractor: function(item) {
-                        /* 'search' method returns user_ids, 'users' method returns ids. */
-                        return item.user_id || item.id;
-                    },
-                    suggestionRenderer: function(item) {
-                        /* Suggestions are feeded from the "search" method which includes
-                         * some additional info. */
-                        var $div = $(
-                            "<div class='ua-usersuggestion'><table><tr>" +
-                            "<td class='ua-td2'><div class='ua-match'></div><div class='ua-tagline'></div></td>" +
-                            "</tr></table></div>"
-                        );
-                        $div.find(".ua-match").html(item.match);
-                        $.each(item.active_employment_functions, function(_, f) {
-                            $div.find(".ua-tagline")
-                                .append($("<span class='ua-note'>")
-                                    .text(
-                                        $.usosCore.lang(f['function']) +
-                                        " (" + $.usosCore.lang(f.faculty.name) + ")"
-                                    )
-                                )
-                                .append(" ");
-                        });
-                        $.each(item.active_student_programmes, function(_, f) {
-                            $div.find(".ua-tagline")
-                                .append($("<span class='ua-note'>")
-                                    .text($.usosCore.lang(f.programme.description))
-                                )
-                                .append(" ");
-                        });
-                        $div.usosBadge({
-                            entity: 'entity/users/user',
-                            user_id: item.user_id || item.id
-                        });
-                        return $div;
-                    },
-                    tagRenderer: function(item) {
-                        /* 'search' method returns 'match', 'users' method returns first_name and last_name. */
-                        var label;
-                        if (item.match) {
-                            label = $("<span>").html(item.match).text();
-                        } else {
-                            label = item.first_name + " " + item.last_name;
-                        }
-                        return $("<span>")
-                            .text(label)
-                            .usosBadge({
-                                entity: 'entity/users/user',
-                                user_id: item.user_id || item.id,
-                                position: "top"
-                            });
-                    }
-                },
-
-                'entity/courses/course': {
-                    prompt: $.usosCore.lang("Wpisz nazwę przedmiotu", "Enter a course name"),
-                    search: {
-                        method: 'services/courses/search',
-                        paramsProvider: function(query) {
-                            return {
-                                'lang': $.usosCore.lang(),
-                                'name': query
-                            };
-                        },
-                        itemsExtractor: function(data) {
-                            return data.items;
-                        }
-                    },
-                    get: {
-                        method: 'services/courses/courses',
-                        paramsProvider: function(ids) {
-                            return {
-                                'course_ids': ids.join("|"),
-                                'fields': 'id|name'
-                            };
-                        },
-                        itemsExtractor: function(data) {
-
-                            /* The 'courses' method returns an unordered dictionary of the {course_id: course} form. */
-
-                            var items = [];
-                            $.each(data, function(course_id, course) {
-                                if (course === null) {
-                                    $.usosCore._console.warn("Course " + course_id + " not found! Will be skipped!");
-                                    return true; // continue
-                                }
-                                items.push(course);
-                            });
-                            return items;
-                        }
-                    },
-                    idExtractor: function(item) {
-                        /* 'search' method returns course_ids, 'courses' method returns ids. */
-                        return item.course_id || item.id;
-                    },
-                    suggestionRenderer: function(item) {
-                        return item.match;
-                    },
-                    tagRenderer: function(item) {
-
-                        /* 'search' method returns 'match', 'users' method returns 'name'. Exact
-                         * value of 'match' is undocumented, so we use some heuristics here... */
-
-                        var name;
-                        if (item.match) {
-                            name = $("<span>").html(item.match).text();
-                            // Remove the " (course code)" part, if present.
-                            var i = name.indexOf(" (" + item.course_id + ")");
-                            if (i > 0) {
-                                name = name.substring(0, i);
-                            }
-                        } else {
-                            name = $.usosCore.lang(item.name);
-                        }
-
-                        /* Return in a block with decent max-width applied. */
-
-                        return $('<span>').text(name).css({
-                            'white-space': 'nowrap',
-                            'display': 'inline-block',
-                            'overflow': 'hidden',
-                            'max-width': '180px',
-                            'text-overflow': 'ellipsis'
-                        });
-                    }
-                },
-
-                'entity/fac/faculty': {
-                    prompt: $.usosCore.lang("Wpisz nazwę jednostki", "Enter a faculty name"),
-                    search: {
-                        method: 'services/fac/search',
-                        paramsProvider: function(query) {
-                            return {
-                                'lang': $.usosCore.lang(),
-                                'fields': 'id|match|name',
-                                'query': query
-                            };
-                        },
-                        itemsExtractor: function(data) {
-                            return data.items;
-                        }
-                    },
-                    get: {
-                        method: 'services/fac/faculties',
-                        paramsProvider: function(ids) {
-                            return {
-                                'fac_ids': ids.join("|"),
-                                'fields': 'id|name'
-                            };
-                        },
-                        itemsExtractor: function(data) {
-
-                            /* The 'faculties' method returns an unordered dictionary of the {fac_id: faculty} form. */
-
-                            var items = [];
-                            $.each(data, function(fac_id, faculty) {
-                                if (faculty === null) {
-                                    $.usosCore._console.warn("Faculty " + fac_id + " not found! Will be skipped!");
-                                    return true; // continue
-                                }
-                                items.push(faculty);
-                            });
-                            return items;
-                        }
-                    },
-                    idExtractor: function(item) {
-                        /* Both methods have the "id" field. */
-                        return item.fac_id || item.id;
-                    },
-                    suggestionRenderer: function(item) {
-                        var div = $("<div>");
-                        div.html(item.match);
-                        div.usosBadge({
-                            entity: 'entity/fac/faculty',
-                            fac_id: item.fac_id || item.id
-                        });
-                        return div;
-                    },
-                    tagRenderer: function(item) {
-
-                        /* Both methods have the "name" field. */
-
-                        var name = $.usosCore.lang(item.name);
-
-                        /* Return in a block with decent max-width applied. */
-
-                        return $('<span>')
-                            .text(name)
-                            .css({
-                                'white-space': 'nowrap',
-                                'display': 'inline-block',
-                                'overflow': 'hidden',
-                                'max-width': '250px',
-                                'text-overflow': 'ellipsis'
-                            })
-                            .usosBadge({
-                                entity: 'entity/fac/faculty',
-                                fac_id: item.fac_id || item.id,
-                                position: "top"
-                            });
-                    }
-                },
-
-                'entity/slips/template': {
-                    prompt: $.usosCore.lang("Wpisz nazwę szablonu obiegówki", "Enter a slip template name"),
-                    search: {
-                        method: 'services/slips/search_templates',
-                        paramsProvider: function(query) {
-                            return {
-                                'langpref': $.usosCore.lang(),
-                                'fields': 'id|match|name|state',
-                                'query': query
-                            };
-                        },
-                        itemsExtractor: function(data) {
-                            return data.items;
-                        }
-                    },
-                    get: {
-                        method: 'services/slips/templates',
-                        paramsProvider: function(ids) {
-                            return {
-                                'tpl_ids': ids.join("|"),
-                                'fields': 'id|name'
-                            };
-                        },
-                        itemsExtractor: function(data) {
-                            var items = [];
-                            $.each(data, function(tpl_id, template) {
-                                if (template === null) {
-                                    $.usosCore._console.warn("Template " + tpl_id + " not found! Will be skipped!");
-                                    return true; // continue
-                                }
-                                items.push(template);
-                            });
-                            return items;
-                        }
-                    },
-                    idExtractor: function(item) {
-                        return item.id;
-                    },
-                    suggestionRenderer: function(item) {
-                        var $div = $("<div>");
-                        $div.append($("<span>").html(item.match));
-                        if (item.state != 'active') {
-                            $div.append(" ").append($("<span class='ua-note'>").text(
-                                item.state == 'draft' ?
-                                $.usosCore.lang("(kopia robocza)", "(draft)") :
-                                $.usosCore.lang("(przestarzały)", "(obsolete)")
-                            ));
-                        }
-                        return $div;
-                    },
-                    tagRenderer: function(item) {
-                        return $('<span>')
-                            .text(item.name)
-                            .css({
-                                'white-space': 'nowrap',
-                                'display': 'inline-block',
-                                'overflow': 'hidden',
-                                'max-width': '250px',
-                                'text-overflow': 'ellipsis'
-                            })
-                            .click(function() {
-                                var url = $.usosEntity.url('entity/slips/template', item.id);
-                                if (!url) {
-                                    return;
-                                }
-                                var msg = $.usosCore.lang(
-                                    "Przejść do strony szablonu \"" + item.name + "\"?",
-                                    "Go to the \"" + item.name + "\" template page?"
-                                );
-                                if (confirm(msg)) {
-                                    document.location = url;
-                                }
-                            });
-                    }
-                }
-            };
+    var _getEntitySetup = function(entityCode) {
+        var entity = $.usosEntity._get(entityCode);
+        if (entity.getSelectorSetup) {
+            return entity.getSelectorSetup();
         }
-
-        if (!(entity in _entities)) {
-            throw "Unknown entity: " + entity;
-        }
-        return _entities[entity];
-    }
+        throw "This entity doesn't implement selectors yet: " + entityCode;
+    };
 
     /** Return true if two values are equal. */
     var _isEqual = function(va, vb) {
@@ -387,6 +66,7 @@
             searchParams: {}
         },
         widgetEventPrefix: "usosselector:",
+        _lastQuery: "",
 
         /**
          * @memberOf $.usosWidgets.usosSelector
@@ -413,10 +93,12 @@
 
             /* Create UI elements. */
 
+            this._progressIndicator = $("<span class='ua-progress'>").hide();
             this.element
                 .empty()
                 .addClass("ua-container ua-selector")
                 .css("width", this.options.width)
+                .append(this._progressIndicator)
                 .append($("<textarea>")
                     .attr("rows", "1")
                     .css("width", this.options.width)
@@ -451,12 +133,26 @@
                                 ((distanceToTop > distanceToBottom) ? "above" : "below")
                         },
                         render: function(suggestion) {
-                            var $span = $('<span>')
-                                .html(widget._entitySetup.suggestionRenderer(
+
+                            /* Usually, "suggestion" vartiable is the entity ID. However,
+                             * is also can be one of the "special values". */
+
+                            var span = $('<span>');
+                            if (suggestion == "empty") {
+                                span.addClass("ua-empty").html($.usosCore.lang(
+                                    "Brak wyników", "No results"
+                                ));
+                            } else if (suggestion == "more") {
+                                span.addClass("ua-more").html($.usosCore.lang(
+                                    "Pokaż więcej wyników", "See more results"
+                                ));
+                            } else {
+                                span.html(widget._entitySetup.suggestionRenderer(
                                     widget._knownItems[suggestion]
                                 ));
-                            $span.find("*").addBack().addClass("text-label");
-                            return $span;
+                            }
+                            span.find("*").addBack().addClass("text-label");
+                            return span;
                         }
                     },
                     ext: {
@@ -480,11 +176,13 @@
                     var $self = $(this);
                     var textext = $(e.target).textext()[0];
                     var query = (data ? data.query : '') || '';
+                    widget._lastQuery = query;
 
                     _startTimer(
                         _getAjaxDelay(),
                         function()
                         {
+                            widget._progressIndicator.delay(1000).fadeIn(100);
                             $.usosCore.usosapiFetch({
                                 source_id: widget.options.source_id,
                                 method: widget._entitySetup.search.method,
@@ -502,7 +200,13 @@
                                         widget._knownItems[id] = item;
                                         keys.push(id);
                                     });
+                                    if (keys.length > 3) {
+                                        keys.push("more");
+                                    } else if (keys.length == 0) {
+                                        keys.push("empty");
+                                    }
                                     $self.trigger('setSuggestions', { result: keys });
+                                    widget._checkProgress();
                                 },
                                 error: function(xhr, errorCode, errorMessage) {
                                     widget._textarea.usosNotice({
@@ -511,12 +215,22 @@
                                             "Could not load the list of suggestions. Try to refresh tha page (F5)."
                                         )
                                     });
+                                    widget._checkProgress();
                                 }
                             });
                         }
                     );
                 })
                 .bind('isTagAllowed', function(e, data) {
+                    if (data.tag == "empty") {
+                        data.result = false;
+                        return;
+                    }
+                    if (data.tag == "more") {
+                        widget._popout();
+                        data.result = false;
+                        return;
+                    }
                     if (!widget._knownItems[data.tag]) {
                         widget._textarea.usosNotice({
                             content: $.usosCore.lang(
@@ -591,6 +305,19 @@
             return keys;
         },
 
+        /**
+         * Check the internal syncObject and determine if we should still show the
+         * progress indicator or not. This is called after AJAX request completes
+         * (both after success of failure).
+         */
+        _checkProgress: function() {
+            var widget = this;
+            var so = widget._suggestionsSyncObject;
+            if (so.lastIssuedRequestId == so.lastReceivedRequestId) {
+                /* All AJAX requests complete. Hide the progress indicator. */
+                widget._progressIndicator.stop(true, false).hide();
+            }
+        },
 
         /**
          * Set the list of currently selected IDs. This will usually trigger an AJAX call
@@ -698,6 +425,108 @@
         _destroy: function() {
             this.element.empty();
             this._super("_destroy");
+        },
+
+        /**
+         * Display results in a separate window.
+         */
+        _popout: function() {
+            var widget = this;
+            var div = $("<div>");
+            $("body").addClass("ua-stop-scrolling");
+            div.dialog({
+                dialogClass: "ua-panic-dialog ua-scrollable ua-selector-popup",
+                resizable: false,
+                modal: true,
+                width: Math.min(parseInt(widget.options.width, 10) * 2.2 + 30, $(window).width() * 0.8),
+                minHeight: 200,
+                height: Math.min($(window).height() * 0.7, 600),
+                closeText: $.usosCore.lang("Zamknij", "Close"),
+                close: function() {
+                    $("body").removeClass("ua-stop-scrolling");
+                    try {
+                        div.usosProgressOverlay('destroy');
+                    } catch(err) {}
+                }
+            });
+            div.usosProgressOverlay();
+            $.usosCore.usosapiFetch({
+                source_id: widget.options.source_id,
+                method: widget._entitySetup.search.method,
+                params: $.extend(
+                    {},
+                    widget.options.searchParams,
+                    widget._entitySetup.search.paramsProvider(widget._lastQuery),
+                    {num: 20}
+                )
+            }).always(function() {
+                try {
+                    div.usosProgressOverlay('destroy');
+                } catch(err) {}
+            }).done(function(data) {
+                div.append($.usosCore.lang(
+                    "<p class='ua-howto'><span class='if-query'>Wyniki dla zapytania <span class='query'></span>.<br></span>" +
+                    "Kliknij element, aby go wybrać. Wciśnij klawisz Esc, aby anulować.</p>",
+
+                    "<p class='ua-howto'><span class='if-query'>Search results for <span class='query'></span>.<br></span>" +
+                    "Kliknij element, aby go wybrać. Wciśnij klawisz Esc, aby anulować.</p>"
+                ));
+                if (widget._lastQuery) {
+                    div.find(".ua-howto .query").text(widget._lastQuery);
+                } else {
+                    div.find(".ua-howto .if-query").hide();
+                }
+                var itemsContainer = $("<div style='display: inline-block'>");
+                div.append(itemsContainer);
+                var items = widget._entitySetup.search.itemsExtractor(data);
+                $.each(items, function(_, item) {
+                    var id = widget._entitySetup.idExtractor(item);
+                    var span = $("<span class='ua-inline-suggestion'>")
+                        .css("width", widget.options.width)
+                        .html(widget._entitySetup.suggestionRenderer(item))
+                        .attr("tabindex", 0)
+                        .on("focus", function() { $(this).addClass("text-selected"); })
+                        .on("blur", function() { $(this).removeClass("text-selected"); })
+                        .hover(
+                            function() { $(this).addClass("text-selected"); },
+                            function() { $(this).removeClass("text-selected"); }
+                        )
+                        .on("click keypress", function(e) {
+                            if (e.which && e.which != 13 && e.which != 32) {
+                                /* Ignore all keypresses other than space and enter */
+                                return;
+                            }
+                            var value;
+                            if (widget.options.multi) {
+                                value = widget.value();
+                                value.push(id);
+                            } else {
+                                value = id;
+                            }
+                            widget.value(value);
+                            div.dialog("close");
+                        });
+                    itemsContainer.append(span);
+                });
+                if (items.length >= 20) {
+                    div.append($.usosCore.lang(
+                        "<p class='ua-warning'><b>Wyświetlanych jest tylko 20 najlepszych trafień.</b> " +
+                        "Jeśli nadal nie możesz znaleźć, to zamknij okno i spróbuj " +
+                        "doprecyzować swoje zapytanie. Na przykład, jeśli szukasz " +
+                        "osoby, to możesz spróbować podać jej numer indeksu. Albo jeśli " +
+                        "szukasz przedmiotu, spróbuj podać jego kod.",
+
+                        "<p class='ua-warning'><b>Only the best 20 matches are displayed.</b> " +
+                        "If you still have trouble with your search then close this window and try " +
+                        "a more specific query. For example, if you're looking for a person " +
+                        "then you might want to try providing his/her student ID. Or, if you're looking " +
+                        "for a course then try providing its code."
+                    ));
+                }
+            }).fail(function(response) {
+                $.usosCore.panic(response);
+                div.dialog("close");
+            });
         }
     });
 

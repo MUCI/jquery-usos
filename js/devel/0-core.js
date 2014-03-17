@@ -32,9 +32,7 @@
                 }
             },
             entityURLs: {
-                "entity/users/user": null,
-                "entity/fac/faculty": null,
-                "entity/slips/template": null
+                /* "entityCode": value, etc. */
             },
             _requestDelay: 0
         };
@@ -123,6 +121,10 @@
         var requestId = null;
         if (options.syncObject !== null) {
             if (typeof options.syncObject.lastIssuedRequestId === "undefined") {
+
+                /* WARNING: This is "internal", but accessed outside od this file,
+                 * grep the code before changing this structure. */
+
                 options.syncObject.lastIssuedRequestId = 0;
                 options.syncObject.lastReceivedRequestId = 0;
             }

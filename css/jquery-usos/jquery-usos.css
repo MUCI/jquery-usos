@@ -1,5 +1,10 @@
 /* Simple "css reset" rule - for debugging. */
 
+body.ua-stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+}
+
 .ua-container {
     margin: 0;
     padding: 0;
@@ -195,6 +200,10 @@
 .ua-note {
     color: #888;
     font-size: 80%;
+    line-height: 1.2em;
+}
+.ua-selector {
+    position: relative;
 }
 .ua-selector.ua-filled textarea {
     z-index: 0;
@@ -208,8 +217,60 @@
 .ua-selector.ua-filled .text-button {
     border-color: transparent !important;
 }
-.ua-selector .text-selected .ua-note {
+.ua-selector .text-selected .ua-note, .ua-inline-suggestion.text-selected .ua-note {
     color: #ddd;
+}
+.ua-selector textarea {
+    background: transparent;
+}
+.ua-selector .ua-progress {
+    position: absolute;
+    background: url(images/loading-11-ffffff.gif) no-repeat;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    z-index: 1;
+    right: 6px;
+    top: 5px;
+}
+.ua-selector .text-suggestion .ua-more {
+    display: block;
+    padding: 10px 20px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+}
+.ua-selector .text-suggestion.text-selected .ua-more {
+    border-top: 1px solid transparent;
+}
+.ua-selector .text-suggestion .ua-empty {
+    display: block;
+    padding: 10px 20px;
+    text-align: center;
+}
+.ua-inline-suggestion {
+    float: left;
+    padding: 5px;
+    font: 11px "lucida grande", tahoma, verdana, arial, sans-serif;
+    cursor: default;
+}
+.ua-selector-popup .ua-howto {
+    color: #333;
+    background: #f3f3f3;
+    border: 1px solid #e5e5e5;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.ua-selector-popup .ua-howto span {
+    font-weight: bold;
+}
+.ua-selector-popup .ua-warning {
+    color: #c00;
+    background: #fee;
+    border: 1px solid #fdd;
+    padding: 10px 15px;
+    clear: both;
+    margin-top: 20px;
 }
 .ua-progressoverlay-background {
     position: absolute;
@@ -599,8 +660,17 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     vertical-align: top;
     text-align: left;
 }
+.ua-usersuggestion .ua-td1 {
+    width: 42px;
+}
+.ua-usersuggestion .ua-td1 img {
+    width: 40px;
+    height: 40px;
+    background: #eee;
+    border: 1px solid rgba(128,128,128,0.5);
+}
 .ua-usersuggestion .ua-td2 {
-    padding: 2px 0 0 0;
+    padding: 2px 0 0 6px;
 }
 .ua-usersuggestion .ua-td2 .ua-tagline {
     padding-top: 4px;
@@ -630,6 +700,7 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ui-dialog.ua-panic-dialog { border-radius: 5px; -webkit-box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.5); -moz-box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.5); box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.5); }
 .ui-dialog.ua-panic-dialog .ui-dialog-titlebar { display: none; }
 .ui-dialog.ua-panic-dialog .ui-dialog-content { padding: 25px 25px 25px 25px; overflow: visible; }
+.ui-dialog.ua-panic-dialog.ua-scrollable .ui-dialog-content { overflow-x: auto; overflow-y: scroll; }
 
 /* Extracted from TextExt. See https://github.com/alexgorbatchev/jquery-textext/issues/59 */
 
@@ -705,7 +776,8 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     font-style: normal;
     text-decoration: underline;
 }
-.text-core .text-wrap .text-dropdown .text-list .text-suggestion.text-selected {
+.text-core .text-wrap .text-dropdown .text-list .text-suggestion.text-selected,
+.ua-inline-suggestion.text-selected {
     color: #fff;
     background: #6d84b4;
 }
