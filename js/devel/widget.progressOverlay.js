@@ -29,11 +29,11 @@
 
             widget.bg = $("<div>")
                 .addClass("ua-progressoverlay-background")
-                .hide();
+                .css("opacity", 0.01);
             $(document.body).append(widget.bg);
             widget.fg = $("<table>")
                 .addClass("ua-progressoverlay-foreground")
-                .hide()
+                .css("opacity", 0.01)
                 .append($("<tr>")
                     .append($("<td>"))
                 );
@@ -46,7 +46,7 @@
                 .css("top", widget.element.offset().top)
                 .css("width", widget.element.outerWidth())
                 .css("height", widget.element.outerHeight())
-                .css("opacity", widget.options.opacity)
+                .css("opacity", 0.01)
                 .delay(widget.options.delay)
                 .each(function() {
 
@@ -55,7 +55,7 @@
                      * we fadeIn, we have to verify that. */
 
                     if ($('body').has(widget.bg).length > 0) {
-                        $(this).fadeIn(widget.options.fadeDuration);
+                        $(this).animate({"opacity": widget.options.opacity}, widget.options.fadeDuration);
                     }
                 });
 

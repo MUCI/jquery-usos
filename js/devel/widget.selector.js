@@ -74,6 +74,7 @@
         _init: function() {
             this._super("_init");
             this._recreate();
+            this._postInit();
         },
 
         _setOption: function(key, value) {

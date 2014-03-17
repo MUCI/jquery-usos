@@ -17,6 +17,7 @@
             var widget = this;
             widget._super("_init");
             widget._build();
+            widget._postInit();
         },
 
         _createOption: function(value, text, selected) {

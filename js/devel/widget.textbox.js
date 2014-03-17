@@ -17,9 +17,7 @@
             var widget = this;
             widget._super("_init");
             widget._build();
-            if (this.options.disabled) {
-                this.disable();
-            }
+            widget._postInit();
         },
 
         _build: function() {
