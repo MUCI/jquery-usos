@@ -19,7 +19,10 @@ Example
 -------
 
 ```javascript
-$("#container").append($("<div>").usosCheckbox());
+$("#container").append($("<div>").usosCheckbox(
+    value: true,
+    caption: {pl: "Zaznacz mnie!", "Check me!"}
+));
 ```
 
 Options
@@ -27,7 +30,8 @@ Options
 
   * All inherited options of the [usosValue widget](widget.value.md), in particular:
     * **value** *(default: false)* - Boolean. Set to `true` if the checkbox
-      should be initially checked. 
+      should be initially checked.
+  * **caption** - the text to display along the checkbox (string or LangDict),
   * **change** - function, a callback to be executed if the value is changed.
 
 Methods

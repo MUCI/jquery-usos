@@ -45,4 +45,4 @@ Methods
 Events
 ------
 
-  * `usosselectbox:change` - triggered when the value is changed.
+  * `usostextbox:change` - triggered when the value is changed.
