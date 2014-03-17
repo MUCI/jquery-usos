@@ -1,26 +1,27 @@
 jQuery-USOS Change Log
 ======================
 
-  * **BETA BRANCH** - *(unreleased)*
+  * **Version 1.2.3** - *2014-03-17*
 
-    * **Version 1.2.2.6** - Some minor bugfixes.
-    * **Version 1.2.2.5** - Added the "See more results" item in the
-      [usosSelector widget](widget.selector.md).
-    * **Version 1.2.2.4** - Bugfixes (`$.usosEntity` still didn't work
-      properly for some entities).
-    * **Version 1.2.2.3** - Bugfixes to the previous version (`$.usosEntity`
-      functions didn't work properly), added user photos and employment
-      positions to `$.usosSelector` suggestions, started making use of
-      USOS API's `services/users/search_history_affect` method, made some
-      user badge entries more compact.
-    * **Version 1.2.2.2** - Moved more stuff into the entities directory.
-      Added `entity/courses/course` to `$.usosEntity` family. 
-    * **Version 1.2.2.1** - Moved most of the entity-related stuff into
-      separate files.
+    * **Requires USOS API 5.4.5.**
+    * Enhancements in the [usosSelector widget](api/widget.selector.md):
+      * It includes user photos and employment positions is the suggestions.
+      * It attempts to "remember" previous choices for some entities
+        (see USOS API's `services/users/search_history_affect` method for more
+        information).
+      * The "See more results" entry is displayed on the bottom of the
+        suggestions list. Currently, it allows the users to see up to 20
+        results for their search queries.
+    * Users' [usosBadges](api/widget.badge.md) are now more compact - i.e. when
+      the user has many student programmes, they won't be displayed right away
+      (the user will need to focus on them).
+    * [$.usosEntity.label](api/entity.label.md) and other functions of the
+      `usosEntity` family now support `entity/courses/course` entity type.
+    * Minor bugfixes.
 
   * **Version 1.2.2** - *2014-02-09*
 
-    * If connected to USOS API 5.4.5, [usosBadge widget](widget.badge.md) for
+    * If connected to USOS API 5.4.5, [usosBadge widget](api/widget.badge.md) for
       the `entity/users/user` displays active and inactive student programmes
       separately.
  
