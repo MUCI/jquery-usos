@@ -7,7 +7,7 @@ will get a set of unique entity IDs.
 Screenshot
 ----------
 
-![Example usosSelector widget](http://i.imgur.com/k3wlwEA.png)
+![Example usosSelector widget](http://i.imgur.com/9d3ILIw.png)
 
 Demos
 -----

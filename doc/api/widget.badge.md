@@ -6,7 +6,7 @@ Displays entity information on hover (users, faculties, etc.)
 Screenshot
 ----------
 
-![Example usosBadge widget](http://i.imgur.com/6NYuKkR.png)
+![Example usosBadge widget](http://i.imgur.com/fHpAJjt.png)
 
 Demos
 -----
