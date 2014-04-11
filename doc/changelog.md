@@ -1,6 +1,16 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.2.4** - *2014-04-11*
+
+    * **Requires USOS API 5.4.6.**
+    * New widget: [usosRadioboxes](api/widget.radioboxes.md).
+    * Added support for the `disabled` option for all `usosValue` widgets.
+    * Display student numbers in user badges.
+    * `usosOverlay` widget now shows up immediatelly (but it is still
+      initially transparent) - this is done in order to additionally
+      prevent user interaction with the overlayed content.
+
   * **Version 1.2.3** - *2014-03-17*
 
     * **Requires USOS API 5.4.5.**
@@ -37,7 +47,7 @@ jQuery-USOS Change Log
   * **Version 1.2** - *2014-01-07*
 
     * New requirements:
-      * jQuery-USOS 1.2 requires USOS API 5.4.4.
+      * **Requires USOS API 5.4.4**.
       * TextExt and Tooltipster libraries were tweaked. Make sure you use the
         ones provided in our repository.
     * Backward-incompatible changes:

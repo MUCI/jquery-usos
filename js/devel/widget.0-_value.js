@@ -14,6 +14,12 @@
             this.element.attr("data-name", this.options.name);
         },
 
+        _postInit: function() {
+            if (this.options.disabled) {
+                this.disable();
+            }
+        },
+
         _destroy: function() {
             this._hideErrors();
             this.element.removeClass("ua-usosvalue");

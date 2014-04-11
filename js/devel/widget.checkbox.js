@@ -16,6 +16,7 @@
             var widget = this;
             widget._super("_init");
             widget._build();
+            widget._postInit();
         },
 
         _build: function() {
@@ -29,7 +30,7 @@
                 content = $("<span>").html($.usosCore.lang(widget.options.caption));
             }
             widget.element.append($("<label>")
-                .append($("<table class='ua-checkbox'>")
+                .append($("<table class='ua-checkbox-or-radio'>")
                     .append($("<tr>")
                         .append($("<td>")
                             .append($("<input type='checkbox'>"))

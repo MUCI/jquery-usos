@@ -295,11 +295,11 @@ body.ua-stop-scrolling {
     position: relative;
     top: 1px;
 }
-table.ua-checkbox { border: 0; border-spacing: 0; }
-table.ua-checkbox > tbody > tr > td { padding: 0; vertical-align: top; text-align: left; }
-table.ua-checkbox > tbody > tr > td:first-child { padding: 3px 5px 3px 0; }
-table.ua-checkbox > tbody > tr > td:first-child > input { padding: 0; margin: 0 }
-table.ua-checkbox > tbody > tr > td:first-child > input:focus { outline: 1px dotted #888; }
+table.ua-checkbox-or-radio { border: 0; border-spacing: 0; }
+table.ua-checkbox-or-radio > tbody > tr > td { padding: 0; vertical-align: top; text-align: left; }
+table.ua-checkbox-or-radio > tbody > tr > td:first-child { padding: 3px 5px 3px 0; }
+table.ua-checkbox-or-radio > tbody > tr > td:first-child > input { padding: 0; margin: 0 }
+table.ua-checkbox-or-radio > tbody > tr > td:first-child > input:focus { outline: 1px dotted #888; }
 
 table.ua-form { border-collapse: collapse; background: #fff; outline: 1px solid #D8D8D8; }
 table.ua-form > tbody > tr > td { background: #ECECEC; padding: 5px 8px; font-family: Tahoma; vertical-align: middle; border: 1px solid #fff; }
@@ -528,6 +528,12 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 }
 .ua-badge-user .ua-name a:hover {
     text-decoration: underline;
+}
+.ua-badge-user .ua-name .ua-student-number {
+    display: inline-block;
+    font-size: 85%;
+    color: #888;
+    margin-left: 5px;
 }
 .ua-badge-user .ua-functions {
     margin: 0;

@@ -169,7 +169,7 @@
             var local_profile_url = $.usosEntity.url("entity/users/user", widget.options.user_id);
             var fields = (
                 "id|first_name|last_name|photo_urls[100x100]|sex|employment_functions|" +
-                "employment_positions|student_programmes[programme|status]"
+                "employment_positions|student_programmes[programme|status]|student_number"
             );
             if (!local_profile_url) {
                 fields += "|profile_url";
@@ -218,6 +218,21 @@
                 .attr("href", user.profile_url)
                 .text(user.first_name + " " + user.last_name)
             );
+            if (user.student_number) {
+                badge.find('.ua-name').append($("<span class='ua-student-number'>")
+                    .text(user.student_number)
+                    .css("cursor", "default")
+                    .usosTip({
+                        type: "tool",
+                        position: "top",
+                        content: {
+                            pl: "Numer albumu",
+                            en: "Student number"
+                        }
+                    })
+                );
+            }
+
             badge.find('.ua-photo-link').attr('href', user.profile_url);
 
             var makeLine = function(content) {
