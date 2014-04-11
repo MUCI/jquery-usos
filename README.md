@@ -57,6 +57,7 @@ API
   * [usosValue widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.value.md) - a base class for all widgets which hold a **value**.
     * [usosSelector widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.selector.md) - allow the user to search for an entity and get its ID.
     * [usosCheckbox widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.checkbox.md) - *usosValue* equivalent of `<input type='checkbox'>` with a label.
+    * [usosRadioboxes widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.radioboxes.md) - *usosValue* equivalent of a set of `<input type='radio'>` with labels.
     * [usosSelectbox widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.selectbox.md) - *usosValue* equivalent of `<select>` input.
     * [usosTextbox widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.textbox.md) - *usosValue* equivalent of `<input type='text'>` and `<textarea>` inputs.
   * [usosNotice widget](https://github.com/MUCI/jquery-usos/blob/master/doc/api/widget.notice.md) - display notices or errors on form elements.
