@@ -224,9 +224,9 @@
                     .css("cursor", "default")
                     .usosTip({
                         type: "tool",
-                        position: "right",
+                        position: "top",
                         content: {
-                            pl: "Numer indeksu",
+                            pl: "Numer albumu",
                             en: "Student number"
                         }
                     })

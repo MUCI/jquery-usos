@@ -3,6 +3,7 @@ jQuery-USOS Change Log
 
   * **BETA BRANCH** - *(unreleased)*
 
+    * **Version 1.2.3.3** - Minor fixes in user badge.
     * **Version 1.2.3.2** - Added support for the `disabled` option for all
       `usosValue` widgets. `usosOverlay` widget now shows up immediatelly (but
       it still is initially transparent) - this is done in order to additionally
