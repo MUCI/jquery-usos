@@ -2,7 +2,7 @@ $(function() {
 	$.usosCore.init({
 		usosAPIs: {
 			'default': {
-				'methodUrl': "http://xusosweb.rygielski.net/usosapiProxy.php?method=%s"
+				'methodUrl': "http://xusosweb.rygielski.net/usosapiProxy.php?_method_=%s"
 			}
 		}
 	});
