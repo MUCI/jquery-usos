@@ -7,7 +7,7 @@ This widget simply displays a set od radio-type inputs.
 Demos
 -----
 
-  * WRTODO
+  * [usosForms Demo](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/forms)
 
 Example
 -------
@@ -18,7 +18,8 @@ $("#container").append($("<div>").usosRadioboxes({
     options: [
         {value: "pl", caption: {pl: "polski", en: "Polish"}},
         {value: "en", caption: {pl: "angielski", en: "English"}} 
-    ]
+    ],
+    change: function() { alert($(this).usosValue('value')); }
 }));
 ```
 

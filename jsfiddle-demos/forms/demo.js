@@ -13,6 +13,22 @@ $(function() {
 			en: "Is visible"
 		}
 	});
+	$("#checkbox").usosRadioboxes({
+		name: "capacity",
+		width: "300px",
+		options: [
+			{value: "<10", caption: {pl: "Tyci tyci", en: "Tiny"}},
+			{value: "30", caption: {pl: "Ma³a", en: "Small"}},
+			{value: "100", caption: {pl: "Spora", en: "Big"}},
+			{value: ">500", caption: {
+				pl: "Wielgachna",
+				en: (
+					"Huge. Note that this can span multiple lines and will " +
+					"remain properly indented. It can also contain <i>HTML</i>."
+				)
+			}}
+		]
+	});
 	$("#selectbox").usosSelectbox({
 		name: "type",
 		options: [
@@ -48,7 +64,8 @@ $(function() {
 				id: id,
 				name: "Name",
 				is_visible: true,
-				type: "B"
+				type: "B",
+				capacity: "100"
 			});
 		}, 2000);
 		return deferred;
