@@ -18,34 +18,8 @@ by jsfiddle itself):
    - Wojciech Rygielski
  resources:
    - http://xusosweb.rygielski.net/css/tooltipster.css
-   - http://xusosweb.rygielski.net/css/theme/jquery-ui-1.10.1.custom.css
    - http://xusosweb.rygielski.net/css/jquery-usos/jquery-usos.css
-   - http://xusosweb.rygielski.net/js/jquery-usos/jquery.tooltipster.2.1.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/jquery.textext.1.3.1.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/jquery.ba-bbq-1.2.1.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/jquery.colResizable-1.3.min.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/0-core.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/1-_apitable.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/badge.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/entity.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/forms.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/utils.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/value.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.0-_badge.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.0-_value.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.checkbox.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.notice.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.progressOverlay.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.radioboxes.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.selectbox.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.selector.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.textbox.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/widget.tip.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/entities/courses.course.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/entities/fac.faculty.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/entities/progs.programme.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/entities/slips.template.js
-   - http://xusosweb.rygielski.net/js/jquery-usos/devel/entities/users.user.js
+   - http://xusosweb.rygielski.net/js/jquery-usos/latest-bundle.min.js
 
  normalize_css: no
  ...
