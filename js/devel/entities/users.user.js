@@ -25,7 +25,8 @@
         getSelectorSetup: function() {
             var user_fields = (
                 /* Possible performance gain: https://redmine.usos.edu.pl/issues/8158 */
-                "id|sex|first_name|last_name|employment_functions|" +
+                "id|sex|first_name|last_name|" +
+                "employment_functions[function|faculty|is_official]|" +
                 "student_programmes[programme|status]|" +
                 "employment_positions|photo_urls[50x50]"
             );
@@ -88,6 +89,9 @@
                             .append(" ");
                     });
                     $.each(item.user.employment_functions, function(_, f) {
+                        if (!f.is_official) {
+                            return;
+                        }
                         $div.find(".ua-tagline")
                             .append($("<span class='ua-note'>")
                                 .text(
@@ -168,7 +172,8 @@
 
             var local_profile_url = $.usosEntity.url("entity/users/user", widget.options.user_id);
             var fields = (
-                "id|first_name|last_name|photo_urls[100x100]|sex|employment_functions|" +
+                "id|first_name|last_name|photo_urls[100x100]|sex|" +
+                "employment_functions[function|faculty|is_official]|" +
                 "employment_positions|student_programmes[programme|status]|student_number"
             );
             if (!local_profile_url) {
@@ -250,6 +255,9 @@
 
             var groups = {};
             $.each(user.employment_functions, function(_, emp) {
+                if (!emp.is_official) {
+                    return;
+                }
                 if (!groups.hasOwnProperty(emp.faculty.id)) {
                     groups[emp.faculty.id] = {
                         faculty: emp.faculty,

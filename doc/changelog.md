@@ -1,6 +1,11 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.2.5** - *2014-04-24*
+
+    * **Requires USOS API 5.4.6.1-1.**
+    * Unofficial employment functions are now hidden from user badges.
+
   * **Version 1.2.4** - *2014-04-11*
 
     * **Requires USOS API 5.4.6.**
