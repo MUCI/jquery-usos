@@ -6,7 +6,8 @@ Pretty standard. You just have to include all JS and CSS files in your page.
 Requirements
 ------------
 
-  * USOS API 5.4.4+,
+  * USOS API (which version? see in
+    [the changelog](https://github.com/MUCI/jquery-usos/blob/master/doc/changelog.md)),
   * Your own USOS API Proxy (see below),
   * jQuery 1.9.1+,
   * jQuery Migrate 1.1.0+,
@@ -28,7 +29,7 @@ Setup your own USOS API Proxy
 -----------------------------
 
 You will probably also need to set up your own USOS API proxy (and point to it
-when calling [$.usosCore.init](https://github.com/MUCI/jquery-usos/blob/master/doc/core.init.md#usosapis)).
+when calling [$.usosCore.init](https://github.com/MUCI/jquery-usos/blob/master/doc/api/core.init.md#usosapis)).
 
 ### Why?
 
