@@ -6,7 +6,7 @@ Displays entity information on hover (users, faculties, etc.)
 Screenshot
 ----------
 
-![Example usosBadge widget](http://i.imgur.com/fHpAJjt.png)
+![Example usosBadge widget](http://i.imgur.com/htjpXDE.png)
 
 Demos
 -----
@@ -35,11 +35,13 @@ Options
 -------
 
   * **entity** - **Required.** Entity type. Currently supported values are:
-    * User - `entity/users/user`.
-    * Faculty - `entity/fac/faculty`.
+    * `entity/users/user` - for user badges.
+    * `entity/fac/faculty` - for faculty badges.
+    * `entity/geo/building` - for building badges.
   * ID of the entity. Parameter name varies on entity type:
     * **user_id** - for user badges,
     * **fac_id** - for faculty badges.
+    * **building_id** - for building badges.
   * **position** - *Optional.* Preferred position of the tooltip. Allowed
     values include: `left`, `right`, `top` and `bottom`.
     Default is undefined and it can be different

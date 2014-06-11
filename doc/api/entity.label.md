@@ -36,6 +36,7 @@ returned by USOS API.
   * `entity/slips/template` requires: `id|name`.
   * `entity/progs/programme` requires: `id|description`.
   * `entity/courses/course` requires: `id|name`.
+  * `entity/geo/building` requires: `id|name`.
 
 If the object is not provided (either `null` or `undefined` is found), a simple
 "no data" placeholder will be displayed.

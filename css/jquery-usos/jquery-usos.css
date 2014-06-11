@@ -18,12 +18,12 @@ body.ua-stop-scrolling {
 }
 
 .ua-link, .ui-widget-content .ua-link {
-    color: #449;
+    color: #3b5998;
     text-decoration: none;
     cursor: pointer;
 }
 .ua-link:hover {
-    color: #006;
+    color: #3b5998;
     text-decoration: underline;
 }
 .ua-link.ua-no-underline:hover {
@@ -656,6 +656,73 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     font-size: 11px;
 }
 
+/* Building badge */
+
+.ua-badge-building table {
+    border-spacing: 0;
+    width: 355px; /* rel: g02d90l */
+    margin: 5px;
+}
+.ua-badge-building td {
+    vertical-align: top;
+    text-align: left;
+}
+.ua-badge-building .ua-td1 {
+    width: 102px;
+}
+.ua-badge-building .ua-td2 {
+    padding: 3px 0 3px 8px;
+}
+.ua-badge-building .ua-photo-link {
+    position: relative;
+    display: block;
+}
+.ua-badge-building .ua-photo-link .ua-icon-office {
+    color: #fff;
+    text-shadow: 0 0 3px #444;
+    position: absolute;
+    right: 6px;
+    top: 6px;
+}
+.ua-badge-building .ua-photo {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #aaa;
+    background: #ddd;
+}
+.ua-badge-building .ua-td2top {
+    min-height: 81px;
+}
+.ua-badge-building .ua-name a {
+    cursor: pointer;
+    font-weight: normal;
+    color: #3b5998;
+    text-decoration: none;
+    font-size: 13px;
+}
+.ua-badge-building .ua-name a:hover {
+    text-decoration: underline;
+}
+.ua-badge-building .ua-desc {
+    margin-top: 4px;
+    padding-left: 1px;
+    font-family: Tahoma;
+    color: #777;
+    font-size: 11px;
+}
+.ua-badge-building .ua-desc .ua-relative {
+    position: relative;
+}
+.ua-badge-building .ua-desc .ui-icon {
+    display: inline-block;
+    opacity: 0.5;
+    position: absolute;
+    top: -1px;
+}
+.ua-badge-building .ua-fac {
+    margin-top: 5px;
+    line-height: 1.1em;
+}
 
 /* user suggestions */
 
@@ -863,4 +930,114 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 }
 .text-core .text-wrap .text-tags .text-tag .text-button a.text-remove:active {
     background-position: 0 -22px;
+}
+
+/* Icomoon fonts */
+
+@font-face {
+    font-family: 'jquery-usos-icons';
+    src:url('fonts/jquery-usos-icons.eot?-4bg1xt');
+    src:url('fonts/jquery-usos-icons.eot?#iefix-4bg1xt') format('embedded-opentype'),
+        url('fonts/jquery-usos-icons.woff?-4bg1xt') format('woff'),
+        url('fonts/jquery-usos-icons.ttf?-4bg1xt') format('truetype'),
+        url('fonts/jquery-usos-icons.svg?-4bg1xt#jquery-usos-icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="ua-icon-"], [class*=" ua-icon-"] {
+    font-family: 'jquery-usos-icons';
+    font-size: 16px;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.ua-icon-home:before {
+    content: "\e600";
+}
+.ua-icon-home2:before {
+    content: "\e601";
+}
+.ua-icon-office:before {
+    content: "\e602";
+}
+.ua-icon-image:before {
+    content: "\e603";
+}
+.ua-icon-library:before {
+    content: "\e604";
+}
+.ua-icon-phone:before {
+    content: "\e605";
+}
+.ua-icon-map:before {
+    content: "\e606";
+}
+.ua-icon-map2:before {
+    content: "\e607";
+}
+.ua-icon-forward:before {
+    content: "\e608";
+}
+.ua-icon-user:before {
+    content: "\e609";
+}
+.ua-icon-users:before {
+    content: "\e60a";
+}
+.ua-icon-busy:before {
+    content: "\e60b";
+}
+.ua-icon-spinner:before {
+    content: "\e60c";
+}
+.ua-icon-remove:before {
+    content: "\e60d";
+}
+.ua-icon-remove2:before {
+    content: "\e60e";
+}
+.ua-icon-warning:before {
+    content: "\e60f";
+}
+.ua-icon-notification:before {
+    content: "\e610";
+}
+.ua-icon-question:before {
+    content: "\e611";
+}
+.ua-icon-close:before {
+    content: "\e612";
+}
+.ua-icon-checkmark:before {
+    content: "\e613";
+}
+.ua-icon-loop:before {
+    content: "\e614";
+}
+.ua-icon-filter:before {
+    content: "\e615";
+}
+.ua-icon-envelope:before {
+    content: "\e616";
+}
+.ua-icon-search:before {
+    content: "\e617";
+}
+.ua-icon-list:before {
+    content: "\e618";
+}
+.ua-icon-tree:before {
+    content: "\e619";
+}
+.ua-icon-newtab:before {
+    content: "\e61a";
 }

@@ -225,7 +225,10 @@
                     );
                 }
                 if (fac.phone_numbers.length > 0) {
-                    address.append($("<div>").text("Tel: " + fac.phone_numbers.join(", ")));
+                    address.append($("<div>").text(
+                        $.usosCore.lang("Tel: ", "Phone: ") +
+                        fac.phone_numbers.join(", ")
+                    ));
                 }
             }
             if (fac.homepage_url) {
