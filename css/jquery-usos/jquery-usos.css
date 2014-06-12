@@ -360,8 +360,9 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 /* Tooltip: default subclass */
 
 .ua-tooltip.ua-tooltip-default {
-    border: 1px solid #555;
+    border: 1px solid #999;
     background: #ffffe1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     color: #000;
 }
 .ua-tooltip.ua-tooltip-default .tooltipster-content {
@@ -930,6 +931,22 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 }
 .text-core .text-wrap .text-tags .text-tag .text-button a.text-remove:active {
     background-position: 0 -22px;
+}
+
+.ua-icon-16 {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -0.1em;
+}
+
+.ua-icon-blue-prefix {
+    color: #88f;
+    margin-right: 6px;
+    text-shadow: 0px 1px 0px #337;
 }
 
 /* Icomoon fonts */

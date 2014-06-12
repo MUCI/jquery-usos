@@ -1,12 +1,13 @@
 usosTip widget
 ==============
 
-Display an "info" icon. When hovered or focused, a tooltip will be displayed. (Currently, there is no way to customize the icon image.)
+This widget adds a tooltip to the given element, or creates a default "i" icon
+with the tooltip.
 
 Screenshot
 ----------
 
-![Screenshot](http://i.imgur.com/g68wXm2.png)
+![Screenshot](http://i.imgur.com/xPpPbKG.png)
 
 Demos
 -----
@@ -22,7 +23,7 @@ It can be called as a regular widget:
     icon**, it will simply add a tooltip to your element. (See below for the
     full list of options.)
 
-Or, using one of the forms of the **static constructor** (these **will** create
+Or, using one of the forms of the **static constructor** (these **will** return
 the "i" icon):
 
   * `$.usosWidgets.usosTip.create(options)` - *see the options below!*
@@ -97,11 +98,27 @@ user-supplied content you must sanitize it (e.g. with
     long.
 
   * `tool` - used on other tool icons or on short paragraphs of text. Has a
-    different "look and feel". Should be rather short (one or two paragraphs of
-    text).
+    different "look and feel". The content should be rather short (one or two
+    paragraphs of text).
 
 ### delayed
 
 *Optional.* Default is `false`. If set to `true`, then the showing of the tip
 will be additionally delayed (the user needs to hover for a longer period of
 time).
+
+### showAs
+
+*Optional.* Default is `auto`. You can use this to change the way the content
+is shown. One of the following values:
+
+  * `auto` - jQuery-USOS will attempt to examine the content and decide which
+    way is better (these heuristics may change in time).
+
+  * `tooltip` - good for small content; the content will be displayed in a
+     tooltip, upon mouse hover or keyboard focus.
+
+  * `dialog` - good for large content; the content will be displayed in a
+    separate dialog, upon mouse click, or keyboard activation (by pressing
+    Enter or space). The user will be properly instucted. This is used only
+    when **type** is set to `default`.

@@ -8,22 +8,26 @@
             position: "top",
             delayed: false,
             type: "default",
+            showAs: "auto",
             _autoWidth: true
         },
         widgetEventPrefix: "usostip:",
         defaultElement: "<span>",
+        _showOnHover: null,
+        _userContent: null,
 
         _create: function() {
 
             var widget = this;
 
-            var content = null;
+            var tooltipContent = null;
             var contentProvider = null;
             if (typeof widget.options.content === 'function') {
-                content = $.usosCore.lang("Wczytywanie...", "Loading...");
+                tooltipContent = $.usosCore.lang("Wczytywanie...", "Loading...");
                 contentProvider = widget.options.content;
             } else {
-                content = widget.options.content;
+                widget._userContent = widget.options.content;
+                tooltipContent = widget._decideTooltipContent();
             }
             var theme = "ua-container ua-tooltip ";
             var offsetX = 0;
@@ -39,7 +43,7 @@
                 theme += "ua-tooltip-default";
             }
             widget.element.tooltipster({
-                content: $.usosUtils._tooltipster_html(content, widget.options._autoWidth),
+                content: $.usosUtils._tooltipster_html(tooltipContent, widget.options._autoWidth),
                 onlyOne: false,
                 delay: widget.options.delayed ? 500 : (contentProvider ? 200 : 50),
                 speed: 0,
@@ -55,23 +59,118 @@
                     var promise = contentProvider.apply(widget.element);
                     contentProvider = null;  // so it will get called once only
                     promise.done(function(obj) {
-                        widget.element.tooltipster('update', $.usosUtils._tooltipster_html(obj, widget.options._autoWidth));
+                        widget._userContent = obj;
+                        var tooltipContent = widget._decideTooltipContent();
+                        widget.element.tooltipster('update', $.usosUtils._tooltipster_html(tooltipContent, widget.options._autoWidth));
                     }).fail(function() {
-                        var content = $.usosCore.lang(
+                        var tmp = $.usosCore.lang(
                             "Nie udało się załadować treści podpowiedzi. " +
                             "Odśwież stronę i spróbuj ponownie.",
                             "Could not load the content of the tip. " +
                             "Refresh the page and try again."
                         );
-                        widget.element.tooltipster('update', $.usosUtils._tooltipster_html(content));
+                        widget.element.tooltipster('update', $.usosUtils._tooltipster_html(tmp));
                     });
                 }
             });
             widget.element.attr("tabindex", 0);
             widget._on(widget.element, {
                 focus: function() { widget.element.tooltipster('show'); },
-                blur: function() { widget.element.tooltipster('hide'); }
+                blur: function() { widget.element.tooltipster('hide'); },
+                click: function() {
+
+                    if (widget._showOnHover) {
+                        return;
+                    }
+
+                    widget.element.trigger('blur');
+
+                    widget._showDialog();
+                },
+                keypress: function(e) {
+
+                    if (widget._showOnHover) {
+                        return;
+                    }
+
+                    if (e.which && e.which != 13 && e.which != 32) {
+                        /* Ignore all keypresses other than space and enter */
+                        return;
+                    }
+
+                    widget._showDialog();
+                }
             });
+        },
+
+        _showDialog: function() {
+            var widget = this;
+            var wrapper = $("<div class='ua-paragraphs'>")
+                .html($.usosUtils._tooltipster_html(widget._userContent, false))
+                .css({
+                    width: "600px",
+                    "overflow-y": "scroll"
+                });
+            wrapper.dialog({
+                dialogClass: "ua-panic-dialog",
+                resizable: false,
+                modal: true,
+                width: "600px",
+                height: 400,
+                closeText: $.usosCore.lang("Zamknij", "Close"),
+                open: function(event, ui) {
+                    $('.ui-widget-overlay')
+                        .on('click', function() {
+                            $(this).siblings('.ui-dialog').find('.ui-dialog-content').dialog('close');
+                        });
+                }
+            });
+        },
+
+        _decideTooltipContent: function() {
+
+            var widget = this;
+            var userContent = widget._userContent;
+
+            widget._showOnHover = function() {
+
+                if (widget.options.type != 'default') {
+
+                    /* We don't want this behavior with tool-type tips. This
+                     * is mentioned in the docs too. */
+
+                    return true;
+                }
+
+                var value = widget.options.showAs;
+
+
+                if (value == "tooltip") {
+                    return true;
+                } else if (value == "dialog") {
+                    return false;
+                }
+
+                if (value != "auto") {
+                    $.usosCore._console.warn("Invalid value for showAs:", value);
+                }
+
+                return ($.usosUtils._tooltipster_html(userContent).text().length < 1300);
+            }();
+
+            var tooltipContent;
+
+            if (widget._showOnHover) {
+                tooltipContent = userContent;
+                widget.element.css("cursor", "default");
+            } else {
+                tooltipContent = (
+                    "<span class='ua-icon-16 ua-icon-blue-prefix ua-icon-forward'></span>" +
+                    $.usosCore.lang("Kliknij, aby otworzyć...", "Click to open...")
+                );
+                widget.element.css("cursor", "pointer");
+            }
+            return tooltipContent;
         },
 
         _setOption: function(key, value) {
