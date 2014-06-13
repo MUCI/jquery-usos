@@ -686,10 +686,16 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     top: 6px;
 }
 .ua-badge-building .ua-photo {
+    display: table-cell;
     width: 100px;
     height: 100px;
     border: 1px solid #aaa;
     background: #ddd;
+    font-size: 9px;
+    font-style: italic;
+    color: #888;
+    text-align: center;
+    vertical-align: middle;
 }
 .ua-badge-building .ua-td2top {
     min-height: 81px;
@@ -711,13 +717,11 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     color: #777;
     font-size: 11px;
 }
-.ua-badge-building .ua-desc .ua-relative {
-    position: relative;
-}
 .ua-badge-building .ua-desc .ui-icon {
     display: inline-block;
     opacity: 0.5;
-    position: absolute;
+    position: relative;
+    vertical-align: middle;
     top: -1px;
 }
 .ua-badge-building .ua-fac {

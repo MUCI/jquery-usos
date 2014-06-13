@@ -70,6 +70,8 @@
             var map_url = building.static_map_urls['100x100'];
             if (map_url) {
                 badge.find('.ua-photo').attr("src", map_url);
+            } else {
+                badge.find('.ua-photo').replaceWith($("<div class='ua-photo'>").text($.usosCore.lang("brak mapy", "no map")));
             }
 
             /* Name and profile link */
@@ -90,7 +92,7 @@
                     .append($("<span>")
                         .text(building.postal_address)
                     )
-                    .append($("<a class='ua-relative'>")
+                    .append($("<a>")
                         .attr("target", "_blank")
                         .attr("href", search_url)
                         .html($("<span class='ui-icon ui-icon-extlink'></span>")
