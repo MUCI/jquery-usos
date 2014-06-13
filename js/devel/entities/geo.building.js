@@ -58,7 +58,7 @@
 
             var badge = $(
                 "<div><table class='ua-container'><tr><td class='ua-td1'>" +
-                "<a class='ua-photo-link'><span class='ua-icon-office'></span><img class='ua-photo'/></a>" +
+                "<a class='ua-photo-link'><span class='ua-icon ua-icon-office'></span><img class='ua-photo'/></a>" +
                 "</td><td class='ua-td2'>" +
                 "<div class='ua-td2top'><div class='ua-name'></div>" +
                 "<div class='ua-desc'></div></div>" +

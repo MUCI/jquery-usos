@@ -387,6 +387,7 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ua-tooltip.ua-tooltip-tool {
     background: #222;
     color: #fff;
+    box-shadow: 0 0 5px rgba(255,255,255,0.5);
 }
 .ua-tooltip.ua-tooltip-tool .tooltipster-content {
     font-family: Tahoma, Arial, sans-serif;
@@ -463,6 +464,17 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     border-bottom: 6px solid transparent !important;
     border-right: 6px solid;
     margin-top: -5px;
+}
+.ua-tooltip.ua-tooltip-tool .ua-tool-num-stats {
+    border-spacing: 0;
+}
+.ua-tooltip.ua-tooltip-tool .ua-tool-num-stats td {
+    padding: 0;
+}
+.ua-tooltip.ua-tooltip-tool .ua-tool-num-stats td:first-child {
+    text-align: right;
+    font-weight: bold;
+    padding: 0 0.4em 0 0;
 }
 
 /* Tooltip: error subclass */
@@ -570,7 +582,8 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     background-attachament: fixed;
     background-position: 50% 85%;
     padding: 0;
-    border-bottom: 1px solid #555;
+    border-bottom: 1px solid #777;
+    text-rendering: optimizelegibility;
 }
 .ua-badge-fac td.ua-cover .ua-cover-inner {
     vertical-align: bottom;
@@ -578,8 +591,8 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     display: table-cell;
     width: 335px; /* 355 - 10 - 10 */
     height: 122px; /* 130 - 8 */
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.5) 100%);
-    padding: 0 10px 8px 10px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+    padding: 0 10px 8px 122px;
 }
 .ua-badge-fac .ua-cover .ua-ancestor {
     line-height: 1.05em;
@@ -604,53 +617,65 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     font-weight: bold;
     color: #fff;
     font-size: 14px;
-    text-shadow: 0 0 3px rgba(0,0,0,0.8);
+    text-shadow: 0 0 3px rgba(0,0,0,1.0);
 }
 .ua-badge-fac td.ua-stats {
     background: #fff;
     vertical-align: middle;
     border-bottom: 1px solid #888;
+    padding: 4px;
 }
 .ua-badge-fac td.ua-stats > div {
-    text-align: center;
-    font-size: 10px;
+    float: right;
     line-height: 1em;
-    padding: 9px 5px 10px 5px;
+    padding: 1px 5px 1px 5px;
+    cursor: default;
+}
+.ua-badge-fac td.ua-stats > div * {
+    cursor: default;
 }
 .ua-badge-fac .ua-stat-entry {
-    color: #888;
-    font-size: 10px;
+    color: #669;
+    font-size: 13px;
     white-space: nowrap;
     display: inline-block;
-    margin: 3px;
+    margin: 7px;
 }
-.ua-badge-fac .ua-stat-entry b {
-    color: #444;
-    font-weight: bold;
-    font-size: 11px;
-    padding-right: 2px;
-    /* text-shadow: 1px 1px 0px rgba(0,0,0,0.7); */
+.ua-badge-fac .ua-stat-entry .ua-icon-16 {
+    margin-right: 4px;
+    opacity: .6;
+}
+.ua-badge-fac td.ua-logo {
+    width: 120px;
+    position: relative;
+}
+.ua-badge-fac td.ua-logo img {
+    position: absolute;
+    left: 7px;
+    top: -50px;
+    border: 3px solid white;
+    border-radius: 2px;
+    outline: 1px solid #aaa;
 }
 .ua-badge-fac td.ua-desc {
     background: #fff;
+    vertical-align: top;
 }
 .ua-badge-fac td.ua-desc > div {
     font-family: Tahoma;
-    padding: 6px 10px;
-    min-height: 8px;
+    padding: 6px 10px 6px 0;
+    min-height: 50px;
 }
 .ua-badge-fac .ua-address {
     color: #777;
     font-size: 11px;
-    margin-bottom: 10px;
-}
-.ua-badge-fac .ua-address .ua-relative {
-    position: relative;
+    margin-bottom: 3px;
 }
 .ua-badge-fac .ua-address .ui-icon {
     display: inline-block;
     opacity: 0.5;
-    position: absolute;
+    vertical-align: middle;
+    position: relative;
     top: -1px;
 }
 .ua-badge-fac a.ua-www {
@@ -957,18 +982,17 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 
 @font-face {
     font-family: 'jquery-usos-icons';
-    src:url('fonts/jquery-usos-icons.eot?-4bg1xt');
-    src:url('fonts/jquery-usos-icons.eot?#iefix-4bg1xt') format('embedded-opentype'),
-        url('fonts/jquery-usos-icons.woff?-4bg1xt') format('woff'),
-        url('fonts/jquery-usos-icons.ttf?-4bg1xt') format('truetype'),
-        url('fonts/jquery-usos-icons.svg?-4bg1xt#jquery-usos-icons') format('svg');
+    src:url('fonts/jquery-usos-icons.eot?3yde87');
+    src:url('fonts/jquery-usos-icons.eot?#iefix3yde87') format('embedded-opentype'),
+        url('fonts/jquery-usos-icons.woff?3yde87') format('woff'),
+        url('fonts/jquery-usos-icons.ttf?3yde87') format('truetype'),
+        url('fonts/jquery-usos-icons.svg?3yde87#jquery-usos-icons') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
-[class^="ua-icon-"], [class*=" ua-icon-"] {
+.ua-icon {
     font-family: 'jquery-usos-icons';
-    font-size: 16px;
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -984,23 +1008,14 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ua-icon-home:before {
     content: "\e600";
 }
-.ua-icon-home2:before {
-    content: "\e601";
-}
 .ua-icon-office:before {
     content: "\e602";
-}
-.ua-icon-image:before {
-    content: "\e603";
 }
 .ua-icon-library:before {
     content: "\e604";
 }
 .ua-icon-phone:before {
     content: "\e605";
-}
-.ua-icon-map:before {
-    content: "\e606";
 }
 .ua-icon-map2:before {
     content: "\e607";
@@ -1029,12 +1044,6 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ua-icon-warning:before {
     content: "\e60f";
 }
-.ua-icon-notification:before {
-    content: "\e610";
-}
-.ua-icon-question:before {
-    content: "\e611";
-}
 .ua-icon-close:before {
     content: "\e612";
 }
@@ -1047,9 +1056,6 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ua-icon-filter:before {
     content: "\e615";
 }
-.ua-icon-envelope:before {
-    content: "\e616";
-}
 .ua-icon-search:before {
     content: "\e617";
 }
@@ -1061,4 +1067,67 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 }
 .ua-icon-newtab:before {
     content: "\e61a";
+}
+.ua-icon-books:before {
+    content: "\e601";
+}
+.ua-icon-zoomin:before {
+    content: "\e61c";
+}
+.ua-icon-zoomout:before {
+    content: "\e61d";
+}
+.ua-icon-expand:before {
+    content: "\e61e";
+}
+.ua-icon-settings:before {
+    content: "\e603";
+}
+.ua-icon-equalizer:before {
+    content: "\e606";
+}
+.ua-icon-cogs:before {
+    content: "\e610";
+}
+.ua-icon-cog:before {
+    content: "\e622";
+}
+.ua-icon-signup:before {
+    content: "\e623";
+}
+.ua-icon-eye:before {
+    content: "\e626";
+}
+.ua-icon-eye-blocked:before {
+    content: "\e627";
+}
+.ua-icon-star:before {
+    content: "\e611";
+}
+.ua-icon-blocked:before {
+    content: "\e628";
+}
+.ua-icon-cancel-circle:before {
+    content: "\e629";
+}
+.ua-icon-checkmark-circle:before {
+    content: "\e616";
+}
+.ua-icon-minus:before {
+    content: "\e61b";
+}
+.ua-icon-plus:before {
+    content: "\e61f";
+}
+.ua-icon-feed:before {
+    content: "\e620";
+}
+.ua-icon-feed2:before {
+    content: "\e621";
+}
+.ua-icon-cmd:before {
+    content: "\e624";
+}
+.ua-icon-book:before {
+    content: "\e625";
 }

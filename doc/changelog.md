@@ -3,6 +3,7 @@ jQuery-USOS Change Log
 
   * **BETA Branch** - *(unreleased)*
 
+    * **1.2.5.5** - Big enhancements to the faculty badge.
     * **1.2.5.4** - Minor UI fixes to the building badge and the usosTip
 	  widget.
     * **1.2.5.3** - Enhancements in the (undocumented) _apitable widget.

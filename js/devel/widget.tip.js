@@ -165,7 +165,7 @@
                 widget.element.css("cursor", "inherit");
             } else {
                 tooltipContent = (
-                    "<span class='ua-icon-16 ua-icon-blue-prefix ua-icon-forward'></span>" +
+                    "<span class='ua-icon ua-icon-16 ua-icon-blue-prefix ua-icon-forward'></span>" +
                     $.usosCore.lang("Kliknij, aby otworzyć...", "Click to open...")
                 );
                 widget.element.css("cursor", "pointer");
