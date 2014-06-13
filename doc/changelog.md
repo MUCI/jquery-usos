@@ -3,6 +3,7 @@ jQuery-USOS Change Log
 
   * **BETA Branch** - *(unreleased)*
 
+    * **1.2.5.3** - Enhancements in the (undocumented) _apitable widget.
     * **1.2.5.2** - Enhancements in the [usosTip widget](api/widget.tip.md),
       e.g. the new `showAs` option.
     * **1.2.5.1** - **Requires USOS API 6.0.0.**

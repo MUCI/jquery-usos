@@ -317,7 +317,7 @@
         if (typeof $elements === "string") {
             $elements = $("<span>").text($elements);
         }
-        mydata.elements.$summary.empty().append($elements.clone());
+        mydata.elements.$summary.empty().append($elements);
     };
 
     /**
@@ -444,6 +444,7 @@
                 columns: null,
                 defaultOrder: null,
                 pageLength: 6,
+                methodLimit: null,
                 actions: [],
                 emptyMessage: {
                     pl: "Brak wyników",
@@ -751,11 +752,39 @@
                         _overlayContentWith(mydata, $span);
                         _updateSummary(mydata, "");
                     } else {
-                        _updateSummary(mydata,
-                            $.usosCore.lang("Pokazywane elementy ", "Showing items ") +
-                            (mydata.currentOffset + 1) + ".." +
-                            (mydata.currentOffset + data.items.length)
-                        );
+                        if (
+                            mydata.settings.methodLimit
+                            && mydata.currentOffset + mydata.settings.pageLength >= mydata.settings.methodLimit
+                        ) {
+                            var notice = $("<div>").html($.usosCore.lang(
+                                "<b style='color: #c00'>Uwaga:</b> Wyświetlanych jest " +
+                                mydata.settings.methodLimit + " pierwszych wyników wyszukiwania",
+
+                                "<b style='color: #c00'>Please note:</b> Only the first " +
+                                mydata.settings.methodLimit + " search results are displayed"
+                            ));
+                            notice.append(" ").append($.usosWidgets.usosTip.create(
+                                "<p>Nawet jeśli więcej wyników pasuje do Twojego zapytania, z pomocą " +
+                                "tej wyszukiwarki możesz ich wyświetlić co najwyżej <b>" +
+                                mydata.settings.methodLimit + "</b>.</p>" +
+                                "<p>Jeśli nie możesz znaleźć szukanego elementu na liście, to spróbuj " +
+                                "zmodyfikować parametry swojego wyszukiwania (np. użyć filtrów lub inaczej " +
+                                "posortować listę wyników).</p>",
+
+                                "<p>Even if more results match your query, this page allows you to " +
+                                "see at most <b>" + mydata.settings.methodLimit + "</b> of them.</p>" +
+                                "<p>If you cannot find your element on this list, then try to modify " +
+                                "your search parameters (e.g. use the filters or try to sort the results " +
+                                "differently).</p>"
+                            ));
+                            _updateSummary(mydata, notice);
+                        } else {
+                            _updateSummary(mydata,
+                                $.usosCore.lang("Pokazywane elementy ", "Showing items ") +
+                                (mydata.currentOffset + 1) + ".." +
+                                (mydata.currentOffset + data.items.length)
+                            );
+                        }
                     }
                 },
                 error: function(xhr, errorCode, errorMessage) {
