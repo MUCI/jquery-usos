@@ -3,10 +3,11 @@ jQuery-USOS Change Log
 
   * **BETA Branch** - *(unreleased)*
 
+    * **1.2.5.6** - Make `_apitable` a jQuery-UI Widget.
     * **1.2.5.5** - Big enhancements to the faculty badge.
     * **1.2.5.4** - Minor UI fixes to the building badge and the usosTip
-	  widget.
-    * **1.2.5.3** - Enhancements in the (undocumented) _apitable widget.
+      widget.
+    * **1.2.5.3** - Enhancements in the (undocumented) `_apitable` widget.
     * **1.2.5.2** - Enhancements in the [usosTip widget](api/widget.tip.md),
       e.g. the new `showAs` option.
     * **1.2.5.1** - **Requires USOS API 6.0.0.**
