@@ -33,6 +33,7 @@
             if (selected) {
                 option.prop('selected', true);
             }
+            option.addClass((value === null) ? "ua-null-value" : "ua-nonnull-value");
             return option;
         },
 
@@ -54,6 +55,16 @@
             }
         },
 
+        _refreshClass: function() {
+            var widget = this;
+            var select = widget.element.find('select');
+            if (widget.options.value === null) {
+                select.addClass("ua-null-selected");
+            } else {
+                select.removeClass("ua-null-selected");
+            }
+        },
+
         _build: function() {
             var widget = this;
             widget.element
@@ -68,8 +79,10 @@
                     data.value, data.caption, val === data.value
                 ));
             });
+            widget._refreshClass();
             select.on("change", function(e) {
                 widget.options.value = widget._getSelectValue();
+                widget._refreshClass();
                 widget._trigger("change", e);
             });
         },

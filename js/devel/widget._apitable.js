@@ -584,7 +584,12 @@
                                         .addClass("ui-icon")
                                         .addClass(action.iconClass)
                                     )
-                                    .attr("title", action.label)
+                                    .usosTip({
+                                        type: "tool",
+                                        content: action.label,
+                                        position: "top",
+                                        delayed: true
+                                    })
                                     .click(function() {
                                         action.click(trData);
                                         return false;
@@ -700,7 +705,6 @@
             var widget = this;
 
             widget._super(options);
-            widget.destroy();
             widget._create();
 
             return this;

@@ -162,7 +162,10 @@
 
             if (widget._showOnHover) {
                 tooltipContent = userContent;
-                widget.element.css("cursor", "inherit");
+                var currentCursor = widget.element.css("cursor");
+                if (currentCursor == "auto" || currentCursor == "text") {
+                    widget.element.css("cursor", "default");
+                }
             } else {
                 tooltipContent = (
                     "<span class='ua-icon ua-icon-16 ua-icon-blue-prefix ua-icon-forward'></span>" +

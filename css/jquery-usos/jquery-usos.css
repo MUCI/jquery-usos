@@ -325,10 +325,13 @@ table.ua-form > tbody > tr.ua-header > td {
     padding: 6px 8px 7px 8px;
 }
 
-input.ua-form, select.ua-form, textarea.ua-form { border: 1px solid #9daccc; font-weight: normal; font-family: tahoma !important; color: #222; font-size: 13px; }
+input.ua-form, select.ua-form, textarea.ua-form { border: 1px solid #9daccc; font-weight: normal; font-family: tahoma !important; color: #222; font-size: 13px; margin: 0; }
 input.ua-form:-moz-placeholder, select.ua-form:-moz-placeholder, textarea.ua-form:-moz-placeholder { color: #888; }
 input.ua-form, textarea.ua-form { padding: 3px 3px 4px 4px /* HARDCODED f93ko */; }
 select.ua-form { padding: 1px 1px 1px 0; }
+select.ua-form.ua-null-selected { color: #999; }
+select.ua-form .ua-null-value { color: #999; }
+select.ua-form .ua-nonnull-value { color: #222; }
 input.ua-form:disabled, select.ua-form:disabled, textarea.ua-form:disabled { border: 1px solid #aaa; font-weight: lighter; color: #999; background: #eee; }
 textarea.ua-form { height: 40px; resize: vertical; }
 
@@ -966,6 +969,16 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     font-size: 16px;
     width: 16px;
     height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -0.1em;
+}
+
+.ua-icon-32 {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
     display: inline-block;
     vertical-align: middle;
     position: relative;
