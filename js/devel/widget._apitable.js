@@ -206,8 +206,8 @@
 
         initialized: false,
         destroyed: false,
-        currentOrder: null, // WRBUG
-        stateCoordinator: null, // WRBUG
+        currentOrder: null,
+        stateCoordinator: null,
         syncObject: null,
         defaultAction: null,
 
@@ -368,8 +368,6 @@
                     var coldata = $(e.currentTarget).data(NS);
 
                     /* Hide other loading indicators. Show this one. */
-
-                    // WRTODO: extract? document?
 
                     widget.etable.find("thead .ua-loading").hide();
                     coldata.loader.show();

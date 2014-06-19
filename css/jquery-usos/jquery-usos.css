@@ -808,6 +808,28 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ui-dialog.ua-panic-dialog .ui-dialog-content { padding: 25px 25px 25px 25px; overflow: visible; }
 .ui-dialog.ua-panic-dialog.ua-scrollable .ui-dialog-content { overflow-x: auto; overflow-y: scroll; }
 
+.ui-dialog.ua-feedback-dialog { border-radius: 5px; box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.5); background: #eee; }
+.ui-dialog.ua-feedback-dialog .ui-dialog-titlebar { display: none; }
+.ui-dialog.ua-feedback-dialog .ui-dialog-content { padding: 15px; overflow: visible; }
+.ui-dialog.ua-feedback-dialog .ua-h1 { font-size: 16px; color: #444; margin: 0 0 20px 0; font-weight: bold; border-bottom: 1px solid #ccc; padding: 0 0 16px 0; }
+.ui-dialog.ua-feedback-dialog .ua-h { font-size: 13px; color: #444; padding: 0 0 5px 0; }
+.ui-dialog.ua-feedback-dialog .ua-usosvalue { margin-bottom: 10px; }
+.ui-dialog.ua-feedback-dialog .ua-footnote { background: #ddd; padding: 6px 10px 8px 10px; font-size: 11px; color: #666; }
+.ui-dialog.ua-feedback-dialog .ua-footnote table { border-spacing: 0; }
+.ui-dialog.ua-feedback-dialog .ua-footnote .ua-1 { color: #aaa; padding: 0 8px 0 0; vertical-align: middle; }
+.ui-dialog.ua-feedback-dialog .ua-loading {
+    display: inline-block;
+    min-height: 16px;
+    background: url(images/loading-16-ffffff.gif) no-repeat;
+    padding-left: 21px;
+    margin-right: 15px;
+    position: relative;
+    top: 1px;
+    background-position: 0 1px;
+    color: #666;
+}
+
+
 /* Extracted from TextExt. See https://github.com/alexgorbatchev/jquery-textext/issues/59 */
 
 .text-core {
@@ -972,6 +994,9 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     display: inline-block;
     vertical-align: middle;
     position: relative;
+}
+
+.ua-icon-inline {
     top: -0.1em;
 }
 
@@ -982,13 +1007,33 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    top: -0.1em;
 }
 
 .ua-icon-blue-prefix {
     color: #88f;
     margin-right: 6px;
     text-shadow: 0px 1px 0px #337;
+}
+
+.ua-feedback-icon.ua-icon {
+    color: #000;
+    opacity: 0.2;
+    top: 0;
+    cursor: pointer;
+    text-shadow: 0 0 7px #fff;
+}
+.ua-feedback-icon.ua-icon:hover {
+    color: #a00;
+    opacity: 0.8;
+}
+.ua-feedback-icon.ua-icon.ua-feedback-complete {
+    color: #080;
+    opacity: 0.7;
+    cursor: default;
+}
+.ua-feedback-icon.ua-icon.ua-feedback-complete:hover {
+    color: #080;
+    opacity: 0.7;
 }
 
 /* Icomoon fonts */

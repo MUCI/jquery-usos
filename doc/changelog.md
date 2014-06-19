@@ -3,6 +3,8 @@ jQuery-USOS Change Log
 
   * **BETA Branch** - *(unreleased)*
 
+    * **1.2.5.8** - New `_usosFeedback` widget (undocumented beta), plus minor
+      fixes in the usosTip widget.
     * **1.2.5.7** - Enhancements and fixes in multiple widgets.
     * **1.2.5.6** - Make `_apitable` a jQuery-UI Widget.
     * **1.2.5.5** - Big enhancements to the faculty badge.

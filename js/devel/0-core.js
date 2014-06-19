@@ -455,17 +455,8 @@
 
     var panic = function(response) {
 
-        /**
-         * Currently, we don't detect if panic was fired as a result of AJAX
-         * requests being cancelled because the user is nevigating away.
-         * We don't want the user to see a panic screen in such case, so we'll
-         * wait a moment for the navigation to complete.
-         *
-         * This can be implemented better in the future. For example, by
-         * catching the AJAX error (via the arguments) and interpretting it
-         * appropriately.
-         */
-        var showDelay = 2000;
+
+        var showDelay;
 
         var msg = $("<div class='ua-paragraphs ua-container'>");
 
@@ -515,6 +506,22 @@
                 );
             }
         } else {
+
+            if (typeof response === 'object' && response.xhr && response.xhr.status >= 400) {
+
+                showDelay = 0;
+            } else {
+
+                /**
+                 * In this case, there is a chance that the error is caused by the user
+                 * navigating away during the execution of the background request. In such
+                 * cases, we will delay the showing of the panic screen. (If the user is
+                 * indeed navigating away, then he doesn't need to see the error.)
+                 */
+
+                showDelay = 2000;
+            }
+
             msg.append($("<p style='font-size: 120%; margin-bottom: 25px'>")
                 .append($("<b>")
                     .html($.usosCore.lang({

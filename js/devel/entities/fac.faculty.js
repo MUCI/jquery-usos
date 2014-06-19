@@ -169,7 +169,7 @@
             var tip = $("<table class='ua-tool-num-stats'>");
             var appendStat = function(iconClass, n, pl1, pl2, pl5, en1, en2) {
                 stats.append($("<div class='ua-stat-entry'>")
-                    .append($("<span class='ua-icon ua-icon-16'>").addClass(iconClass))
+                    .append($("<span class='ua-icon ua-icon-16 ua-icon-inline'>").addClass(iconClass))
                     .append($("<span>").text(n))
                 );
                 tip.append($("<tr>")
