@@ -460,11 +460,20 @@
 
         var msg = $("<div class='ua-paragraphs ua-container'>");
 
-        if (typeof response === 'object' && response.user_messages && response.user_messages.fields) {
+        if (typeof response === 'object' && response.user_messages) {
 
             showDelay = 0;
 
-            $.each(response.user_messages.fields, function(key, message) {
+            var messages = [];
+            if (response.user_messages.generic_message) {
+                messages.push(response.user_messages.generic_message);
+            }
+            if (response.user_messages.fields) {
+                $.each(response.user_messages.fields, function(key, message) {
+                    messages.push(message);
+                });
+            }
+            $.each(messages, function(_, message) {
                 msg.append($("<p style='font-size: 120%; line-height: 130%; margin-bottom: 25px'>")
                     .append($("<b>").html($.usosCore.lang(message))
                 ));
@@ -499,9 +508,9 @@
                 .append(" ")
                 .append(close)
             );
-            if (mydata.settings.debug) {
+            if (mydata.settings.debug && response.user_messages.fields) {
                 $.usosCore._console.warn(
-                    "Displaying panic screen based on `user_messages` response. " +
+                    "Displaying panic screen based on `user_messages.fields` response. " +
                     "Try to use `yourValueInputs.usosForms('showErrors', response)` if possible."
                 );
             }
@@ -592,7 +601,15 @@
                 modal: true,
                 width: "600px",
                 height: "auto",
-                closeText: $.usosCore.lang("Zamknij", "Close")
+                closeText: $.usosCore.lang("Zamknij", "Close"),
+                show: {
+                    effect: "fade",
+                    duration: 150
+                },
+                hide: {
+                    effect: "fade",
+                    duration: 150
+                }
             });
         };
 
