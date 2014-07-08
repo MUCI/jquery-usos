@@ -200,10 +200,11 @@
                         .fadeIn(500);
                 }
             }).fail(function(response) {
-                $.usosCore.panic(response);
-                $("#ua-bsave").button("enable");
-                form.usosForms("findValueWidgets").usosValue("enable");
-                loading.remove();
+                $.usosCore.panic(response).done(function() {
+                    $("#ua-bsave").button("enable");
+                    form.usosForms("findValueWidgets").usosValue("enable");
+                    loading.remove();
+                });
             });
         },
 

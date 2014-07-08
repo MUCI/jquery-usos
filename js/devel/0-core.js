@@ -455,6 +455,7 @@
 
     var panic = function(response) {
 
+        var deferred = $.Deferred();
 
         var showDelay;
 
@@ -609,11 +610,15 @@
                 hide: {
                     effect: "fade",
                     duration: 150
+                },
+                close: function() {
+                    deferred.resolve();
                 }
             });
         };
 
         setTimeout(showIt, showDelay);
+        return deferred.promise();
     };
 
     var _methodForwarder = function(dataKey, funcName, type) {

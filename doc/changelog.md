@@ -3,6 +3,8 @@ jQuery-USOS Change Log
 
   * **BETA Branch** - *(unreleased)*
 
+    * **1.2.5.10** - Make $.usosCore.panic deferrable, minor enhancements in
+	  _usosFeedback widget.
     * **1.2.5.9** - Support for newer version of API's user_messages response
       in the panic screen,
     * **1.2.5.8** - New `_usosFeedback` widget (undocumented beta), plus minor
