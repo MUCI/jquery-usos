@@ -3,22 +3,16 @@ jQuery-USOS Change Log
 
   * **BETA Branch** - *(unreleased)*
 
-    * **1.2.5.10** - Make $.usosCore.panic deferrable, minor enhancements in
-	  _usosFeedback widget.
-    * **1.2.5.9** - Support for newer version of API's user_messages response
-      in the panic screen,
-    * **1.2.5.8** - New `_usosFeedback` widget (undocumented beta), plus minor
-      fixes in the usosTip widget.
-    * **1.2.5.7** - Enhancements and fixes in multiple widgets.
-    * **1.2.5.6** - Make `_apitable` a jQuery-UI Widget.
-    * **1.2.5.5** - Big enhancements to the faculty badge.
-    * **1.2.5.4** - Minor UI fixes to the building badge and the usosTip
-      widget.
-    * **1.2.5.3** - Enhancements in the (undocumented) `_apitable` widget.
-    * **1.2.5.2** - Enhancements in the [usosTip widget](api/widget.tip.md),
-      e.g. the new `showAs` option.
-    * **1.2.5.1** - **Requires USOS API 6.0.0.**
-      New [badge widget](api/widget.badge.md): `entity/geo/building`.
+    * **Requires USOS API 6.0.0.**
+	* New [badge widget](api/widget.badge.md): `entity/geo/building`.
+	* Redesigned badge UI for `entity/fac/faculty`.
+    * Improved [usosTip widget](api/widget.tip.md): Better design, better
+	  support for long content. New option: `showAs`.
+	* Changed in [$.usosCore.panic](api/core.panic.md) function: It now
+	  understands the newer version of API's user_messages response, it also
+	  returns a `$.Deferred` object.
+	* New `_usosFeedback` widget (undocumented beta).
+	* Enhancements and fixes in multiple widgets.
 
   * **Version 1.2.5** - *2014-04-24*
 

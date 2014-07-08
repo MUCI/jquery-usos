@@ -1,10 +1,13 @@
 $.usosCore.panic([response])
 ============================
 
-Display a "panic screen". This should be called when unrecoverable errors
-are encountered. **Depending on the content of the response**, the user
-will be advised to do different things (e.g. to refresh the page, contact
-the administrators etc.).
+Display a "panic screen". This should be called when unexpected errors
+are encountered, especially after you receive an unexpected HTTP 400 error
+from USOS API.
+
+Some basic automatic heuristics will be used to analyze the content of the
+HTTP response and jQuery-USOS will decide what message to display to the user.
+The user may be advised to refresh the page, etc.
 
 The **response** parameter should be one of the following:
 
@@ -13,6 +16,9 @@ The **response** parameter should be one of the following:
     [$.usosCore.usosapiFetch](core.usosapiFetch.md) method.
   * **xhr** - in case you use `$.ajax` instead of *usosapiFetch*.
 
+Starting with version 1.3 it returns a `$.Deferred` object which is resolved
+once the panic screen is closed (the user ignored the error).
+  
 Demos
 -----
 
@@ -42,7 +48,9 @@ $.usosCore.usosapiFetch(
     if (response.someKey == "someValue") {
         doSomethingDifferent();
     } else {
-        $.usosCore.panic(response);
+        $.usosCore.panic(response).done(function() {
+            reloadSomeWidgets();
+        });
     }
 });
 ```
