@@ -2,7 +2,7 @@ $(function() {
     $.usosCore.init({
         usosAPIs: {
             'default': {
-                'methodUrl': "http://xusosweb.rygielski.net/usosapiProxy.php?_method_=%s"
+                'methodUrl': "https://usosphp.mimuw.edu.pl/~rygielski/usosweb/usosapiProxy.php?_method_=%s"
             }
         }
     });
