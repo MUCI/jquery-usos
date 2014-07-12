@@ -3,23 +3,23 @@ This should work at:
 http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/_debug_
 
 Provided that you have a development USOSweb VM running at
-http://xusosweb.rygielski.net/.
+https://usosphp.mimuw.edu.pl/~rygielski/usosweb/.
 
-These resources WILL NOT be loaded from your local VM (they are provided
+These resources WILL NOT be loaded from your development site (they are provided
 by jsfiddle itself):
-   - http://xusosweb.rygielski.net/js/jquery-1.9.1.js
-   - http://xusosweb.rygielski.net/js/jquery-migrate-1.1.0.js
-   - http://xusosweb.rygielski.net/js/jquery-ui-1.10.1.custom.js
+   - https://usosphp.mimuw.edu.pl/~rygielski/usosweb/js/jquery-1.9.1.js
+   - https://usosphp.mimuw.edu.pl/~rygielski/usosweb/js/jquery-migrate-1.1.0.js
+   - https://usosphp.mimuw.edu.pl/~rygielski/usosweb/js/jquery-ui-1.10.1.custom.js
 
 ---
  name: jQuery-USOS Debug
- description: Used for debugging. Resources are loaded from my local USOSweb VM.
+ description: Used for debugging. Resources are loaded from a development site.
  authors:
    - Wojciech Rygielski
  resources:
-   - http://xusosweb.rygielski.net/css/tooltipster.css
-   - http://xusosweb.rygielski.net/css/jquery-usos/jquery-usos.css
-   - http://xusosweb.rygielski.net/js/jquery-usos/latest-bundle.min.js
+   - https://usosphp.mimuw.edu.pl/~rygielski/usosweb/css/tooltipster.css
+   - https://usosphp.mimuw.edu.pl/~rygielski/usosweb/css/jquery-usos/jquery-usos.css
+   - https://usosphp.mimuw.edu.pl/~rygielski/usosweb/js/jquery-usos/latest-bundle.min.js
 
  normalize_css: no
  ...
