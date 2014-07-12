@@ -1,7 +1,7 @@
 jQuery-USOS Change Log
 ======================
 
-  * **BETA Branch** - *(unreleased)*
+  * **Version 1.3** - *2014-07-12*
 
     * **Requires USOS API 6.0.0.**
     * New [badge widget](api/widget.badge.md): `entity/geo/building`.
