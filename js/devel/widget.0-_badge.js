@@ -10,30 +10,47 @@
             'position': "right"
         },
 
-        _create: function() {
+        _listenerAdded: false,
 
+        _create: function() {
             var widget = this;
             widget.element.data("usosBadge", this);
+            widget._create2();
+        },
+
+        /**
+         * Add a listener, to continue initialization after the item
+         * is hovered.
+         */
+        _create2: function() {
+
+            var widget = this;
 
             /* Postpone actual initialization until the user hovers over
              * the item for some time. */
 
+            if (widget._listenerAdded) {
+                return;
+            }
+
             widget._on(widget.element, {
                 mouseenter: function() {
                     widget.timeoutId = setTimeout(function() {
-                        widget._create2();
+                        widget._create3();
                     }, 200);
                 },
                 mouseleave: function() {
                     clearTimeout(widget.timeoutId);
                 }
             });
+
+            widget._listenerAdded = true;
         },
 
         /**
          * Continue initialization.
          */
-        _create2: function() {
+        _create3: function() {
 
             var widget = this;
 
@@ -85,13 +102,9 @@
                 position: widget.options.position,
                 theme: "ua-container ua-tooltip ua-tooltip-badge " + widget._cssClass(),
                 functionAfter: function() {
-
-                    /* When tooltip is closed, tooltipster removes it from the DOM. This in turn,
-                     * destroys all widgets contained within. If we want the widgets to work properly
-                     * when the tooltip is opened next time, then we need to recreate the widgets
-                     * again. */
-
-                    widget._updateBadgeContent();
+                    widget.element.tooltipster("destroy");
+                    widget._listenerAdded = false;
+                    widget._create2();
                 }
             });
 
@@ -157,9 +170,9 @@
         },
 
         _setOption: function(key, value) {
-            /* Recreate. */
-            this._create2();
-            return this;
+            var widget = this;
+            widget._super(key, value);
+            widget._create2();
         },
 
         _destroy: function() {

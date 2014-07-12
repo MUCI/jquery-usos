@@ -1,6 +1,10 @@
 jQuery-USOS Change Log
 ======================
 
+  * **BETA Branch** - *(unreleased)*
+
+    * 1.3.0.1: Fix dynamic option-changes in usosBadges
+
   * **Version 1.3** - *2014-07-12*
 
     * **Requires USOS API 6.0.0.**

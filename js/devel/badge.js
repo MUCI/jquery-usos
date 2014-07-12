@@ -8,6 +8,7 @@
 
         /* Public usosBadge methods. */
 
+        option: $.usosCore._methodForwarder("usosBadge", "option", "setter"),
         destroy: $.usosCore._methodForwarder("usosBadge", "destroy", "setter")
     };
 
