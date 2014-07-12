@@ -19,7 +19,7 @@ $("#container").append($("<div>").usosSelectbox({
     options: [
         {value: null, caption: {pl: "-- wybierz --", en: "-- choose --"}},
         {value: "pl", caption: {pl: "polski", en: "Polish"}},
-        {value: "en", caption: {pl: "angielski", en: "English"}} 
+        {value: "en", caption: {pl: "angielski", en: "English"}}
     ]
 }));
 ```

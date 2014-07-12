@@ -1,7 +1,7 @@
 jQuery-USOS plugin
 ==================
 
-This is a set of [jQuery](http://jquery.com/) utilities and simple widgets, 
+This is a set of [jQuery](http://jquery.com/) utilities and simple widgets,
 intended to help web developers with their work with
 [USOS](http://usos.edu.pl/about-usos)-related projects (primarily, the *USOSweb*
 project).
@@ -14,7 +14,7 @@ About
 -----
 
   * Quick demos
-    * Try 
+    * Try
       [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.selector),
       [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.notice),
       [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.tip),
@@ -28,7 +28,7 @@ About
 
 API
 ---
-  
+
 ### $.usosCore
 
   * [$.usosCore.init](https://github.com/MUCI/jquery-usos/blob/master/doc/api/core.init.md) -

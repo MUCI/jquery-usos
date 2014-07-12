@@ -18,10 +18,10 @@ class BadRequest extends Exception {}
  *
  * - This proxy was primarily designed to work with jQuery-USOS Demo pages, but
  *   it can also be used in other, simple projects.
- *   
+ *
  * - It DOES NOT protect against CSRF attacks. It can be safely used to read data,
  *   but not to change it.
- *   
+ *
  * - It DOES NOT sign the requests with OAuth Access Tokens (if you intend to add
  *   support for this, keep CSRF in mind!).
  */
@@ -49,9 +49,9 @@ class PublicAnonymousProxy
 
     private static function internalHandleRequest()
     {
-    	foreach (Settings::$ACCESS_CONTROL_ORIGINS as $origin) {
-        	header('Access-Control-Allow-Origin: '.$origin, false);
-    	}
+        foreach (Settings::$ACCESS_CONTROL_ORIGINS as $origin) {
+            header('Access-Control-Allow-Origin: '.$origin, false);
+        }
 
         if (!isset($_REQUEST['_method_'])) {
             throw new BadRequest("Missing _method_ parameter.");

@@ -20,13 +20,13 @@ Example
 
 ```javascript
 $('#some_input').usosNotice({
-	content: {
-		pl: "To pole jest wymagane!",
-		en: "This field is required!"
-	}
+    content: {
+        pl: "To pole jest wymagane!",
+        en: "This field is required!"
+    }
 });
 ```
-  
+
 Options
 -------
 
@@ -36,7 +36,7 @@ Options
     * jQuery object.
   * **scroll** *(default: `true`)* - If set to `true`, and the notice is outside
     of the user's view, then the page will scroll to show the content of the
-	notice.
+    notice.
 
 Methods
 -------

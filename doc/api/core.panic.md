@@ -12,13 +12,13 @@ The user may be advised to refresh the page, etc.
 The **response** parameter should be one of the following:
 
   * **undefined** - if the error was not caused by any AJAX response.
-  * **USOS API response object** - the one returned by the 
+  * **USOS API response object** - the one returned by the
     [$.usosCore.usosapiFetch](core.usosapiFetch.md) method.
   * **xhr** - in case you use `$.ajax` instead of *usosapiFetch*.
 
 Starting with version 1.3 it returns a `$.Deferred` object which is resolved
 once the panic screen is closed (the user ignored the error).
-  
+
 Demos
 -----
 

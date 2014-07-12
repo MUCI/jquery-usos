@@ -32,7 +32,7 @@ the "i" icon):
   * `$.usosWidgets.usosTip.create("Po polsku", "In English")` - *HTML!*
   * `$.usosWidgets.usosTip.create(jQuery_object)`
   * `$.usosWidgets.usosTip.create(function)` - *see the options below!*
-  
+
 Examples
 --------
 
@@ -48,22 +48,22 @@ $('body').append($.usosWidgets.usosTip.create(
 
 ```javascript
 $('body').append($.usosWidgets.usosTip.create({
-	content: function() {
-		return $.usosCore.usosapiFetch({
-			method: 'services/some_service',
-			params: {
-				item_id: $(this).closest('tr').attr('item_id')
-			}
-		}).then(function(response) {
-			return $("<p>")
-				.css('text-color', 'red')
-				.text(response.description);
-		});
-	},
-	position: 'left'
+    content: function() {
+        return $.usosCore.usosapiFetch({
+            method: 'services/some_service',
+            params: {
+                item_id: $(this).closest('tr').attr('item_id')
+            }
+        }).then(function(response) {
+            return $("<p>")
+                .css('text-color', 'red')
+                .text(response.description);
+        });
+    },
+    position: 'left'
 }));
 ```
- 
+
 Options
 -------
 

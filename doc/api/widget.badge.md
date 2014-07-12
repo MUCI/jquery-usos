@@ -18,19 +18,19 @@ Example
 
 ```javascript
 $.usosCore.init({
-	usosAPIs: {
-		'default': {
-			'methodUrl': "http://example.com/yourProxy.php?_method_=%s"
-		}
-	}
+    usosAPIs: {
+        'default': {
+            'methodUrl': "http://example.com/yourProxy.php?_method_=%s"
+        }
+    }
 });
 
 $('#someItem').usosBadge({
-	entity: "entity/fac/faculty",
+    entity: "entity/fac/faculty",
     fac_id: "10000000"
 });
 ```
-  
+
 Options
 -------
 
@@ -45,7 +45,7 @@ Options
   * **position** - *Optional.* Preferred position of the tooltip. Allowed
     values include: `left`, `right`, `top` and `bottom`.
     Default is undefined and it can be different
-    for each entity type. Please note, that some badges may not support all 
+    for each entity type. Please note, that some badges may not support all
     possible position values (for example, they must be "top" and ignore any
     other values).
 

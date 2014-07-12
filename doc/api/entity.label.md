@@ -29,7 +29,7 @@ Entity codes and entity objects
 -------------------------------
 
 Each `entityCode` requires and object with a set of fields, in the format
-returned by USOS API. 
+returned by USOS API.
 
   * `entity/users/user` requires: `id|first_name|last_name`.
   * `entity/fac/faculty` requires: `id|name`.
