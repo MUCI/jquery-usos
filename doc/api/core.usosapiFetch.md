@@ -189,7 +189,7 @@ Part of the *Promise* interface. The callback doesn't take any arguments.
     least the following keys:
     * **message** - a short reason for the error, intended to be read **by
       developers only**.
-    * **xhr** - the underlying `jqXHR` object. 
+    * **xhr** - the underlying `jqXHR` object.
   * **If any response has been received** from USOS API, then the `response`
     object will contain the parsed USOS API response (plus the `xhr` entry).
   * **If no response has been received** (or the browser did not allow us to
@@ -199,4 +199,3 @@ Part of the *Promise* interface. The callback doesn't take any arguments.
     `response` object to `$.usosCore.panic`, or `.usosForms('showErrors', response)`. In many cases, calling the `panic` method will be enough.
   * Note that by default `.fail` will not be triggered if the error occured
     while the page was unloading. See `errorOnUnload` option.
- 

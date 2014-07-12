@@ -29,13 +29,14 @@ Entity codes and entity objects
 -------------------------------
 
 Each `entityCode` requires and object with a set of fields, in the format
-returned by USOS API. 
+returned by USOS API.
 
   * `entity/users/user` requires: `id|first_name|last_name`.
   * `entity/fac/faculty` requires: `id|name`.
   * `entity/slips/template` requires: `id|name`.
   * `entity/progs/programme` requires: `id|description`.
   * `entity/courses/course` requires: `id|name`.
+  * `entity/geo/building` requires: `id|name`.
 
 If the object is not provided (either `null` or `undefined` is found), a simple
 "no data" placeholder will be displayed.

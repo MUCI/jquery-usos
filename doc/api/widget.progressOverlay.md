@@ -20,9 +20,9 @@ Example
 var request = $.ajax(...);
 $('#someElement').usosProgressOverlay();
 request.always(function() {
-	$('#someElement').usosProgressOverlay('destroy');
+    $('#someElement').usosProgressOverlay('destroy');
 }).done(function(result) {
-	$('#someElement').text(/* ... */);
+    $('#someElement').text(/* ... */);
 });
 ```
 
@@ -35,7 +35,7 @@ Options
     *starting* to be displayed.
   * `opacity` - default 0.8, the maximum opacity of the overlay (after it is
     fully shown.
-  * `fadeDuration` - default 300, duration of the fading animation. 
+  * `fadeDuration` - default 300, duration of the fading animation.
 
 Methods
 -------

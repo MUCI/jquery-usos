@@ -9,12 +9,12 @@ class Settings
      * Insert the exact value of its "Base URL" below. */
 
     public static $USOSAPI_BASE_URL = 'https://usosapps.uw.edu.pl/';
-    
+
     /* What should appear in Access-Control-Allow-Origin header served by
      * our proxy? Note: this is an array. */
-    
+
     public static $ACCESS_CONTROL_ORIGINS = array('*');
-    
+
     /* Go to $USOSAPI_BASE_URL/developers/ page
      * (e.g. https://usosapps.uw.edu.pl/developers/) and fill the "Sign up for
      * an API key" form. You will get two keys. Insert them below. */

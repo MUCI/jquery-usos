@@ -19,22 +19,22 @@ Example
 
 ```javascript
 $.usosCore.init({
-	usosAPIs: {
-		'default': {
-			'methodUrl': "http://example.com/yourProxy.php?_method_=%s"
-		}
-	}
+    usosAPIs: {
+        'default': {
+            'methodUrl': "http://example.com/yourProxy.php?_method_=%s"
+        }
+    }
 });
 
 $('#course').usosSelector({
-	entity: "entity/courses/course",
-	multi: true,
-	change: function () {
-		console.log($(this).usosSelector('value').length + " item(s) selected");
-	}
+    entity: "entity/courses/course",
+    multi: true,
+    change: function () {
+        console.log($(this).usosSelector('value').length + " item(s) selected");
+    }
 });
 ```
-  
+
 Options
 -------
 

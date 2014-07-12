@@ -7,7 +7,7 @@ Given *an object* and a *field selector*, do the following:
     * Verify whether all wanted fields exist within the object.
     * Return a filtered objects - only the wanted fields will be included.
   * If run in non-debug mode:
-    * Simply return the given object. 
+    * Simply return the given object.
 
 This might be useful for **documenting and testing** interface requirements
 (see use case below).
@@ -39,14 +39,14 @@ function foo(user) {
 };
 ```
 
-  * **Useful for documenting:** If you use `user.pesel` in `foo`, it will be 
+  * **Useful for documenting:** If you use `user.pesel` in `foo`, it will be
     `undefined`, until you add `pesel` to your `requirements`. Hence, it forces
     you to update your `requirements` properly.
 
-  * **Useful for testing:** If you forget to fetch `student_number` into your 
+  * **Useful for testing:** If you forget to fetch `student_number` into your
     `user`, and then you call `foo(user)`, an error will be logged into the
     developer console (in debug mode). Hence, you should notice that your object
-    does not meet your function's requirements. 
+    does not meet your function's requirements.
 
 Parameters
 ----------

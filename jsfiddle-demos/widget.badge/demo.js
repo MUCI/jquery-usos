@@ -21,4 +21,10 @@ $(function () {
             fac_id: $(this).attr("fac_id")
         });
     });
+    $("[building_id]").each(function () {
+        $(this).usosBadge({
+            entity: "entity/geo/building",
+            building_id: $(this).attr("building_id")
+        });
+    });
 });

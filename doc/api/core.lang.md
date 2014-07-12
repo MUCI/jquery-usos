@@ -11,7 +11,7 @@ Demos
 
 How to call it
 --------------
-  
+
   * `$.usosCore.lang()` - Return the currently used language code (the one
     set during [$.usosCore.init](core.init.md)).
   * `$.usosCore.lang(langdict)` - Extract the proper translation from the given

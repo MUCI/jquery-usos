@@ -455,25 +455,26 @@
 
     var panic = function(response) {
 
-        /**
-         * Currently, we don't detect if panic was fired as a result of AJAX
-         * requests being cancelled because the user is nevigating away.
-         * We don't want the user to see a panic screen in such case, so we'll
-         * wait a moment for the navigation to complete.
-         *
-         * This can be implemented better in the future. For example, by
-         * catching the AJAX error (via the arguments) and interpretting it
-         * appropriately.
-         */
-        var showDelay = 2000;
+        var deferred = $.Deferred();
+
+        var showDelay;
 
         var msg = $("<div class='ua-paragraphs ua-container'>");
 
-        if (typeof response === 'object' && response.user_messages && response.user_messages.fields) {
+        if (typeof response === 'object' && response.user_messages) {
 
             showDelay = 0;
 
-            $.each(response.user_messages.fields, function(key, message) {
+            var messages = [];
+            if (response.user_messages.generic_message) {
+                messages.push(response.user_messages.generic_message);
+            }
+            if (response.user_messages.fields) {
+                $.each(response.user_messages.fields, function(key, message) {
+                    messages.push(message);
+                });
+            }
+            $.each(messages, function(_, message) {
                 msg.append($("<p style='font-size: 120%; line-height: 130%; margin-bottom: 25px'>")
                     .append($("<b>").html($.usosCore.lang(message))
                 ));
@@ -508,13 +509,29 @@
                 .append(" ")
                 .append(close)
             );
-            if (mydata.settings.debug) {
+            if (mydata.settings.debug && response.user_messages.fields) {
                 $.usosCore._console.warn(
-                    "Displaying panic screen based on `user_messages` response. " +
+                    "Displaying panic screen based on `user_messages.fields` response. " +
                     "Try to use `yourValueInputs.usosForms('showErrors', response)` if possible."
                 );
             }
         } else {
+
+            if (typeof response === 'object' && response.xhr && response.xhr.status >= 400) {
+
+                showDelay = 0;
+            } else {
+
+                /**
+                 * In this case, there is a chance that the error is caused by the user
+                 * navigating away during the execution of the background request. In such
+                 * cases, we will delay the showing of the panic screen. (If the user is
+                 * indeed navigating away, then he doesn't need to see the error.)
+                 */
+
+                showDelay = 2000;
+            }
+
             msg.append($("<p style='font-size: 120%; margin-bottom: 25px'>")
                 .append($("<b>")
                     .html($.usosCore.lang({
@@ -585,11 +602,23 @@
                 modal: true,
                 width: "600px",
                 height: "auto",
-                closeText: $.usosCore.lang("Zamknij", "Close")
+                closeText: $.usosCore.lang("Zamknij", "Close"),
+                show: {
+                    effect: "fade",
+                    duration: 150
+                },
+                hide: {
+                    effect: "fade",
+                    duration: 150
+                },
+                close: function() {
+                    deferred.resolve();
+                }
             });
         };
 
         setTimeout(showIt, showDelay);
+        return deferred.promise();
     };
 
     var _methodForwarder = function(dataKey, funcName, type) {

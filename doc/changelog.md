@@ -1,6 +1,19 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.3** - *2014-07-12*
+
+    * **Requires USOS API 6.0.0.**
+    * New [badge widget](api/widget.badge.md): `entity/geo/building`.
+    * Redesigned badge UI for `entity/fac/faculty`.
+    * Improved [usosTip widget](api/widget.tip.md): Better design, better
+      support for long content. New option: `showAs`.
+    * Changed in [$.usosCore.panic](api/core.panic.md) function: It now
+      understands the newer version of API's user_messages response, it also
+      returns a `$.Deferred` object.
+    * New `_usosFeedback` widget (undocumented beta).
+    * Enhancements and fixes in multiple widgets.
+
   * **Version 1.2.5** - *2014-04-24*
 
     * **Requires USOS API 5.4.6.1-1.**
@@ -39,7 +52,7 @@ jQuery-USOS Change Log
     * If connected to USOS API 5.4.5, [usosBadge widget](api/widget.badge.md) for
       the `entity/users/user` displays active and inactive student programmes
       separately.
- 
+
   * **Version 1.2.1** - *2014-01-30*
 
     * [$.usosCore.usosapiFetch](api/core.usosapiFetch.md): The `xhr` field was
@@ -62,7 +75,7 @@ jQuery-USOS Change Log
         `fail` if the user is navigating away from page. You may bring back this
         behavior with `errorOnUnload` parameter.
     * New features and backward-compatible changes:
-      * **New widget:** [usosBadge](api/widget.badge.md). Many widgets and 
+      * **New widget:** [usosBadge](api/widget.badge.md). Many widgets and
         methods make use of the usosBadge widget automatically.
       * [$.usosCore.usosapiFetch](api/core.usosapiFetch.md)
          * Now supports `File`-type parameters.
@@ -78,7 +91,7 @@ jQuery-USOS Change Log
     * Minor bug fixed in the `.usosForms('showErrors', response)` function.
 
   * **Version 1.1** - *2013-10-16*
-  
+
     * Added support for forms and server-side validation.
       This includes some new widgets
       ([usosValue](api/widget.value.md),
@@ -96,7 +109,7 @@ jQuery-USOS Change Log
       [$.entity.*](api/entity.label.md) functions.
 
   * **Version 1.0.2** - *2013-09-24*
-  
+
     * Added `searchParams` parameter to the
       [usosSelector widget](api/widget.selector.md).
 

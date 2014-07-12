@@ -6,7 +6,7 @@ Utility functions for working with [usosValue](widget.value.md) AJAX forms.
   * [showErrors(response)](#showerrorsresponse) - display USOS API form errors.
   * [hideErrors()](#hideerrors) - hide previously shown errors.
   * [findValueWidgets()](#findvaluewidgets) - find topmost *usosValue* widgets.
-  * [values(...)](#values) - cumulative get/set many *usosValues*. 
+  * [values(...)](#values) - cumulative get/set many *usosValues*.
   * [flatValues()](#flatValues) - get flat values (for USOS API input).
 
 
@@ -31,11 +31,11 @@ function showProgress() {
      * get changed or clicked while loading or saving. */
     $("#save").button("disable");
     myWidgets.usosValue("disable");
-	$("#myForm").usosProgressOverlay();
+    $("#myForm").usosProgressOverlay();
 }
 
 function hideProgress() {
-	$("#myForm").usosProgressOverlay('destroy');
+    $("#myForm").usosProgressOverlay('destroy');
     myWidgets.usosValue("enable");
     $("#save").button("enable");
 }
@@ -57,18 +57,18 @@ $.usosCore.usosapiFetch({
 
 $("#save").click(function() {
     showProgress();
-	$.usosCore.usosapiFetch({
-		method: "services/save_form",
-		params: $.expand({
-			id: "some_id"
+    $.usosCore.usosapiFetch({
+        method: "services/save_form",
+        params: $.expand({
+            id: "some_id"
             /* Expand with form values. */
-		}, myWidgets.usosForms("flatValues"))
-	})
-	.always(hideProgress)
-	.done(function() { alert("Saved!"); })
-	.fail(function(response) {
-		myWidgets.usosForms('showErrors', response);
-	});
+        }, myWidgets.usosForms("flatValues"))
+    })
+    .always(hideProgress)
+    .done(function() { alert("Saved!"); })
+    .fail(function(response) {
+        myWidgets.usosForms('showErrors', response);
+    });
 });
 ```
 
@@ -217,4 +217,4 @@ This is similar to `values`, but:
   * It works only as a getter.
   * All values are mapped to *flat representations*, acceptable as USOS API
     input arguments. For example, this will return `"a|b|c"` rather than
-    `["a", "b", "c"]`. 
+    `["a", "b", "c"]`.

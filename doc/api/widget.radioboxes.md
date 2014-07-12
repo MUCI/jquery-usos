@@ -17,7 +17,7 @@ $("#container").append($("<div>").usosRadioboxes({
     value: "en",
     options: [
         {value: "pl", caption: {pl: "polski", en: "Polish"}},
-        {value: "en", caption: {pl: "angielski", en: "English"}} 
+        {value: "en", caption: {pl: "angielski", en: "English"}}
     ],
     change: function() { alert($(this).usosValue('value')); }
 }));
