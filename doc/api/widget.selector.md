@@ -46,6 +46,7 @@ Options
     * Users - `entity/users/user`
     * Courses - `entity/courses/course`
     * Faculties - `entity/fac/faculty`
+    * Programmes - `entity/progs/programme`
     * Slip templates - `entity/slips/template`
   * **multi** *(default: `false`)* - Set to `true` if you want the user to
     select multiple elements (instead of just one).
@@ -55,6 +56,7 @@ Options
     * Users - `services/users/search`
     * Courses - `services/courses/search`
     * Faculties - `services/fac/search`
+    * Programmes - `services/progs/search`
     * Slip templates - `services/slips/search_templates`
   * **width** *(default: `300px`)* - The width of the widget.
   * **change** - A function to be called upon `usosselector:change` event.
