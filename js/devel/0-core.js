@@ -532,11 +532,12 @@
                 showDelay = 2000;
             }
 
+            var suffix = (response.xhr.status >= 400 ? " (" + response.xhr.status + ")" : "");
             msg.append($("<p style='font-size: 120%; margin-bottom: 25px'>")
                 .append($("<b>")
                     .html($.usosCore.lang({
-                        pl: "Wystąpił niespodziewany błąd.",
-                        en: "Unexpected error occured."
+                        pl: "Wystąpił niespodziewany błąd" + suffix,
+                        en: "Unexpected error occured" + suffix
                     }))
                 )
             );
@@ -561,38 +562,58 @@
                         });
                 })
             );
-            ul.append($("<li>").html($.usosCore.lang(
-                "Spróbuj ponownie wykonać akcję, która spowodowała wystąpienie błędu. Być może był " +
-                "to jednorazowy błąd spowodowany chwilową utratą połączenia z Internetem?",
 
-                "Try to repeat the action which you were doing when the error occured. Perhaps it was " +
-                "a one-time network error caused by bad Internet connection?"
-            )));
-            ul.append($("<li>").html($.usosCore.lang(
-                "Upewnij się, czy posiadasz odpowiednie uprawnienia. Czy jesteś zalogowany? " +
-                "Być może musisz uzyskać pewne dodatkowe uprawnienia, aby móc wyświetlić stronę " +
-                "lub wykonać akcję, którą właśnie próbowałeś wykonać?",
+            var server_error = response.xhr.status >= 500 && response.xhr.status < 600;
 
-                "Make sure you have proper privileges. Are you signed in? Perhaps, you need to " +
-                "acquire some special privileges before you can view this page or perform this action?"
-            )));
+            if (server_error) {
+                ul.append($("<li>").html($.usosCore.lang(
+                    "<p>Powiadomimy o tym błędzie administratorów i postaramy się go szybko naprawić. " +
+                    "Czasem, tego rodzaju błędy mogą wynikać również z chwilowego przeciążenia serwerów, " +
+                    "więc możesz spróbować wyświetlić stronę później.</p>",
+
+                    "<p>We will notify the administrators about this error. Sometimes, these types of " +
+                    "errors can also occur when the servers are overloaded - you may try to view this " +
+                    "page later."
+                )));
+            }
+
+            if (!server_error) {
+                ul.append($("<li>").html($.usosCore.lang(
+                    "Spróbuj ponownie wykonać akcję, która spowodowała wystąpienie błędu. Być może był " +
+                    "to jednorazowy błąd spowodowany chwilową utratą połączenia z Internetem?",
+
+                    "Try to repeat the action which you were doing when the error occured. Perhaps it was " +
+                    "a one-time network error caused by bad Internet connection?"
+                )));
+
+                ul.append($("<li>").html($.usosCore.lang(
+                    "Upewnij się, czy posiadasz odpowiednie uprawnienia. Czy jesteś zalogowany? " +
+                    "Być może musisz uzyskać pewne dodatkowe uprawnienia, aby móc wyświetlić stronę " +
+                    "lub wykonać akcję, którą właśnie próbowałeś wykonać?",
+
+                    "Make sure you have proper privileges. Are you signed in? Perhaps, you need to " +
+                    "acquire some special privileges before you can view this page or perform this action?"
+                )));
+            }
+
             ul.append($("<li>").html($.usosCore.lang(
                 "Jeśli problem będzie się powtarzał, to skontaktuj się z administratorem. Napisz " +
-                "na której stronie i w którym momencie problem wystąpuje, tak aby administrator " +
+                "na której stronie i w którym momencie problem występuje, tak aby administrator " +
                 "mógł go dokładniej zbadać.",
 
                 "If the problem persists, contact the administrator. Try to include detailed " +
                 "descriptions of where and when the error occurs, so that the administrator " +
                 "will be able to examine it closely."
             )));
+
             msg.append($("<p style='text-align: center; font-size: 120%; margin-top: 20px'>")
-                    .html($("<a class='ua-link'>")
-                        .html($.usosCore.lang("Zamknij i kontynuuj", "Close and continue"))
-                        .click(function() {
-                            msg.dialog('close');
-                        })
-                    )
-                );
+                .html($("<a class='ua-link'>")
+                    .html($.usosCore.lang("Zamknij i kontynuuj", "Close and continue"))
+                    .click(function() {
+                        msg.dialog('close');
+                    })
+                )
+            );
         }
 
         var showIt = function() {
