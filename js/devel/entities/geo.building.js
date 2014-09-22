@@ -44,7 +44,7 @@
                     langpref: $.usosCore.lang(),
                     fields: (
                         "id|name|static_map_urls[100x100]|related_faculties|" +
-                        "postal_address|phone_numbers|profile_url"
+                        "postal_address|phone_numbers|profile_url|campus_name"
                     )
                 }
             });
@@ -81,6 +81,9 @@
                 .attr("href", profile_url)
                 .text($.usosCore.lang(building.name))
             );
+            if (building.campus_name) {
+                badge.find('.ua-name').append($("<div class='ua-note'>").text($.usosCore.lang(building.campus_name)));
+            }
             badge.find('.ua-photo-link').attr('href', profile_url);
 
             /* Address, phone numbers */

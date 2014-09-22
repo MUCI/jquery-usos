@@ -3,6 +3,7 @@ jQuery-USOS Change Log
 
   * **BETA Branch** - *(unreleased)*
 
+    * 1.3.0.4: Add campus names to building badges.
     * 1.3.0.3: Minor enhancements in $.usosCore.panic.
     * 1.3.0.2: usosSelector for `entity/progs/programme` added.
     * 1.3.0.1: Fix dynamic option-changes in usosBadges.
