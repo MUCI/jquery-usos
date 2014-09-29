@@ -137,23 +137,25 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                         if (this.options.interactive == true) {
                             $this.on('mouseleave.tooltipster', function() {
                                 var tooltipster = $this.data('tooltipster');
-                                var keepAlive = false;
 
                                 if ((tooltipster !== undefined) && (tooltipster !== '')) {
+                                    var enteredAtLeastOnce = false;
+                                    var countDownTimer = null;
                                     tooltipster.mouseenter(function() {
-                                        keepAlive = true;
+                                        enteredAtLeastOnce = true;
+                                        if (countDownTimer !== null) {
+                                            clearTimeout(countDownTimer);
+                                            countDownTimer = null;
+                                        }
                                     });
                                     tooltipster.mouseleave(function() {
-                                        keepAlive = false;
+                                        countDownTimer = setTimeout(function() {
+                                            object.hideTooltip();
+                                        }, object.options.interactiveTolerance);
                                     });
 
-                                    var tolerance = setTimeout(function() {
-                                        if (keepAlive == true) {
-                                            tooltipster.mouseleave(function() {
-                                                object.hideTooltip();
-                                            });
-                                        }
-                                        else {
+                                    setTimeout(function() {
+                                        if (!enteredAtLeastOnce) {
                                             object.hideTooltip();
                                         }
                                     }, object.options.interactiveTolerance);
@@ -406,11 +408,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                                     }
                                 });
                             }
-
-                            // if this is an interactive tooltip activated by a click, close the tooltip when you hover off the tooltip
-                            tooltipster.mouseleave(function() {
-                                object.hideTooltip();
-                            });
                         }
                     });
 
