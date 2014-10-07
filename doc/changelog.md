@@ -3,6 +3,8 @@ jQuery-USOS Change Log
 
   * **BETA Branch** - *(unreleased)*
 
+    * 1.3.0.8: "search_history_affect" is now called properly when keyboard
+      is used.
     * 1.3.0.7: Fix usosSelector's "show more" screen (click didn't work)
       https://redmine.usos.edu.pl/issues/9737,
     * 1.3.0.6: Feedback widget incorrectly cached the state of the USOS API's

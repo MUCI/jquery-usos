@@ -269,8 +269,28 @@
                         }
                     }
                     if (!_isEqual(currentValue, widget._previousValue)) {
+                        var prev = widget._previousValue;
+                        var cur = currentValue;
                         widget._previousValue = currentValue;
                         widget._trigger('change');
+                        if (!widget._textarea.prop("disabled")) {
+                            if (widget._entitySetup.affector) {
+                                /* Affector function is responsible for calling proper
+                                 * search_history_affect USOS API method. It takes a list of IDs.
+                                 * We need to determine with which set of items search history
+                                 * should be updated. */
+                                if (!$.isArray(cur)) {
+                                    cur = [cur];
+                                }
+                                if (!$.isArray(prev)) {
+                                    prev = [prev];
+                                }
+                                var newids = $(cur).not(prev).get();
+                                if (newids.length > 0) {
+                                    widget._entitySetup.affector(newids);
+                                }
+                            }
+                        }
                     }
                 });
 
@@ -505,6 +525,9 @@
                                 value = id;
                             }
                             widget.value(value);
+                            if (widget._entitySetup.affector) {
+                                widget._entitySetup.affector([value]);
+                            }
                             div.dialog("close");
                         });
                     itemsContainer.append(span);

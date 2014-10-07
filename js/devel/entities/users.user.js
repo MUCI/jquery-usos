@@ -131,15 +131,17 @@
                         entity: 'entity/users/user',
                         user_id: item.user.id
                     });
-                    $div.on("click", function() {
+                    return $div;
+                },
+                affector: function(user_ids) {
+                    $.each(user_ids, function(_, user_id) {
                         $.usosCore.usosapiFetch({
                             method: "services/users/search_history_affect",
                             params: {
-                                user_id: item.user.id
+                                user_id: user_id
                             }
                         });
                     });
-                    return $div;
                 },
                 tagRenderer: function(item) {
                     return $("<span>")

@@ -69,16 +69,17 @@
                     div.find(".ua-match").html(item.match);
                     div.find("img").attr("src", item.programme.faculty.logo_urls['50x50']);
                     div.find(".ua-tagline").append($("<span class='ua-note'>").text($.usosCore.lang(item.programme.faculty.name)));
-                    div.on("click", function() {
+                    return div;
+                },
+                affector: function(programme_ids) {
+                    $.each(programme_ids, function(_, programme_id) {
                         $.usosCore.usosapiFetch({
                             method: "services/progs/search_history_affect",
                             params: {
-                                programme_id: item.programme.id
+                                programme_id: programme_id
                             }
                         });
                     });
-                    return div;
-
                 },
                 tagRenderer: function(item) {
                     var name = $.usosCore.lang(item.programme.name);
