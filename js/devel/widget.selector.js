@@ -493,7 +493,7 @@
                             function() { $(this).removeClass("text-selected"); }
                         )
                         .on("click keypress", function(e) {
-                            if (e.which && e.which != 13 && e.which != 32) {
+                            if (e.type == "keypress" && e.which && e.which != 13 && e.which != 32) {
                                 /* Ignore all keypresses other than space and enter */
                                 return;
                             }
