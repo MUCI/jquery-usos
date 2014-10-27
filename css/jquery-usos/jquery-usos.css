@@ -1,4 +1,6 @@
-/* Simple "css reset" rule - for debugging. */
+body {
+    overflow-y: scroll;
+}
 
 body.ua-stop-scrolling {
     height: 100%;
@@ -535,6 +537,24 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ua-badge-user .ua-td2top {
     min-height: 81px;
 }
+.ua-badge-user .ua-id-icon {
+    float: right;
+    margin-left: 8px;
+    margin-top: -4px;
+}
+.ua-id-icon {
+    font-family: Arial;
+    font-size: 10px;
+    color: #ddd;
+    border: 1px solid #eee;
+    padding: 0 4px;
+    cursor: pointer;
+}
+.ua-id-icon:hover {
+    color: #888;
+    border: 1px solid #888;
+    box-shadow: 1px 1px 3px #aaa;
+}
 .ua-badge-user .ua-name a {
     cursor: pointer;
     font-weight: bold;
@@ -765,9 +785,11 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ua-usersuggestion td {
     vertical-align: top;
     text-align: left;
+    background: transparent !important;
 }
 .ua-usersuggestion .ua-td1 {
     width: 42px;
+    padding: 0 !important;
 }
 .ua-usersuggestion .ua-td1 img {
     width: 40px;
@@ -776,7 +798,7 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     border: 1px solid rgba(128,128,128,0.5);
 }
 .ua-usersuggestion .ua-td2 {
-    padding: 2px 0 0 6px;
+    padding: 2px 0 0 6px !important;
 }
 .ua-usersuggestion .ua-td2 .ua-tagline {
     padding-top: 4px;
@@ -784,6 +806,47 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 10px;
+    max-height: 20px;
+}
+
+/* programme suggestions */
+
+.ua-programmesuggestion table {
+    border-spacing: 0;
+}
+.ua-programmesuggestion td {
+    vertical-align: top;
+    text-align: left;
+}
+.ua-programmesuggestion .ua-td1 {
+    width: 42px;
+}
+.ua-programmesuggestion .ua-td1 img {
+    width: 40px;
+    height: 40px;
+    background: #eee;
+    border: 1px solid rgba(128,128,128,0.5);
+}
+.ua-programmesuggestion .ua-td2 {
+    padding: 2px 0 0 6px;
+}
+.ua-programmesuggestion .ua-td2 .ua-match {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 13px;
+    max-height: 26px;
+}
+.ua-programmesuggestion .ua-td2 .ua-tagline {
+    padding-top: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     line-height: 10px;
     max-height: 20px;

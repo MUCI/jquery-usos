@@ -131,15 +131,17 @@
                         entity: 'entity/users/user',
                         user_id: item.user.id
                     });
-                    $div.on("click", function() {
+                    return $div;
+                },
+                affector: function(user_ids) {
+                    $.each(user_ids, function(_, user_id) {
                         $.usosCore.usosapiFetch({
                             method: "services/users/search_history_affect",
                             params: {
-                                user_id: item.user.id
+                                user_id: user_id
                             }
                         });
                     });
-                    return $div;
                 },
                 tagRenderer: function(item) {
                     return $("<span>")
@@ -209,7 +211,8 @@
                 "<div><table class='ua-container'><tr><td class='ua-td1'>" +
                 "<a class='ua-photo-link'><img class='ua-photo'/></a>" +
                 "</td><td class='ua-td2'>" +
-                "<div class='ua-td2top'><div class='ua-name'></div><ul class='ua-functions'></ul></div>" +
+                "<div class='ua-td2top'><div class='ua-id-icon'>id</div>" +
+                "<div class='ua-name'></div><ul class='ua-functions'></ul></div>" +
                 "</td></tr></table></div>"
             );
 
@@ -410,6 +413,108 @@
                     )
                 );
             }
+
+            /* ID icon */
+
+            var getTablePromise = function() {
+                var promise = null;
+                return function() {
+                    if (promise != null) {
+                        return promise;
+                    }
+                    promise = $.usosCore.usosapiFetch({
+                        method: "services/users/user",
+                        params: {
+                            user_id: user.id,
+                            fields: (
+                                "id|first_name|middle_names|last_name|sex|email|" +
+                                "phone_numbers|mobile_numbers|student_number|pesel"
+                            )
+                        }
+                    }).then(function(data) {
+                        var table = $("<table cellspacing='0' style='width: 100%'>");
+                        var add = function(header, value) {
+                            var formatted;
+                            if (value === null) {
+                                return;
+                            }
+                            if ($.isArray(value)) {
+                                if (value.length == 0) {
+                                    return;
+                                }
+                                formatted = $("<div>");
+                                $.each(value, function(_, v) { formatted.append($("<div>").text(v)); });
+                            } else if ((typeof value === "string") || (typeof value === "number")) {
+                                formatted = $("<div>").text(value);
+                            } else {
+                                $.usosCore._console.error("Unknown value type", value);
+                                return;
+                            }
+                            table.append($("<tr>")
+                                .append($("<td style='padding: 0 4px 0 0; white-space: nowrap; font-weight: bold; text-align: right; vertical-align: top'>").text(header + ":"))
+                                .append($("<td style='padding: 0 0 0 0; white-space: nowrap; vertical-align: top'>").append(formatted))
+                            );
+                        };
+                        add($.usosCore.lang("Numer PESEL", "PESEL number"), data.pesel);
+                        add($.usosCore.lang("Numer albumu", "Student number"), data.student_number);
+                        add($.usosCore.lang("Imię", "First name"), data.first_name);
+                        add($.usosCore.lang("Drugie imię", "Middle names"), data.middle_names);
+                        add($.usosCore.lang("Nazwisko", "Last name"), data.last_name);
+                        add($.usosCore.lang("Adres e-mail", "Email address"), data.email);
+                        add("USOS ID", data.id);
+                        add($.usosCore.lang("Płeć", "Sex"), data.sex == "M"
+                            ? $.usosCore.lang("mężczyzna", "male")
+                            : $.usosCore.lang("kobieta", "female")
+                        );
+                        add($.usosCore.lang("Numery telefonów", "Phone numbers"), data.phone_numbers);
+                        add($.usosCore.lang("Numery prywatne", "Private mobile numbers"), data.mobile_numbers);
+                        return table;
+                    });
+                    return promise;
+                };
+            }();
+
+            badge.find(".ua-id-icon").usosTip({
+                type: "tool",
+                position: "right",
+                _autoWidth: false,
+                content: getTablePromise
+            }).on("click", function() {
+                getTablePromise().done(function(table) {
+                    widget.element.tooltipster("hide");
+                    var div = $("<div class='ua-paragraphs'>");
+                    div.append(table);
+                    div.append($("<p style='text-align: center'>").append($("<a class='ua-link'>").text($.usosCore.lang(
+                        "Zamknij", "Close"
+                    ))));
+                    //$("body").addClass("ua-stop-scrolling");
+                    div.dialog({
+                        dialogClass: "ua-panic-dialog ua-scrollable ua-selector-popup",
+                        resizable: false,
+                        modal: true,
+                        width: "auto",
+                        height: "auto",
+                        closeText: $.usosCore.lang("Zamknij", "Close"),
+                        close: function() {
+                            //$("body").removeClass("ua-stop-scrolling");
+                            try {
+                                div.usosProgressOverlay('destroy');
+                            } catch(err) {}
+                        },
+                        show: {
+                            effect: 'fade',
+                            duration: 300
+                        },
+                        hide: {
+                            effect: 'fade',
+                            duration: 100
+                        }
+                    });
+                    div.find("a").on("click", function() {
+                        div.dialog("close")
+                    });
+                });
+            });;
 
             return badge;
         }

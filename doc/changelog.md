@@ -1,6 +1,35 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.3.1** - *2014-10-27*
+
+    * **Requires USOS API 6.0.0.0-4** (or any later version).
+    * New features and improvements to
+      [usosSelector widget](api/widget.selector.md):
+      * New entity supported: `entity/progs/programme`.
+      * Fixed "show more" screen (no action was triggered on click).
+      * `search_history_affect` method is now called properly when keyboard
+        is used. It is also NOT called when the user is not logged in (which
+        resulted in an error).
+      * Improved display on small width fields (selector popup now has a
+        certain min-width).
+      * Improved CSS encapculation when used inside certain USOSweb forms.
+      * Improved responsivity (progress indicator will show faster on slow
+        USOS API connections).
+    * New features and improvements to
+      [usosBadge widgets](api/widget.badge.md):
+      * New entity supported: `entity/progs/programme`.
+      * Fixed an issue with badges dissapearing too quickly after mouseleave.
+      * User badges include the "ID" section which may help to find and
+        identify the user in other external systems.
+      * Campus names are now included in building badges.
+    * Fix overflow issue in tips and badges (`overflow-x: hidden` was applied
+      to `body` and never removed).
+    * Fix dynamic option-changes in usosBadges.
+    * `_usosFeedback` widget (still undocumented beta) incorrectly cached the
+      state of USOS API's feedback module.
+    * Minor enhancements to `$.usosCore.panic`.
+
   * **Version 1.3** - *2014-07-12*
 
     * **Requires USOS API 6.0.0.**

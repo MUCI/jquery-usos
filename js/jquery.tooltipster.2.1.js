@@ -137,23 +137,25 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                         if (this.options.interactive == true) {
                             $this.on('mouseleave.tooltipster', function() {
                                 var tooltipster = $this.data('tooltipster');
-                                var keepAlive = false;
 
                                 if ((tooltipster !== undefined) && (tooltipster !== '')) {
+                                    var enteredAtLeastOnce = false;
+                                    var countDownTimer = null;
                                     tooltipster.mouseenter(function() {
-                                        keepAlive = true;
+                                        enteredAtLeastOnce = true;
+                                        if (countDownTimer !== null) {
+                                            clearTimeout(countDownTimer);
+                                            countDownTimer = null;
+                                        }
                                     });
                                     tooltipster.mouseleave(function() {
-                                        keepAlive = false;
+                                        countDownTimer = setTimeout(function() {
+                                            object.hideTooltip();
+                                        }, object.options.interactiveTolerance);
                                     });
 
-                                    var tolerance = setTimeout(function() {
-                                        if (keepAlive == true) {
-                                            tooltipster.mouseleave(function() {
-                                                object.hideTooltip();
-                                            });
-                                        }
-                                        else {
+                                    setTimeout(function() {
+                                        if (!enteredAtLeastOnce) {
                                             object.hideTooltip();
                                         }
                                     }, object.options.interactiveTolerance);
@@ -272,6 +274,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                         // if the tooltip isn't already open, open that sucker up!
                         else {
                             // disable horizontal scrollbar to keep overflowing tooltips from jacking with it
+                            object.bodyOverflowX = $('body').css('overflow-x');
                             $('body').css('overflow-x', 'hidden');
 
                             // get the content for the tooltip
@@ -406,11 +409,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                                     }
                                 });
                             }
-
-                            // if this is an interactive tooltip activated by a click, close the tooltip when you hover off the tooltip
-                            tooltipster.mouseleave(function() {
-                                object.hideTooltip();
-                            });
                         }
                     });
 
@@ -453,7 +451,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                     tooltipster.clearQueue().removeClass(animation +'-show').addClass('tooltipster-dying').delay(object.options.speed).queue(function() {
                         tooltipster.remove();
                         $this.data('tooltipster', '');
-                        $('body').css('verflow-x', '');
+                        $('body').css('overflow-x', object.bodyOverflowX);
 
                         // finally, call our custom callback function
                         object.options.functionAfter($this);

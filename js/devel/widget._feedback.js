@@ -16,13 +16,14 @@
 
         var deferred = $.Deferred();
         var checkingInProgress = false;
+        var key = 'ua-feedback-enabled';
 
         return function() {
             if (typeof(Storage) == "undefined") {
                 /* No storage support. Disable all feedback widgets. */
                 return false;
             }
-            if (typeof(sessionStorage['ua-feedback-enabled']) === "undefined") {
+            if (typeof(sessionStorage[key]) === "undefined") {
                 if (checkingInProgress) {
                     return deferred.promise();
                 }
@@ -30,17 +31,17 @@
                 $.usosCore.usosapiFetch({
                     method: "services/feedback/status"
                 }).done(function(data) {
-                    sessionStorage['ua-feedback-enabled'] = data.enabled;
+                    sessionStorage[key] = data.enabled ? "1" : "0";
                 }).fail(function() {
-                    sessionStorage['ua-feedback-enabled'] = false;
+                    sessionStorage[key] = "0";
                 }).always(function() {
-                    deferred.resolve(sessionStorage['ua-feedback-enabled']);
-                })
+                    deferred.resolve(sessionStorage[key] == "1");
+                });
             } else {
-                deferred.resolve(sessionStorage['ua-feedback-enabled']);
+                deferred.resolve(sessionStorage[key] == "1");
             }
             return deferred.promise();
-        }
+        };
     }();
 
     $.widget('usosWidgets._usosFeedback', {
@@ -170,7 +171,7 @@
                 formValues.push({
                     title: $(this).find("div:first-child").text(),
                     value: $(this).find("div:last-child").usosValue("value")
-                })
+                });
             });
 
             $.usosCore.usosapiFetch({
