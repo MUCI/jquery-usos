@@ -1,23 +1,34 @@
 jQuery-USOS Change Log
 ======================
 
-  * **BETA Branch** - *(unreleased)*
+  * **Version 1.3.1** - *2014-10-27*
 
-    * 1.3.0.9: Improve usosSelector display on smaller fields (min-width) and
-      USOSweb forms, improve usosSelector responsivity, fix overflow-x in tips
-      and badges, fix search-history-affect bug with anonymous users.
-    * 1.3.0.8: "search_history_affect" is now called properly when keyboard
-      is used.
-    * 1.3.0.7: Fix usosSelector's "show more" screen (click didn't work)
-      https://redmine.usos.edu.pl/issues/9737,
-    * 1.3.0.6: Feedback widget incorrectly cached the state of the USOS API's
-      feedback module.
-    * 1.3.0.5: Add "id" section to user badges. Fix issues with badges
-      disappearing too quickly after mouseleave.
-    * 1.3.0.4: Add campus names to building badges.
-    * 1.3.0.3: Minor enhancements in $.usosCore.panic.
-    * 1.3.0.2: usosSelector for `entity/progs/programme` added.
-    * 1.3.0.1: Fix dynamic option-changes in usosBadges.
+    * **Requires USOS API 6.0.0.0-4** (or any later version).
+    * New features and improvements to
+      [usosSelector widget](api/widget.selector.md):
+      * New entity supported: `entity/progs/programme`.
+      * Fixed "show more" screen (no action was triggered on click).
+      * `search_history_affect` method is now called properly when keyboard
+        is used. It is also NOT called when the user is not logged in (which
+        resulted in an error).
+      * Improved display on small width fields (selector popup now has a
+        certain min-width).
+      * Improved CSS encapculation when used inside certain USOSweb forms.
+      * Improved responsivity (progress indicator will show faster on slow
+        USOS API connections).
+    * New features and improvements to
+      [usosBadge widgets](api/widget.badge.md):
+      * New entity supported: `entity/progs/programme`.
+      * Fixed an issue with badges dissapearing too quickly after mouseleave.
+      * User badges include the "ID" section which may help to find and
+        identify the user in other external systems.
+      * Campus names are now included in building badges.
+    * Fix overflow issue in tips and badges (`overflow-x: hidden` was applied
+      to `body` and never removed).
+    * Fix dynamic option-changes in usosBadges.
+    * `_usosFeedback` widget (still undocumented beta) incorrectly cached the
+      state of USOS API's feedback module.
+    * Minor enhancements to `$.usosCore.panic`.
 
   * **Version 1.3** - *2014-07-12*
 
