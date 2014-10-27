@@ -18,7 +18,6 @@ jQuery-USOS Change Log
         USOS API connections).
     * New features and improvements to
       [usosBadge widgets](api/widget.badge.md):
-      * New entity supported: `entity/progs/programme`.
       * Fixed an issue with badges dissapearing too quickly after mouseleave.
       * User badges include the "ID" section which may help to find and
         identify the user in other external systems.
