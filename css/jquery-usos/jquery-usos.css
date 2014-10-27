@@ -785,9 +785,11 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ua-usersuggestion td {
     vertical-align: top;
     text-align: left;
+    background: transparent !important;
 }
 .ua-usersuggestion .ua-td1 {
     width: 42px;
+    padding: 0 !important;
 }
 .ua-usersuggestion .ua-td1 img {
     width: 40px;
@@ -796,7 +798,7 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     border: 1px solid rgba(128,128,128,0.5);
 }
 .ua-usersuggestion .ua-td2 {
-    padding: 2px 0 0 6px;
+    padding: 2px 0 0 6px !important;
 }
 .ua-usersuggestion .ua-td2 .ua-tagline {
     padding-top: 4px;

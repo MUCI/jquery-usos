@@ -19,13 +19,17 @@
      * Returns the number of seconds to wait after the user finished typing.
      * After such delay, AJAX request is issued.
      */
-    var _getAjaxDelay = function() {
+    var _getAjaxDelay = function(query) {
 
         /* In the future, we may decide that it should vary on such things
          * as browser version, resolution, internet speed etc. Currently, we
          * assume that all clients are fast enough. */
 
-        return 0.25;
+        if (query) {
+            return 0.25;
+        } else {
+            return 0.05;
+        }
     };
 
     /** We're using a single timer for all the selectors. */
@@ -126,6 +130,12 @@
                 .textext({
                     plugins: 'autocomplete tags focus prompt',
                     prompt: widget._entitySetup.prompt,
+                    html: {
+                        dropdown: (
+                            '<div class="text-dropdown" style="min-width: 300px">' +
+                            '<div class="text-list"/></div>'
+                        )
+                    },
                     autocomplete: {
                         dropdown: {
                             maxHeight: "250px",
@@ -180,10 +190,10 @@
                     widget._lastQuery = query;
 
                     _startTimer(
-                        _getAjaxDelay(),
+                        _getAjaxDelay(query),
                         function()
                         {
-                            widget._progressIndicator.delay(1000).fadeIn(100);
+                            widget._progressIndicator.delay(300).fadeIn(300);
                             $.usosCore.usosapiFetch({
                                 source_id: widget.options.source_id,
                                 method: widget._entitySetup.search.method,
@@ -274,7 +284,10 @@
                         widget._previousValue = currentValue;
                         widget._trigger('change');
                         if (!widget._textarea.prop("disabled")) {
-                            if (widget._entitySetup.affector) {
+                            if (
+                                widget._entitySetup.affector
+                                && ($.usosCore._getSettings().usosAPIs['default'].user_id !== null)
+                            ) {
                                 /* Affector function is responsible for calling proper
                                  * search_history_affect USOS API method. It takes a list of IDs.
                                  * We need to determine with which set of items search history
@@ -459,7 +472,7 @@
                 dialogClass: "ua-panic-dialog ua-scrollable ua-selector-popup",
                 resizable: false,
                 modal: true,
-                width: Math.min(parseInt(widget.options.width, 10) * 2.2 + 30, $(window).width() * 0.8),
+                width: Math.min(Math.max(300, parseInt(widget.options.width, 10)) * 2.2 + 30, $(window).width() * 0.8),
                 minHeight: 200,
                 height: Math.min($(window).height() * 0.7, 600),
                 closeText: $.usosCore.lang("Zamknij", "Close"),
@@ -497,13 +510,13 @@
                 } else {
                     div.find(".ua-howto .if-query").hide();
                 }
-                var itemsContainer = $("<div style='display: inline-block'>");
+                var itemsContainer = $("<div style='display: inline-block; text-align: center'>");
                 div.append(itemsContainer);
                 var items = widget._entitySetup.search.itemsExtractor(data);
                 $.each(items, function(_, item) {
                     var id = widget._entitySetup.idExtractor(item);
                     var span = $("<span class='ua-inline-suggestion'>")
-                        .css("width", widget.options.width)
+                        .css("width", Math.max(300, parseInt(widget.options.width, 10)) - 4)
                         .html(widget._entitySetup.suggestionRenderer(item))
                         .attr("tabindex", 0)
                         .on("focus", function() { $(this).addClass("text-selected"); })

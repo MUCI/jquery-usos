@@ -3,6 +3,9 @@ jQuery-USOS Change Log
 
   * **BETA Branch** - *(unreleased)*
 
+    * 1.3.0.9: Improve usosSelector display on smaller fields (min-width) and
+      USOSweb forms, improve usosSelector responsivity, fix overflow-x in tips
+      and badges, fix search-history-affect bug with anonymous users.
     * 1.3.0.8: "search_history_affect" is now called properly when keyboard
       is used.
     * 1.3.0.7: Fix usosSelector's "show more" screen (click didn't work)
