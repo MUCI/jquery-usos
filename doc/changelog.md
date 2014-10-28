@@ -1,6 +1,10 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.3.3** - *2014-10-28*
+
+    * New [usosSelector](api/widget.selector.md) parameter: `placeholder`.
+
   * **Version 1.3.2** - *2014-10-28*
 
     * Fixes minor display issues in

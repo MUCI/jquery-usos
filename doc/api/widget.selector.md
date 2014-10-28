@@ -59,6 +59,9 @@ Options
     * Programmes - `services/progs/search`
     * Slip templates - `services/slips/search_templates`
   * **width** *(default: `300px`)* - The width of the widget.
+  * **placeholder** - string or LangDict. If given, it will override the
+    default placeholder (the greyed-out value displayed when the input is
+    empty). The default placeholder varies on the entity being selected.
   * **change** - A function to be called upon `usosselector:change` event.
   * **source_id** - If you want to use non-default USOS API installation
   (see [$.usosCore.init](core.init.md)).

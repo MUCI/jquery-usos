@@ -70,12 +70,6 @@
                 tagRenderer: function(item) {
                     return $('<span>')
                         .text(item.name)
-                        .css({
-                            'white-space': 'nowrap',
-                            'display': 'inline-block',
-                            'overflow': 'hidden',
-                            'text-overflow': 'ellipsis'
-                        })
                         .click(function() {
                             var url = $.usosEntity.url('entity/slips/template', item.id);
                             if (!url) {

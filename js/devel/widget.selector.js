@@ -67,6 +67,7 @@
             width: "300px",
             multi: false,
             value: null,
+            placeholder: null,
             searchParams: {}
         },
         widgetEventPrefix: "usosselector:",
@@ -137,7 +138,11 @@
             widget._textarea
                 .textext({
                     plugins: 'autocomplete tags focus prompt',
-                    prompt: widget._entitySetup.prompt,
+                    prompt: (
+                        (widget.options.placeholder !== null)
+                        ? $.usosCore.lang(widget.options.placeholder)
+                        : widget._entitySetup.prompt
+                    ),
                     html: {
                         dropdown: (
                             '<div class="text-dropdown" style="min-width: 300px">' +
