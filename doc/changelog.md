@@ -1,6 +1,11 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.3.2** - *2014-10-28*
+
+    * Fixes minor display issues in
+      [usosSelector widget](api/widget.selector.md).
+
   * **Version 1.3.1** - *2014-10-27*
 
     * **Requires USOS API 6.0.0.0-4** (or any later version).

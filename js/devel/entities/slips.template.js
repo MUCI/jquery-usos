@@ -74,7 +74,6 @@
                             'white-space': 'nowrap',
                             'display': 'inline-block',
                             'overflow': 'hidden',
-                            'max-width': '250px',
                             'text-overflow': 'ellipsis'
                         })
                         .click(function() {
