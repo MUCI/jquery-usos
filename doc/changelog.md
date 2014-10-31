@@ -1,6 +1,11 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.3.4** - *2014-10-31*
+
+    * Fixed [$.usosCore.panic](api/core.panic.md) - starting from 1.3 it didn't
+      work properly when no arguments were passed.
+
   * **Version 1.3.3** - *2014-10-28*
 
     * New [usosSelector](api/widget.selector.md) parameter: `placeholder`.
@@ -45,7 +50,7 @@ jQuery-USOS Change Log
     * Redesigned badge UI for `entity/fac/faculty`.
     * Improved [usosTip widget](api/widget.tip.md): Better design, better
       support for long content. New option: `showAs`.
-    * Changed in [$.usosCore.panic](api/core.panic.md) function: It now
+    * Improved [$.usosCore.panic](api/core.panic.md) function: It now
       understands the newer version of API's user_messages response, it also
       returns a `$.Deferred` object.
     * New `_usosFeedback` widget (undocumented beta).
