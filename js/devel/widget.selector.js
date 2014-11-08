@@ -67,6 +67,7 @@
             width: "300px",
             multi: false,
             value: null,
+            placeholder: null,
             searchParams: {}
         },
         widgetEventPrefix: "usosselector:",
@@ -81,6 +82,14 @@
             this._postInit();
         },
 
+        /**
+         * Get options.width in pixels.
+         */
+        _width: function() {
+            var widget = this;
+            return Math.max(parseInt(widget.options.width, 10), 80);
+        },
+
         _setOption: function(key, value) {
             this._super(key, value);
             if ($.inArray(key, ['entity', 'width', 'multi']) !== -1) {
@@ -92,44 +101,48 @@
         },
 
         _recreate: function() {
+            var widget = this;
 
-            this._entitySetup = _getEntitySetup(this.options.entity);
-            this._knownItems = {};
+            widget._entitySetup = _getEntitySetup(widget.options.entity);
+            widget._knownItems = {};
 
             /* Create UI elements. */
 
-            this._progressIndicator = $("<span class='ua-progress'>").hide();
-            this.element
+            widget._progressIndicator = $("<span class='ua-progress'>").hide();
+            widget.element
                 .empty()
                 .addClass("ua-container ua-selector")
-                .css("width", this.options.width)
-                .append(this._progressIndicator)
+                .css("width", widget._width() + "px")
+                .append(widget._progressIndicator)
                 .append($("<textarea>")
                     .attr("rows", "1")
-                    .css("width", this.options.width)
+                    .css("width", widget._width() + "px")
                 );
 
             /* This is used by usosapiFetch for synchronizing suggestion requests. */
 
-            this._suggestionsSyncObject = {};
+            widget._suggestionsSyncObject = {};
 
             /* This is used for publishing the 'change' event. */
 
-            this._previousValue = this.options.multi ? [] : null;
+            widget._previousValue = widget.options.multi ? [] : null;
 
             /* Discover, bind and extend key UI elements. */
 
-            this._textarea = this.element.find("textarea");
-            var distanceToTop = this.element.offset().top;
+            widget._textarea = widget.element.find("textarea");
+            var distanceToTop = widget.element.offset().top;
             var distanceToBottom = $(document).height() - (
-                this.element.offset().top + this.element.height()
+                widget.element.offset().top + widget.element.height()
             );
-            var widget = this;
 
             widget._textarea
                 .textext({
                     plugins: 'autocomplete tags focus prompt',
-                    prompt: widget._entitySetup.prompt,
+                    prompt: (
+                        (widget.options.placeholder !== null)
+                        ? $.usosCore.lang(widget.options.placeholder)
+                        : widget._entitySetup.prompt
+                    ),
                     html: {
                         dropdown: (
                             '<div class="text-dropdown" style="min-width: 300px">' +
@@ -171,10 +184,17 @@
                             renderTag: function(tag)
                             {
                                 var node = $(this.opts('html.tag'));
-                                node.find('.text-label')
-                                    .html(widget._entitySetup.tagRenderer(
-                                        widget._knownItems[tag]
-                                    ));
+                                var elem = widget._entitySetup.tagRenderer(
+                                    widget._knownItems[tag]
+                                );
+                                elem.css({
+                                    'white-space': 'nowrap',
+                                    'display': 'inline-block',
+                                    'overflow': 'hidden',
+                                    'text-overflow': 'ellipsis',
+                                    'max-width': (widget._width() - 40) + "px"
+                                });
+                                node.find('.text-label').html(elem);
                                 node.data(widget.widgetFullName, widget._knownItems[tag]);
                                 node.data('text-tag', tag);
                                 return node;
@@ -472,7 +492,7 @@
                 dialogClass: "ua-panic-dialog ua-scrollable ua-selector-popup",
                 resizable: false,
                 modal: true,
-                width: Math.min(Math.max(300, parseInt(widget.options.width, 10)) * 2.2 + 30, $(window).width() * 0.8),
+                width: Math.min(Math.max(300, widget._width()) * 2.2 + 30, $(window).width() * 0.8),
                 minHeight: 200,
                 height: Math.min($(window).height() * 0.7, 600),
                 closeText: $.usosCore.lang("Zamknij", "Close"),
@@ -516,7 +536,7 @@
                 $.each(items, function(_, item) {
                     var id = widget._entitySetup.idExtractor(item);
                     var span = $("<span class='ua-inline-suggestion'>")
-                        .css("width", Math.max(300, parseInt(widget.options.width, 10)) - 4)
+                        .css("width", Math.max(300, widget._width()) - 4)
                         .html(widget._entitySetup.suggestionRenderer(item))
                         .attr("tabindex", 0)
                         .on("focus", function() { $(this).addClass("text-selected"); })

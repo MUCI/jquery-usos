@@ -84,13 +84,6 @@
 
                     return $('<span>')
                         .text(name)
-                        .css({
-                            'white-space': 'nowrap',
-                            'display': 'inline-block',
-                            'overflow': 'hidden',
-                            'max-width': '250px',
-                            'text-overflow': 'ellipsis'
-                        })
                         .usosBadge({
                             entity: 'entity/fac/faculty',
                             fac_id: item.fac_id || item.id,

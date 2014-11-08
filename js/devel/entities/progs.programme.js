@@ -88,13 +88,6 @@
 
                     return $('<span>')
                         .text(name)
-                        .css({
-                            'white-space': 'nowrap',
-                            'display': 'inline-block',
-                            'overflow': 'hidden',
-                            'max-width': '250px',
-                            'text-overflow': 'ellipsis'
-                        })
                         /* Add .usosBadge(...) here, when implemented (align
                          * top). */
                         ;

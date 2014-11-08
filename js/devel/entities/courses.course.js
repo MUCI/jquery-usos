@@ -82,13 +82,7 @@
 
                     /* Return in a block with decent max-width applied. */
 
-                    return $('<span>').text(name).css({
-                        'white-space': 'nowrap',
-                        'display': 'inline-block',
-                        'overflow': 'hidden',
-                        'max-width': '180px',
-                        'text-overflow': 'ellipsis'
-                    });
+                    return $('<span>').text(name);
                 }
             };
         }

@@ -517,9 +517,15 @@
             }
         } else {
 
-            if (typeof response === 'object' && response.xhr && response.xhr.status >= 400) {
+            var suffix = "";
+            var server_error = false;
 
+            if (typeof response === 'object' && response.xhr && response.xhr.status >= 400) {
                 showDelay = 0;
+                suffix = " (" + response.xhr.status + ")";
+                if (response.xhr.status >= 500 && response.xhr.status < 600) {
+                    server_error = true;
+                }
             } else {
 
                 /**
@@ -532,7 +538,6 @@
                 showDelay = 2000;
             }
 
-            var suffix = (response.xhr.status >= 400 ? " (" + response.xhr.status + ")" : "");
             msg.append($("<p style='font-size: 120%; margin-bottom: 25px'>")
                 .append($("<b>")
                     .html($.usosCore.lang({
@@ -562,8 +567,6 @@
                         });
                 })
             );
-
-            var server_error = response.xhr.status >= 500 && response.xhr.status < 600;
 
             if (server_error) {
                 ul.append($("<li>").html($.usosCore.lang(
