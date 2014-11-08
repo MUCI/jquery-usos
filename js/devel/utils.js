@@ -100,6 +100,29 @@
         return $result.children();
     };
 
+    var _getScrollDimensions = function(e) {
+        var w, h;
+        if (jQuery.contains(document.documentElement, e[0])) {
+            /* Attached. */
+            w = e[0].scrollWidth;
+            h = e[0].scrollHeight;
+        } else {
+            /* Detached. We need to attach temporarily. */
+            var tmp = $("<div>").append(e).css({
+                position: "absolute",
+                visibility: "hidden"
+            });
+            $("body").prepend(tmp);
+            w = tmp[0].scrollWidth;
+            h = tmp[0].scrollHeight;
+            tmp.detach();
+        }
+        return {
+            width: w,
+            height: h
+        };
+    };
+
     /**
      * Convert a content parameter (passed as the "content" option to various
      * jQuery-USOS functions and widgets) to HTML string, suitable to be used
@@ -107,6 +130,9 @@
      *
      * Currently, tooltipster is used by various other plugins, that's why this
      * needs to be put in the utils module.
+     *
+     * This might be slow and should be called lazily, especially if autoWidth
+     * is used.
      */
     var _tooltipster_html = function(obj, autoWidth) {
 
@@ -128,6 +154,10 @@
             });
         }
 
+        /* Wrap in a single element. */
+
+        $content = $("<div>").append($content);
+
         /* Tooltips should not be too wide. We need to guess a proper max-width
          * for the given content. We'll use simple heuristics, based on the
          * length of the text given. */
@@ -135,22 +165,25 @@
         if (autoWidth) {
             var len = $content.text().length;
             var maxWidth;
-            if (len < 30) {
-                maxWidth = "auto";
-            } else if (len < 300) {
-                maxWidth = "300px";
+            if (len < 300) {
+                maxWidth = 300;
             } else if (len < 1200) {
                 /* We don't want it to be too high, so it is better to make it wider. */
                 var scale = 1.0 - ((1200 - len) / 900.0);
-                maxWidth = (300 + 300 * scale) + "px";
+                maxWidth = 300 + 300 * scale;
             } else {
-                maxWidth = "600px";
+                maxWidth = 600;
             }
-            $content = $("<div>")
-                .append($content)
-                .css("max-width", maxWidth);
+
+            /* Detect if we're not overflowing. If we do, then expand further. */
+
+            $content.css("max-width", maxWidth);
+            var scrollWidth = _getScrollDimensions($content).width;
+            if (scrollWidth > maxWidth) {
+                $content.css("max-width", scrollWidth);
+            }
         }
-        return $("<div>").append($content);
+        return $content;
     };
 
     $[NS] = {

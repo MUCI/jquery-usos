@@ -17,6 +17,16 @@
         _userContent: null,
 
         _create: function() {
+            var widget = this;
+
+            /* Lazy initialization. */
+
+            widget.element.one("mouseover focus", function() {
+                widget._create2();
+            });
+        },
+
+        _create2: function() {
 
             var widget = this;
 
@@ -101,6 +111,7 @@
                     widget._showDialog();
                 }
             });
+            widget.element.tooltipster('show');
         },
 
         _showDialog: function() {
@@ -155,7 +166,7 @@
                     $.usosCore._console.warn("Invalid value for showAs:", value);
                 }
 
-                return ($.usosUtils._tooltipster_html(userContent).text().length < 1300);
+                return ($.usosUtils._tooltipster_html(userContent, false).text().length < 1300);
             }();
 
             var tooltipContent;

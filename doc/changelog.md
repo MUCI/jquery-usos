@@ -1,6 +1,10 @@
 jQuery-USOS Change Log
 ======================
 
+  * **BETA branch** - *(unreleased)*
+
+    * 1.3.4.1: Changed the algorithm of width computation in usosTip.
+
   * **Version 1.3.4** - *2014-10-31*
 
     * Fixed [$.usosCore.panic](api/core.panic.md) - starting from 1.3 it didn't
