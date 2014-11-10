@@ -15,12 +15,14 @@
         defaultElement: "<span>",
         _showOnHover: null,
         _userContent: null,
+        _created: false,
 
         _create: function() {
             var widget = this;
 
             /* Lazy initialization. */
 
+            widget.element.attr("tabindex", 0);
             widget.element.one("mouseover focus", function() {
                 widget._create2();
             });
@@ -29,6 +31,11 @@
         _create2: function() {
 
             var widget = this;
+
+            if (widget._created) {
+                return;
+            }
+            widget._created = true;
 
             var tooltipContent = null;
             var contentProvider = null;
@@ -83,7 +90,6 @@
                     });
                 }
             });
-            widget.element.attr("tabindex", 0);
             widget._on(widget.element, {
                 focus: function() { widget.element.tooltipster('show'); },
                 blur: function() { widget.element.tooltipster('hide'); },

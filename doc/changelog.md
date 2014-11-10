@@ -3,7 +3,9 @@ jQuery-USOS Change Log
 
   * **BETA branch** - *(unreleased)*
 
-    * 1.3.4.1: Changed the algorithm of width computation in usosTip.
+    * 1.3.4.2: Bugfix in usosTip lazy initialization.
+    * 1.3.4.1: Changed the algorithm of width computation in usosTip. Also
+      made initialization more lazy.
 
   * **Version 1.3.4** - *2014-10-31*
 
