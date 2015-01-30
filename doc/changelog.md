@@ -3,6 +3,8 @@ jQuery-USOS Change Log
 
   * **BETA branch** - *(unreleased)*
 
+    * 1.3.4.4: New font icons added. Changed fonts and line-heights in CSS.
+      $.usosCore._simpleDialog function added (undocumented beta).
     * 1.3.4.3: New font icons added.
     * 1.3.4.2: Bugfix in usosTip lazy initialization.
     * 1.3.4.1: Changed the algorithm of width computation in usosTip. Also
