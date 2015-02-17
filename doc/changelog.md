@@ -3,6 +3,8 @@ jQuery-USOS Change Log
 
   * **BETA branch** - *(unreleased)*
 
+    * 1.3.4.5: Use public_subfaculty_count (instead of subfaculty_count).
+      Requires USOS API 6.0.1.0-12.
     * 1.3.4.4: New font icons added. Changed fonts and line-heights in CSS.
       $.usosCore._simpleDialog function added (undocumented beta).
     * 1.3.4.3: New font icons added.

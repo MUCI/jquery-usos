@@ -115,7 +115,7 @@
                         "id|profile_url|name|phone_numbers|homepage_url|postal_address|" +
                         "path[id|profile_url|name]|" +
                         "static_map_urls[400x200]|logo_urls[100x100]|" +
-                        "stats[programme_count|course_count|staff_count|subfaculty_count]"
+                        "stats[programme_count|course_count|staff_count|public_subfaculty_count]"
                     )
                 }
             });
@@ -190,7 +190,7 @@
             );
             appendStat(
                 "ua-icon-tree",
-                fac.stats.subfaculty_count,
+                fac.stats.public_subfaculty_count,
                 "podjednostka", "podjednostki", "podjednostek",
                 "subfaculty", "subfaculties"
             );
