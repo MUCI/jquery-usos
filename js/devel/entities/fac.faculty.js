@@ -114,7 +114,7 @@
                     fields: (
                         "id|profile_url|name|phone_numbers|homepage_url|postal_address|" +
                         "path[id|profile_url|name]|" +
-                        "static_map_urls[400x200]|logo_urls[100x100]|" +
+                        "static_map_urls[400x200]|cover_urls[400x200]|logo_urls[100x100]|" +
                         "stats[programme_count|course_count|staff_count|public_subfaculty_count]"
                     )
                 }
@@ -135,7 +135,11 @@
 
             /* Cover image */
 
-            if (fac.static_map_urls['400x200'] != null) {
+            if (fac.cover_urls['400x200'] != null) {
+                badge.find(".ua-cover")
+                    .css("background-image", "url(" + fac.cover_urls['400x200'] + ")");
+            }
+            else if (fac.static_map_urls['400x200'] != null) {
                 badge.find(".ua-cover")
                     .css("background-image", "url(" + fac.static_map_urls['400x200'] + ")");
             }
