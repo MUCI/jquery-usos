@@ -19,10 +19,11 @@ Requirements
 
 ### Debug version
 
-If you intend to debug jQuery-USOS, then probably you'll need to include all the
-fields separately (instead of the bundled and minified package). Please note,
-that **some of the third-party plugins were modified** to work properly with
-jQuery-USOS! You should use the versions included in this repository.
+If you intend to develop (or debug) jQuery-USOS, then probably you'll need to
+include all the files separately (instead of the bundled and minified package).
+Please note, that **some of the third-party plugins were modified** to work
+properly with jQuery-USOS! You should use the versions included in this
+repository.
 
 
 Setup your own USOS API Proxy
@@ -35,7 +36,8 @@ when calling [$.usosCore.init](https://github.com/MUCI/jquery-usos/blob/master/d
 
 USOS API is using OAuth 1.0, which does not provide a JavaScript flow.
 That means that jQuery-USOS cannot handle OAuth on itself. You will
-need to set up USOS API proxy if you need to access **non-anonymous** methods.
+need to set up USOS API proxy if you need to access **non-anonymous** methods
+(and you most probably **will** need to).
 
 ### Some guidelines
 

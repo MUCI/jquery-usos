@@ -93,28 +93,28 @@
             widget._on(widget.element, {
                 focus: function() { widget.element.tooltipster('show'); },
                 blur: function() { widget.element.tooltipster('hide'); },
-                click: function() {
+                click: function(e, extra) {
 
                     if (widget._showOnHover) {
                         return;
                     }
 
-                    widget.element.trigger('blur');
+                    if (!extra || (!extra.fromKeypress)) {
+                        widget.element.trigger('blur');
+                    }
 
                     widget._showDialog();
                 },
                 keypress: function(e) {
 
-                    if (widget._showOnHover) {
-                        return;
-                    }
+                    var key = e.keyCode || e.which;
 
-                    if (e.which && e.which != 13 && e.which != 32) {
+                    if (key == 13 || key == 32) {
                         /* Ignore all keypresses other than space and enter */
-                        return;
+                        e.preventDefault();
+                        e.stopPropagation();
+                        widget.element.trigger("click", [{fromKeypress: true}]);
                     }
-
-                    widget._showDialog();
                 }
             });
             widget.element.tooltipster('show');

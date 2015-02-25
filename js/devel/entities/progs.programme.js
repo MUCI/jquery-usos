@@ -68,7 +68,15 @@
                     );
                     div.find(".ua-match").html(item.match);
                     div.find("img").attr("src", item.programme.faculty.logo_urls['50x50']);
-                    div.find(".ua-tagline").append($("<span class='ua-note'>").text($.usosCore.lang(item.programme.faculty.name)));
+                    if (div.find(".ua-match").text().indexOf(item.programme.id) == -1) {
+                        div.find(".ua-match").append(" ");
+                        div.find(".ua-match").append(
+                            $("<span class='ua-note'>").text(item.programme.id)
+                        );
+                    }
+                    div.find(".ua-tagline").append(
+                        $("<span class='ua-note'>").text($.usosCore.lang(item.programme.faculty.name))
+                    );
                     return div;
                 },
                 affector: function(programme_ids) {

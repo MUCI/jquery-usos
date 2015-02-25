@@ -5,7 +5,7 @@ rem * This is a simple build script template. I use it to build a new
 rem * version from the sources kept in my copy of the USOSweb project.
 rem * Currently this works in my personal environment only.
 
-set VERSION=1.3.4.6
+set VERSION=1.3.4.7
 
 set USOSWEB=D:/PRIV/Projekty/usosweb
 set DEST=D:/PRIV/Projekty/jquery-usos
@@ -50,6 +50,8 @@ echo /*!> %DEST%/js/tmp1.js
 echo  * jQuery-USOS %VERSION% *BUNDLE VERSION* -- this file includes all jQuery-USOS>> %DEST%/js/tmp1.js
 echo  * JavaScript dependencies except jQuery and jQuery-UI.>> %DEST%/js/tmp1.js
 echo  */>> %DEST%/js/tmp1.js
+echo. >> %DEST%/js/tmp1.js
+cat %DEST%/js/jquery.autogrowtextarea.js >> %DEST%/js/tmp1.js
 echo. >> %DEST%/js/tmp1.js
 cat %DEST%/js/jquery.ba-bbq-1.2.1.js >> %DEST%/js/tmp1.js
 echo. >> %DEST%/js/tmp1.js

@@ -206,12 +206,12 @@
 
             /* Logo */
 
-            badge.find('.ua-logo').append($("<a>")
+            badge.find('.ua-logo').append($("<div>").append($("<a>")
                 .attr("href", fac.profile_url)
                 .append($("<img>")
                     .attr("src", fac.logo_urls["100x100"])
                 )
-            );
+            ));
 
             /* Address, phone numbers, home page */
 

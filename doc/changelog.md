@@ -3,6 +3,10 @@ jQuery-USOS Change Log
 
   * **BETA branch** - *(unreleased)*
 
+    * 1.3.4.7: Better keyboard support in usosTip and _usosFeedback widgets.
+      Fixed problems in faculty badge in Firefox. usosTextbox fields will now
+      "auto grow" on focus. Selectors for entity/progs/programme will always
+      contain the programme ID.
     * 1.3.4.6: Display faculty covers in badges. Requires USOS API 6.0.1.0-13.
     * 1.3.4.5: Use public_subfaculty_count (instead of subfaculty_count).
       Requires USOS API 6.0.1.0-12.

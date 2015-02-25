@@ -668,6 +668,9 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 }
 .ua-badge-fac td.ua-logo {
     width: 120px;
+    vertical-align: top;
+}
+.ua-badge-fac td.ua-logo > div {
     position: relative;
 }
 .ua-badge-fac td.ua-logo img {
