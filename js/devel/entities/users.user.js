@@ -319,16 +319,23 @@
 
             var compressedHelper = function(sps, li) {
                 var tipContent = $("<div>");
+                var uniqueCount = 0;
+                var usedIds = {};
                 $.each(sps, function(i, sp) {
-                    tipContent.append(makeLine(
-                        $.usosEntity.label("entity/progs/programme", sp.programme)
-                    ));
+                    var id = sp.programme.id;
+                    if (!usedIds.hasOwnProperty(id)) {
+                        usedIds[id] = true;
+                        uniqueCount++;
+                        tipContent.append(makeLine(
+                            $.usosEntity.label("entity/progs/programme", sp.programme)
+                        ));
+                    }
                 });
                 li.append($.usosCore.lang(" (na ", " (on "));
                 var link = $("<span class='ua-link ua-no-underline'>");
                 li.append(link);
                 link
-                    .append(sps.length + " ")
+                    .append(uniqueCount + " ")
                     .append($.usosCore.lang("programach", "programmes"))
                     .usosTip({
                         content: tipContent,

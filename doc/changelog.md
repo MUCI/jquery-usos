@@ -3,6 +3,7 @@ jQuery-USOS Change Log
 
   * **BETA branch** - *(unreleased)*
 
+    * 1.3.4.8: Skip repeated programmes in user badge.
     * 1.3.4.7: Better keyboard support in usosTip and _usosFeedback widgets.
       Fixed problems in faculty badge in Firefox. usosTextbox fields will now
       "auto grow" on focus. Selectors for entity/progs/programme will always
