@@ -34,6 +34,7 @@
             entityURLs: {
                 /* "entityCode": value, etc. See docs. */
             },
+            panicCallback: null,
             _requestDelay: 0
         };
         mydata.settings = $.extend(true, {}, defaultSettings, options);
@@ -643,6 +644,12 @@
         };
 
         setTimeout(showIt, showDelay);
+        if (mydata.settings.panicCallback) {
+            setTimeout(function() {
+                mydata.settings.panicCallback(response);
+            }, 100);
+        }
+
         return deferred.promise();
     };
 

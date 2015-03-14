@@ -3,6 +3,7 @@ jQuery-USOS Change Log
 
   * **BETA branch** - *(unreleased)*
 
+    * 1.3.4.10: Global `panicCallback` option added.
     * 1.3.4.9: `response.xhr.usosapiFetchOptions` added in usosXHR's
       `fail(response)`. Minor changes in default fonts and appearance of some
       widgets.
