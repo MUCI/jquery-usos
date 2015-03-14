@@ -199,9 +199,10 @@
                 }
             }
 
-            /* Add the xhr field. */
+            /* Add the xhr and usosapiFetchOptions fields. */
 
             response.xhr = xhr;
+            response.xhr.usosapiFetchOptions = options;
 
             if ((xhr.status == 0) && mydata.unloading && (!options.errorOnUnload)) {
 
@@ -681,7 +682,8 @@
     var _simpleDialog = function(opts) {
         var options = $.extend({}, {
             content: null,
-            width: "auto"
+            width: "auto",
+            grey: false
         }, opts);
         var deferred = $.Deferred();
         var closeLink = $("<a class='ua-close-link'><span class='ua-icon ua-icon-16 ua-icon-close'></span></a>");
@@ -690,7 +692,7 @@
             .append(closeLink)
             .append(options.content);
         div.dialog({
-            dialogClass: "ua-panic-dialog",
+            dialogClass: "ua-panic-dialog" + (options.grey ? " ua-panic-dialog-grey" : ""),
             resizable: false,
             modal: true,
             width: options.width,

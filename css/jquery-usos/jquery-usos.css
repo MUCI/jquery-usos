@@ -870,6 +870,7 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ui-dialog.ua-panic-dialog .ui-dialog-titlebar { display: none; }
 .ui-dialog.ua-panic-dialog .ui-dialog-content { padding: 25px 25px 25px 25px; overflow: visible; }
 .ui-dialog.ua-panic-dialog.ua-scrollable .ui-dialog-content { overflow-x: auto; overflow-y: scroll; }
+.ui-dialog.ua-panic-dialog.ua-panic-dialog-grey { background: #f7f7f7; }
 
 .ui-dialog.ua-feedback-dialog { border-radius: 5px; box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.5); background: #eee; }
 .ui-dialog.ua-feedback-dialog .ui-dialog-titlebar { display: none; }

@@ -3,6 +3,9 @@ jQuery-USOS Change Log
 
   * **BETA branch** - *(unreleased)*
 
+    * 1.3.4.9: `response.xhr.usosapiFetchOptions` added in usosXHR's
+      `fail(response)`. Minor changes in default fonts and appearance of some
+      widgets.
     * 1.3.4.8: Skip repeated programmes in user badge.
     * 1.3.4.7: Better keyboard support in usosTip and _usosFeedback widgets.
       Fixed problems in faculty badge in Firefox. usosTextbox fields will now
