@@ -15,10 +15,27 @@
         defaultElement: "<span>",
         _showOnHover: null,
         _userContent: null,
+        _created: false,
 
         _create: function() {
+            var widget = this;
+
+            /* Lazy initialization. */
+
+            widget.element.attr("tabindex", 0);
+            widget.element.one("mouseover focus", function() {
+                widget._create2();
+            });
+        },
+
+        _create2: function() {
 
             var widget = this;
+
+            if (widget._created) {
+                return;
+            }
+            widget._created = true;
 
             var tooltipContent = null;
             var contentProvider = null;
@@ -73,34 +90,34 @@
                     });
                 }
             });
-            widget.element.attr("tabindex", 0);
             widget._on(widget.element, {
                 focus: function() { widget.element.tooltipster('show'); },
                 blur: function() { widget.element.tooltipster('hide'); },
-                click: function() {
+                click: function(e, extra) {
 
                     if (widget._showOnHover) {
                         return;
                     }
 
-                    widget.element.trigger('blur');
+                    if (!extra || (!extra.fromKeypress)) {
+                        widget.element.trigger('blur');
+                    }
 
                     widget._showDialog();
                 },
                 keypress: function(e) {
 
-                    if (widget._showOnHover) {
-                        return;
-                    }
+                    var key = e.keyCode || e.which;
 
-                    if (e.which && e.which != 13 && e.which != 32) {
+                    if (key == 13 || key == 32) {
                         /* Ignore all keypresses other than space and enter */
-                        return;
+                        e.preventDefault();
+                        e.stopPropagation();
+                        widget.element.trigger("click", [{fromKeypress: true}]);
                     }
-
-                    widget._showDialog();
                 }
             });
+            widget.element.tooltipster('show');
         },
 
         _showDialog: function() {
@@ -155,7 +172,7 @@
                     $.usosCore._console.warn("Invalid value for showAs:", value);
                 }
 
-                return ($.usosUtils._tooltipster_html(userContent).text().length < 1300);
+                return ($.usosUtils._tooltipster_html(userContent, false).text().length < 1300);
             }();
 
             var tooltipContent;

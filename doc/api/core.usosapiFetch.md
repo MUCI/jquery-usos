@@ -166,7 +166,9 @@ usosXHR object
 --------------
 
 It implements the **Promise** interface (as `jqXHR` does) and the `abort()`
-method. However, it doesn't expose any other `jqXHR` methods.
+method. However, it doesn't expose any other `jqXHR` methods - it is
+(purposefully) a **subset** of `jqXHR`. You can still get the original `jqXHR`
+object, but only via the `fail` method callback.
 
 ### .abort()
 
@@ -189,7 +191,10 @@ Part of the *Promise* interface. The callback doesn't take any arguments.
     least the following keys:
     * **message** - a short reason for the error, intended to be read **by
       developers only**.
-    * **xhr** - the underlying `jqXHR` object.
+    * **xhr** - the underlying `jqXHR` object, **extended** with a single extra
+      field:
+      * **usosapiFetchOptions** - the complete set of parameters used by the
+        `usosapiFetch` method in this request.
   * **If any response has been received** from USOS API, then the `response`
     object will contain the parsed USOS API response (plus the `xhr` entry).
   * **If no response has been received** (or the browser did not allow us to

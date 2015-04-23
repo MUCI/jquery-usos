@@ -41,9 +41,16 @@
             if (widget.options.placeholder) {
                 input.attr('placeholder', $.usosCore.lang(widget.options.placeholder));
             }
-            input.on("change", function(e) {
-                widget.options.value = input.val();
-                widget._trigger("change", e);
+            widget._on(input, {
+                change: function(e) {
+                    widget.options.value = input.val();
+                    widget._trigger("change", e);
+                },
+                focus: function() {
+                    if (widget.options.multiline) {
+                        input.autoGrow();
+                    }
+                }
             });
         },
 

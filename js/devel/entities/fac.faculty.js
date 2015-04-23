@@ -114,8 +114,8 @@
                     fields: (
                         "id|profile_url|name|phone_numbers|homepage_url|postal_address|" +
                         "path[id|profile_url|name]|" +
-                        "static_map_urls[400x200]|logo_urls[100x100]|" +
-                        "stats[programme_count|course_count|staff_count|subfaculty_count]"
+                        "static_map_urls[400x200]|cover_urls[400x200]|logo_urls[100x100]|" +
+                        "stats[programme_count|course_count|staff_count|public_subfaculty_count]"
                     )
                 }
             });
@@ -135,7 +135,11 @@
 
             /* Cover image */
 
-            if (fac.static_map_urls['400x200'] != null) {
+            if (fac.cover_urls['400x200'] != null) {
+                badge.find(".ua-cover")
+                    .css("background-image", "url(" + fac.cover_urls['400x200'] + ")");
+            }
+            else if (fac.static_map_urls['400x200'] != null) {
                 badge.find(".ua-cover")
                     .css("background-image", "url(" + fac.static_map_urls['400x200'] + ")");
             }
@@ -161,6 +165,9 @@
             var stats = badge.find('.ua-stats div');
             var tip = $("<table class='ua-tool-num-stats'>");
             var appendStat = function(iconClass, n, pl1, pl2, pl5, en1, en2) {
+                if (n === null) {
+                    return;  // issue #11215
+                }
                 stats.append($("<div class='ua-stat-entry'>")
                     .append($("<span class='ua-icon ua-icon-16 ua-icon-inline'>").addClass(iconClass))
                     .append($("<span>").text(n))
@@ -190,7 +197,7 @@
             );
             appendStat(
                 "ua-icon-tree",
-                fac.stats.subfaculty_count,
+                fac.stats.public_subfaculty_count,
                 "podjednostka", "podjednostki", "podjednostek",
                 "subfaculty", "subfaculties"
             );
@@ -202,12 +209,12 @@
 
             /* Logo */
 
-            badge.find('.ua-logo').append($("<a>")
+            badge.find('.ua-logo').append($("<div>").append($("<a>")
                 .attr("href", fac.profile_url)
                 .append($("<img>")
                     .attr("src", fac.logo_urls["100x100"])
                 )
-            );
+            ));
 
             /* Address, phone numbers, home page */
 

@@ -32,8 +32,9 @@
                 }
             },
             entityURLs: {
-                /* "entityCode": value, etc. */
+                /* "entityCode": value, etc. See docs. */
             },
+            panicCallback: null,
             _requestDelay: 0
         };
         mydata.settings = $.extend(true, {}, defaultSettings, options);
@@ -199,9 +200,10 @@
                 }
             }
 
-            /* Add the xhr field. */
+            /* Add the xhr and usosapiFetchOptions fields. */
 
             response.xhr = xhr;
+            response.xhr.usosapiFetchOptions = options;
 
             if ((xhr.status == 0) && mydata.unloading && (!options.errorOnUnload)) {
 
@@ -642,6 +644,12 @@
         };
 
         setTimeout(showIt, showDelay);
+        if (mydata.settings.panicCallback) {
+            setTimeout(function() {
+                mydata.settings.panicCallback(response);
+            }, 100);
+        }
+
         return deferred.promise();
     };
 
@@ -678,12 +686,62 @@
         mydata.preloaderElement.append(elements);
     };
 
+    var _simpleDialog = function(opts) {
+        var options = $.extend({}, {
+            content: null,
+            width: "auto",
+            grey: false
+        }, opts);
+        var deferred = $.Deferred();
+        var closeLink = $("<a class='ua-close-link'><span class='ua-icon ua-icon-16 ua-icon-close'></span></a>");
+        var div = $("<div>")
+            .css("position", "relative")
+            .append(closeLink)
+            .append(options.content);
+        div.dialog({
+            dialogClass: "ua-panic-dialog" + (options.grey ? " ua-panic-dialog-grey" : ""),
+            resizable: false,
+            modal: true,
+            width: options.width,
+            height: "auto",
+            open: function(event, ui) {
+                $('.ui-widget-overlay').on('click', function() {
+                    $(this).siblings('.ui-dialog').find('.ui-dialog-content').dialog('close');
+                });
+            },
+            closeText: $.usosCore.lang("Zamknij", "Close"),
+            close: function() {
+                deferred.resolve();
+            },
+            show: {
+                effect: 'fade',
+                duration: 300
+            },
+            hide: {
+                effect: 'fade',
+                duration: 100
+            }
+        });
+        closeLink.on("click", function() {
+            div.dialog("close");
+        });
+
+        return deferred.promise();
+    };
+
     $[NS] = {
+
+        /* Undocumented methods. These don't have to stay backward-compatible
+         * (and may be removed). */
+
         _getSettings: function() { return mydata.settings; },
         _console: fixedConsole,
         _methodForwarder: _methodForwarder,
         _preload: _preload,
         _nlang: _nlang,
+        _simpleDialog: _simpleDialog,
+
+        /* Documented methods. */
 
         init: init,
         usosapiFetch: usosapiFetch,

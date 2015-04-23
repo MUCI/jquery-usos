@@ -41,7 +41,7 @@
 
             widget.fg.find("td").empty();
             widget.bg.add(widget.fg)
-                .css("z-index", _findZIndex(widget.element))
+                .css("z-index", _findZIndex(widget.element) + 1)
                 .css("left", widget.element.offset().left)
                 .css("top", widget.element.offset().top)
                 .css("width", widget.element.outerWidth())

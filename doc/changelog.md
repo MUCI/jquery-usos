@@ -1,6 +1,31 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.3.5** - *2015-04-23*
+
+    * **Requires USOS API 6.0.1.0-13** (or any later version).
+    * Enhancements and fixes in faculty [badges](api/widget.badge.md):
+      * Badges will include faculty cover images instead of static maps (if
+        cover images are available).
+      * Fixed a bug with "nulls" sometimes displayed in the statistics shown
+        in the upper part of the badge.
+      * Fixed other bug with wrong number of subfaculties displayed in the
+        statistics (`subfaculty_count` field was used instead of
+        `public_subfaculty_count`).
+      * Fixed display issues in Firefox.
+    * New font icons added. Changed fonts and line-heights in default widget
+      CSS.
+    * Programme [selectors](api/widget.selector.md) will not always contain
+      programme ID.
+    * Repeated study programmes will no longer be displayed in user badges.
+    * Changes in [usosTip widget](api/widget.usosTip.md). Initialization is
+      more lazy, and width is calculated with different heuristics. Also
+      fixed some issues regarding handling the widgets with keyboard.
+    * [usosTextbox widget](api/widget.textbox.md) will now autogrow upon focus.
+    * `panicCallback` option added in [$.usosCore.init](api/core.init.md).
+    * `response.xhr.usosapiFetchOptions` added in
+      [usosXHR](api/core.usosapiFetch.md)'s `fail(response)`.
+
   * **Version 1.3.4** - *2014-10-31*
 
     * Fixed [$.usosCore.panic](api/core.panic.md) - starting from 1.3 it didn't

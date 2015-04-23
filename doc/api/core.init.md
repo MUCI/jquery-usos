@@ -119,3 +119,9 @@ future, jQuery-USOS will retrieve default profile URLs from USOS API
 dynamically.
 
 See also: `$.usosEntity.*` family of functions.
+
+### panicCallback
+
+A function to be executed every time `$.usosCore.panic()` is called. The
+callback will receive the same `response` parameter as the `panic` did (most
+probably an `usosXHR` object). You might want to use it for logging purposes.
