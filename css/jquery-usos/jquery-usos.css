@@ -19,6 +19,11 @@ body.ua-stop-scrolling {
     font-size: 13px;
 }
 
+.ua-container a { text-decoration: none; color: #449; }
+.ua-container a:visited, .ua-container a:active { color: #449; }
+.ua-container a:hover { text-decoration: underline; color: #006; }
+
+
 .ua-link, .ui-widget-content .ua-link {
     color: #3b5998;
     text-decoration: none;
@@ -32,7 +37,7 @@ body.ua-stop-scrolling {
     color: #449;
     text-decoration: none;
 }
-.ua-ellipsis { /* to use, set nax-width manually */
+.ua-ellipsis { /* to use, set max-width manually */
     display: block;
     white-space: nowrap;
     overflow: hidden;
@@ -624,8 +629,11 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     padding: 0 0 0 0;
     text-shadow: 0 0 2px rgba(0,0,0,1.0);
     white-space: nowrap;
-    overflow: ellipsis;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 219px;
     opacity: 0.9;
+    display: block;
 }
 .ua-badge-fac .ua-cover .ua-ancestor a:hover {
     opacity: 0.99;

@@ -1,6 +1,10 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.3.6** - *2015-05-21*
+
+    * Fixes in CSS and images. Faculty badges should look better.
+
   * **Version 1.3.5** - *2015-04-23*
 
     * **Requires USOS API 6.0.1.0-13** (or any later version).
