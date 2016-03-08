@@ -1,6 +1,11 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.3.7** - *2016-03-08*
+
+    * `usosSelector` widget sometimes improperly called `search_history_affect`
+      method with `null` parameter.
+
   * **Version 1.3.6** - *2015-05-21*
 
     * Fixes in CSS and images. Faculty badges should look better.

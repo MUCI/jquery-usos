@@ -305,7 +305,8 @@
                         widget._trigger('change');
                         if (!widget._textarea.prop("disabled")) {
                             if (
-                                widget._entitySetup.affector
+                                cur != null
+                                && widget._entitySetup.affector
                                 && ($.usosCore._getSettings().usosAPIs['default'].user_id !== null)
                             ) {
                                 /* Affector function is responsible for calling proper
