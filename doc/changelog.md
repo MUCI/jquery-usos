@@ -1,6 +1,10 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.3.8** - *2016-04-11*
+
+    * Minor fixes in apitable plugin (alpha, undocumented).
+
   * **Version 1.3.7** - *2016-03-08*
 
     * `usosSelector` widget sometimes improperly called `search_history_affect`

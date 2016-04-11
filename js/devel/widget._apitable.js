@@ -18,7 +18,7 @@
     }
     InvisibleStateCoordinator.prototype.publishState = function(force) {
         var currentState = this.getState();
-        if ((!force) && (currentState == this.lastPublishedState))
+        if ((!force) && (currentState == this._lastPublishedState))
             return;
         this._lastPublishedState = currentState;
         this.onStateChanged(currentState);
@@ -57,7 +57,7 @@
     }
     UrlHashStateCoordinator.prototype.publishState = function(force) {
         var currentState = this.getState();
-        if ((!force) && (currentState == this.lastPublishedState))
+        if ((!force) && (currentState == this._lastPublishedState))
             return;
         this._lastPublishedState = currentState;
         this.onStateChanged(currentState);
