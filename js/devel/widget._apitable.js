@@ -519,7 +519,7 @@
                     }
                     widget.econtents.empty();
                     $.each(data.items, function(_, trData) {
-                        var tr = $("<tr>");
+                        var tr = $("<a class='ua-tr'>");
                         tr.data(NS, trData);
                         $.each(widget.options.columns, function(_, column) {
                             var td;
@@ -588,13 +588,18 @@
                                         position: "top",
                                         delayed: true
                                     })
-                                    .click(function() {
-                                        action.click(trData);
-                                        return false;
-                                    })
                                     .keypress(function(e) {
                                         if (e.which == 13) { $(this).trigger("click"); }
                                     });
+                                if (action.click) {
+                                    div.on("click", function() {
+                                        action.click(trData);
+                                        return false;
+                                    });
+                                }
+                                if (action.hrefProvider) {
+                                    div.attr("href", action.hrefProvider(trData));
+                                }
                                 if ((action.isVisible) && (!action.isVisible(trData))) {
                                     div.css("visibility", "hidden");
                                 }
@@ -606,13 +611,23 @@
                     });
                     /* Apply hover/click actions. */
                     if (widget.defaultAction) {
-                        widget._on(widget.econtents.find("tr"), {
+                        var trs = widget.econtents.find("a.ua-tr");
+                        widget._on(trs, {
                             mouseenter: function(e) { $(e.currentTarget).addClass("ua-hovered"); },
-                            mouseleave: function(e) { $(e.currentTarget).removeClass("ua-hovered"); },
-                            click: function(e) {
-                                widget.defaultAction.click($(e.currentTarget).data(NS));
-                            }
+                            mouseleave: function(e) { $(e.currentTarget).removeClass("ua-hovered"); }
                         });
+                        if (widget.defaultAction.click) {
+                            widget._on(trs, {
+                                click: function(e) {
+                                    widget.defaultAction.click($(e.currentTarget).data(NS));
+                                }
+                            });
+                        }
+                        if (widget.defaultAction.hrefProvider) {
+                            trs.each(function() {
+                                $(this).attr("href", widget.defaultAction.hrefProvider($(this).data(NS)));
+                            });
+                        }
                     }
                     /* Next/Prev buttons */
                     widget.enextPage.button(data.next_page ? "enable" : "disable");

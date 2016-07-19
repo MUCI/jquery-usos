@@ -797,6 +797,9 @@ body .ui-tooltip {
     font-family: Tahoma, Helvetica, 'Segoe UI', Segoe, Arial, 'Lucida Grande', Verdana, sans-serif;
     font-size: 1em;
 }
+.ui-widget select {
+    color: #222222;
+}
 .ui-widget-content {
     border: 1px solid #aaaaaa;
     background: #ffffff url(images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
