@@ -675,11 +675,16 @@
                             ));
                             widget._updateSummary(notice);
                         } else {
-                            widget._updateSummary(
+                            var message = (
                                 $.usosCore.lang("Pokazywane elementy ", "Showing items ") +
                                 (widget.currentOffset + 1) + ".." +
                                 (widget.currentOffset + data.items.length)
                             );
+                            if (data.total) {
+                                message += $.usosCore.lang(" (spośród ", " (out of ");
+                                message += data.total + ")";
+                            }
+                            widget._updateSummary(message);
                         }
                     }
                 },

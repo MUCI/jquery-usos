@@ -1,6 +1,11 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.3.10** - *2016-07-29*
+
+    * Small bugfix in faculty badge (improper faculty URL in logo image).
+    * Minor fixes in apitable plugin (alpha, undocumented).
+
   * **Version 1.3.9** - *2016-07-19*
 
     * Minor fixes in apitable plugin (alpha, undocumented).
