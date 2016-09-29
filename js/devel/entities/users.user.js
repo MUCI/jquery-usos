@@ -72,7 +72,7 @@
                 suggestionRenderer: function(item) {
                     var $div = $(
                         "<div class='ua-usersuggestion'><table><tr>" +
-                        "<td class='ua-td1'><img/></td>" +
+                        "<td class='ua-td1'><img alt=''/></td>" +
                         "<td class='ua-td2'><div class='ua-match'></div><div class='ua-tagline'></div></td>" +
                         "</tr></table></div>"
                     );
@@ -209,7 +209,7 @@
 
             var badge = $(
                 "<div><table class='ua-container'><tr><td class='ua-td1'>" +
-                "<a class='ua-photo-link'><img class='ua-photo'/></a>" +
+                "<a class='ua-photo-link'><img class='ua-photo' alt=''/></a>" +
                 "</td><td class='ua-td2'>" +
                 "<div class='ua-td2top'><div class='ua-id-icon'>id</div>" +
                 "<div class='ua-name'></div><ul class='ua-functions'></ul></div>" +

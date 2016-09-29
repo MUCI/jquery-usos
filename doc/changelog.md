@@ -1,6 +1,11 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.3.11** - *2016-09-29*
+
+    * Accessibility improvements in [usosTip](api/widget.usosTip.md) and
+      [usosSelector](api/widget.usosSelector.md) widgets.
+
   * **Version 1.3.10** - *2016-07-29*
 
     * Small bugfix in faculty badge (improper faculty URL in logo image).

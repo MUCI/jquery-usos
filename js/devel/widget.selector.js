@@ -102,7 +102,7 @@
 
         _recreate: function() {
             var widget = this;
-
+            widget._uid = Math.random().toString(36).substring(2, 10);
             widget._entitySetup = _getEntitySetup(widget.options.entity);
             widget._knownItems = {};
 
@@ -130,6 +130,20 @@
             /* Discover, bind and extend key UI elements. */
 
             widget._textarea = widget.element.find("textarea");
+            var prompt = (
+                (widget.options.placeholder !== null)
+                ? $.usosCore.lang(widget.options.placeholder)
+                : widget._entitySetup.prompt
+            );
+            if (prompt) {
+                var label = $('<label class="ua-screen-reader-only">').attr("for", widget._uid);
+                label.text(prompt + $.usosCore.lang(
+                    " - Wpisz tekst i wciśnij enter aby wyszukać",
+                    " - Type text and press enter to search"
+                ));
+                widget._textarea.before(label);
+            }
+            widget._textarea.attr('id', widget._uid);
             var distanceToTop = widget.element.offset().top;
             var distanceToBottom = $(document).height() - (
                 widget.element.offset().top + widget.element.height()
@@ -138,15 +152,11 @@
             widget._textarea
                 .textext({
                     plugins: 'autocomplete tags focus prompt',
-                    prompt: (
-                        (widget.options.placeholder !== null)
-                        ? $.usosCore.lang(widget.options.placeholder)
-                        : widget._entitySetup.prompt
-                    ),
+                    prompt: prompt,
                     html: {
                         dropdown: (
                             '<div class="text-dropdown" style="min-width: 300px">' +
-                            '<div class="text-list"/></div>'
+                            '<div class="text-list" tabindex="-1"></div>'
                         )
                     },
                     autocomplete: {
@@ -170,7 +180,12 @@
                                 span.addClass("ua-more").html($.usosCore.lang(
                                     "Pokaż więcej wyników", "See more results"
                                 ));
-                            } else {
+                            } else if (suggestion == "more-hidden") {
+                                span.addClass("ua-more ua-more-hidden").html($.usosCore.lang(
+                                    "Pokaż wyniki", "See results"
+                                ));
+                            }
+                            else {
                                 span.html(widget._entitySetup.suggestionRenderer(
                                     widget._knownItems[suggestion]
                                 ));
@@ -235,6 +250,8 @@
                                         keys.push("more");
                                     } else if (keys.length == 0) {
                                         keys.push("empty");
+                                    } else if (keys.length > 0) {
+                                        keys.push("more-hidden");
                                     }
                                     $self.trigger('setSuggestions', { result: keys });
                                     widget._checkProgress();
@@ -255,9 +272,10 @@
                 .bind('isTagAllowed', function(e, data) {
                     if (data.tag == "empty") {
                         data.result = false;
+                        widget._popout();
                         return;
                     }
-                    if (data.tag == "more") {
+                    if (data.tag == "more" || data.tag == "more-hidden") {
                         widget._popout();
                         data.result = false;
                         return;
@@ -487,6 +505,8 @@
          */
         _popout: function() {
             var widget = this;
+            var uiElems = $('body > *');
+            uiElems.attr('aria-hidden', 'true');
             var div = $("<div>");
             $("body").addClass("ua-stop-scrolling");
             div.dialog({
@@ -499,6 +519,8 @@
                 closeText: $.usosCore.lang("Zamknij", "Close"),
                 close: function() {
                     $("body").removeClass("ua-stop-scrolling");
+                    uiElems.removeAttr('aria-hidden');
+                    widget._textarea.focus();
                     try {
                         div.usosProgressOverlay('destroy');
                     } catch(err) {}
@@ -520,36 +542,78 @@
                 } catch(err) {}
             }).done(function(data) {
                 div.append($.usosCore.lang(
-                    "<p class='ua-howto'><span class='if-query'>Wyniki dla zapytania <span class='query'></span>.<br></span>" +
-                    "Kliknij element, aby go wybrać. Wciśnij klawisz Esc, aby anulować.</p>",
+                    "<p class='ua-howto' tabindex='0'><span class='if-query'>Wyniki dla zapytania <span class='query'></span>.<br></span>" +
+                    "Kliknij element, aby go wybrać. Wciśnij klawisz Esc, aby zamknąć to okno. " +
+                    "<span class='ua-screen-reader-only'>Na liście wyników możesz poruszać się tabulatorem oraz strzałkami góra/dół.</span></p>",
 
-                    "<p class='ua-howto'><span class='if-query'>Search results for <span class='query'></span>.<br></span>" +
-                    "Kliknij element, aby go wybrać. Wciśnij klawisz Esc, aby anulować.</p>"
+                    "<p class='ua-howto tabindex='0'><span class='if-query'>Search results for <span class='query'></span>.<br></span>" +
+                    "Click to choose element. Press Esc, to cancel.</p>"
                 ));
-                if (widget._lastQuery) {
-                    div.find(".ua-howto .query").text(widget._lastQuery);
-                } else {
-                    div.find(".ua-howto .if-query").hide();
-                }
-                var itemsContainer = $("<div style='display: inline-block; text-align: center'>");
+                div.prepend('<span class="ua-close-button" aria-hidden="true"></span>');
+                div.find('.ua-close-button').bind('click', function(e) {
+                    e.preventDefault();
+                    div.dialog("close");
+                });
+                div.find('.ua-howto')
+                    .bind('keypress keydown', function(e) {
+                        if (e.keyCode == 40 || e.which == 40) {
+                            $('.ua-inline-suggestion').first().focus();
+                        }
+                    })
+                    .focus();
+                var itemsContainer = $("<ul style='display: inline-block; text-align: center; padding: 0;'>");
                 div.append(itemsContainer);
                 var items = widget._entitySetup.search.itemsExtractor(data);
-                $.each(items, function(_, item) {
+                $.each(items, function(index, item) {
                     var id = widget._entitySetup.idExtractor(item);
-                    var span = $("<span class='ua-inline-suggestion'>")
+                    var span = $("<li class='ua-inline-suggestion'> ")
                         .css("width", Math.max(300, widget._width()) - 4)
                         .html(widget._entitySetup.suggestionRenderer(item))
                         .attr("tabindex", 0)
+                        .attr("id", "ua-suggestion-id-" + index)
                         .on("focus", function() { $(this).addClass("text-selected"); })
                         .on("blur", function() { $(this).removeClass("text-selected"); })
                         .hover(
                             function() { $(this).addClass("text-selected"); },
-                            function() { $(this).removeClass("text-selected"); }
+                            function() {
+                                if (!($(this).is(":focus"))) {
+                                    $(this).removeClass("text-selected");
+                                }
+                            }
                         )
-                        .on("click keypress", function(e) {
-                            if (e.type == "keypress" && e.which && e.which != 13 && e.which != 32) {
-                                /* Ignore all keypresses other than space and enter */
+                        .on("click keypress keydown", function(e) {
+                            var keyCode = e.keyCode || e.which;
+                            if (
+                                (e.type == "keypress" || e.type == "keydown")
+                                && e.which != 13 && e.which != 9 && e.which != 27 && e.which != 32
+                                && e.which != 38 && e.which != 40
+                            ) {
+                                /* Ignore all keypresses other than enter, tab, escape, space, up and down arrow */
                                 return;
+                            }
+                            /* Keyboard access */
+                            switch(keyCode) {
+                                case 9: return true;
+                                case 27:
+                                    div.dialog("close");
+                                    return true;
+                                case 39: return true;
+                                case 38:
+                                    if ($(this).attr('id') == 'ua-suggestion-id-0') {
+                                        $('.ua-howto').focus();
+                                    } else {
+                                        $(this).prev().focus();
+                                    }
+                                    e.preventDefault();
+                                    return true;
+                                case 40:
+                                    if ($(this).attr('id') == 'ua-suggestion-id-19') {
+                                        $('.ua-warning').focus();
+                                    } else {
+                                        $(this).next().focus();
+                                    }
+                                    e.preventDefault();
+                                    return true;
                             }
                             var value;
                             if (widget.options.multi) {
@@ -566,20 +630,38 @@
                         });
                     itemsContainer.append(span);
                 });
+                if (items.length == 0) {
+                    $('.ua-howto').addClass('ua-warning').html($.usosCore.lang(
+                        "Brak wyników dla zapytania <span class='query'></span>. Aby zamknąć okno wciśnij klawisz Esc",
+
+                        "No results found for <span class='query></span>. Press Esc to close this window."
+                    )).removeClass('ua-howto');
+                }
                 if (items.length >= 20) {
                     div.append($.usosCore.lang(
-                        "<p class='ua-warning'><b>Wyświetlanych jest tylko 20 najlepszych trafień.</b> " +
+                        "<p class='ua-warning ua-focusvisible' tabindex='0'><b>Wyświetlanych jest tylko 20 najlepszych trafień.</b> " +
                         "Jeśli nadal nie możesz znaleźć, to zamknij okno i spróbuj " +
                         "doprecyzować swoje zapytanie. Na przykład, jeśli szukasz " +
                         "osoby, to możesz spróbować podać jej numer indeksu. Albo jeśli " +
-                        "szukasz przedmiotu, spróbuj podać jego kod.",
+                        "szukasz przedmiotu, spróbuj podać jego kod. "+
+                        "<span class='ua-screen-reader-only'>Wciśnij klawisz Esc aby zamknąć to okno</span>",
 
-                        "<p class='ua-warning'><b>Only the best 20 matches are displayed.</b> " +
+                        "<p class='ua-warning ua-focusvisible' tabindex='0'><b>Only the best 20 matches are displayed.</b> " +
                         "If you still have trouble with your search then close this window and try " +
                         "a more specific query. For example, if you're looking for a person " +
                         "then you might want to try providing his/her student ID. Or, if you're looking " +
-                        "for a course then try providing its code."
+                        "for a course then try providing its code. <span class='ua-screen-reader-only'>Press Esc, to cancel</span>"
                     ));
+                    div.find('.ua-warning').bind('keypress keydown', function(e) {
+                        if (e.keyCode == 38 || e.which == 38) {
+                            $('.ua-inline-suggestion').last().focus();
+                        }
+                    });
+                }
+                if (widget._lastQuery) {
+                    div.find(".ua-howto .query").text(widget._lastQuery);
+                } else {
+                    div.find(".ua-howto .if-query").hide().attr('aria-hidden', 'true');
                 }
             }).fail(function(response) {
                 $.usosCore.panic(response);
