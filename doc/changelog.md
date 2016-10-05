@@ -1,6 +1,11 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.3.12** - *2016-10-05*
+
+    * Accessibility improvements introduced in 1.3.11 have broken the apiTable
+      plugin. Fixed now.
+
   * **Version 1.3.11** - *2016-09-29*
 
     * Accessibility improvements in [usosTip](api/widget.usosTip.md) and

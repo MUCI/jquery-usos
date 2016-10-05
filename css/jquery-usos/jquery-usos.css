@@ -90,7 +90,8 @@ body.ua-stop-scrolling {
 .ua-table a {
     color: #449;
 }
-.ua-table.ua-ellipsis-tds > * > tr > td {
+.ua-table.ua-ellipsis-tds > * > tr > td,
+.ua-table.ua-ellipsis-tds > * > a.ua-tr > td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -126,38 +127,44 @@ body.ua-stop-scrolling {
 .ua-table > thead > tr > td.ua-actions {
     padding: 0 5px;
 }
-.ua-table > tbody > tr > td {
+.ua-table > tbody > a.ua-tr {
+    display: table-row;
+    color: unset;
+    text-decoration: unset;
+    cursor: auto;
+}
+.ua-table > tbody > a.ua-tr > td {
     vertical-align: middle;
     background: #f5f5f5;
     padding: 5px 8px;
     border-bottom: 1px solid #d3d3d3;
 }
-.ua-table > tbody > tr.ua-hovered > td {
+.ua-table > tbody > a.ua-tr.ua-hovered > td {
     background: #fff !important;
     cursor: pointer;
 }
 .ua-table > tbody > tr.ua-placeholder > td {
     padding: 60px;
 }
-.ua-table > tbody > tr > td.ua-strong {
+.ua-table > tbody > a.ua-tr > td.ua-strong {
     background: #f0f0f0;
     border-left: 1px solid #e1e1e1;
     border-right: 1px solid #e1e1e1;
 }
-.ua-table > tbody > tr > td.ua-actions {
+.ua-table > tbody > a.ua-tr > td.ua-actions {
     background: #fff;
     border-left: 1px solid #e1e1e1;
     border-right: 1px solid #e1e1e1;
     padding: 0 5px;
 }
-.ua-table > tbody > tr > td.ua-actions a.ua-action-icon {
+.ua-table > tbody > a.ua-tr > td.ua-actions a.ua-action-icon {
     float: left;
     cursor: pointer;
     padding: 1px 2px 2px 1px;
     opacity: 0.5;
 }
-.ua-table > tbody > tr > td.ua-actions a.ua-action-icon:hover,
-.ua-table > tbody > tr > td.ua-actions a.ua-action-icon:focus {
+.ua-table > tbody > a.ua-tr > td.ua-actions a.ua-action-icon:hover,
+.ua-table > tbody > a.ua-tr > td.ua-actions a.ua-action-icon:focus {
     background: #ddd;
     opacity: 1.0;
 }
