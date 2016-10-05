@@ -1,6 +1,12 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.4.0** - *2016-10-05*
+
+    * **Requires USOS API 6.2.0.0-8** (or any later version).
+    * [User badges](api/widget.badge.md) will now display previous names of the
+      user (in the "ID" section).
+
   * **Version 1.3.12** - *2016-10-05*
 
     * Accessibility improvements introduced in 1.3.11 have broken the apiTable
