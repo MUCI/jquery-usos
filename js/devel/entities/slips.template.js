@@ -79,7 +79,7 @@
                                 "Przejść do strony szablonu \"" + item.name + "\"?",
                                 "Go to the \"" + item.name + "\" template page?"
                             );
-                            if (confirm(msg)) {
+                            if (window.confirm(msg)) {
                                 document.location = url;
                             }
                         });
