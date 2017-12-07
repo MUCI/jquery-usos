@@ -28,6 +28,7 @@ const webpackConfigCommon = require('./webpack.common.config.js');
  */
 const PATHS = {
   examples: path.resolve(__dirname, '../examples'),
+  examplesOut: path.resolve(__dirname, '../docs/index.html'),
   vendor: path.resolve(__dirname, '../src/vendor'),
   requireJS: path.resolve(__dirname, '../src/js'),
   requireEntities: path.resolve(__dirname, '../src/js/entities'),
@@ -146,4 +147,10 @@ gulp.task('dev', function(){
  
 gulp.task('release', function(){
   gulp.start('build:release');
+});
+
+gulp.task('examples', function(){
+  fiddleMount('*', PATHS.examples, (content) => {
+    fs.writeFileSync(PATHS.examplesOut, content);
+  });
 });

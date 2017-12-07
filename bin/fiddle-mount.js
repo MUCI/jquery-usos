@@ -26,7 +26,6 @@ const parse = (exampleName, examplesPath, callback, onlyBody=false) => {
   if(exampleName == '*') {
     
     const examples = fs.readdirSync(path.resolve(__dirname, examplesPath));
-    console.log("availeable examples = "+(examples.join("|")));
     
     const examplesJoined = (acc) => {
               const result = `
