@@ -13,9 +13,70 @@ const fs = require('fs');
 /*
  * Generate html output for given example.
  * Calls callback(contents) when the contents of the output html file is generated.
+ *
+ * If exampleName is null then the index file with links is generated.
+ * If exampleName is '*' then one big file with all examples is generated.
+ *
+ * If onlyBody is true then the contents of <body></body> is returned.
  */
-module.exports = (exampleName, examplesPath, callback) => {
+const parse = (exampleName, examplesPath, callback, onlyBody=false) => {
   const exampleDir = path.resolve(__dirname, examplesPath, exampleName);
+  
+  // Make one big html out of all examples
+  if(exampleName == '*') {
+    
+    const examples = fs.readdirSync(path.resolve(__dirname, examplesPath));
+    console.log("availeable examples = "+(examples.join("|")));
+    
+    const examplesJoined = (acc) => {
+              const result = `
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Example ${exampleName}</title>
+  <meta name="description" content="${exampleName} jquery-usos example">
+  <meta name="author" content="Piotr Styczyński">
+  
+  <script src="./js/jquery-1.9.1.js"></script>
+  <script src="./js/jquery-migrate-1.1.0.js"></script>
+  <script src="./js/jquery-ui-1.10.1.custom.js"></script>
+  <script src="./lib/jquery-usos.min.js"></script>
+  
+  <link rel="stylesheet" href="./css/jquery-ui-1.10.1.custom.css">
+  <link rel="stylesheet" href="./lib/jquery-usos.css">
+
+  
+</head>
+
+<body>
+
+${acc}
+
+</body>
+
+</html>
+`;
+       callback(result);
+    };
+    
+    const exampleJoinCallback = (acc, i) => {
+      if(i >= examples.length) {
+        examplesJoined(acc);
+        return;
+      }
+      parse(examples[i], examplesPath, (result) => {
+        exampleJoinCallback(acc + '\n' + result, i+1);
+      }, true);
+    };
+    
+    exampleJoinCallback('', 0);
+    
+    return;
+  }
+  
   
   if(!exampleName) {
     const examplesList = fs.readdirSync(examplesPath).map(function(name){
@@ -26,6 +87,12 @@ module.exports = (exampleName, examplesPath, callback) => {
 `;
     }).join('');
     
+    const body = `
+  <b>All available jquery-usos examples:</b>
+  <ul>
+    ${examplesList}
+  </ul>
+`;
     
     const result = `
 <!doctype html>
@@ -40,15 +107,17 @@ module.exports = (exampleName, examplesPath, callback) => {
   
 </head>
 <body style="color: black;">
-  <b>All available jquery-usos examples:</b>
-  <ul>
-    ${examplesList}
-  </ul>
+  ${body}
 </body>
 </html>
 `;
   
-    callback(result);
+    if(onlyBody) {
+      callback(body);
+    } else {
+      callback(result);
+    }
+        
     return;
   }
   
@@ -64,6 +133,17 @@ module.exports = (exampleName, examplesPath, callback) => {
       fs.readFile(path.resolve(exampleDir, 'demo.html'), (err, data) => {
         if (err) throw err;
         const htmlContents = data.toString();
+        
+            const body = `
+${htmlContents}
+<style>
+${cssContents}
+</style>
+
+<script>
+${jsContents}
+</script>
+`;
         
         const result = `
 <!doctype html>
@@ -87,23 +167,23 @@ module.exports = (exampleName, examplesPath, callback) => {
   
 </head>
 
-<style>
-${cssContents}
-</style>
-
-<script>
-${jsContents}
-</script>
-
 <body>
-${htmlContents}
+
+${body}
+
 </body>
 
 </html>
 `;
 
-        callback(result);
+        if(onlyBody) {
+          callback(body);
+        } else {
+          callback(result);
+        }
       });
     });
   });
 };
+
+module.exports = parse;
