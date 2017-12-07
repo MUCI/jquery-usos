@@ -16,7 +16,7 @@ app.use('/example/lib', express.static('../lib'));
 
 app.use('/example/js', express.static('../src/vendor'));
 
-app.use('/example/css', express.static('../jquery-ui-theme'));
+app.use('/example/css', express.static('../externals'));
 
 
 app.get('/', function(req, res) {

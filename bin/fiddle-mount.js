@@ -46,6 +46,7 @@ const parse = (exampleName, examplesPath, callback, onlyBody=false) => {
   <script src="./lib/jquery-usos.min.js"></script>
   
   <link rel="stylesheet" href="./css/jquery-ui-1.10.1.custom.css">
+  <link rel="stylesheet" href="./css/tooltipster.css">
   <link rel="stylesheet" href="./lib/jquery-usos.css">
 
   
@@ -162,6 +163,7 @@ ${jsContents}
   <script src="./lib/jquery-usos.min.js"></script>
   
   <link rel="stylesheet" href="./css/jquery-ui-1.10.1.custom.css">
+  <link rel="stylesheet" href="./css/tooltipster.css">
   <link rel="stylesheet" href="./lib/jquery-usos.css">
 
   
