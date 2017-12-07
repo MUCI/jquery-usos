@@ -10,6 +10,8 @@ $(function() {
 
     $(function() {
         // Resize the result pane for a better view!
-        $.usosCore.panic();
+        $('#pleasePanic').click(function() {
+          $.usosCore.panic();
+        });
     });
 });

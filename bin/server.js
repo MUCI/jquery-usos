@@ -16,7 +16,7 @@ app.use('/example/lib', express.static('../lib'));
 
 app.use('/example/js', express.static('../src/vendor'));
 
-app.use('/example/css', express.static('../externals'));
+app.use('/example/css', express.static('../htdocs'));
 
 
 app.get('/', function(req, res) {

@@ -1,0 +1,1405 @@
+
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Example *</title>
+  <meta name="description" content="* jquery-usos example">
+  <meta name="author" content="Piotr Styczyński">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  
+  
+  <script src="../src/vendor/jquery-1.9.1.js"></script>
+  <script src="../src/vendor/jquery-migrate-1.1.0.js"></script>
+  <script src="../src/vendor/jquery-ui-1.10.1.custom.js"></script>
+  <script src="../lib/jquery-usos.min.js"></script>
+  
+  <link rel="stylesheet" href="./jquery-ui-1.10.1.custom.css">
+  <link rel="stylesheet" href="./tooltipster.css">
+  <link rel="stylesheet" href="../lib/jquery-usos.css">
+
+</head>
+
+<body>
+
+<style>
+h1 {
+    font-size: 200%;
+    width: 100%;
+    background-color: #416067;
+    height: 43px;
+    color: white;
+    padding-top: 2px;
+    margin-left: -40px;
+    margin-bottom: 20px;
+    padding-left: 30px;
+}
+.exampleContent {
+  margin-top: 66px;
+  margin-bottom: -38px;
+}
+.htmlExampleContents {
+  margin-left: 90px;
+  display: block;
+}
+p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.header {
+  width: 100%;
+  background-color: black;
+  position: fixed;
+  top: 0px;
+}
+.header > img {
+  box-shadow: 0px 0px 141px #161616;
+  color: black;
+  border-radius: 184px;
+  height: 50px;
+}
+.header > span {
+  color: white;
+  margin-left: 15px;
+  font-weight: 600;
+  z-index: 9999999 !important;
+}
+</style>
+
+<div class="header">
+<img src="https://avatars1.githubusercontent.com/u/2855566?s=200&v=4" />
+<span>
+  JQuery-USOS version 1.4.1
+</span>
+</div>
+
+
+
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>$.usosCore.lang </h1>
+<p id='result'></p>
+
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init({
+        langpref: "en"
+    });
+
+    $(function() {
+        // $('#result').text($.usosCore.lang("Po polsku", "In English"));
+        // $('#result').text($.usosCore.lang("Po polsku", null));
+        // $('#result').text($.usosCore.lang(null, "In English"));
+        // $('#result').text($.usosCore.lang(null, null));
+        // $('#result').text($.usosCore.lang(null));
+        // $('#result').text($.usosCore.lang("Untranslated"));
+        // $('#result').text($.usosCore.lang());
+
+        $('#result').html($.usosCore.lang({
+            langdict: {pl: "Po <b>polsku</b>", en: null},
+            wrapper: 'jQuery.html' // also try 'jQuery.text'
+        }));
+    });
+});</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init({
+        langpref: "en"
+    });
+
+    $(function() {
+        // $('#result').text($.usosCore.lang("Po polsku", "In English"));
+        // $('#result').text($.usosCore.lang("Po polsku", null));
+        // $('#result').text($.usosCore.lang(null, "In English"));
+        // $('#result').text($.usosCore.lang(null, null));
+        // $('#result').text($.usosCore.lang(null));
+        // $('#result').text($.usosCore.lang("Untranslated"));
+        // $('#result').text($.usosCore.lang());
+
+        $('#result').html($.usosCore.lang({
+            langdict: {pl: "Po <b>polsku</b>", en: null},
+            wrapper: 'jQuery.html' // also try 'jQuery.text'
+        }));
+    });
+});
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>$.usosCore.panic </h1>
+<button id="pleasePanic">Trigger panic!</button>
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init({
+        langpref: 'pl',
+        usosAPIs: {
+            'default': {
+                'methodUrl': "https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=%s"
+            }
+        }
+    });
+
+    $(function() {
+        // Resize the result pane for a better view!
+        $('#pleasePanic').click(function() {
+          $.usosCore.panic();
+        });
+    });
+});
+</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init({
+        langpref: 'pl',
+        usosAPIs: {
+            'default': {
+                'methodUrl': "https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=%s"
+            }
+        }
+    });
+
+    $(function() {
+        // Resize the result pane for a better view!
+        $('#pleasePanic').click(function() {
+          $.usosCore.panic();
+        });
+    });
+});
+
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>$.usosCore.usosapiFetch </h1>
+<p>USOS API methods:</p>
+<ul id='methods'></ul>
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init({
+        usosAPIs: {
+            'default': {
+                'methodUrl': "https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=%s"
+            }
+        }
+    });
+
+    $(function() {
+        $.usosCore.usosapiFetch({
+            method: "services/apiref/method_index"
+        }).done(function(list) {
+            $.each(list, function(_, method) {
+                $('#methods').append($("<li>").text(method.name));
+            });
+        }).fail($.usosCore.panic);
+    });
+});
+</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init({
+        usosAPIs: {
+            'default': {
+                'methodUrl': "https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=%s"
+            }
+        }
+    });
+
+    $(function() {
+        $.usosCore.usosapiFetch({
+            method: "services/apiref/method_index"
+        }).done(function(list) {
+            $.each(list, function(_, method) {
+                $('#methods').append($("<li>").text(method.name));
+            });
+        }).fail($.usosCore.panic);
+    });
+});
+
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>$.usosEntity.label </h1>
+<ul id='result'></ul>
+
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init({
+        langpref: "pl",
+        usosAPIs: {
+            'default': {
+                'methodUrl': "https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=%s"
+            }
+        }
+    });
+
+    $(function() {
+        $.usosCore.usosapiFetch({
+            method: 'services/fac/search',
+            params: {
+                lang: "pl",
+                query: "matemat",
+                fields: "id|name"
+            }
+        }).done(function(response) {
+            $.each(response.items, function(_, fac) {
+                $('#result').append($('<li>').html($.usosEntity.label('entity/fac/faculty', fac)));
+            });
+        });
+    });
+});
+</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init({
+        langpref: "pl",
+        usosAPIs: {
+            'default': {
+                'methodUrl': "https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=%s"
+            }
+        }
+    });
+
+    $(function() {
+        $.usosCore.usosapiFetch({
+            method: 'services/fac/search',
+            params: {
+                lang: "pl",
+                query: "matemat",
+                fields: "id|name"
+            }
+        }).done(function(response) {
+            $.each(response.items, function(_, fac) {
+                $('#result').append($('<li>').html($.usosEntity.label('entity/fac/faculty', fac)));
+            });
+        });
+    });
+});
+
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>$.usosEntity.link </h1>
+<ul id='result'></ul>
+
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init({
+        langpref: "pl",
+        usosAPIs: {
+            'default': {
+                'methodUrl': "https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=%s"
+            }
+        },
+        entityURLs: {
+            'entity/fac/faculty': "http://example.com/faculty/${fac_id}"
+        }
+    });
+
+    $(function() {
+        $.usosCore.usosapiFetch({
+            method: 'services/fac/search',
+            params: {
+                lang: "pl",
+                query: "matemat",
+                fields: "id|name"
+            }
+        }).done(function(response) {
+            $.each(response.items, function(_, fac) {
+                $('#result').append($('<li>').html($.usosEntity.link('entity/fac/faculty', fac)));
+            });
+        });
+    });
+});
+</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init({
+        langpref: "pl",
+        usosAPIs: {
+            'default': {
+                'methodUrl': "https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=%s"
+            }
+        },
+        entityURLs: {
+            'entity/fac/faculty': "http://example.com/faculty/${fac_id}"
+        }
+    });
+
+    $(function() {
+        $.usosCore.usosapiFetch({
+            method: 'services/fac/search',
+            params: {
+                lang: "pl",
+                query: "matemat",
+                fields: "id|name"
+            }
+        }).done(function(response) {
+            $.each(response.items, function(_, fac) {
+                $('#result').append($('<li>').html($.usosEntity.link('entity/fac/faculty', fac)));
+            });
+        });
+    });
+});
+
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>$.usosEntity.url </h1>
+<p id='result'></p>
+
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init({
+        langpref: "pl",
+        entityURLs: {
+            'entity/fac/faculty': "http://example.com/faculty/${fac_id}"
+        }
+    });
+
+    $(function() {
+        $('#result').text($.usosEntity.url('entity/fac/faculty', '10000000'));
+    });
+});
+</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init({
+        langpref: "pl",
+        entityURLs: {
+            'entity/fac/faculty': "http://example.com/faculty/${fac_id}"
+        }
+    });
+
+    $(function() {
+        $('#result').text($.usosEntity.url('entity/fac/faculty', '10000000'));
+    });
+});
+
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>usosForms </h1>
+
+
+<h2>Course Editor</h2>
+
+<table id='myForm'>
+    <tr>
+        <td>Course name:</td>
+        <td>
+            <div id='textbox'></div>
+        </td>
+    </tr>
+    <tr>
+        <td>Options:</td>
+        <td>
+            <div id='checkbox'></div>
+        </td>
+    </tr>
+    <tr>
+        <td>Classroom capacity:</td>
+        <td>
+            <div id='radioboxes'></div>
+        </td>
+    </tr>
+    <tr>
+        <td>Type:</td>
+        <td>
+            <div id='selectbox'></div>
+        </td>
+    </tr>
+</table>
+<button id='save'>Save</button>
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init();
+
+    /* Create the widgets */
+
+    $("#textbox").usosTextbox({
+        name: "name"
+    });
+    $("#checkbox").usosCheckbox({
+        name: "is_visible",
+        caption: {
+            pl: "Czy widoczny",
+            en: "Is visible"
+        }
+    });
+    $("#checkbox").usosRadioboxes({
+        name: "capacity",
+        width: "300px",
+        options: [
+            {value: "<10", caption: {pl: "Tyci tyci", en: "Tiny"}},
+            {value: "30", caption: {pl: "Ma�a", en: "Small"}},
+            {value: "100", caption: {pl: "Spora", en: "Big"}},
+            {value: ">500", caption: {
+                pl: "Wielgachna",
+                en: (
+                    "Huge. Note that this can span multiple lines and will " +
+                    "remain properly indented. It can also contain <i>HTML</i>."
+                )
+            }}
+        ]
+    });
+    $("#selectbox").usosSelectbox({
+        name: "type",
+        options: [
+            {value: "A", caption: {pl: "Typ A", en: "A-Type"}},
+            {value: "B", caption: {pl: "Typ B", en: "B-Type"}}
+        ]
+    });
+    $("#save").button();
+    var myWidgets = $("#myForm").usosForms("findValueWidgets");
+
+    /* Define progress helpers. */
+
+    function showProgress() {
+        /* Disable all the inputs and buttons so that they won't
+         * get changed or clicked while loading or saving. */
+        $("#save").button("disable");
+        myWidgets.usosValue("disable");
+        $("#myForm").usosProgressOverlay();
+    }
+
+    function hideProgress() {
+        $("#myForm").usosProgressOverlay('destroy');
+        myWidgets.usosValue("enable");
+        $("#save").button("enable");
+    }
+
+    /* Fake USOS API AJAX requests. Change them to test how things work. */
+
+    function loadObject(id) {
+        var deferred = $.Deferred();
+        setTimeout(function() {
+            deferred.resolve({
+                id: id,
+                name: "Name",
+                is_visible: true,
+                type: "B",
+                capacity: "100"
+            });
+        }, 2000);
+        return deferred;
+    }
+
+    function updateObject(id, fields) {
+        var deferred = $.Deferred();
+        setTimeout(function() {
+            deferred.reject({
+                message: "Fake error.",
+                user_messages: {
+                    fields: {
+                        /* */
+                        name: {
+                            pl: "Ta nazwa nie jest wystarczaj�co �adna.",
+                            en: "This name is not pretty enough."
+                        }
+                        /* Also check this alternative */ /*
+                        id: {
+                            pl: "Nie masz uprawnie� do edycji tego przedmiotu.",
+                            en: "You have no permissions to edit this course."
+                        }
+                        /* */
+                    }
+                }
+            });
+        }, 2000);
+        return deferred;
+    }
+
+    /* Load the current values and display them in the form. */
+
+    showProgress();
+    loadObject("some_id")
+    .always(hideProgress)
+    .done(function(data) {
+        myWidgets.usosForms("values", data);
+        $(".ua-usosvalue[data-name=name]").usosValue("focus");
+    })
+    .fail($.usosCore.panic);
+
+    /* Handle the save button. */
+
+    $("#save").click(function() {
+        showProgress();
+        updateObject("some_id", myWidgets.usosForms("flatValues"))
+        .always(hideProgress)
+        .done(function() { alert("Saved!"); })
+        .fail(function(response) {
+            myWidgets.usosForms('showErrors', response);
+        });
+    });
+});</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+#myForm {
+    border-spacing: 1px;
+    border: 1px solid #aaa;
+    margin-bottom: 10px;
+}
+#myForm > tbody > tr > td {
+    background: #e4e4e4;
+    padding: 5px 8px;
+    font-size: 13px;
+}
+#myForm > tbody > tr > td:first-child {
+    background: #d8d8d8;
+    text-align: right;
+}
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init();
+
+    /* Create the widgets */
+
+    $("#textbox").usosTextbox({
+        name: "name"
+    });
+    $("#checkbox").usosCheckbox({
+        name: "is_visible",
+        caption: {
+            pl: "Czy widoczny",
+            en: "Is visible"
+        }
+    });
+    $("#checkbox").usosRadioboxes({
+        name: "capacity",
+        width: "300px",
+        options: [
+            {value: "<10", caption: {pl: "Tyci tyci", en: "Tiny"}},
+            {value: "30", caption: {pl: "Ma�a", en: "Small"}},
+            {value: "100", caption: {pl: "Spora", en: "Big"}},
+            {value: ">500", caption: {
+                pl: "Wielgachna",
+                en: (
+                    "Huge. Note that this can span multiple lines and will " +
+                    "remain properly indented. It can also contain <i>HTML</i>."
+                )
+            }}
+        ]
+    });
+    $("#selectbox").usosSelectbox({
+        name: "type",
+        options: [
+            {value: "A", caption: {pl: "Typ A", en: "A-Type"}},
+            {value: "B", caption: {pl: "Typ B", en: "B-Type"}}
+        ]
+    });
+    $("#save").button();
+    var myWidgets = $("#myForm").usosForms("findValueWidgets");
+
+    /* Define progress helpers. */
+
+    function showProgress() {
+        /* Disable all the inputs and buttons so that they won't
+         * get changed or clicked while loading or saving. */
+        $("#save").button("disable");
+        myWidgets.usosValue("disable");
+        $("#myForm").usosProgressOverlay();
+    }
+
+    function hideProgress() {
+        $("#myForm").usosProgressOverlay('destroy');
+        myWidgets.usosValue("enable");
+        $("#save").button("enable");
+    }
+
+    /* Fake USOS API AJAX requests. Change them to test how things work. */
+
+    function loadObject(id) {
+        var deferred = $.Deferred();
+        setTimeout(function() {
+            deferred.resolve({
+                id: id,
+                name: "Name",
+                is_visible: true,
+                type: "B",
+                capacity: "100"
+            });
+        }, 2000);
+        return deferred;
+    }
+
+    function updateObject(id, fields) {
+        var deferred = $.Deferred();
+        setTimeout(function() {
+            deferred.reject({
+                message: "Fake error.",
+                user_messages: {
+                    fields: {
+                        /* */
+                        name: {
+                            pl: "Ta nazwa nie jest wystarczaj�co �adna.",
+                            en: "This name is not pretty enough."
+                        }
+                        /* Also check this alternative */ /*
+                        id: {
+                            pl: "Nie masz uprawnie� do edycji tego przedmiotu.",
+                            en: "You have no permissions to edit this course."
+                        }
+                        /* */
+                    }
+                }
+            });
+        }, 2000);
+        return deferred;
+    }
+
+    /* Load the current values and display them in the form. */
+
+    showProgress();
+    loadObject("some_id")
+    .always(hideProgress)
+    .done(function(data) {
+        myWidgets.usosForms("values", data);
+        $(".ua-usosvalue[data-name=name]").usosValue("focus");
+    })
+    .fail($.usosCore.panic);
+
+    /* Handle the save button. */
+
+    $("#save").click(function() {
+        showProgress();
+        updateObject("some_id", myWidgets.usosForms("flatValues"))
+        .always(hideProgress)
+        .done(function() { alert("Saved!"); })
+        .fail(function(response) {
+            myWidgets.usosForms('showErrors', response);
+        });
+    });
+});
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>$.usosCore.makeParagraphs </h1>
+
+<table>
+    <tr>
+        <td>
+            <textarea>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ac laoreet ante.
+
+Aliquam feugiat pretium mi. Ut hendrerit libero quam, vel dictum odio interdum sed. Phasellus ac risus fringilla, gravida lectus fermentum, facilisis nibh.</textarea>
+        </td>
+        <td>
+            <div id='result' class='ua-paragraphs'></div>
+        </td>
+    </tr>
+</table>
+
+<p>And here's how it looks inside a tooltip: <span id='tip'></span></p>
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init();
+
+    $(function () {
+        $("#tip").usosTip();
+
+        var update = function () {
+            var paragraphs = $.usosUtils.makeParagraphs($('textarea').val());
+            $('#result').html(paragraphs);
+            $("#tip").usosTip("option", "content", paragraphs.clone());
+        };
+
+        update();
+        $('textarea').on('keyup', update);
+    });
+});
+</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+table textarea {
+    width: 300px;
+    height: 180px;
+}
+table td {
+    vertical-align: top;
+}
+.ua-paragraphs {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init();
+
+    $(function () {
+        $("#tip").usosTip();
+
+        var update = function () {
+            var paragraphs = $.usosUtils.makeParagraphs($('textarea').val());
+            $('#result').html(paragraphs);
+            $("#tip").usosTip("option", "content", paragraphs.clone());
+        };
+
+        update();
+        $('textarea').on('keyup', update);
+    });
+});
+
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>$.usosCore.requireFields </h1>
+<pre id='result'></pre>
+
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init({
+        debug: true  // Try setting to false.
+    });
+
+    $(function() {
+        var obj = {a: {b: 3, c: 2}, b: 1, c: 1};
+        var req = "a[c]|c";  // Try adding "|d".
+        var result = $.usosUtils.requireFields(obj, req);
+        console.log(result);
+        $('#result').text(JSON.stringify(result));
+    });
+});
+</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init({
+        debug: true  // Try setting to false.
+    });
+
+    $(function() {
+        var obj = {a: {b: 3, c: 2}, b: 1, c: 1};
+        var req = "a[c]|c";  // Try adding "|d".
+        var result = $.usosUtils.requireFields(obj, req);
+        console.log(result);
+        $('#result').text(JSON.stringify(result));
+    });
+});
+
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>usosBadge widget </h1>
+
+<ul>
+    <li>Resize this window in order to see the entire badge.</li>
+    <li>
+        <p>Hover over an item to see the badge:</p>
+        <p>
+            <a href='#' user_id='397'>Janina Mincer-Daszkiewicz</a>,
+            <a href='#' user_id='8094'>Wojciech Rygielski</a>,
+            <br />
+            <a href='#' fac_id='00000000'>University of Warsaw</a>,
+            <a href='#' fac_id='10000000'>Faculty of MIM</a>.
+            <br />
+            <a href='#' building_id='1224'>Pałac Zamojskich</a>.
+            <a href='#' building_id='1119'>Budynek Szkoły Języków Obcych</a>.
+        </p>
+    </li>
+    <li>
+        <p>The item doesn't have to be a link (it can be any type of element).</p>
+        <p>
+            <span class='fancy' fac_id='10000000'>a span element</span>
+        </p>
+    </li>
+</ul>
+
+  <!-- <pre><code>$.usosCore.init({
+    langpref: 'pl',
+    usosAPIs: {
+        'default': {
+            'methodUrl': "https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=%s"
+        }
+    }
+});
+
+$(function () {
+    $("[user_id]").each(function () {
+        $(this).usosBadge({
+            entity: "entity/users/user",
+            user_id: $(this).attr("user_id"),
+            position: "top"
+        });
+    });
+    $("[fac_id]").each(function () {
+        $(this).usosBadge({
+            entity: "entity/fac/faculty",
+            fac_id: $(this).attr("fac_id")
+        });
+    });
+    $("[building_id]").each(function () {
+        $(this).usosBadge({
+            entity: "entity/geo/building",
+            building_id: $(this).attr("building_id")
+        });
+    });
+});</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+.fancy {
+    cursor: default;
+    background: #88f;
+    color: white;
+    font-weight: bold;
+    padding: 2px 5px;
+    font-size: 12px;
+    border-radius: 3px;
+    border: 1px solid #55d;
+}
+</style>
+
+<script>
+  $.usosCore.init({
+    langpref: 'pl',
+    usosAPIs: {
+        'default': {
+            'methodUrl': "https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=%s"
+        }
+    }
+});
+
+$(function () {
+    $("[user_id]").each(function () {
+        $(this).usosBadge({
+            entity: "entity/users/user",
+            user_id: $(this).attr("user_id"),
+            position: "top"
+        });
+    });
+    $("[fac_id]").each(function () {
+        $(this).usosBadge({
+            entity: "entity/fac/faculty",
+            fac_id: $(this).attr("fac_id")
+        });
+    });
+    $("[building_id]").each(function () {
+        $(this).usosBadge({
+            entity: "entity/geo/building",
+            building_id: $(this).attr("building_id")
+        });
+    });
+});
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>usosNotice widget </h1>
+
+<div>
+    <textarea title='Enter some text here!'></textarea>
+</div>
+<div>
+    <input type='button' value='Validate' />
+</div>
+
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init();
+
+    $(function () {
+        $('input').click(function () {
+            if ($('textarea').val()) {
+                alert("OK!");
+            } else {
+                $('textarea').usosNotice({
+                    content: {
+                        pl: "To pole jest wymagane!",
+                        en: "This field is required!"
+                    }
+                });
+            }
+        });
+    });
+});
+</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+textarea {
+    width: 300px;
+    height: 50px;
+}
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init();
+
+    $(function () {
+        $('input').click(function () {
+            if ($('textarea').val()) {
+                alert("OK!");
+            } else {
+                $('textarea').usosNotice({
+                    content: {
+                        pl: "To pole jest wymagane!",
+                        en: "This field is required!"
+                    }
+                });
+            }
+        });
+    });
+});
+
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>usosProgressOverlay widget </h1>
+
+<table id='mytable'>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td rowspan='2'></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan='2'></td>
+        <td></td>
+    </tr>
+</table>
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init();
+
+    $(function () {
+        var fakeRequest = function () {
+            var deferred = $.Deferred();
+            /* Change "7000" to "1000" to simulate a fast connection. */
+            var delay = Math.floor(Math.random() * 7000);
+            setTimeout(function () {
+                deferred.resolve(delay + "ms");
+            }, delay);
+            return deferred;
+        };
+
+        $('td').each(function () {
+            var self = $(this);
+            self.usosProgressOverlay();
+            fakeRequest()
+                .always(function () {
+                    self.usosProgressOverlay('destroy');
+                })
+                .done(function (result) {
+                    self.text(result);
+                });
+        });
+    });
+});
+</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+#mytable td {
+    width: 80px;
+    height: 80px;
+    border: 1px solid #aaa;
+    text-align: center;
+    color: #666;
+}
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init();
+
+    $(function () {
+        var fakeRequest = function () {
+            var deferred = $.Deferred();
+            /* Change "7000" to "1000" to simulate a fast connection. */
+            var delay = Math.floor(Math.random() * 7000);
+            setTimeout(function () {
+                deferred.resolve(delay + "ms");
+            }, delay);
+            return deferred;
+        };
+
+        $('td').each(function () {
+            var self = $(this);
+            self.usosProgressOverlay();
+            fakeRequest()
+                .always(function () {
+                    self.usosProgressOverlay('destroy');
+                })
+                .done(function (result) {
+                    self.text(result);
+                });
+        });
+    });
+});
+
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>usosSelector widget </h1>
+<div id='course'></div>
+<p id='result'></p>
+
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init({
+        langpref: 'pl',
+        usosAPIs: {
+            'default': {
+                'methodUrl': "https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=%s"
+            }
+        }
+    });
+
+    $(function() {
+        $('#course').usosSelector({
+            entity: "entity/courses/course",
+            // multi: true,
+            // value: ["1000-412SOP"],
+            // width: "450px",
+            change: function () {
+                $('#result').text(JSON.stringify(
+                    $(this).usosSelector('value')
+                ));
+            }
+        });
+    });
+});
+</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init({
+        langpref: 'pl',
+        usosAPIs: {
+            'default': {
+                'methodUrl': "https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=%s"
+            }
+        }
+    });
+
+    $(function() {
+        $('#course').usosSelector({
+            entity: "entity/courses/course",
+            // multi: true,
+            // value: ["1000-412SOP"],
+            // width: "450px",
+            change: function () {
+                $('#result').text(JSON.stringify(
+                    $(this).usosSelector('value')
+                ));
+            }
+        });
+    });
+});
+
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1>usosTip widget </h1>
+<p>Note, that you can also navigate using the keyboard.</p>
+<p id='result'></p>
+<button>Add a paragraph!</button>
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init();
+
+    $(function() {
+
+        /* Simplest (and most common) use case */
+
+        $('#result').append($.usosWidgets.usosTip.create("Po polsku", "In English"));
+
+        /* Dynamic loading */
+
+        $('#result').append($.usosWidgets.usosTip.create({
+            content: function() {
+                /* Simulate 2 sec AJAX request. */
+                var deferred = $.Deferred();
+                setTimeout(function() {
+                    deferred.resolve({
+                        pl: "Wczytane dynamicznie!",
+                        en: "Dynamically loaded!"
+                    });
+                }, 2000);
+                return deferred;
+            }
+        }));
+
+        /* Nonstatic constructor */
+
+        var sentence = "This is a sample <b>sentence</b>. ";
+        $("#result").append($("<span id='myTip'>").text('CUSTOM'));
+        $("#myTip").usosTip({content: sentence});
+
+        /* Changing the content. */
+
+        $("button").click(function () {
+            var oldContent = $("#myTip").usosTip("option", "content");
+            var newContent = oldContent + sentence;
+            $("#myTip").usosTip("option", "content", newContent);
+        });
+    });
+});
+</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+#myTip {
+    display: inline-block;
+    background: #c00;
+    padding: 2px 4px;
+    color: white;
+    font-weight: bold;
+    font-size: 10px;
+    cursor: default;
+    margin-left: 3px;
+    border: 1px outset #c44;
+}
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init();
+
+    $(function() {
+
+        /* Simplest (and most common) use case */
+
+        $('#result').append($.usosWidgets.usosTip.create("Po polsku", "In English"));
+
+        /* Dynamic loading */
+
+        $('#result').append($.usosWidgets.usosTip.create({
+            content: function() {
+                /* Simulate 2 sec AJAX request. */
+                var deferred = $.Deferred();
+                setTimeout(function() {
+                    deferred.resolve({
+                        pl: "Wczytane dynamicznie!",
+                        en: "Dynamically loaded!"
+                    });
+                }, 2000);
+                return deferred;
+            }
+        }));
+
+        /* Nonstatic constructor */
+
+        var sentence = "This is a sample <b>sentence</b>. ";
+        $("#result").append($("<span id='myTip'>").text('CUSTOM'));
+        $("#myTip").usosTip({content: sentence});
+
+        /* Changing the content. */
+
+        $("button").click(function () {
+            var oldContent = $("#myTip").usosTip("option", "content");
+            var newContent = oldContent + sentence;
+            $("#myTip").usosTip("option", "content", newContent);
+        });
+    });
+});
+
+</script>
+</div>
+<div class="exampleContent">
+<span class="htmlExampleContents">
+  <h1> debugger</h1>
+<div id='result'></div>
+
+
+  <!-- <pre><code>$(function() {
+    $.usosCore.init({
+        usosAPIs: {
+            'default': {
+                'methodUrl': "https://usosphp.mimuw.edu.pl/~rygielski/usosweb/usosapiProxy.php?_method_=%s"
+            }
+        }
+    });
+
+    $(function() {
+        $.usosCore.usosapiFetch({
+            method: "services/apiref/method_index"
+        }).done(function(list) {
+            $("#result").text(list.length + " methods.");
+        }).fail(function() {
+            /* Cross-origin requests in usosapiProxy.php will work only
+             * if both DEBUG flag and $debugUser field are set! */
+            $("#result").text("Failed to access usosapiProxy.php. Is $debugUser set?");
+        });
+    });
+});
+</code></pre> -->
+  
+</span>
+<style>
+  body {
+    font-family: Segoe UI;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+</style>
+
+<script>
+  $(function() {
+    $.usosCore.init({
+        usosAPIs: {
+            'default': {
+                'methodUrl': "https://usosphp.mimuw.edu.pl/~rygielski/usosweb/usosapiProxy.php?_method_=%s"
+            }
+        }
+    });
+
+    $(function() {
+        $.usosCore.usosapiFetch({
+            method: "services/apiref/method_index"
+        }).done(function(list) {
+            $("#result").text(list.length + " methods.");
+        }).fail(function() {
+            /* Cross-origin requests in usosapiProxy.php will work only
+             * if both DEBUG flag and $debugUser field are set! */
+            $("#result").text("Failed to access usosapiProxy.php. Is $debugUser set?");
+        });
+    });
+});
+
+</script>
+</div>
+
+</body>
+
+</html>

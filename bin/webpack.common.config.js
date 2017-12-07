@@ -67,6 +67,8 @@ module.exports = function(PATHS, currentEnv) {
     });
   });
   
+  if(PATHS == null) return buildConfig;
+  
   if(currentEnv === 'prod') {
     buildConfig['process.env'] = {
       NODE_ENV: JSON.stringify('production')
