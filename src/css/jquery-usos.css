@@ -1480,12 +1480,10 @@ a.ua-close-link:hover { background: rgba(105,105,105,0.45); }
     border-left-color: transparent;
     border-top-color: transparent;
     border-bottom-color: transparent;
-    //border-right-color: transparent;
 }
 
 .ua-tooltip.tooltipster-left .tooltipster-arrow-background,
 .ua-tooltip.tooltipster-left .tooltipster-arrow-border {
-    //border-left-color: transparent;
     border-top-color: transparent;
     border-bottom-color: transparent;
     border-right-color: transparent;
@@ -1494,7 +1492,6 @@ a.ua-close-link:hover { background: rgba(105,105,105,0.45); }
 .ua-tooltip.tooltipster-top .tooltipster-arrow-background,
 .ua-tooltip.tooltipster-top .tooltipster-arrow-border {
     border-left-color: transparent;
-    //border-top-color: transparent;
     border-bottom-color: transparent;
     border-right-color: transparent;
 }
@@ -1503,6 +1500,22 @@ a.ua-close-link:hover { background: rgba(105,105,105,0.45); }
 .ua-tooltip.tooltipster-bottom .tooltipster-arrow-border {
     border-left-color: transparent;
     border-top-color: transparent;
-    //border-bottom-color: transparent;
     border-right-color: transparent;
+}
+
+/* Fix tooltipster arrow positioning */
+
+.tooltipster-sidetip.tooltipster-left .tooltipster-arrow-background {
+    left: -1px;
+    top: 0px;
+}
+
+.tooltipster-sidetip.tooltipster-top .tooltipster-arrow-background {
+    left: 0px;
+    top: 0px;
+}
+
+.tooltipster-sidetip.tooltipster-right .tooltipster-arrow-background {
+    left: 0px;
+    top: 0px;
 }
