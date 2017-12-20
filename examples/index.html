@@ -66,6 +66,17 @@ p {
     font-weight: 600;
     z-index: 9999999 !important;
 }
+.contents {
+    padding-top: 100px;
+}
+a {
+    padding-left: 50px;
+}
+iframe {
+    width: 50%;
+    height: 400px;
+    overflow: hidden;
+}
 </style>
 
 <div class="header">
@@ -75,9 +86,11 @@ p {
 </span>
 </div>
 
+<div class="contents">
 {{~it.examples :value:index}}
-<div>{{=value}}</div>
+<iframe scrolling="no" src="./{{=value}}.html"></iframe>
 {{~}}
+</div>
 
 </body>
 

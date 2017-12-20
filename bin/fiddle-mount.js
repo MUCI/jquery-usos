@@ -49,8 +49,8 @@ const parse = (exampleName, examplesPath, callback, onlyBody=false, conf=null) =
               examplesJoined();
               return;
           }
-          parse(examples[i], examplesPath, (result) => {
-              joinArray.push(result);
+          parse(examples[i], examplesPath, (result, name) => {
+              joinArray.push(name);
               exampleJoinCallback(i+1);
           }, true, conf);
         };
@@ -75,7 +75,7 @@ const parse = (exampleName, examplesPath, callback, onlyBody=false, conf=null) =
                       jsContents,
                       title: htmlContents.replace(/Demo/ig, ''),
                       config: conf
-                  }));
+                  }), exampleName);
               });
           });
       });
