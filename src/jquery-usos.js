@@ -1,3 +1,7 @@
+/*
+ * JQuery-USOS entrypoint
+ */
+
 import 'tooltipster';
 
 import './deps.js';

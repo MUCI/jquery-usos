@@ -27,10 +27,10 @@ module.exports = function(PATHS, currentEnv) {
 
   // Load build config file
   const buildConfig = require('../buildConfig.js')[currentEnv];
-  
+
   // Load package.json
   const packageJson = require('../package.json');
-  
+
   /*
    * Merge package.json attributes into final config object.
    * All properties are mapped to their upper case variants prefixed with $.
@@ -45,7 +45,7 @@ module.exports = function(PATHS, currentEnv) {
   Object.keys(packageJson).forEach((key) => {
     buildConfig['$' + key.toString().toUpperCase()] = packageJson[key];
   });
-  
+
   /*
    * Replace all variable references in all strings from buildConfig.
    *
@@ -66,17 +66,17 @@ module.exports = function(PATHS, currentEnv) {
       }
     });
   });
-  
+
   if(PATHS == null) return buildConfig;
-  
+
   if(currentEnv === 'prod') {
     buildConfig['process.env'] = {
       NODE_ENV: JSON.stringify('production')
     };
   }
-  
+
   let webpackDevtool = false;
-  
+
   // Wrap all strings in commas to prevent webpack define plugin issue.
   const buildConfigForDefinitions = buildConfig;
   Object.keys(buildConfigForDefinitions).forEach((keyTarget) => {
@@ -85,7 +85,7 @@ module.exports = function(PATHS, currentEnv) {
       buildConfigForDefinitions[keyTarget] = '"' + valueTarget + '"';
     }
   });
-  
+
   let webpackPlugins = [
     new ProgressBarPlugin(),
     new webpack.DefinePlugin(buildConfigForDefinitions)
@@ -97,13 +97,13 @@ module.exports = function(PATHS, currentEnv) {
       loader: "style-loader!css-loader"
     }
   ];
-  
+
   let webpackEntry = [
     PATHS.srcJS
   ];
-  
+
   let webpackOutput = {};
-  
+
   if(currentEnv === 'prod') {
     webpackOutput = {
       filename: PATHS.outJS,
@@ -120,9 +120,9 @@ module.exports = function(PATHS, currentEnv) {
       path: PATHS.outJSPath
     };
   }
-  
+
   if(currentEnv === 'prod') {
-    
+
     webpackDevtool = 'source-map';
     webpackLoaders = webpackLoaders.concat([
       {
@@ -146,7 +146,7 @@ module.exports = function(PATHS, currentEnv) {
         ]
       }
     ]);
-    
+
     webpackPlugins = webpackPlugins.concat([
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.ModuleConcatenationPlugin(),
@@ -175,9 +175,9 @@ module.exports = function(PATHS, currentEnv) {
       new webpack.optimize.AggressiveMergingPlugin()
     ]);
   } else if(currentEnv === 'dev') {
-    
+
     webpackDevtool = 'eval';
-    
+
     webpackLoaders = webpackLoaders.concat([
       {
         test: /\.js$/,
@@ -200,9 +200,9 @@ module.exports = function(PATHS, currentEnv) {
         ]
       }
     ]);
-    
+
   }
-  
+
   if(buildConfig['$CONFIG_BUILD_CACHE'] === true) {
     webpackPlugins = webpackPlugins.concat([
       // 70%-speedup caching
@@ -210,12 +210,12 @@ module.exports = function(PATHS, currentEnv) {
         // Directory to store cache
         cacheDirectory: path.join(PATHS.buildCache, currentEnv, '[confighash]'),
         recordsPath: path.join(PATHS.buildCache, currentEnv, '[confighash]', 'records.json'),
-        
+
         // Generate hash for current cache
         configHash: function(webpackConfig) {
           return `webpack-${currentEnv}`;
         },
-        
+
         // Used to generate has for current env
         environmentHash: {
           root: '..',
@@ -227,7 +227,7 @@ module.exports = function(PATHS, currentEnv) {
       })
     ]);
   }
-  
+
   webpackPlugins.push(new webpack.BannerPlugin(buildConfig['$BANNER']));
 
   // Final webpack config
@@ -274,10 +274,10 @@ module.exports = function(PATHS, currentEnv) {
       }
     }
   };
-  
+
   // Store config in cache
   configCache[currentEnv] = finalConfig;
-  
+
   // Return generated config object
   return finalConfig;
 };
