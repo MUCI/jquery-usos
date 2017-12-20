@@ -14,6 +14,7 @@ const path        = require('path');
 const nodemon     = require('gulp-nodemon');
 const livereload  = require('gulp-livereload');
 const stylus      = require('gulp-stylus');
+const fiddleMount = require('./fiddle-mount.js');
 const fs          = require('fs');
 
 
@@ -121,4 +122,15 @@ gulp.task('assets', function () {
  
 gulp.task('release', function(){
   gulp.start('build:release', 'examples');
+});
+
+/*
+ * Builds htdocs/index.html
+ */
+gulp.task('examples', function(){
+  fiddleMount('*', PATHS.examples, (content) => {
+    fs.writeFileSync(PATHS.examplesOut, content);
+  }, false, {
+    version: webpackConfigCommon(null, 'dev')['$VERSION']
+  });
 });
