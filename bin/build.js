@@ -134,3 +134,13 @@ gulp.task('examples', function(){
     version: webpackConfigCommon(null, 'dev')['$VERSION']
   });
 });
+
+
+/*
+ * Runs server serving examples
+ */
+gulp.task('server', function(){
+  nodemon({
+    'script': './server.js'
+  })
+});
