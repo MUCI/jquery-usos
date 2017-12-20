@@ -45,8 +45,8 @@ body.ua-stop-scrolling {
     text-decoration: underline;
 }
 .ua-link.ua-no-underline:hover {
-    color: #449;
     text-decoration: none;
+    color: #449;
 }
 .ua-ellipsis { /* to use, set max-width manually */
     display: block;
@@ -395,12 +395,12 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 
 /* Tooltip: Base */
 
-.ua-tooltip {
+.ua-tooltip  .tooltipster-box {
     border-radius: 0px;
     font-size: 13px;
     line-height: 1.2;
 }
-.ua-tooltip .tooltipster-content {
+.ua-tooltip .tooltipster-content  .tooltipster-box {
     font-size: 12px;
     line-height: 16px;
     padding: 7px 10px 8px 10px;
@@ -408,18 +408,27 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 
 /* Tooltip: default subclass */
 
-.ua-tooltip.ua-tooltip-default {
+.ua-tooltip.ua-tooltip-default .tooltipster-box {
     border: 1px solid #999;
     background: #ffffe1;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     color: #000;
 }
+.ua-tooltip.ua-tooltip-default .tooltipster-arrow-background {
+    border-color: #ffffe1;
+}
+.ua-tooltip.ua-tooltip-default .tooltipster-arrow-border {
+    border-color: #999;
+}
 .ua-tooltip.ua-tooltip-default .tooltipster-content {
+    color: #000;
+}
+.ua-tooltip.ua-tooltip-default .tooltipster-content .tooltipster-content {
     font-size: 12px;
     line-height: 16px;
     padding: 7px 10px;
 }
-.ua-tooltip.ua-tooltip-default .tooltipster-content b {
+.ua-tooltip.ua-tooltip-default .tooltipster-content b .tooltipster-content {
     color: #444;
 }
 .ua-tooltip.ua-tooltip-default .tooltipster-content p { margin: 10px 0; }
@@ -432,12 +441,18 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 
 /* Tooltip: tool subclass */
 
-.ua-tooltip.ua-tooltip-tool {
+.ua-tooltip.ua-tooltip-tool .tooltipster-content {
     background: #222;
     color: #fff;
     box-shadow: 0 0 5px rgba(255,255,255,0.5);
 }
-.ua-tooltip.ua-tooltip-tool .tooltipster-content {
+.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-background {
+    border-color: #222;
+}
+.ua-tooltip.ua-tooltip-error .tooltipster-arrow-border {
+    border-color: #fff;
+}
+.ua-tooltip.ua-tooltip-tool .tooltipster-content  .tooltipster-box {
     font-size: 11px;
     line-height: 14px;
     padding: 5px 9px;
@@ -450,40 +465,40 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 .ua-tooltip.ua-tooltip-tool .tooltipster-content ul li:first-child { margin-top: 0; }
 .ua-tooltip.ua-tooltip-tool .tooltipster-content ul li:last-child { margin-bottom: 2px; }
 
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-top span,
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-top-right span,
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-top-left span {
+.ua-tooltip.ua-tooltip-tool .tooltipster-top span,
+.ua-tooltip.ua-tooltip-tool .tooltipster-top-right span,
+.ua-tooltip.ua-tooltip-tool .tooltipster-top-left span {
     border-left: 5px solid transparent !important;
     border-right: 5px solid transparent !important;
     border-top: 5px solid;
     bottom: -5px;
 }
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-top .tooltipster-arrow-border,
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-top-right .tooltipster-arrow-border,
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-top-left .tooltipster-arrow-border {
+.ua-tooltip.ua-tooltip-tool .tooltipster-top .tooltipster-arrow-border,
+.ua-tooltip.ua-tooltip-tool .tooltipster-top-right .tooltipster-arrow-border,
+.ua-tooltip.ua-tooltip-tool .tooltipster-top-left .tooltipster-arrow-border {
     border-left: 6px solid transparent !important;
     border-right: 6px solid transparent !important;
     border-top: 6px solid;
     bottom: -5px;
 }
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-bottom span,
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-bottom-right span,
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-bottom-left span {
+.ua-tooltip.ua-tooltip-tool .tooltipster-bottom span,
+.ua-tooltip.ua-tooltip-tool .tooltipster-bottom-right span,
+.ua-tooltip.ua-tooltip-tool .tooltipster-bottom-left span {
     border-left: 5px solid transparent !important;
     border-right: 5px solid transparent !important;
     border-bottom: 5px solid;
     top: -5px;
 }
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-bottom .tooltipster-arrow-border,
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-bottom-right .tooltipster-arrow-border,
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-bottom-left .tooltipster-arrow-border {
+.ua-tooltip.ua-tooltip-tool .tooltipster-bottom .tooltipster-arrow-border,
+.ua-tooltip.ua-tooltip-tool .tooltipster-bottom-right .tooltipster-arrow-border,
+.ua-tooltip.ua-tooltip-tool .tooltipster-bottom-left .tooltipster-arrow-border {
     border-left: 6px solid transparent !important;
     border-right: 6px solid transparent !important;
     border-bottom: 6px solid;
     top: -5px;
 }
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-left span,
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-left .tooltipster-arrow-border {
+.ua-tooltip.ua-tooltip-tool .tooltipster-left span,
+.ua-tooltip.ua-tooltip-tool .tooltipster-left .tooltipster-arrow-border {
     border-top: 5px solid transparent !important;
     border-bottom: 5px solid transparent !important;
     border-left: 5px solid;
@@ -491,14 +506,14 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     margin-top: -4px;
     right: -5px;
 }
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-left .tooltipster-arrow-border {
+.ua-tooltip.ua-tooltip-tool .tooltipster-left .tooltipster-arrow-border {
     border-top: 6px solid transparent !important;
     border-bottom: 6px solid transparent !important;
     border-left: 6px solid;
     margin-top: -5px;
 }
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-right span,
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-right .tooltipster-arrow-border {
+.ua-tooltip.ua-tooltip-tool .tooltipster-right span,
+.ua-tooltip.ua-tooltip-tool .tooltipster-right .tooltipster-arrow-border {
     border-top: 5px solid transparent !important;
     border-bottom: 5px solid transparent !important;
     border-right: 5px solid;
@@ -506,7 +521,7 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
     margin-top: -4px;
     left: -5px;
 }
-.ua-tooltip.ua-tooltip-tool .tooltipster-arrow-right .tooltipster-arrow-border {
+.ua-tooltip.ua-tooltip-tool .tooltipster-right .tooltipster-arrow-border {
     border-top: 6px solid transparent !important;
     border-bottom: 6px solid transparent !important;
     border-right: 6px solid;
@@ -526,26 +541,38 @@ hr.ua-hr { border: 0; width: 100%; background: transparent; color: transparent; 
 
 /* Tooltip: error subclass */
 
-.ua-tooltip.ua-tooltip-error {
+.ua-tooltip.ua-tooltip-error .tooltipster-box {
     border: 1px solid #fff;
     cursor: pointer;
     background: #d22;
     color: #fff;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
+.ua-tooltip.ua-tooltip-error .tooltipster-arrow-background {
+    border-color: #d22;
+}
+.ua-tooltip.ua-tooltip-error .tooltipster-arrow-border {
+    border-color: #fff;
+}
 .ua-tooltip.ua-tooltip-error .tooltipster-content .ua-note { color: #ddd; }
 
 /* Tooltip: badge subclass */
 
-.ua-tooltip.ua-tooltip-badge {
+.ua-tooltip.ua-tooltip-badge .tooltipster-box {
     border: 1px solid #8c8c8c;
     background: #fff;
     box-shadow: 0 4px 5px rgba(0,0,0,0.4);
 }
+.ua-tooltip.ua-tooltip-badge .tooltipster-arrow-background {
+    border-color: #fff;
+}
+.ua-tooltip.ua-tooltip-badge .tooltipster-arrow-border {
+    border-color: #8c8c8c;
+}
 .ua-tooltip.ua-tooltip-badge .tooltipster-content {
     padding: 0;
 }
-.ua-tooltip.ua-tooltip-badge .ua-loading {
+.ua-tooltip.ua-tooltip-badge .ua-loading .tooltipster-box {
     color: #444;
     font-size: 11px;
     line-height: 1.5;
@@ -1444,4 +1471,38 @@ a.ua-close-link:hover { background: rgba(105,105,105,0.45); }
 }
 .ua-icon-firefox:before {
     content: "\e7be";
+}
+
+/* Hide all tooltip arrow faces that are not displayed */
+
+.ua-tooltip.tooltipster-right .tooltipster-arrow-background,
+.ua-tooltip.tooltipster-right .tooltipster-arrow-border {
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    //border-right-color: transparent;
+}
+
+.ua-tooltip.tooltipster-left .tooltipster-arrow-background,
+.ua-tooltip.tooltipster-left .tooltipster-arrow-border {
+    //border-left-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+}
+
+.ua-tooltip.tooltipster-top .tooltipster-arrow-background,
+.ua-tooltip.tooltipster-top .tooltipster-arrow-border {
+    border-left-color: transparent;
+    //border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+}
+
+.ua-tooltip.tooltipster-bottom .tooltipster-arrow-background,
+.ua-tooltip.tooltipster-bottom .tooltipster-arrow-border {
+    border-left-color: transparent;
+    border-top-color: transparent;
+    //border-bottom-color: transparent;
+    border-right-color: transparent;
 }
