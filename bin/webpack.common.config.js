@@ -21,12 +21,12 @@ module.exports = function(PATHS, currentEnv) {
   console.log("[WebpackCommonConfig] Using config for "+currentEnv);
 
   // Load cached config
-  if(configCache[currentEnv] !== undefined) {
+  if(PATHS !== null && configCache[currentEnv] !== undefined) {
     return configCache[currentEnv];
   }
 
   // Load build config file
-  const buildConfig = require('../buildConfig.js')[currentEnv];
+  const buildConfig = require('../config.js').definitions[currentEnv];
 
   // Load package.json
   const packageJson = require('../package.json');
@@ -35,7 +35,7 @@ module.exports = function(PATHS, currentEnv) {
    * Merge package.json attributes into final config object.
    * All properties are mapped to their upper case variants prefixed with $.
    * Example:
-   * 
+   *
    *   In package.json we have:
    *     version: "1.2.0"
    *
@@ -90,7 +90,7 @@ module.exports = function(PATHS, currentEnv) {
     new ProgressBarPlugin(),
     new webpack.DefinePlugin(buildConfigForDefinitions)
   ];
-  
+
   let webpackLoaders = [
     {
       test: /\.css$/,
@@ -255,7 +255,7 @@ module.exports = function(PATHS, currentEnv) {
     },
     resolve: {
       alias: {
-        /* 
+        /*
          * Aliases for modules.
          * If you would ever want to update any of these please remove/change the alias.
          */

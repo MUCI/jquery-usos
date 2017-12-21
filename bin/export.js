@@ -1,7 +1,7 @@
 /*
  * Script for exporting build and devel files into the usosweb project.
  * Usage:
- *    node ./bin/export.js 
+ *    node ./bin/export.js
  *
  * It will prompt for any info it needs.
  */
@@ -14,26 +14,6 @@ const del = require('del');
 
 // Path to config storage
 const exportConfigPath = path.resolve(__dirname, '../.export.json');
-
-// jquery-usos input paths
-const IN_PATHS = {
-  dist:   '../lib/jquery-usos.min.js',
-  vendor: '../src/vendor',
-  devel:  '../src/js',
-  css:    '../lib/jquery-usos.css',
-  fonts:  '../lib/fonts',
-  images: '../lib/images'
-};
-
-// usosweb output paths
-const OUT_PATHS = {
-  dist:   'www/js/jquery-usos/latest-bundle.min.js',
-  vendor: 'www/js/jquery-usos',
-  devel:  'www/js/jquery-usos/devel',
-  css:    'www/css/jquery-usos/jquery-usos.css',
-  fonts:  'www/css/jquery-usos/fonts',
-  images: 'www/css/jquery-usos/images'
-};
 
 
 colors.setTheme({
@@ -50,9 +30,9 @@ colors.setTheme({
 });
 
 // Checks if directories/files exist inside usosweb folder
-const validateExportDirStructure = (dir) => {
+const validateExportDirStructure = (paths, dir) => {
   let result = true;
-  ([OUT_PATHS.dist]).map((requiredPath) => {
+  ([paths.out.dist]).map((requiredPath) => {
     try {
       const lstat = fs.lstatSync(path.resolve(dir, requiredPath, '..'));
       if(!lstat.isDirectory() && !lstat.isFile()) {
@@ -66,12 +46,12 @@ const validateExportDirStructure = (dir) => {
 };
 
 // Checks if gven directory is a valid usosweb project
-const validateExportDir = (value) => {
+const validateExportDir = (paths, value) => {
   value = path.resolve(__dirname, '..', value);
   let isDir = false;
   try {
     if(fs.lstatSync(value).isDirectory()) {
-      return validateExportDirStructure(value);
+      return validateExportDirStructure(paths, value);
     }
   } catch(e) {
      return 'Problem accessing path: '+e.toString();
@@ -85,7 +65,7 @@ const validateExportDir = (value) => {
  *                  otherwise may be null - in that case we prompt user for data
  * proceed(o)     - callback called for parsed configuration object
  */
-const loadConfig = (loadConfigFile, data, proceed) => {
+const loadConfig = (paths, loadConfigFile, data, proceed) => {
   if(!loadConfigFile) {
     inquirer.prompt([
       {
@@ -93,7 +73,7 @@ const loadConfig = (loadConfigFile, data, proceed) => {
           name: 'exportPath',
           message: "What's the export path (USOSWEB e.g. ../usosweb)?",
           validate: function(value) {
-            return validateExportDir(value);
+            return validateExportDir(paths, value);
           }
       },
       {
@@ -125,7 +105,7 @@ const loadConfig = (loadConfigFile, data, proceed) => {
       }
     ]).then(answers => {
       if(!answers.continueWithCurrentConfig) {
-        loadConfig(false, null, proceed);
+        loadConfig(paths, false, null, proceed);
       } else {
          const conf = JSON.parse(data);
          inquirer.prompt([
@@ -150,29 +130,29 @@ const loadConfig = (loadConfigFile, data, proceed) => {
 /*
  * Cleans current eported files
  */
-const cleanExportPath = (outPath, conf) => {
+const cleanExportPath = (paths, outPath, conf) => {
   console.log(('[-] Removing previous build from '+outPath).info);
-  
-  if(IN_PATHS.vendor) {
-    const tgtPath = path.resolve(outPath, OUT_PATHS.vendor);
+
+  if(paths.in.vendor) {
+    const tgtPath = path.resolve(outPath, paths.out.vendor);
     console.log((`    del ${tgtPath}`).debug);
     del.sync([ path.resolve(tgtPath, '**', '*.*') ], {force: true});
   }
-  
-  if(IN_PATHS.devel) {
-    const tgtPath = path.resolve(outPath, OUT_PATHS.devel);
+
+  if(paths.in.devel) {
+    const tgtPath = path.resolve(outPath, paths.out.devel);
     console.log((`    del ${tgtPath}`).debug);
     del.sync([ path.resolve(tgtPath, '**', '*.*') ], {force: true});
   }
-  
-  if(IN_PATHS.fonts) {
-    const tgtPath = path.resolve(outPath, OUT_PATHS.fonts);
+
+  if(paths.in.fonts) {
+    const tgtPath = path.resolve(outPath, paths.out.fonts);
     console.log((`    del ${tgtPath}`).debug);
     del.sync([ path.resolve(tgtPath, '**', '*.*') ], {force: true});
   }
-  
-  if(IN_PATHS.images) {
-    const tgtPath = path.resolve(outPath, OUT_PATHS.images);
+
+  if(paths.in.images) {
+    const tgtPath = path.resolve(outPath, paths.out.images);
     console.log((`    del ${tgtPath}`).debug);
     del.sync([ path.resolve(tgtPath, '**', '*.*') ], {force: true});
   }
@@ -181,97 +161,128 @@ const cleanExportPath = (outPath, conf) => {
 /*
  * Performs export operation for given usosweb path and configuration object.
  */
-const doExport = (outPath, conf) => {
-    
-  cleanExportPath(outPath, conf);
-  
+const doExport = (paths, outPath, conf, onExportExit) => {
+
+  cleanExportPath(paths, outPath, conf);
+
+  let completedTasksCount = 0;
+  let allTasksCount = 0;
+
+  const onStartTask = () => {
+    ++allTasksCount;
+  };
+
+  const onEndTask = () => {
+    ++completedTasksCount;
+    if(allTasksCount <= completedTasksCount) {
+      console.log(('[^] Export done into "'+outPath+'" directory.').info);
+      onExportExit();
+    }
+  };
+
   console.log(('[+] Export will be placed into "'+outPath+'" directory.').info);
-  
-  if(IN_PATHS.dist) {
+  onStartTask();
+
+  if(paths.in.dist) {
     console.log('[+] Copy bundle...'.info);
-    const srcPath = path.resolve(__dirname, IN_PATHS.dist);
-    const tgtPath = path.resolve(outPath, OUT_PATHS.dist);
+    const srcPath = path.resolve(__dirname, paths.in.dist);
+    const tgtPath = path.resolve(outPath, paths.out.dist);
     console.log((`    from ${srcPath} to ${tgtPath}`).debug);
-    fs.createReadStream(srcPath).pipe(fs.createWriteStream(tgtPath));
+    onStartTask();
+    fs.createReadStream(srcPath).pipe(fs.createWriteStream(tgtPath)).on('finish', () => {
+      onEndTask();
+    });
   }
-  
-  if(IN_PATHS.vendor) {
+
+  if(paths.in.vendor) {
     console.log('[+] Copy vendor files...'.info);
-    const srcPath = path.resolve(__dirname, IN_PATHS.vendor);
-    const tgtPath = path.resolve(outPath, OUT_PATHS.vendor);
+    const srcPath = path.resolve(__dirname, paths.in.vendor);
+    const tgtPath = path.resolve(outPath, paths.out.vendor);
     console.log((`    from ${srcPath} to ${tgtPath}`).debug);
-    
-    //del.sync([ path.resolve(tgtPath, '**', '*.*') ], {force: true});
+
+    onStartTask();
     ncp(srcPath, tgtPath, function (err) {
+      onEndTask();
       if (err) {
         return console.error(err);
       }
     });
   }
-  
-  if(IN_PATHS.devel) {
+
+  if(paths.in.devel) {
     console.log('[+] Copy devel files...'.info);
-    const srcPath = path.resolve(__dirname, IN_PATHS.devel);
-    const tgtPath = path.resolve(outPath, OUT_PATHS.devel);
+    const srcPath = path.resolve(__dirname, paths.in.devel);
+    const tgtPath = path.resolve(outPath, paths.out.devel);
     console.log((`    from ${srcPath} to ${tgtPath}`).debug);
-    
-    //del.sync([ path.resolve(tgtPath, '**', '*.*') ], {force: true});
+
+    onStartTask();
     ncp(srcPath, tgtPath, function (err) {
+      onEndTask();
       if (err) {
         return console.error(err);
       }
     });
   }
-  
-  if(IN_PATHS.css) {
+
+  if(paths.in.css) {
     console.log('[+] Copy css bundle...'.info);
-    const srcPath = path.resolve(__dirname, IN_PATHS.css);
-    const tgtPath = path.resolve(outPath, OUT_PATHS.css);
+    const srcPath = path.resolve(__dirname, paths.in.css);
+    const tgtPath = path.resolve(outPath, paths.out.css);
     console.log((`    from ${srcPath} to ${tgtPath}`).debug);
-    fs.createReadStream(srcPath).pipe(fs.createWriteStream(tgtPath));
+
+    onStartTask();
+    fs.createReadStream(srcPath).pipe(fs.createWriteStream(tgtPath)).on('finish', () => {
+      onEndTask();
+    });
   }
-  
-  if(IN_PATHS.fonts) {
+
+  if(paths.in.fonts) {
     console.log('[+] Copy fonts...'.info);
-    const srcPath = path.resolve(__dirname, IN_PATHS.fonts);
-    const tgtPath = path.resolve(outPath, OUT_PATHS.fonts);
+    const srcPath = path.resolve(__dirname, paths.in.fonts);
+    const tgtPath = path.resolve(outPath, paths.out.fonts);
     console.log((`    from ${srcPath} to ${tgtPath}`).debug);
-    
-    //del.sync([ path.resolve(tgtPath, '**', '*.*') ], {force: true});
+
+    onStartTask();
     ncp(srcPath, tgtPath, function (err) {
+      onEndTask();
       if (err) {
         return console.error(err);
       }
     });
   }
-  
-  if(IN_PATHS.images) {
+
+  if(paths.in.images) {
     console.log('[+] Copy images...'.info);
-    const srcPath = path.resolve(__dirname, IN_PATHS.images);
-    const tgtPath = path.resolve(outPath, OUT_PATHS.images);
+    const srcPath = path.resolve(__dirname, paths.in.images);
+    const tgtPath = path.resolve(outPath, paths.out.images);
     console.log((`    from ${srcPath} to ${tgtPath}`).debug);
-    
-    //del.sync([ path.resolve(tgtPath, '**', '*.*') ], {force: true});
+
+    onStartTask();
     ncp(srcPath, tgtPath, function (err) {
+      onEndTask();
       if (err) {
         return console.error(err);
       }
     });
   }
+
+  onEndTask();
 };
 
-fs.readFile(exportConfigPath, (err, data) => {
-  const configLoadedCallback = (conf) => {
-    const exportPath = conf.exportPath;
-    const validationResult = validateExportDir(exportPath);
-    
-    if(validationResult !== true) {
-      console.log(('[-] '+validationResult).error);
-      loadConfig(true, null, configLoadedCallback);
-    } else {
-      doExport(exportPath, conf);
-    }
-    
-  };
-  loadConfig(!err, data, configLoadedCallback);
-});
+module.exports = function(paths, onExportExit) {
+  fs.readFile(exportConfigPath, (err, data) => {
+    const configLoadedCallback = (conf) => {
+      const exportPath = conf.exportPath;
+      const validationResult = validateExportDir(paths, exportPath);
+
+      if(validationResult !== true) {
+        console.log(('[-] '+validationResult).error);
+        loadConfig(paths, true, null, configLoadedCallback);
+      } else {
+        doExport(paths, exportPath, conf, onExportExit);
+      }
+
+    };
+    loadConfig(paths, !err, data, configLoadedCallback);
+  });
+}
