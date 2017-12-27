@@ -85,7 +85,7 @@
                     promise.done(function(obj) {
                         widget._userContent = obj;
                         var tooltipContent = widget._decideTooltipContent();
-                        widget.element.tooltipster('update', $.usosUtils._tooltipster_html(tooltipContent, widget.options._autoWidth));
+                        widget.element.tooltipster('content', $.usosUtils._tooltipster_html(tooltipContent, widget.options._autoWidth));
                     }).fail(function() {
                         var tmp = $.usosCore.lang(
                             "Nie udało się załadować treści podpowiedzi. " +
@@ -93,7 +93,7 @@
                             "Could not load the content of the tip. " +
                             "Refresh the page and try again."
                         );
-                        widget.element.tooltipster('update', $.usosUtils._tooltipster_html(tmp));
+                        widget.element.tooltipster('content', $.usosUtils._tooltipster_html(tmp));
                     });
                 }
             });
@@ -203,11 +203,6 @@
         _setOption: function(key, value) {
             var widget = this;
             this._super(key, value);
-            if (key == 'content') {
-                widget._contentUpdate(
-                    $.usosUtils._tooltipster_html(widget.options.content, widget.options._autoWidth)
-                );
-            }
             return widget;
         },
 

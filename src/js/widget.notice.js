@@ -38,6 +38,10 @@
                 },
                 functionAfter: function() {
                     widget.destroy();
+                },
+                functionInit: function() {
+                    // Provide compatibility with the Tooltipster API that does not provide tooltipster attribute
+                    widget.element.data('tooltipster', widget.element);
                 }
             });
 
@@ -130,7 +134,7 @@
             widget._super(key, value);
             if (key == 'content') {
                 widget.element.tooltipster(
-                    'update',
+                    'content',
                     $.usosUtils._tooltipster_html(widget.options.content)
                 );
             }

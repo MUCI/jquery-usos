@@ -1,0 +1,64 @@
+{
+  "name": "jquery-usos",
+  "version": "1.4.1",
+  "description": "JavaScript library with a set of USOS-related widgets and helper functions.",
+  "main": "./lib/jquery-usos.min.js",
+  "scripts": {
+    "build": "node ./node_modules/grunt/bin/grunt build:dev --base . --gruntfile ./bin/Gruntfile.js",
+    "release": "node ./node_modules/grunt/bin/grunt build:prod --base . --gruntfile ./bin/Gruntfile.js",
+    "server": "node ./node_modules/grunt/bin/grunt server --base . --gruntfile ./bin/Gruntfile.js",
+    "export": "node ./node_modules/grunt/bin/grunt export --base . --gruntfile ./bin/Gruntfile.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MUCI/jquery-usos.git"
+  },
+  "contributors": [
+    {
+      "name": "Wojciech Rygielski",
+      "email": "rygielski@mimuw.edu.pl",
+      "url": "http://rygielski.net//"
+    },
+    {
+      "name": "Piotr Styczyński",
+      "email": "piotrsty1@gmail.com",
+      "url": "http://styczynski.ml"
+    }
+  ],
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/MUCI/jquery-usos/issues"
+  },
+  "homepage": "https://github.com/MUCI/jquery-usos#README",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-remove-strict-mode": "0.0.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "colors": "^1.1.2",
+    "css-loader": "^0.28.7",
+    "del": "^3.0.0",
+    "dot": "^1.1.2",
+    "eslint": "^4.11.0",
+    "eslint-loader": "^1.9.0",
+    "express": "^4.16.2",
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-stylus": "^1.2.0",
+    "grunt-webpack": "^3.0.2",
+    "hard-source-webpack-plugin": "^0.4.11",
+    "inquirer": "^4.0.1",
+    "jquery": "^3.2.1",
+    "load-grunt-tasks": "^3.5.2",
+    "ncp": "^2.0.0",
+    "progress-bar-webpack-plugin": "^1.10.0",
+    "run-sequence": "^2.2.0",
+    "style-loader": "^0.19.0",
+    "time-grunt": "^1.4.0",
+    "webpack": "^3.8.1",
+    "webpack-stream": "^4.0.0"
+  }
+}

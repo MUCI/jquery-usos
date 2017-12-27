@@ -105,12 +105,12 @@
                     widget.element.tooltipster("destroy");
                     widget._listenerAdded = false;
                     widget._create2();
+                },
+                functionReady: function() {
+                    /* 2. Begin loading data. */
+                    widget._updateBadgeContent();
                 }
             });
-
-            /* 2. Begin loading data. */
-
-            widget._updateBadgeContent();
         },
 
         /**
@@ -119,9 +119,9 @@
         _updateBadgeContent: function() {
             var widget = this;
             widget._fetchData().done(function(data) {
-                widget.element.tooltipster("update", widget._createBadge(data));
+                widget.element.tooltipster("content", widget._createBadge(data));
             }).fail(function() {
-                widget.element.tooltipster("update", $("<p class='ua-loading'>")
+                widget.element.tooltipster("content", $("<p class='ua-loading'>")
                     .text($.usosCore.lang(
                         "Wystąpił błąd. Prosimy odświeżyć stronę.",
                         "Error occured. Please refresh the page."
@@ -172,7 +172,6 @@
         _setOption: function(key, value) {
             var widget = this;
             widget._super(key, value);
-            widget._create2();
         },
 
         _destroy: function() {
