@@ -1,0 +1,71 @@
+{
+  "name": "jquery-usos",
+  "version": "1.4.1",
+  "description": "JavaScript library with a set of USOS-related widgets and helper functions.",
+  "main": "./lib/jquery-usos.min.js",
+  "scripts": {
+    "build": "node ./node_modules/gulp/bin/gulp.js build:dev --gulpfile ./bin/build.js",
+    "release": "node ./node_modules/gulp/bin/gulp.js release --gulpfile ./bin/build.js",
+    "server": "node ./node_modules/gulp/bin/gulp.js server --gulpfile ./bin/build.js",
+    "dev": "node ./node_modules/gulp/bin/gulp.js dev --gulpfile ./bin/build.js",
+    "css": "node ./node_modules/gulp/bin/gulp.js css --gulpfile ./bin/build.js",
+    "examples": "node ./node_modules/gulp/bin/gulp.js examples --gulpfile ./bin/build.js",
+    "export": "node ./bin/export.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MUCI/jquery-usos.git"
+  },
+  "contributors": [
+    {
+      "name": "Wojciech Rygielski",
+      "email": "rygielski@mimuw.edu.pl",
+      "url": "http://rygielski.net//"
+    },
+    {
+      "name": "Piotr Styczyński",
+      "email": "piotrsty1@gmail.com",
+      "url": "http://styczynski.ml"
+    },
+    {
+      "name": "Mikołaj Kamiński",
+      "email": "m.kaminski@usos.edu.pl"
+    }
+  ],
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/MUCI/jquery-usos/issues",
+    "email": "m.kaminski@usos.edu.pl"
+  },
+  "homepage": "https://github.com/MUCI/jquery-usos#README",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-remove-strict-mode": "0.0.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "colors": "^1.1.2",
+    "css-loader": "^0.28.7",
+    "del": "^3.0.0",
+    "eslint": "^4.11.0",
+    "eslint-loader": "^1.9.0",
+    "express": "^4.16.2",
+    "gulp": "^3.9.1",
+    "gulp-cached": "^1.1.1",
+    "gulp-livereload": "^3.8.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-runner": "^1.1.0",
+    "gulp-stylus": "^2.6.0",
+    "hard-source-webpack-plugin": "^0.4.11",
+    "inquirer": "^4.0.1",
+    "jquery": "^3.2.1",
+    "ncp": "^2.0.0",
+    "progress-bar-webpack-plugin": "^1.10.0",
+    "run-sequence": "^2.2.0",
+    "style-loader": "^0.19.0",
+    "webpack": "^3.8.1",
+    "webpack-stream": "^4.0.0"
+  }
+}
