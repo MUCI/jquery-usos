@@ -72,7 +72,7 @@
                 suggestionRenderer: function(item) {
                     var $div = $(
                         "<div class='ua-usersuggestion'><table><tr>" +
-                        "<td class='ua-td1'><img/></td>" +
+                        "<td class='ua-td1'><img alt=''/></td>" +
                         "<td class='ua-td2'><div class='ua-match'></div><div class='ua-tagline'></div></td>" +
                         "</tr></table></div>"
                     );
@@ -209,7 +209,7 @@
 
             var badge = $(
                 "<div><table class='ua-container'><tr><td class='ua-td1'>" +
-                "<a class='ua-photo-link'><img class='ua-photo'/></a>" +
+                "<a class='ua-photo-link'><img class='ua-photo' alt=''/></a>" +
                 "</td><td class='ua-td2'>" +
                 "<div class='ua-td2top'><div class='ua-id-icon'>id</div>" +
                 "<div class='ua-name'></div><ul class='ua-functions'></ul></div>" +
@@ -434,7 +434,7 @@
                         params: {
                             user_id: user.id,
                             fields: (
-                                "id|first_name|middle_names|last_name|sex|email|" +
+                                "id|first_name|middle_names|last_name|previous_names|sex|email|" +
                                 "phone_numbers|mobile_numbers|student_number|pesel"
                             )
                         }
@@ -442,7 +442,7 @@
                         var table = $("<table cellspacing='0' style='width: 100%'>");
                         var add = function(header, value) {
                             var formatted;
-                            if (value === null) {
+                            if (!value) {
                                 return;
                             }
                             if ($.isArray(value)) {
@@ -453,6 +453,8 @@
                                 $.each(value, function(_, v) { formatted.append($("<div>").text(v)); });
                             } else if ((typeof value === "string") || (typeof value === "number")) {
                                 formatted = $("<div>").text(value);
+                            } else if (value instanceof $) {
+                                formatted = value;
                             } else {
                                 $.usosCore._console.error("Unknown value type", value);
                                 return;
@@ -467,6 +469,24 @@
                         add($.usosCore.lang("Imię", "First name"), data.first_name);
                         add($.usosCore.lang("Drugie imię", "Middle names"), data.middle_names);
                         add($.usosCore.lang("Nazwisko", "Last name"), data.last_name);
+                        add($.usosCore.lang("Poprzednie nazwiska", "Previous names"), function() {
+                            if (!data.previous_names) {
+                                return null;
+                            }
+                            if (data.previous_names.length === 0) {
+                                return null;
+                            }
+                            var lst = $("<div>");
+                            $.each(data.previous_names, function(_, entry) {
+                                lst.append($("<div>").text(
+                                    entry.first_name + " " + entry.last_name + " " + $.usosCore.lang(
+                                        "(do " + entry.until + ")",
+                                        "(until " + entry.until + ")"
+                                    )
+                                ));
+                            });
+                            return lst;
+                        }());
                         add($.usosCore.lang("Adres e-mail", "Email address"), data.email);
                         add("USOS ID", data.id);
                         add($.usosCore.lang("Płeć", "Sex"), data.sex == "M"

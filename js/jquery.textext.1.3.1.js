@@ -2434,7 +2434,7 @@
         var self   = this,
             target = $(e.target)
             ;
-
+        $(".ua-hide-selection").removeClass('ua-hide-selection');
         if(!target.is(CSS_DOT_SUGGESTION)) {
             target = target.closest(CSS_DOT_SUGGESTION)
         }
@@ -2695,7 +2695,7 @@
 
         var self   = this,
             all    = self.suggestionElements(),
-            target = all.first(),
+            target = all.last(),
             item, i
             ;
 
@@ -2727,7 +2727,7 @@
      */
     p.selectedSuggestionElement = function()
     {
-        return this.suggestionElements().filter(CSS_DOT_SELECTED).first();
+        return this.suggestionElements().filter(CSS_DOT_SELECTED).last();
     };
 
     /**
@@ -3088,6 +3088,13 @@
         }
         else
         {
+            next = self.suggestionElements().last();
+            next.addClass('ua-hide-selection');
+            $('.ua-more-hidden').closest('.text-suggestion').addClass('ua-screen-reader-only');
+        }
+        if (selected.is(':last-child')) {
+            selected.removeClass(CSS_SELECTED);
+            selected.removeClass('ua-hide-selection');
             next = self.suggestionElements().first();
         }
 
@@ -3114,6 +3121,8 @@
 
         if(prev.length == 0)
             return;
+        if (selected.hasClass('ua-hide-selection'))
+            selected.removeClass('ua-hide-selection');
 
         self.clearSelected();
         prev.addClass(CSS_SELECTED);

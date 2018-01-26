@@ -210,7 +210,7 @@
             /* Logo */
 
             badge.find('.ua-logo').append($("<div>").append($("<a>")
-                .attr("href", fac.profile_url)
+                .attr("href", $.usosEntity.url("entity/fac/faculty", fac.id) || fac.profile_url)
                 .append($("<img>")
                     .attr("src", fac.logo_urls["100x100"])
                 )

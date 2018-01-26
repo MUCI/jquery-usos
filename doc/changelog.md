@@ -1,6 +1,44 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.4.0** - *2016-10-05*
+
+    * **Requires USOS API 6.2.0.0-8** (or any later version).
+    * [User badges](api/widget.badge.md) will now display previous names of the
+      user (in the "ID" section).
+
+  * **Version 1.3.12** - *2016-10-05*
+
+    * Accessibility improvements introduced in 1.3.11 have broken the apiTable
+      plugin. Fixed now.
+
+  * **Version 1.3.11** - *2016-09-29*
+
+    * Accessibility improvements in [usosTip](api/widget.usosTip.md) and
+      [usosSelector](api/widget.usosSelector.md) widgets.
+
+  * **Version 1.3.10** - *2016-07-29*
+
+    * Small bugfix in faculty badge (improper faculty URL in logo image).
+    * Minor fixes in apitable plugin (alpha, undocumented).
+
+  * **Version 1.3.9** - *2016-07-19*
+
+    * Minor fixes in apitable plugin (alpha, undocumented).
+
+  * **Version 1.3.8** - *2016-04-11*
+
+    * Minor fixes in apitable plugin (alpha, undocumented).
+
+  * **Version 1.3.7** - *2016-03-08*
+
+    * `usosSelector` widget sometimes improperly called `search_history_affect`
+      method with `null` parameter.
+
+  * **Version 1.3.6** - *2015-05-21*
+
+    * Fixes in CSS and images. Faculty badges should look better.
+
   * **Version 1.3.5** - *2015-04-23*
 
     * **Requires USOS API 6.0.1.0-13** (or any later version).

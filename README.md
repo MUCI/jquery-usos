@@ -9,6 +9,8 @@ project).
 Official project homepage:
 [https://github.com/MUCI/jquery-usos](https://github.com/MUCI/jquery-usos).
 
+![jQuery-USOS widgets preview](http://i.imgur.com/jyJy1w5.png)
+
 
 About
 -----

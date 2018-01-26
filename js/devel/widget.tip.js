@@ -20,10 +20,17 @@
         _create: function() {
             var widget = this;
 
+            if (
+                (widget.element.prop('tagName').toLowerCase() == 'img')
+                && (!widget.element.attr('alt'))
+            ) {
+                widget.element.attr('alt', $.usosCore.lang('Podpowiedź', 'Tip'));
+            }
+
             /* Lazy initialization. */
 
             widget.element.attr("tabindex", 0);
-            widget.element.one("mouseover focus", function() {
+            widget.element.one("mouseover focus touchstart", function() {
                 widget._create2();
             });
         },
@@ -197,8 +204,7 @@
             var widget = this;
             this._super(key, value);
             if (key == 'content') {
-                widget.element.tooltipster(
-                    'update',
+                widget._contentUpdate(
                     $.usosUtils._tooltipster_html(widget.options.content, widget.options._autoWidth)
                 );
             }
