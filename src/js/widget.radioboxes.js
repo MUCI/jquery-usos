@@ -50,7 +50,7 @@
                 input.data('value', value);
             }
             if (selected) {
-                input.prop('checked', true);
+                input.attr('checked', true);
             }
             return label;
         },
@@ -101,7 +101,7 @@
             } else if (key == 'value') {
                 $.each(widget.element.find('input'), function(_, option) {
                     if (widget._getInputValue(option) === value) {
-                        option.prop("checked", true);
+                        $(option).attr("checked", true);
                         return false; // break
                     }
                 });
