@@ -62,7 +62,7 @@ body.ua-stop-scrolling {
     position: absolute;
     background: #f8f8f8;
     opacity: .8;
-    filter: alpha(opacity=80);
+    filter: unquote("alpha(opacity=80)");
 }
 .ua-table-container .ua-overlay-foreground {
     position: absolute;
@@ -321,7 +321,7 @@ body.ua-stop-scrolling {
 .ua-progressoverlay-background {
     position: absolute;
     background: #f8f8f8;
-    filter: alpha(opacity=80);
+    filter: unquote("alpha(opacity=80)");
 }
 .ua-progressoverlay-foreground {
     position: absolute;
@@ -365,7 +365,7 @@ table.ua-form > tbody > tr.ua-header > td {
     background: -o-linear-gradient(top,  rgba(247,247,247,1) 0%,rgba(255,255,255,1) 46%,rgba(247,247,247,1) 85%,rgba(230,230,230,1) 100%) !important; /* Opera 11.10+ */
     background: -ms-linear-gradient(top,  rgba(247,247,247,1) 0%,rgba(255,255,255,1) 46%,rgba(247,247,247,1) 85%,rgba(230,230,230,1) 100%) !important; /* IE10+ */
     background: linear-gradient(to bottom,  rgba(247,247,247,1) 0%,rgba(255,255,255,1) 46%,rgba(247,247,247,1) 85%,rgba(230,230,230,1) 100%) !important; /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#e6e6e6',GradientType=0 ) !important; /* IE6-9 */
+    filter: unquote("progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#e6e6e6',GradientType=0 ) !important"); /* IE6-9 */
     /* Other */
     position: relative;
     padding: 6px 8px 7px 8px;

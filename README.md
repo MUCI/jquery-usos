@@ -12,17 +12,28 @@ Official project homepage:
 ![jQuery-USOS widgets preview](http://i.imgur.com/jyJy1w5.png)
 
 
+Installation
+------------
+
+To install all dependencies type:
+
+* `npm install`
+
+* Then do `npm run release` to build release in lib/ folder
+
+* Then you can start static server with `npm run server`
+
+* Examples can be previewed at localhost:3000 while the server is running.
+
+Other useful commands are:
+
+* `npm run dev` - build developer version of the library
+
+* `npm run export` - export the library (bundled and minified) to USOSweb
+
 About
 -----
 
-  * Quick demos
-    * Try
-      [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.selector),
-      [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/core.usosapiFetch),
-      [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.badge),
-      [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.tip), or
-      [this](http://jsfiddle.net/gh/get/jquery/1.9.1/dependencies/migrate,ui/MUCI/jquery-usos/tree/master/jsfiddle-demos/widget.progressOverlay).
-    * Doesn't work? Click the "Run" button one more time ([why?](https://github.com/MUCI/jquery-usos/issues/1))
   * [Requirements and installation instructions](https://github.com/MUCI/jquery-usos/blob/master/doc/installation.md)
   * [Change Log](https://github.com/MUCI/jquery-usos/blob/master/doc/changelog.md)
   * [Backward compatibility policy](https://github.com/MUCI/jquery-usos/blob/master/doc/backward-compatibility.md)
