@@ -1,6 +1,14 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.4.1** - *2018-06-29*
+
+    * New scripts for building the package, examples and export to USOSweb (using Grunt).
+    * USOS ID of the user was removed from user badges (for GDPR compliance).
+    * Tooltipster update to version 4.0. 
+    * Fix for erroneous tooltip persistence.
+    * Better touchscreen support for tooltips.
+
   * **Version 1.4.0** - *2016-10-05*
 
     * **Requires USOS API 6.2.0.0-8** (or any later version).
