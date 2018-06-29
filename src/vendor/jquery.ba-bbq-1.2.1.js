@@ -1134,4 +1134,4 @@
     return self;
   })();
 
-})(jQuery,window);
+})(jQuery,this);

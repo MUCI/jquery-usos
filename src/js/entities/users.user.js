@@ -488,7 +488,6 @@
                             return lst;
                         }());
                         add($.usosCore.lang("Adres e-mail", "Email address"), data.email);
-                        add("USOS ID", data.id);
                         add($.usosCore.lang("Płeć", "Sex"), data.sex == "M"
                             ? $.usosCore.lang("mężczyzna", "male")
                             : $.usosCore.lang("kobieta", "female")

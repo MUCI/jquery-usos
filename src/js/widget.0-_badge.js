@@ -172,6 +172,7 @@
         _setOption: function(key, value) {
             var widget = this;
             widget._super(key, value);
+            widget._create2();
         },
 
         _destroy: function() {

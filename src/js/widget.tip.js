@@ -2,6 +2,27 @@
 
     "use strict";
 
+    var closeableTips = [];
+
+    /*
+     * Hides all tooltips on page except for one and resets
+     * persistence state for all tooltips.
+     */
+    function hideAllTipsExcept(except, resetPersistence) {
+        closeableTips.forEach (function(widget) {
+            if (widget !== except) {
+                widget.element.tooltipster('hide');
+                if (resetPersistence === true) {
+                    widget._persistent = false;
+                }
+            }
+        });
+    }
+
+    $(window).on('click', function() {
+        hideAllTipsExcept(null, true);
+    });
+
     $.widget('usosWidgets.usosTip', {
         options: {
             content: "",
@@ -13,6 +34,13 @@
         },
         widgetEventPrefix: "usostip:",
         defaultElement: "<span>",
+
+        /*
+         * A persistent tooltip is a tooltip shown on click (not on hover). It has
+         * "empty" mouseleave listener (useful with touchscreens when there is none).
+         */
+        _persistent: false,
+
         _showOnHover: null,
         _userContent: null,
         _created: false,
@@ -66,7 +94,13 @@
             } else {
                 theme += "ua-tooltip-default";
             }
+
             widget.element.tooltipster({
+                /*
+                 * Important for custom tooltip behavior handling.
+                 */
+                trigger: 'custom',
+
                 content: $.usosUtils._tooltipster_html(tooltipContent, widget.options._autoWidth),
                 onlyOne: false,
                 delay: widget.options.delayed ? 500 : (contentProvider ? 200 : 50),
@@ -97,12 +131,36 @@
                     });
                 }
             });
+
+            closeableTips.push(widget);
+
             widget._on(widget.element, {
-                focus: function() { widget.element.tooltipster('show'); },
+                mouseleave: function(e) {
+                    if(widget._persistent) {
+                        return;
+                    }
+                    widget.element.tooltipster('hide');
+                },
+                mouseenter: function(e) {
+                    e.stopPropagation();
+                    hideAllTipsExcept(widget);
+                    widget.element.tooltipster('show');
+                },
+                focus: function() {
+                    hideAllTipsExcept(widget);
+                    widget.element.tooltipster('show');
+                },
                 blur: function() { widget.element.tooltipster('hide'); },
                 click: function(e, extra) {
 
+                    widget._persistent = true;
+
+                    /*
+                     * Prevents tooltip flickering by stopping global window hook from
+                     * trying to close it.
+                     */
                     if (widget._showOnHover) {
+                        e.stopPropagation();
                         return;
                     }
 
@@ -157,7 +215,6 @@
             var userContent = widget._userContent;
 
             widget._showOnHover = function() {
-
                 if (widget.options.type != 'default') {
 
                     /* We don't want this behavior with tool-type tips. This
@@ -203,6 +260,11 @@
         _setOption: function(key, value) {
             var widget = this;
             this._super(key, value);
+            if (key == 'content') {
+                widget._contentUpdate(
+                    $.usosUtils._tooltipster_html(widget.options.content, widget.options._autoWidth)
+                );
+            }
             return widget;
         },
 
