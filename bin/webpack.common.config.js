@@ -256,7 +256,6 @@ module.exports = function(currentEnv, PATHS) {
                 'js': PATHS.requireJS,
                 'entities': PATHS.requireEntities,
                 'autogrowtextarea': path.resolve(PATHS.vendor, 'jquery.autogrowtextarea.js'),
-                'ba-bbq': path.resolve(PATHS.vendor, 'jquery.ba-bbq-1.2.1.js'),
                 'colResizable': path.resolve(PATHS.vendor, 'jquery.colResizable-1.3.min.js'),
                 'texttext': path.resolve(PATHS.vendor, 'jquery.textext.1.3.1.js'),
                 'tooltipster': path.resolve(PATHS.vendor, 'jquery.tooltipster.4.0.js'),

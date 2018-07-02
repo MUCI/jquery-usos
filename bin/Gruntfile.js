@@ -14,6 +14,7 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
     require('time-grunt')(grunt);
 
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-webpack');
 
     const buildingScriptPaths = require('../config.js').paths;
@@ -37,6 +38,9 @@ module.exports = function (grunt) {
         srcAssets:  buildingScriptPaths.srcAssets,
         outAssets: path.join(__dirname, '..', buildingScriptPaths.outAssets),
         filesToClear: buildingScriptPaths.filesToClear.map(function(dir) {
+            return path.resolve(__dirname, '..', dir);
+        }),
+        filesToConcat: buildingScriptPaths.filesToConcat.map(function(dir) {
             return path.resolve(__dirname, '..', dir);
         }),
         filesToWatch: path.resolve(__dirname, '..', buildingScriptPaths.filesToWatch),
@@ -68,6 +72,12 @@ module.exports = function (grunt) {
                     force: true
                 },
                 src: PATHS.filesToClear
+            }
+        },
+        concat: {
+            prod: {
+                src: [PATHS.filesToConcat],
+                dest: path.resolve(__dirname, '..', PATHS.outJSPath, PATHS.outJS)
             }
         },
         webpack: {
@@ -149,6 +159,10 @@ module.exports = function (grunt) {
         'webpack:dev'
     ]);
 
+    grunt.registerTask('concat-js.prod', [
+        'concat:prod'
+    ]);
+
     grunt.registerTask('build:dev', [
         'clean:build',
         'js:dev',
@@ -160,6 +174,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build:prod', [
         'clean:build',
         'js:prod',
+        'concat:prod',
         'css:prod',
         'copy:assets',
         'build:examples'

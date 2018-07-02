@@ -21,6 +21,10 @@ module.exports = {
             'lib/**/*.*'
         ],
         filesToWatch: 'src/**/*.*',
+        filesToConcat: [
+            'lib/jquery-usos.min.js',
+            'src/vendor/jquery.ba-bbq.min.js'
+        ],
         buildCache: 'build-cache',
         exportProject: {
             in: {
