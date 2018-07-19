@@ -1,6 +1,12 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.4.2** - *2018-07-19*
+
+    * Updated version of jQuery-BBQ library.
+    * Fixed UglifyJS error on USOSweb export task.
+    * Fixed overwriting of existing onclick property in tooltip widget. 
+
   * **Version 1.4.1** - *2018-06-29*
 
     * New scripts for building the package, examples and export to USOSweb (using Grunt).
