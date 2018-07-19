@@ -155,12 +155,7 @@
 
                     widget._persistent = true;
 
-                    /*
-                     * Prevents tooltip flickering by stopping global window hook from
-                     * trying to close it.
-                     */
                     if (widget._showOnHover) {
-                        e.stopPropagation();
                         return;
                     }
 
