@@ -47,23 +47,3 @@ need to set up USOS API proxy if you need to access **non-anonymous** methods
     requests via USOS API's
     [services/oauth/proxy method](https://usosapps.uw.edu.pl/developers/api/services/oauth/#proxy).
   * Your proxy should be guarded against CSRF attacks.
-
-### Demo proxy
-
-All of our "live demos" use a simple, anonymous proxy connected to one of the
-USOS API installations.
-
-  * **The source code is included in our repository.**
-    * It can be used as a quick-starter.
-    * It's just a simple anonymous proxy implementation. There are many
-      advantages of writing your own proxy which signs the requests with
-      users' Access Tokens.
-  * **Live demo** of this proxy is set up
-    [here](https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php).
-    * Sample request: [method_index](https://public.usos.edu.pl/jquery-usos/proxy/usosapiProxy.php?_method_=services/apiref/method_index).
-    * Currently, it is connected to the official USOS API server of the
-      University of Warsaw. This may change in the future.
-    * *This URL is intended to be used only with our demo pages*, please set up
-      your own proxy for your project. All responses include the
-      `Access-Control-Allow-Origin` header which will restrict access from
-      other domains.
