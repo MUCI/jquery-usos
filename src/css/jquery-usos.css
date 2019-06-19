@@ -378,7 +378,7 @@ select.ua-form { padding: 1px 1px 1px 0; }
 select.ua-form.ua-null-selected { color: #999; }
 select.ua-form .ua-null-value { color: #999; }
 select.ua-form .ua-nonnull-value { color: #222; }
-input.ua-form:disabled, select.ua-form:disabled, textarea.ua-form:disabled { border: 1px solid #aaa; font-weight: lighter; color: #999; background: #eee; }
+input.ua-form:disabled, select.ua-form:disabled, textarea.ua-form:disabled { border: 1px solid #aaa; font-weight: lighter; color: #000; background: #eee; }
 textarea.ua-form { height: 40px; resize: vertical; }
 
 .ua-form-textbox-icon { position: absolute; top: 1px; left: -2px; font-size: 10px; text-align: center; color: #fff; padding: 1px 0 0 0; width: 14px; height: 9px; background-repeat: none; }
