@@ -1,11 +1,16 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.4.3** - *2019-07-03*
+
+    * Darker text in disabled fields for better visibility.
+    * Removed references to public demo proxy in documentation.
+
   * **Version 1.4.2** - *2018-07-19*
 
     * Updated version of jQuery-BBQ library.
     * Fixed UglifyJS error on USOSweb export task.
-    * Fixed overwriting of existing onclick property in tooltip widget. 
+    * Fixed overwriting of existing onclick property in tooltip widget.
 
   * **Version 1.4.1** - *2018-06-29*
 
