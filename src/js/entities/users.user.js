@@ -334,9 +334,15 @@
                 li.append($.usosCore.lang(" (na ", " (on "));
                 var link = $("<span class='ua-link ua-no-underline'>");
                 li.append(link);
+                var programmesPl = "programach";
+                var programmesEn = "programmes";
+                if (uniqueCount === 1) {
+                    programmesPl = "programie";
+                    programmesEn = "programme";
+                }
                 link
                     .append(uniqueCount + " ")
-                    .append($.usosCore.lang("programach", "programmes"))
+                    .append($.usosCore.lang(programmesPl, programmesEn))
                     .usosTip({
                         content: tipContent,
                         position: "bottom",
