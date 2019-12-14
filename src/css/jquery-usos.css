@@ -1091,6 +1091,7 @@ a.ua-close-link:hover { background: rgba(105,105,105,0.45); }
     height: 100%;
     padding: 3px 35px 3px 3px;
     cursor: text;
+    z-index: 1;
 }
 .text-core .text-wrap .text-tags.text-tags-on-top {
     z-index: 2;
