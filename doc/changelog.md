@@ -1,10 +1,14 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.4.5** - *2019-12-18*
+
+    * Fixed a display error in the usosSelector widget.
+
   * **Version 1.4.4** - *2019-08-05*
 
     * Increased opacity in disabled fields.
-    * Fixed display error in the usosBadge widget.
+    * Fixed a display error in the usosBadge widget.
 
   * **Version 1.4.3** - *2019-07-03*
 
