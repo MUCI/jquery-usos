@@ -642,7 +642,7 @@
                         "<p class='ua-warning ua-focusvisible' tabindex='0'><b>Wyświetlanych jest tylko 20 najlepszych trafień.</b> " +
                         "Jeśli nadal nie możesz znaleźć, to zamknij okno i spróbuj " +
                         "doprecyzować swoje zapytanie. Na przykład, jeśli szukasz " +
-                        "osoby, to możesz spróbować podać jej numer indeksu. Albo jeśli " +
+                        "osoby, to możesz spróbować podać jej numer albumu. Albo jeśli " +
                         "szukasz przedmiotu, spróbuj podać jego kod. "+
                         "<span class='ua-screen-reader-only'>Wciśnij klawisz Esc aby zamknąć to okno</span>",
 
