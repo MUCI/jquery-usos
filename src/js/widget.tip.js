@@ -23,6 +23,9 @@
         hideAllTipsExcept(null, true);
     });
 
+    var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) ||
+            (navigator.msMaxTouchPoints > 0));
+
     $.widget('usosWidgets.usosTip', {
         options: {
             content: "",
@@ -154,6 +157,12 @@
                 click: function(e, extra) {
 
                     widget._persistent = true;
+                    hideAllTipsExcept(widget, true);
+                    e.stopPropagation();
+
+                    if (isTouchDevice) {
+                        widget.element.tooltipster('show');
+                    }
 
                     if (widget._showOnHover) {
                         return;
