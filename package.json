@@ -1,6 +1,6 @@
 {
   "name": "jquery-usos",
-  "version": "1.4.1",
+  "version": "1.4.6",
   "description": "JavaScript library with a set of USOS-related widgets and helper functions.",
   "main": "./lib/jquery-usos.min.js",
   "scripts": {

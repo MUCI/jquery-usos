@@ -1,6 +1,13 @@
 jQuery-USOS Change Log
 ======================
 
+  * **Version 1.4.6** - *2021-08-31*
+
+    * Fixed persistent tooltip after click.
+    * Tooltip on touch devices after click.
+    * Corrected 'numer indeksu' -> 'numer albumu'.
+
+
   * **Version 1.4.5** - *2019-12-18*
 
     * Fixed a display error in the usosSelector widget.
