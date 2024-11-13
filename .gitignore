@@ -1,5 +1,4 @@
 .export.json
 lib
 node_modules
-package-lock.json
 proxy/settings.php
